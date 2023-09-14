@@ -1,29 +1,16 @@
-function homePage(req, res) {
-  const variablePrueba = 'si';
-  const otraVariable = 'no';
-  const items = [
-    {
-      name: 'test1',
-      price: 3.54,
-    },
-    {
-      name: 'test341',
-      price: 0.0,
-    },
-    {
-      name: 'otrotest',
-      price: 200,
-    },
-    {
-      name: 'test1',
-      price: 57,
-    },
-  ];
+const db = require('../db/db');
 
-  res.render('index.html', {
-    mensaje1: variablePrueba,
-    mensaje2: otraVariable,
-    items,
+async function homePage(req, res) {
+  const { id } = req.params;
+  const [usuarios, fields] = await db.execute(
+    'SELECT * FROM `usuarios` WHERE `id` = ?',
+    [id]
+  );
+
+  console.log(usuarios);
+
+  res.render('test.html', {
+    usuario: usuarios[0],
   });
 }
 

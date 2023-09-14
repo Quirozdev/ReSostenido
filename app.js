@@ -1,12 +1,12 @@
 require('dotenv').config();
 
 const express = require('express');
+const nunjucks = require('nunjucks');
 const path = require('path');
 
 const indexRouter = require('./routes/index');
 
 const app = express();
-const nunjucks = require('nunjucks');
 
 // view template
 nunjucks.configure('views', {
@@ -15,7 +15,6 @@ nunjucks.configure('views', {
 });
 
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
 
 // middlewares
 app.use(express.json());
@@ -23,8 +22,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(indexRouter);
-
-const PORT = process.env.PORT || 3000;
 
 // si no se encontro ningun recurso en alguna ruta
 app.use((req, res) => {
@@ -39,6 +36,8 @@ app.use((err, req, res, next) => {
 
   res.status(500).send(err);
 });
+
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   if (process.env.NODE_ENV === 'development') {

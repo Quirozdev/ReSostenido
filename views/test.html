@@ -3,16 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ReSostenido</title>
+    <title>Test</title>
   </head>
   <body>
     <h1>Prueba</h1>
-    <h2>{{ mensaje1 }}</h2>
-    <h3>{{ mensaje2 }}</h3>
-    {% for item in items %}
-    <li>{{item.name}} - ${{item.price}}</li>
+    {% if usuario %}
+    <p>
+      {{ usuario.nombre }} {{ usuario.apellido_paterno }} {{
+      usuario.apellido_materno}}
+    </p>
     {% else %}
-    <p>This list is empty</p>
-    {% endfor %}
+    <p>No hay usuario con esa id</p>
+    {% endif %}
   </body>
 </html>

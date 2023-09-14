@@ -3,6 +3,10 @@ const router = express.Router();
 
 const testController = require('../controllers/testController');
 
-router.get('/', testController.homePage);
+router.get('/', (req, res) => {
+  res.send('en /test/{id_usuario} hay una prueba');
+});
+
+router.get('/test/:id', testController.homePage);
 
 module.exports = router;
