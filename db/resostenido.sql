@@ -11,17 +11,17 @@ CREATE TABLE usuarios (
   apellido_paterno VARCHAR(55) NOT NULL,
   apellido_materno VARCHAR(55) NOT NULL,
   numero_telefono VARCHAR(15) NOT NULL,
+  es_admin BOOLEAN DEFAULT 0,
   verificado BOOLEAN DEFAULT 0,
   PRIMARY KEY(id)
 );
 
 CREATE TABLE tokens_registro (
-  id int(11) AUTO_INCREMENT,
   token VARCHAR(128) UNIQUE NOT NULL,
   fecha_expiracion DATETIME NOT NULL,
+  id_usuario int(11) NOT NULL,
   CONSTRAINT fk_usuario
-  FOREIGN KEY (id) REFERENCES usuarios(id),
-  PRIMARY KEY(id)
+  FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
 );
 
 CREATE TABLE servicios (
