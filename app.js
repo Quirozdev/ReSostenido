@@ -6,8 +6,14 @@ const path = require('path');
 const indexRouter = require('./routes/index');
 
 const app = express();
+const nunjucks = require('nunjucks');
 
 // view template
+nunjucks.configure('views', {
+  autoescape: true,
+  express: app,
+});
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 

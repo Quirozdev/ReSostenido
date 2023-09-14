@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ReSostenido</title>
+  </head>
+  <body>
+    <h1>Prueba</h1>
+    <h2>{{ mensaje1 }}</h2>
+    <h3>{{ mensaje2 }}</h3>
+    {% for item in items %}
+    <li>{{item.name}} - ${{item.price}}</li>
+    {% else %}
+    <p>This list is empty</p>
+    {% endfor %}
+  </body>
+</html>
