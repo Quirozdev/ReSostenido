@@ -11,6 +11,7 @@ CREATE TABLE usuarios (
   apellido_paterno VARCHAR(55) NOT NULL,
   apellido_materno VARCHAR(55) NOT NULL,
   numero_telefono VARCHAR(15) NOT NULL,
+  contrasenia VARCHAR(60) NOT NULL,
   es_admin BOOLEAN DEFAULT 0,
   verificado BOOLEAN DEFAULT 0,
   PRIMARY KEY(id)
