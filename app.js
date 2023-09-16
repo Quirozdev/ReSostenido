@@ -10,7 +10,7 @@ const app = express();
 
 // view template
 nunjucks.configure('views', {
-  autoescape: true,
+  autoescape: true, 
   express: app,
 });
 
@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(indexRouter);
+app.use('/',indexRouter);
 
 // si no se encontro ningun recurso en alguna ruta
 app.use((req, res) => {

@@ -4,7 +4,7 @@ const router = express.Router();
 const testController = require('../controllers/testController');
 
 router.get('/', (req, res) => {
-  res.send('en /test/{id_usuario} hay una prueba');
+  res.sendfile('./views/index.html')
 });
 
 router.get('/test/:id', testController.homePage);
