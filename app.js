@@ -3,8 +3,10 @@ require('dotenv').config();
 const express = require('express');
 const nunjucks = require('nunjucks');
 const path = require('path');
+const { session } = require('./middlewares/session');
 
-const indexRouter = require('./routes/index');
+const indexRouter = require('./routes/testIndex');
+const authRouter = require('./routes/authRoutes');
 
 const app = express();
 
@@ -20,8 +22,10 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session);
 
 app.use(indexRouter);
+app.use(authRouter);
 
 // si no se encontro ningun recurso en alguna ruta
 app.use((req, res) => {

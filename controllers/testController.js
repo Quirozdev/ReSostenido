@@ -2,12 +2,10 @@ const db = require('../db/db');
 
 async function homePage(req, res) {
   const { id } = req.params;
-  const [usuarios, fields] = await db.execute(
+  const [usuarios, campos] = await db.execute(
     'SELECT * FROM `usuarios` WHERE `id` = ?',
     [id]
   );
-
-  console.log(usuarios);
 
   res.render('test.html', {
     usuario: usuarios[0],
