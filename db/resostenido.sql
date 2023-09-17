@@ -8,8 +8,7 @@ CREATE TABLE usuarios (
   id int(11) AUTO_INCREMENT,
   email VARCHAR(255) UNIQUE NOT NULL,
   nombre VARCHAR(55) NOT NULL,
-  apellido_paterno VARCHAR(55) NOT NULL,
-  apellido_materno VARCHAR(55) NOT NULL,
+  apellidos VARCHAR(110) NOT NULL,
   numero_telefono VARCHAR(15) NOT NULL,
   contrasenia VARCHAR(60) NOT NULL,
   es_admin BOOLEAN DEFAULT 0,
@@ -17,8 +16,8 @@ CREATE TABLE usuarios (
   PRIMARY KEY(id)
 );
 
-CREATE TABLE tokens_registro (
-  token VARCHAR(128) UNIQUE NOT NULL,
+CREATE TABLE tokens_verificacion (
+  token VARCHAR(64) UNIQUE NOT NULL,
   fecha_expiracion DATETIME NOT NULL,
   id_usuario int(11) NOT NULL,
   CONSTRAINT fk_usuario
