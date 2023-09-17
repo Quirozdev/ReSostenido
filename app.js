@@ -12,7 +12,7 @@ const app = express();
 
 // view template
 nunjucks.configure('views', {
-  autoescape: true,
+  autoescape: true, 
   express: app,
 });
 
