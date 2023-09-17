@@ -13,6 +13,7 @@ const testindexRouter = require('./routes/testIndex');
 const authRouter = require('./routes/authRoutes');
 const indexRouter = require('./routes/index');
 const faqRouter = require('./routes/faq');
+const servicesRouter = require('./routes/services');
 
 const app = express();
 
@@ -40,6 +41,7 @@ app.use(testindexRouter);
 app.use(authRouter);
 app.use(indexRouter);
 app.use(faqRouter);
+app.use(servicesRouter);
 
 // si no se encontro ningun recurso en alguna ruta
 app.use((req, res) => {
