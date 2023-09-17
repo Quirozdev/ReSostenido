@@ -5,8 +5,10 @@ const nunjucks = require('nunjucks');
 const path = require('path');
 const { session } = require('./middlewares/session');
 
-const indexRouter = require('./routes/testIndex');
+const testindexRouter = require('./routes/testIndex');
 const authRouter = require('./routes/authRoutes');
+const indexRouter = require('./routes/index');
+const loginnRouter = require('./routes/loginn');
 
 const app = express();
 
@@ -17,6 +19,8 @@ nunjucks.configure('views', {
 });
 
 app.set('views', path.join(__dirname, 'views'));
+app.use(express.static('public'));
+app.set('view engine', 'html');
 
 // middlewares
 app.use(express.json());
@@ -24,8 +28,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session);
 
-app.use(indexRouter);
+app.use(testindexRouter);
 app.use(authRouter);
+app.use(indexRouter);
+app.use(loginnRouter);
 
 // si no se encontro ningun recurso en alguna ruta
 app.use((req, res) => {
