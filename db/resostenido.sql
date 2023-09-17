@@ -27,6 +27,7 @@ CREATE TABLE tokens_verificacion (
 CREATE TABLE servicios (
   id int(11) AUTO_INCREMENT,
   precio DECIMAL(10, 2) NOT NULL,
+  grupo VARCHAR(55),
   nombre_instrumento VARCHAR(55) NOT NULL,
   descripcion VARCHAR(255),
   url_imagen VARCHAR(255),
