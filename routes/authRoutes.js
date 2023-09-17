@@ -11,6 +11,8 @@ router.get('/register', authController.registerGet);
 
 router.post('/register', validateRegistration, authController.registerPost);
 
+router.get('/verify/:token', authController.verifyAccountGet);
+
 router.get('/login', authController.loginGet);
 
 router.post('/login', validateLogin, authController.loginPost);

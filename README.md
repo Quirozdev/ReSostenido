@@ -23,15 +23,18 @@ npm install
 Create a .env file that must contains the following variables:
 
 ```
-MYSQL_HOST
+HOST_NAME=
 
-MYSQL_USER
+MYSQLHOST=
+MYSQLPORT=
+MYSQLUSER=
+MYSQLPASSWORD=
+MYSQLDATABASE='resostenido'
 
-MYSQL_USER_PASSWORD
+SESSION_SECRET=
 
-MYSQL_DATABASE='resostenido'
-
-SESSION_SECRET
+EMAIL_USER=
+EMAIL_USER_PASSWORD=
 ```
 
 To run the project

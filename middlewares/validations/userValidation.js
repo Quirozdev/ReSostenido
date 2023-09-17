@@ -44,20 +44,13 @@ const validateRegistration = [
     .withMessage('El nombre no puede estar vacío')
     .isLength({ max: 55 })
     .withMessage('El nombre debe tener 55 caracteres o menos'),
-  body('apellido_paterno', 'Apellido paterno inválido')
+  body('apellidos', 'Apellidos inválidos')
     .trim()
     .escape()
     .notEmpty()
-    .withMessage('El apellido paterno no puede estar vacío')
-    .isLength({ max: 55 })
-    .withMessage('El apellido paterno debe tener 55 caracteres o menos'),
-  body('apellido_materno', 'Apellido materno inválido')
-    .trim()
-    .escape()
-    .notEmpty()
-    .withMessage('El apellido materno no puede estar vacío')
-    .isLength({ max: 55 })
-    .withMessage('El apellido materno debe tener 55 caracteres o menos'),
+    .withMessage('Los apellidos no pueden estar vacíos')
+    .isLength({ max: 110 })
+    .withMessage('Los apellidos deben tener 110 caracteres o menos'),
   body('numero_telefono', 'Número de teléfono inválido')
     .trim()
     .escape()
@@ -70,6 +63,12 @@ const validateRegistration = [
       'El número de teléfono debe ser mexicano, con su formato correspondiente'
     ),
   createPasswordChain(),
+  body('confirmar_contrasenia')
+    .trim()
+    .custom((contraseniaConfirmada, { req }) => {
+      return contraseniaConfirmada === req.body.contrasenia;
+    })
+    .withMessage('Las contraseñas no coinciden'),
 ];
 
 const validateLogin = [createEmailChain(), createPasswordChain()];
