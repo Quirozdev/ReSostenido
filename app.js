@@ -3,7 +3,11 @@ require('dotenv').config();
 const express = require('express');
 const nunjucks = require('nunjucks');
 const path = require('path');
-const { session, sendUserSessionDataToTemplates, logUserSessionData } = require('./middlewares/session');
+const {
+  session,
+  sendUserSessionDataToTemplates,
+  logUserSessionData,
+} = require('./middlewares/session');
 
 const testindexRouter = require('./routes/testIndex');
 const authRouter = require('./routes/authRoutes');

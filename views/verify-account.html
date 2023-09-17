@@ -1,0 +1,31 @@
+{% extends "layoult.html" %} {% block body %}
+<div
+  id="contenedor"
+  style="
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  "
+>
+  <p>{{ mensaje }}</p>
+</div>
+{% if not error %}
+<script>
+  const elementoMensajeRedireccion = document.createElement('p');
+  elementoMensajeRedireccion.textContent = 'Serás redireccionado al login...';
+  document.getElementById('contenedor').appendChild(elementoMensajeRedireccion);
+  setTimeout(() => {
+    window.location.href = `${location.origin}/login`;
+  }, 4000);
+</script>
+{% else %}
+<script>
+  const enlaceAReenvioToken = document.createElement('a');
+  enlaceAReenvioToken.textContent = 'Ir a página de reenvío de token';
+  enlaceAReenvioToken.href = `${location.origin}/resend-verification-token`;
+  enlaceAReenvioToken.classList.add('btn', 'btn-lg', 'btn-light', 'w-100', 'fs-6');
+  document.getElementById('contenedor').appendChild(enlaceAReenvioToken);
+</script>
+{% endif %} {% endblock %}
