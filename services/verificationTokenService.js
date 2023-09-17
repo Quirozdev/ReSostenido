@@ -33,7 +33,8 @@ async function createVerificationTokenForUser(email) {
     return {
       error: null,
       status: 201,
-      mensaje: 'Token creado exitosamente, por favor checa tu correo',
+      mensaje:
+        'Te hemos enviado un nuevo correo de verificación, por favor, haz clic en el enlace para verificar tu cuenta',
       usuario,
       token,
     };

@@ -7,19 +7,19 @@
       class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box"
       style="background: #f8ca6b"
     ></div>
-    <div class="col-md-6 right-box">
+    <div id="info-container" class="col-md-6 right-box">
       <div
         id="error-container"
         class="alert alert-danger"
         role="alert"
         style="display: none"
       ></div>
-      <div
+      <!-- <div
         id="success-container"
         class="alert alert-success"
         role="alert"
         style="display: none"
-      ></div>
+      ></div> -->
       <form
         action="/resend-verification-token"
         method="POST"
@@ -55,19 +55,32 @@
   const formulario = document.querySelector('form');
   const campoEmail = document.getElementById('email');
 
+  const infoContainer = document.getElementById('info-container');
+
   const errorMsgContainer = document.getElementById('error-container');
-  const successMsgContainer = document.getElementById('success-container');
+  // const successMsgContainer = document.getElementById('success-container');
 
   function showErrorMessage(msg) {
-    successMsgContainer.style.display = 'none';
     errorMsgContainer.textContent = msg;
     errorMsgContainer.style.display = 'block';
   }
 
   function showSuccessMessage(msg) {
     errorMsgContainer.style.display = 'none';
-    successMsgContainer.textContent = msg;
-    successMsgContainer.style.display = 'block';
+    formulario.remove();
+
+    const contenedorTitulo = document.createElement('div');
+    contenedorTitulo.classList.add('header-text', 'mb-4', 'text-center');
+
+    const tituloElemento = document.createElement('h2');
+    tituloElemento.textContent = 'Confirmación de correo';
+
+    const parrafoInfo = document.createElement('p');
+    parrafoInfo.textContent = msg;
+
+    contenedorTitulo.appendChild(tituloElemento);
+    infoContainer.appendChild(contenedorTitulo);
+    infoContainer.appendChild(parrafoInfo);
   }
 
   formulario.addEventListener('submit', (e) => {
@@ -88,7 +101,6 @@
         const { error, mensaje } = data;
         if (!error) {
           showSuccessMessage(mensaje);
-          document.getElementById('btn-resend-token').disabled = true;
         } else {
           showErrorMessage(mensaje);
         }
