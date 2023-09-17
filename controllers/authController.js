@@ -50,7 +50,7 @@ async function registerPost(req, res, next) {
   }
 }
 
-async function verifyAccountGet(req, res, next) {
+async function verifyAccountPost(req, res, next) {
   const { token } = req.params;
   const { err, msg } = await verifyAccount(token);
 
@@ -98,10 +98,26 @@ async function loginPost(req, res) {
   res.send('Login exitoso');
 }
 
+function forgotPasswordGet(req, res) {
+  res.render('forgot-password.html');
+}
+
+function forgotPasswordPost(req, res) {}
+
+function changePasswordGet(req, res) {
+  res.render('change-password.html');
+}
+
+function changePasswordPost(req, res) {}
+
 module.exports = {
   registerGet,
   registerPost,
-  verifyAccountGet,
+  verifyAccountPost,
   loginGet,
   loginPost,
+  forgotPasswordGet,
+  forgotPasswordPost,
+  changePasswordGet,
+  changePasswordPost,
 };
