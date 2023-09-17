@@ -8,7 +8,6 @@ const { session } = require('./middlewares/session');
 const testindexRouter = require('./routes/testIndex');
 const authRouter = require('./routes/authRoutes');
 const indexRouter = require('./routes/index');
-const loginnRouter = require('./routes/loginn');
 
 const app = express();
 
@@ -31,7 +30,6 @@ app.use(session);
 app.use(testindexRouter);
 app.use(authRouter);
 app.use(indexRouter);
-app.use(loginnRouter);
 
 // si no se encontro ningun recurso en alguna ruta
 app.use((req, res) => {
