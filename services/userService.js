@@ -55,7 +55,7 @@ async function verifyAccount(token) {
     if (!tokenBd) {
       return {
         err: 'invalid_token',
-        msg: 'El token de verificación de no se encontró, posiblemente ya expiró, solicita uno nuevo',
+        msg: 'El token de verificación no se encontró, posiblemente ya expiró, solicita uno nuevo',
       };
     }
 
@@ -75,6 +75,7 @@ async function verifyAccount(token) {
     );
 
     // borrar token de la bd
+    // borra todos los tokens de verificacion asociados a ese usuario, por si este habia solicitado mas de uno
     await connection.execute(
       'DELETE FROM `tokens_verificacion` WHERE `id_usuario` = ?',
       [tokenBd.id_usuario]
@@ -82,7 +83,10 @@ async function verifyAccount(token) {
 
     await connection.commit();
 
-    return { err: null, msg: 'Usuario verificado exitosamente' };
+    return {
+      err: null,
+      msg: 'Usuario verificado exitosamente',
+    };
   } catch (err) {
     await connection.rollback();
     return { err: err, msg: 'Algo salio mal, vuelvelo a intentar' };

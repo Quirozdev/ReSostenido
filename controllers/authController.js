@@ -5,6 +5,9 @@ const {
   registerUserWithVerificationToken,
   verifyAccount,
 } = require('../services/userService');
+const {
+  createVerificationTokenForUser,
+} = require('../services/verificationTokenService');
 const emailService = require('../services/emailService');
 const { compare } = require('../services/encryptionService');
 const mapErrorValidationResultToObject = require('../utils/validationErrorsMapper');
@@ -28,7 +31,10 @@ async function registerPost(req, res, next) {
   if (!result.isEmpty()) {
     const errores = mapErrorValidationResultToObject(result);
 
-    return res.send({ errores: errores, datos_usuario: usuario });
+    return res.render('register.html', {
+      errores: errores,
+      datos_ingresados: usuario,
+    });
   }
 
   try {
@@ -50,16 +56,45 @@ async function registerPost(req, res, next) {
   }
 }
 
-async function verifyAccountPost(req, res, next) {
+async function verifyAccountGet(req, res, next) {
   const { token } = req.params;
   const { err, msg } = await verifyAccount(token);
 
-  if (err) {
-    return res.send(msg);
+  res.render('verify-account.html', {
+    error: err,
+    mensaje: msg,
+  });
+}
+
+function resendVerificationTokenGet(req, res) {
+  res.render('resend-verification-token.html');
+}
+
+async function resendVerificationTokenPost(req, res) {
+  const result = validationResult(req);
+  const { email } = req.body;
+
+  if (!result.isEmpty()) {
+    const errores = mapErrorValidationResultToObject(result);
+
+    return res.status(400).json({
+      error: 'Error de validación',
+      mensaje: errores.email,
+    });
   }
 
-  // redireccionar a login con mensaje exitoso
-  res.redirect('/login');
+  const { error, mensaje, status, usuario, token } =
+    await createVerificationTokenForUser(email);
+
+  const hostname = process.env.RAILWAY_PUBLIC_DOMAIN || process.env.HOST_NAME;
+
+  await emailService.sendEmail(
+    email,
+    `Reenvío de token - Confirma tu cuenta ${usuario.nombre} ${usuario.apellidos}`,
+    `<a href=${hostname}/verify/${token}>Confirmar cuenta</a>`
+  );
+
+  res.status(status).json({ error, mensaje });
 }
 
 function loginGet(req, res) {
@@ -113,7 +148,9 @@ function changePasswordPost(req, res) {}
 module.exports = {
   registerGet,
   registerPost,
-  verifyAccountPost,
+  verifyAccountGet,
+  resendVerificationTokenGet,
+  resendVerificationTokenPost,
   loginGet,
   loginPost,
   forgotPasswordGet,
