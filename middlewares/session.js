@@ -19,6 +19,19 @@ sessionStore
     console.error(err);
   });
 
+// para que todos los templates puedan acceder a la variable 'usuario' dentro de ellos,
+// esta variable tiene nombre, apellidos y si el usuario es_admin
+const sendUserSessionDataToTemplates = (req, res, next) => {
+  res.locals.usuario = req.session.usuario;
+  next();
+};
+
+// esta es solo para probar
+const logUserSessionData = (req, res, next) => {
+  console.log('Usuario loggeado:', res.locals.usuario);
+  next();
+};
+
 const isAuth = (req, res, next) => {
   if (req.session.isAuth) {
     next();
@@ -29,6 +42,8 @@ const isAuth = (req, res, next) => {
 
 module.exports = {
   isAuth,
+  sendUserSessionDataToTemplates,
+  logUserSessionData,
   session: session({
     cookie: {
       httpOnly: true,

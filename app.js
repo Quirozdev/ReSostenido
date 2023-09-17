@@ -3,7 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const nunjucks = require('nunjucks');
 const path = require('path');
-const { session } = require('./middlewares/session');
+const { session, sendUserSessionDataToTemplates, logUserSessionData } = require('./middlewares/session');
 
 const testindexRouter = require('./routes/testIndex');
 const authRouter = require('./routes/authRoutes');
@@ -27,6 +27,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session);
+
+app.use(sendUserSessionDataToTemplates);
+
+app.use(logUserSessionData);
 
 app.use(testindexRouter);
 app.use(authRouter);

@@ -1,4 +1,14 @@
 {% extends "layoult.html" %}
 {% block body %}
-    Hola
+    {% if usuario %}
+        Hola {{ usuario.nombre }} {{ usuario.apellidos }} 
+        {% if usuario.es_admin %}
+            Soy admin B)
+        {% else %}
+            No soy admin
+        {% endif %}
+    {% else %}
+        No estas loggeado
+    {% endif %}
+
 {% endblock %}
