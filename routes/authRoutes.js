@@ -11,6 +11,10 @@ const {
 const {
   validateTokenEmail,
 } = require('../middlewares/validations/tokenEmailValidations');
+const {
+  validateForgotPasswordTokenEmail,
+  validateChangePasswordTokenPasswords,
+} = require('../middlewares/validations/passwordRecoveryTokenValidation');
 
 router.get('/register', authController.registerGet);
 
@@ -37,10 +41,18 @@ router.post('/logout', authController.logOut);
 
 router.get('/forgot-password', authController.forgotPasswordGet);
 
-router.post('/forgot-password', authController.forgotPasswordPost);
+router.post(
+  '/forgot-password',
+  validateForgotPasswordTokenEmail,
+  authController.forgotPasswordPost
+);
 
 router.get('/change-password', authController.changePasswordGet);
 
-router.post('/change-password', authController.changePasswordPost);
+router.post(
+  '/change-password',
+  validateChangePasswordTokenPasswords,
+  authController.changePasswordPost
+);
 
 module.exports = router;

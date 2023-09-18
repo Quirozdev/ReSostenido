@@ -9,6 +9,10 @@ const {
 const {
   createVerificationTokenForUser,
 } = require('../services/verificationTokenService');
+const {
+  createRecoveryTokenForUser,
+  changePassword,
+} = require('../services/recoverPasswordService');
 const emailService = require('../services/emailService');
 const mapErrorValidationResultToObject = require('../utils/validationErrorsMapper');
 
@@ -108,10 +112,16 @@ async function resendVerificationTokenPost(req, res) {
 }
 
 function loginGet(req, res) {
-  // esta variable solo va a tener un valor de true cuando el registro haya sido exitoso
-  // y haya redirrecionado al login
-  const { successfulRegister } = req.query;
-  res.render('login.html', { registroExitoso: successfulRegister });
+  // successfulRegister solo va a tener un valor de true cuando el registro haya sido exitoso
+  // y haya redireccionado al login.
+  // successfulPasswordChange solo va a tener un valor de true cuando el cambio de contrasenia haya sido exitoso
+  // y haya redireccionado al login.
+  const { successfulRegister, successfulPasswordChange } = req.query;
+
+  res.render('login.html', {
+    registroExitoso: successfulRegister,
+    cambioContraseniaExitoso: successfulPasswordChange,
+  });
 }
 
 async function loginPost(req, res) {
@@ -171,13 +181,112 @@ function forgotPasswordGet(req, res) {
   res.render('forgot-password.html');
 }
 
-function forgotPasswordPost(req, res) {}
+async function forgotPasswordPost(req, res) {
+  const result = validationResult(req);
+
+  if (!result.isEmpty()) {
+    const errores = mapErrorValidationResultToObject(result);
+
+    return res.render('forgot-password.html', {
+      errores: errores,
+      datos_ingresados: {
+        email: req.body.email,
+      },
+    });
+  }
+
+  const { error, usuario, token } = await createRecoveryTokenForUser(
+    req.body.email
+  );
+
+  if (error) {
+    return res.render('forgot-password.html', {
+      errores: error,
+      datos_ingresados: {
+        email: req.body.email,
+      },
+    });
+  }
+
+  const hostname = process.env.RAILWAY_PUBLIC_DOMAIN || process.env.HOST_NAME;
+
+  // para que a la ruta de cambiar contrasenia le llegue este query param indicandole el token de recuperacion
+  const query = querystring.stringify({
+    verificationToken: token,
+  });
+
+  // enviar correo
+  await emailService.sendEmail(
+    usuario.email,
+    `Solicitud de cambio de contraseña`,
+    `
+    <p>Hola ${usuario.nombre} ${usuario.apellidos}, dale clic al siguiente enlace para cambiar tu contraseña</p>
+    <a href=${hostname}/change-password?${query}>Cambiar contraseña</a>
+    `
+  );
+  //
+
+  res.render('forgot-password.html', {
+    mensaje:
+      'Hemos mandado una confirmación a tu correo electrónico, por favor, haz click en la confirmación para cambiar tu contraseña',
+  });
+}
 
 function changePasswordGet(req, res) {
   res.render('change-password.html');
 }
 
-function changePasswordPost(req, res) {}
+async function changePasswordPost(req, res) {
+  const result = validationResult(req);
+
+  if (!result.isEmpty()) {
+    const errores = mapErrorValidationResultToObject(result);
+
+    return res.render('change-password.html', {
+      errores: errores,
+      datos_ingresados: {
+        contrasenia: req.body.contrasenia,
+        confirmar_contrasenia: req.body.confirmar_contrasenia,
+      },
+    });
+  }
+
+  const { verificationToken } = req.query;
+  if (!verificationToken) {
+    return res.render('change-password.html', {
+      errores: {
+        general:
+          'El token no es válido, por favor accede a esta página solo desde los enlaces envíados a tu correo',
+      },
+      datos_ingresados: {
+        contrasenia: req.body.contrasenia,
+        confirmar_contrasenia: req.body.confirmar_contrasenia,
+      },
+    });
+  }
+
+  const { error } = await changePassword(
+    verificationToken,
+    req.body.contrasenia
+  );
+
+  if (error) {
+    res.render('change-password.html', {
+      errores: error,
+      datos_ingresados: {
+        contrasenia: req.body.contrasenia,
+        confirmar_contrasenia: req.body.confirmar_contrasenia,
+      },
+    });
+  }
+
+  // para que a la ruta de login le llegue este query param indicandole que proviene de un cambio de contrasenia exitoso
+  const query = querystring.stringify({
+    successfulPasswordChange: true,
+  });
+
+  res.redirect('/login?' + query);
+}
 
 module.exports = {
   registerGet,

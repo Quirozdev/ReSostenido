@@ -93,51 +93,65 @@ async function verifyAccount(token) {
     };
   } catch (err) {
     await connection.rollback();
-    return { err: err, msg: 'Algo salio mal, vuelvelo a intentar' };
+    return {
+      err: err,
+      msg: 'Algo salió mal :(, vuelvelo a intentar más tarde',
+    };
   }
 }
 
 async function loginUser(email, contrasenia) {
-  const [usuarios, campos] = await db.execute(
-    'SELECT `nombre`, `apellidos`, `es_admin`, `verificado`, `contrasenia` FROM `usuarios` WHERE `email` = ?',
-    [email]
-  );
+  try {
+    const [usuarios, campos] = await db.execute(
+      'SELECT `nombre`, `apellidos`, `es_admin`, `verificado`, `contrasenia` FROM `usuarios` WHERE `email` = ?',
+      [email]
+    );
 
-  const usuario = usuarios[0];
+    const usuario = usuarios[0];
 
-  // no hay un usuario con ese email
-  if (!usuario) {
+    // no hay un usuario con ese email
+    if (!usuario) {
+      return {
+        error: {
+          general: 'El email o contraseña son incorrectos',
+        },
+      };
+    }
+
+    const esContraseniaCorrecta = await compare(
+      contrasenia,
+      usuario.contrasenia
+    );
+
+    if (!esContraseniaCorrecta) {
+      return {
+        error: {
+          general: 'El email o contraseña son incorrectos',
+        },
+      };
+    }
+
+    if (!usuario.verificado) {
+      return {
+        error: {
+          general:
+            'Esta cuenta no ha sido verificada, por favor revisa tu correo y dale clic al enlace',
+        },
+      };
+    }
+
+    // no hubo errores
+    return {
+      error: null,
+      usuario: usuario,
+    };
+  } catch (err) {
     return {
       error: {
-        general: 'El email o contraseña son incorrectos',
+        general: 'Algo salió mal :(, vuelvelo a intentar más tarde',
       },
     };
   }
-
-  const esContraseniaCorrecta = await compare(contrasenia, usuario.contrasenia);
-
-  if (!esContraseniaCorrecta) {
-    return {
-      error: {
-        general: 'El email o contraseña son incorrectos',
-      },
-    };
-  }
-
-  if (!usuario.verificado) {
-    return {
-      error: {
-        general:
-          'Esta cuenta no ha sido verificada, por favor revisa tu correo y dale clic al enlace',
-      },
-    };
-  }
-
-  // no hubo errores
-  return {
-    error: null,
-    usuario: usuario,
-  };
 }
 
 module.exports = {

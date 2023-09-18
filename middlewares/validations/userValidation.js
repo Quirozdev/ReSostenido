@@ -24,6 +24,15 @@ function createPasswordChain() {
     .withMessage('La contraseña debe tener entre 8 y 60 caracteres');
 }
 
+function createPasswordConfirmationChain() {
+  return body('confirmar_contrasenia')
+    .trim()
+    .custom((contraseniaConfirmada, { req }) => {
+      return contraseniaConfirmada === req.body.contrasenia;
+    })
+    .withMessage('Las contraseñas no coinciden');
+}
+
 const validateRegistration = [
   createEmailChain().custom(async (email) => {
     const [usuarios, campos] = await db.execute(
@@ -62,14 +71,14 @@ const validateRegistration = [
       'El número de teléfono debe ser mexicano, con su formato correspondiente'
     ),
   createPasswordChain(),
-  body('confirmar_contrasenia')
-    .trim()
-    .custom((contraseniaConfirmada, { req }) => {
-      return contraseniaConfirmada === req.body.contrasenia;
-    })
-    .withMessage('Las contraseñas no coinciden'),
+  createPasswordConfirmationChain(),
 ];
 
 const validateLogin = [createEmailChain(), createPasswordChain()];
 
-module.exports = { validateRegistration, validateLogin };
+module.exports = {
+  validateRegistration,
+  validateLogin,
+  createPasswordChain,
+  createPasswordConfirmationChain,
+};
