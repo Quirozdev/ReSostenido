@@ -102,6 +102,20 @@ function loginGet(req, res) {
 }
 
 async function loginPost(req, res) {
+  const result = validationResult(req);
+
+  if (!result.isEmpty()) {
+    const errores = mapErrorValidationResultToObject(result);
+
+    return res.render('login.html', {
+      errores: errores,
+      datos_ingresados: {
+        email: req.body.email,
+        contrasenia: req.body.contrasenia,
+      },
+    });
+  }
+
   const { email, contrasenia } = req.body;
   const [usuarios, campos] = await db.execute(
     'SELECT `nombre`, `apellidos`, `es_admin`, `contrasenia` FROM `usuarios` WHERE `email` = ?',

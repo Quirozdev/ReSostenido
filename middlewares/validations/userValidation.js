@@ -11,18 +11,7 @@ function createEmailChain() {
     .isEmail()
     .withMessage('El correo no tiene el formato correcto')
     .isLength({ max: 255 })
-    .withMessage('El correo debe tener 255 caracteres o menos')
-    .custom(async (email) => {
-      const [usuarios, campos] = await db.execute(
-        'SELECT `email` FROM `usuarios` WHERE `email` = ?',
-        [email]
-      );
-
-      const usuario = usuarios[0];
-      if (usuario) {
-        throw new Error('Ese correo ya ha sido registrado por otro usuario');
-      }
-    });
+    .withMessage('El correo debe tener 255 caracteres o menos');
 }
 
 function createPasswordChain() {
@@ -36,7 +25,17 @@ function createPasswordChain() {
 }
 
 const validateRegistration = [
-  createEmailChain(),
+  createEmailChain().custom(async (email) => {
+    const [usuarios, campos] = await db.execute(
+      'SELECT `email` FROM `usuarios` WHERE `email` = ?',
+      [email]
+    );
+
+    const usuario = usuarios[0];
+    if (usuario) {
+      throw new Error('Ese correo ya ha sido registrado por otro usuario');
+    }
+  }),
   body('nombre', 'Nombre inválido')
     .trim()
     .escape()
