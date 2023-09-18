@@ -1,15 +1,15 @@
+const querystring = require('node:querystring');
 const { validationResult } = require('express-validator');
 
-const db = require('../db/db');
 const {
   registerUserWithVerificationToken,
   verifyAccount,
+  loginUser,
 } = require('../services/userService');
 const {
   createVerificationTokenForUser,
 } = require('../services/verificationTokenService');
 const emailService = require('../services/emailService');
-const { compare } = require('../services/encryptionService');
 const mapErrorValidationResultToObject = require('../utils/validationErrorsMapper');
 
 function registerGet(req, res) {
@@ -50,9 +50,19 @@ async function registerPost(req, res, next) {
       `<a href=${hostname}/verify/${token}>Confirmar cuenta</a>`
     );
 
-    res.status(201).send('Usuario creado exitosamente');
+    // para que a la ruta de login le llegue este query param indicandole que proviene de un registro exitoso
+    const query = querystring.stringify({
+      successfulRegister: true,
+    });
+
+    res.redirect('/login?' + query);
   } catch (err) {
-    next(err);
+    return res.render('register.html', {
+      errores: {
+        general: 'Algo salió mal :(, vuelve a intentarlo más tarde',
+      },
+      datos_ingresados: usuario,
+    });
   }
 }
 
@@ -98,7 +108,10 @@ async function resendVerificationTokenPost(req, res) {
 }
 
 function loginGet(req, res) {
-  res.render('login.html');
+  // esta variable solo va a tener un valor de true cuando el registro haya sido exitoso
+  // y haya redirrecionado al login
+  const { successfulRegister } = req.query;
+  res.render('login.html', { registroExitoso: successfulRegister });
 }
 
 async function loginPost(req, res) {
@@ -116,25 +129,22 @@ async function loginPost(req, res) {
     });
   }
 
-  const { email, contrasenia } = req.body;
-  const [usuarios, campos] = await db.execute(
-    'SELECT `nombre`, `apellidos`, `es_admin`, `contrasenia` FROM `usuarios` WHERE `email` = ?',
-    [email]
+  const { error, usuario } = await loginUser(
+    req.body.email,
+    req.body.contrasenia
   );
-  const usuario = usuarios[0];
 
-  // no hay un usuario con ese email
-  if (!usuario) {
-    return res.send('El email o contraseña son incorrectos');
+  if (error) {
+    return res.render('login.html', {
+      errores: error,
+      datos_ingresados: {
+        email: req.body.email,
+        contrasenia: req.body.contrasenia,
+      },
+    });
   }
 
-  const esContraseniaCorrecta = await compare(contrasenia, usuario.contrasenia);
-
-  if (!esContraseniaCorrecta) {
-    return res.send('El email o contraseña son incorrectos');
-  }
-
-  // si se encontro al usuario y la contrasenia es correcta,
+  // si se encontro al usuario, la contrasenia es correcta y esta verificado,
   // se crea la sesion automaticamente en la bd, haciendole
   // un cambio a req.session y guardando datos del usuario en la
   // sesion que podrian usarse en los templates
@@ -144,7 +154,8 @@ async function loginPost(req, res) {
     apellidos: usuario.apellidos,
     es_admin: usuario.es_admin,
   };
-  res.send('Login exitoso');
+
+  res.redirect('/');
 }
 
 function forgotPasswordGet(req, res) {

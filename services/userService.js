@@ -1,6 +1,10 @@
 const db = require('../db/db');
 const tokensConfig = require('../configs/tokensVerificacionConf');
-const { hash, generateRandomToken } = require('../services/encryptionService');
+const {
+  hash,
+  generateRandomToken,
+  compare,
+} = require('../services/encryptionService');
 
 async function registerUserWithVerificationToken({
   email,
@@ -93,4 +97,51 @@ async function verifyAccount(token) {
   }
 }
 
-module.exports = { registerUserWithVerificationToken, verifyAccount };
+async function loginUser(email, contrasenia) {
+  const [usuarios, campos] = await db.execute(
+    'SELECT `nombre`, `apellidos`, `es_admin`, `verificado`, `contrasenia` FROM `usuarios` WHERE `email` = ?',
+    [email]
+  );
+
+  const usuario = usuarios[0];
+
+  // no hay un usuario con ese email
+  if (!usuario) {
+    return {
+      error: {
+        general: 'El email o contraseña son incorrectos',
+      },
+    };
+  }
+
+  const esContraseniaCorrecta = await compare(contrasenia, usuario.contrasenia);
+
+  if (!esContraseniaCorrecta) {
+    return {
+      error: {
+        general: 'El email o contraseña son incorrectos',
+      },
+    };
+  }
+
+  if (!usuario.verificado) {
+    return {
+      error: {
+        general:
+          'Esta cuenta no ha sido verificada, por favor revisa tu correo y dale clic al enlace',
+      },
+    };
+  }
+
+  // no hubo errores
+  return {
+    error: null,
+    usuario: usuario,
+  };
+}
+
+module.exports = {
+  registerUserWithVerificationToken,
+  verifyAccount,
+  loginUser,
+};
