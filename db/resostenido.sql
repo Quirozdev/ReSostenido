@@ -20,7 +20,14 @@ CREATE TABLE tokens_verificacion (
   token VARCHAR(64) UNIQUE NOT NULL,
   fecha_expiracion DATETIME NOT NULL,
   id_usuario int(11) NOT NULL,
-  CONSTRAINT fk_usuario
+  CONSTRAINT fk_usuario_token_verificacion
+  FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+);
+
+CREATE TABLE tokens_recuperacion_contrasenia (
+  token VARCHAR(64) UNIQUE NOT NULL,
+  id_usuario int(11) NOT NULL,
+  CONSTRAINT fk_usuario_token_recuperacion
   FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
 );
 
