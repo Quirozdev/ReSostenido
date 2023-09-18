@@ -158,6 +158,15 @@ async function loginPost(req, res) {
   res.redirect('/');
 }
 
+function logOut(req, res, next) {
+  req.session.destroy((err) => {
+    if (err) {
+      next(err);
+    }
+    res.redirect('/login');
+  });
+}
+
 function forgotPasswordGet(req, res) {
   res.render('forgot-password.html');
 }
@@ -178,6 +187,7 @@ module.exports = {
   resendVerificationTokenPost,
   loginGet,
   loginPost,
+  logOut,
   forgotPasswordGet,
   forgotPasswordPost,
   changePasswordGet,
