@@ -33,3 +33,33 @@ CREATE TABLE servicios (
   url_imagen VARCHAR(255),
   PRIMARY KEY(id)
 );
+
+
+/*-- Inserta información para Guitarras
+INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
+VALUES (350.00, 'Guitarras', 'Guitarra acústica', '', '');
+INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
+VALUES (350.00, 'Guitarras', 'Guitarra eléctrica 6 cuerdas', '', '');
+INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
+VALUES (400.00, 'Guitarras', 'Guitarra eléctrica 7 cuerdas', '', '');
+INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
+VALUES (450.00, 'Guitarras', 'Guitarra eléctrica 8 cuerdas', '', '');
+INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
+VALUES (550.00, 'Guitarras', 'Guitarra eléctrica con Floyd Rose o Kahler', '+100$','');
+
+-- Inserta información para Bajos
+INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
+VALUES (350.00, 'Bajos', 'Bajo 4 cuerdas', '', '');
+INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
+VALUES (400.00, 'Bajos', 'Bajo 5 cuerdas', '', '');
+INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
+VALUES (450.00, 'Bajos', 'Bajo 6 cuerdas', '', '');
+
+-- Inserta información para otros instrumentos
+INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
+VALUES (450.00, 'Otros', 'Bajo quinto', '', '');
+INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
+VALUES (450.00, 'Otros', 'Docerola', '', '');
+INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
+VALUES (450.00, 'Otros', 'Bajo sexto', '', '');
+*/
