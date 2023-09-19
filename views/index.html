@@ -2,25 +2,40 @@
 {% block body %}
 
 <header class="header pt-7 margin-top-110">
+
+    {% if usuario %}
+    <div class="container-xl">
+        {% if usuario.es_admin %}
+
+        {% else %}
+
+        {% endif %}
+    </div>
+    <hr>
+    {% endif %}
     <div class="container-xl">
         <div class="row">
             <div class="col-md-6">
                 <div class="text-container p-4 d-flex flex-column justify-content-center h-100 mb-5">
                     <h1 class="display-6">Nosotros</h1>
                     <p class="lead text-secondary"><small>
-                        En Re sostenido, somos apasionados por la música y la excelencia en la artesanía de las
-                        guitarras.
-                        Nuestra misión es proporsionar a los músicos y amantes de las guitarras una experiencia
-                        excepcional al brindar una gama de servicios de calidad para sus instrumentos.
-                    </small></p>
+                            En Re sostenido, somos apasionados por la música y la excelencia en la artesanía de las
+                            guitarras.
+                            Nuestra misión es proporsionar a los músicos y amantes de las guitarras una experiencia
+                            excepcional al brindar una gama de servicios de calidad para sus instrumentos.
+                        </small></p>
                     <h1 class="display-6 mt-2">Nuestra pasión por la música</h1>
                     <p class="lead text-secondary"><small>
-                        La música tiene el poder de inspirar, conmover y unir a las personas. Como amantes de la música,
-                        entendemos la importancia de tener un instrumento que se sienta como una extensión de ti mismo.
-                        Ya sea que seas un profesional de la guitarra o un principiante entusiasta, estamos aquí para
-                        ayudarte a cuidar, mantener y optimizar tu instrumento para que puedas expresarte plenamente a
-                        través de la música.
-                    </small></p>
+                            La música tiene el poder de inspirar, conmover y unir a las personas. Como amantes de la
+                            música,
+                            entendemos la importancia de tener un instrumento que se sienta como una extensión de ti
+                            mismo.
+                            Ya sea que seas un profesional de la guitarra o un principiante entusiasta, estamos aquí
+                            para
+                            ayudarte a cuidar, mantener y optimizar tu instrumento para que puedas expresarte plenamente
+                            a
+                            través de la música.
+                        </small></p>
                 </div>
             </div>
             <div class="col-md-6">
