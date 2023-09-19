@@ -40,7 +40,7 @@ datos_ingresados: {
 ### Login
 
 El login ademas de las otras variables mencionadas en 'Variables para algunos templates con formularios', puede tener las variables:
-registroExitoso y cambioContraseniaExitoso
+registroExitoso y cambioContraseniaExitoso, que pueden usarse para mostrar el mensaje correspondiente en el login
 
 - registroExitoso solo va a tener un valor de true cuando el registro haya sido exitoso y haya redireccionado al login, undefined en caso contrario.
 - cambioContraseniaExitoso solo va a tener un valor de true cuando el cambio de contrasenia haya sido exitoso y se haya redireccionado al login, undefined en caso contrario.
