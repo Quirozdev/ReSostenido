@@ -1,37 +1,43 @@
 {% extends "layoult.html" %}
 
-    {% block body %}
-    <div class="container d-flex justify-content-center align-items-center min-vh-100">
-        <div class="row p-3 bg-white shadow box-area mt-5">
-            <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box"
-                style="background: #f8ca6b">
-            </div>
-            <div class="col-md-6 right-box">
-                <div class="row align-items-center justify-content-between">
-                    <div class="header-text mb-4 text-center">
-                        <h2>Iniciar Sesión</h2>
-                    </div>
+{% block body %}
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="row p-3 bg-white shadow box-area mt-5">
+        <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box"
+            style="background: #f8ca6b">
+        </div>
+
+        <div class="col-md-6 right-box">
+            <div class="row align-items-center justify-content-between">
+                <div class="header-text mb-4 text-center">
+                    <h2>Iniciar Sesión</h2>
+                </div>
+                <form method="post" action="/login">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control form-control-lg bg-light fs-6"
-                            placeholder="E-mail" name="email" id="email">
+                        <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="E-mail"
+                            name="email" id="email">
                     </div>
                     <div class="input-group mb-1">
                         <input type="password" class="form-control form-control-lg bg-light fs-6"
                             placeholder="Contraseña" name="contrasenia" id="contrasenia">
                     </div>
+
                     <div class="input-group mb-5 d-flex justify-content-between">
                         <div class="forgot">
                             <small><a href="/forgetpassword">¿Olvidaste tu contraseña?</a></small>
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="submit" name="login" id="login" value="Iniciar Sesión" class="btn btn-lg w-100 fs-6 color-principal text-light">
+                        <input type="submit" name="login" id="login" value="Iniciar Sesión"
+                            class="btn btn-lg w-100 fs-6 color-principal text-light">
                     </div>
                     <div class="input-group mb-3">
-                        <button class="btn btn-lg btn-light w-100 fs-6"><small><a href="/signup">Crear una cuenta</a></small></button>
+                        <button class="btn btn-lg btn-light w-100 fs-6"><small><a href="/signup">Crear una
+                                    cuenta</a></small></button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
-    {% endblock %}
+</div>
+{% endblock %}
