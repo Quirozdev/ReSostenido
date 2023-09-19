@@ -41,8 +41,8 @@
         <div class="input-group mb-3">
           <button
             id="btn-resend-token"
-            type="submit"
             class="btn btn-lg btn-light w-100 fs-6"
+            type="submit"
           >
             Reenviar token
           </button>
@@ -54,6 +54,8 @@
 <script>
   const formulario = document.querySelector('form');
   const campoEmail = document.getElementById('email');
+  const botonReenviar = document.getElementById('btn-resend-token');
+  const componenteDeCargando = document.getElementById('loading-component');
 
   const infoContainer = document.getElementById('info-container');
 
@@ -62,7 +64,7 @@
 
   function showErrorMessage(msg) {
     errorMsgContainer.textContent = msg;
-    errorMsgContainer.style.display = 'block';
+    errorMsgContainer.style.display = 'inline-flex';
   }
 
   function showSuccessMessage(msg) {
@@ -83,9 +85,28 @@
     infoContainer.appendChild(parrafoInfo);
   }
 
+  function setIsLoading(isLoading) {
+    if (isLoading) {
+      botonReenviar.disabled = true;
+      botonReenviar.textContent = '';
+      botonReenviar.innerHTML = `
+      <span
+              class="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+      `;
+    } else {
+      botonReenviar.disabled = false;
+      botonReenviar.innerHTML = '';
+      botonReenviar.textContent = 'Reenviar token';
+    }
+  }
+
   formulario.addEventListener('submit', (e) => {
     // para que no se recargue la pagina
     e.preventDefault();
+    setIsLoading(true);
     fetch(`${location.origin}/resend-verification-token`, {
       method: 'POST',
       mode: 'cors',
@@ -104,6 +125,12 @@
         } else {
           showErrorMessage(mensaje);
         }
+      })
+      .catch((err) => {
+        showErrorMessage('Algo salió mal :(, vuelvelo a intentar más tarde');
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   });
 </script>
