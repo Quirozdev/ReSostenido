@@ -1,0 +1,109 @@
+{% extends "layoult.html" %}
+{% block body %}
+
+<header class="header pt-7 margin-top-110">
+    <div class="container-xl">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="text-container p-4 d-flex flex-column justify-content-center h-100 mb-5">
+                    <h1 class="fs-3">Servicios</h1>
+                    <p class="lead text-secondary"><small>
+                            Nuestro servicio de calibración de instrumentos musicales está diseñado para elevar tu
+                            experiencia musical al máximo. Con una atención meticulosa al detalle, nuestro equipo de
+                            expertos se encarga de optimizar el rendimiento de tu instrumento para que puedas disfrutar
+                            al máximo de tu música.
+                        </small></p>
+                    <h1 class="fs-4">Incluye:</h1>
+                    <p class="lead text-secondary"><small>
+                            - Limpieza exhaustiva del instrumento.
+                            - Ajuste del brazo, puente y tuerca.
+                            - Entonación precisa.
+                            - Pulido de trastes y diapasón.
+                            - Hidratación del ciapasón y puente en instrumentos acústicos.
+                            - Ajuste de la altura de las cuerdas para máxima comodidad.
+                            - Revisión de la electrónica en instrumentos eléctricos.
+                        </small></p>
+                    <h1 class="fs-4">No incluye:</h1>
+                    <p class="lead text-secondary"><small>
+                            - Cuerdas (se recomienda traer un paquete nuevo).
+                        </small></p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="image-container mb-5 px-4">
+                    <img src="/images/img-servicio-user-1.jpg" alt="" width="100%" height="100%" class="mt-5 rounded">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-xl">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="image-container mb-5 px-4 d-flex justify-content-center align-items-center">
+                    <img src="images/img-servicio-user-2.jpg" alt="landingpage-2" width="70%" height="70%"
+                        class="rounded">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="text-container p-4 d-flex flex-column justify-content-center h-100 mb-5">
+                    <p class="lead text-secondary"><small>
+                            1. Valoración inicial: Realizamos una inspección visual para evaluar el estado general del
+                            instrumento y detectar posibles problemas graves.
+                            <br>
+                            2. Inspección con cuerdas: Realizamos una revisión conectada para identificar cualquier
+                            problema adicional y efectuamos un preajuste con las cuerdas existentes.
+                            <br>
+                            3. Limpieza y
+                            cuidado: Retiramos las cuerdas y llevamos a cabo una limpieza completa del instrumento.
+                            También realizamos un pulido de trastes y diapason, seguido de la hidratación, especialmente
+                            en instrumentos acústicos.
+                            <br>
+                            4. Instalación de cuerdas: Instalamos nuevas cuerdas (no incluidas en el servicio) y
+                            ajustamos el alma, puente, tuerca y entonación para garantizar la máxima comodidad y
+                            afinación.
+                            <br>
+                            5. Servicio eléctrico: Para instrumentos eléctricos, realizamos un ajuste y limpieza
+                            minuciosos de la electrónica.
+                            <br>
+                            6. Afinación personalizada: Calibramos el instrumento según tus preferencias de afinación,
+                            asegúrate de comunicarnos estos detalles.
+                        </small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <div class="container-xl">
+        <h2 class="mt-5 mb-5 fs-1">Servicios disponibles</h2>
+        <div class="container">
+            {% for grupo in grupos %}
+            <h2 class="mt-5 mb-5">{{ grupo }}</h2>
+            <div class="row row-cols-1 row-cols-md-3 d-flex justify-content-center align-middle">
+                {% for servicio in servicios[grupo] %}
+                <div class="col d-flex justify-content-center align-middle">
+                    <div class="card mb-2 mt-2 bg-transparent card-style">
+                        <div class="card-index rounded-pill">
+                            <img src="/images/landingpage-1.jpg" class="card-img-top" alt="servicio-{{ servicio.nombre_instrumento }}">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ servicio.nombre_instrumento }}</h5>
+                            <p class="card-text">{{ servicio.descripcion }}</p>
+                            <p class="card-text">Precio: ${{ servicio.precio }}</p>
+                            <a href="#" class="btn color-principal text-light mt-2 rounded-pill d-flex justify-content-center align-middle">Agendar</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <hr>
+
+
+</header>
+
+{% endblock %}

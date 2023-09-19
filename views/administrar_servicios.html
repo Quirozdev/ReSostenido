@@ -1,12 +1,15 @@
 {% extends "layoult.html" %}
 {% block body %}
-<div class="position-absolute top-50 start-50">
+<div class="margin-top-110">
     LOS SERVICIOS SON:
     {% for grupo in grupos %}
     <h2>{{ grupo }}</h2>
     <ul>
         {% for servicio in servicios[grupo] %}
-        <li>{{ servicio.nombre_instrumento }} - Precio: {{ servicio.precio }}</li>
+        <li>{{ servicio.nombre_instrumento }} - 
+            Descripcion: {{servicio.descripcion}} - 
+            Precio: {{ servicio.precio }} - 
+            Imagen> {{servicio.url_imagen}}</li>
         {% endfor %}
     </ul>
     {% endfor %}
