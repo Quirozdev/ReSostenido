@@ -55,7 +55,6 @@
   const formulario = document.querySelector('form');
   const campoEmail = document.getElementById('email');
   const botonReenviar = document.getElementById('btn-resend-token');
-  const componenteDeCargando = document.getElementById('loading-component');
 
   const infoContainer = document.getElementById('info-container');
 
@@ -64,7 +63,7 @@
 
   function showErrorMessage(msg) {
     errorMsgContainer.textContent = msg;
-    errorMsgContainer.style.display = 'inline-flex';
+    errorMsgContainer.style.display = 'block';
   }
 
   function showSuccessMessage(msg) {
