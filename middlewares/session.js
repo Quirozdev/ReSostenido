@@ -33,7 +33,7 @@ const logUserSessionData = (req, res, next) => {
 };
 
 const isAuth = (req, res, next) => {
-  if (req.session.isAuth) {
+  if (req.session.usuario) {
     next();
   } else {
     res.redirect('/login');
