@@ -21,9 +21,7 @@
                         <input type="password" class="form-control form-control-lg bg-light fs-6"
                             placeholder="Contraseña" name="contrasenia" id="contrasenia" required>
                     </div>
-                    {% if noAutorizado %}
-                    <h1>NO ERES ADMIN</h1>
-                    {% endif %}
+                    
                     <div class="input-group mb-5 d-flex justify-content-between">
                         <div class="forgot">
                             <small><a href="/forgetpassword">¿Olvidaste tu contraseña?</a></small>
@@ -37,11 +35,22 @@
                         <button class="btn btn-lg btn-light w-100 fs-6"><small><a href="/signup">Crear una
                                     cuenta</a></small></button>
                     </div>
-                    <!-- Aqui podria haber un if para los errores de credenciales
+                    {% if noAutorizado %}
                     <div class="alert alert-danger" role="alert">
-                        Comprueba tu correo o contraseña
+                        Debe iniciar sesión para acceder a esta página
                     </div>
-                    -->
+                    {% endif %}
+                    {% if cambioContraseniaExitoso %}
+                    <div class="alert alert-danger" role="alert">
+                        La contraseña se ha cambiado con éxito
+                    </div>
+                    {% endif %}
+                    {% if registroExitoso %}
+                    <div class="alert alert-danger" role="alert">
+                        El registro se ha realizado con éxito
+                    </div>
+                    {% endif %}
+                    
                 </form>
             </div>
         </div>
