@@ -1,17 +1,57 @@
 {% extends "layoult.html" %}
 {% block body %}
 <div class="margin-top-110">
+    <div class="table-responsive">
+        <table class="table table-borderless">
+            <thead>
+                <tr>
+                    <th scope="col" class="fs-4">Servicios</th>
+                    <th scope="col" class="fs-5 fw-lighter">Nombre</th>
+                    <th scope="col" class="fs-5 fw-lighter">Grupo</th>
+                    <th scope="col" class="fs-5 fw-lighter">Descripción</th>
+                    <th scope="col" class="fs-5 fw-lighter">Costo</th>
+                    <th scope="col" class="fs-5 fw-lighter"></th>
+                    <th scope="col" class="fs-5 fw-lighter"><button class="btn btn-lg w-100 fs-6 color-principal text-light rounded-pill" type="submit">Agregar</button></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for grupo in grupos %}
+                {% for servicio in servicios[grupo] %}
+                <tr>
+                    <th scope="row" style="max-width: 150px;">
+                        <img src="/images/landingpage-1.jpg" alt="Imagen de servicio" class="img-fluid rounded-pill"
+                            style="max-width: 100%; height: auto;">
+                    </th>
+                    <td>{{ servicio.nombre_instrumento }}</td>
+                    <td>{{ servicio.grupo }}</td>
+                    <td>{{ servicio.descripcion }}</td>
+                    <td>${{ servicio.precio }}</td>
+                    <td><button class="btn btn-lg w-100 fs-6 color-principal text-light rounded-pill" type="submit">Editar</button></td>
+                    <td><button class="btn btn-lg w-100 fs-6 color-principal text-light rounded-pill" type="submit">Eliminar</button></td>
+                </tr>
+                {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+
+<div class="margin-top-110">
     LOS SERVICIOS SON:
     {% for grupo in grupos %}
     <h2>{{ grupo }}</h2>
     <ul>
         {% for servicio in servicios[grupo] %}
-        <li>{{ servicio.nombre_instrumento }} - 
-            Descripcion: {{servicio.descripcion}} - 
-            Precio: {{ servicio.precio }} - 
+        <li>{{ servicio.nombre_instrumento }} -
+            Descripcion: {{servicio.descripcion}} -
+            Precio: {{ servicio.precio }} -
             Imagen> {{servicio.url_imagen}}</li>
         {% endfor %}
     </ul>
     {% endfor %}
 </div>
-{% endblock %}

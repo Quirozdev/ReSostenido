@@ -1,7 +1,7 @@
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const db = require('../db/db');
-
+const querystring = require('querystring');
 const sessionStore = new MySQLStore(
   {
     clearExpired: true, // para que en la base de datos borre las sesiones que vayan expirando
@@ -36,12 +36,28 @@ const isAuth = (req, res, next) => {
   if (req.session.usuario) {
     next();
   } else {
-    res.redirect('/login');
+    res.redirect('/login?error=Debes iniciar sesion para acceder a esta pagina');
+  }
+};
+
+const isAdmin = (req, res, next) => {
+  if (req.session.usuario) {
+    if(req.session.usuario.es_admin){
+      next();
+    }else{
+      res.redirect('/');
+    }
+  } else {
+    const query = querystring.stringify({
+      unauthorized: true,
+    });
+    res.redirect('/login?' + query);
   }
 };
 
 module.exports = {
   isAuth,
+  isAdmin,
   sendUserSessionDataToTemplates,
   logUserSessionData,
   session: session({
