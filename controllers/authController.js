@@ -116,11 +116,12 @@ function loginGet(req, res) {
   // y haya redireccionado al login.
   // successfulPasswordChange solo va a tener un valor de true cuando el cambio de contrasenia haya sido exitoso
   // y haya redireccionado al login.
-  const { successfulRegister, successfulPasswordChange } = req.query;
+  const { successfulRegister, successfulPasswordChange, unauthorized } = req.query;
 
   res.render('login.html', {
     registroExitoso: successfulRegister,
     cambioContraseniaExitoso: successfulPasswordChange,
+    noAutorizado: unauthorized,
   });
 }
 

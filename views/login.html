@@ -21,7 +21,9 @@
                         <input type="password" class="form-control form-control-lg bg-light fs-6"
                             placeholder="Contraseña" name="contrasenia" id="contrasenia" required>
                     </div>
-
+                    {% if noAutorizado %}
+                    <h1>NO ERES ADMIN</h1>
+                    {% endif %}
                     <div class="input-group mb-5 d-flex justify-content-between">
                         <div class="forgot">
                             <small><a href="/forgetpassword">¿Olvidaste tu contraseña?</a></small>
