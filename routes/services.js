@@ -4,7 +4,7 @@ const servicesController = require('../controllers/servicesController');
 const { isAdmin } = require('../middlewares/session');
 
 router.get(
-  '/administrar_servicios',
+  '/administrar_servicios', isAdmin,
   servicesController.administrarServiciosGet
 );
 
