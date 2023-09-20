@@ -37,7 +37,7 @@ router.get('/login', authController.loginGet);
 
 router.post('/login', validateLogin, authController.loginPost);
 
-router.post('/logout', authController.logOut);
+router.get('/logout', authController.logOut);
 
 router.get('/forgot-password', authController.forgotPasswordGet);
 
