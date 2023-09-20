@@ -41,13 +41,23 @@
                                 </a>
                             </li>
                             <li class="nav-item mb-4">
-                                <a class="nav-link" href="/servicios">
+                                {% if usuario.es_admin %}
+                                <a class="nav-link" href="/administrar_servicios">
                                     <div class="d-flex align-items-center">
-                                        <img src="/images/registrarse.avif" alt="Servicios"
+                                        <img src="/images/servicios.png" alt="Servicios"
                                             class="nav-icon ms-2 icons-navbar">
                                         Servicios
                                     </div>
                                 </a>
+                                {% else %}
+                                <a class="nav-link" href="/servicios">
+                                    <div class="d-flex align-items-center">
+                                        <img src="/images/servicios.png" alt="Servicios"
+                                            class="nav-icon ms-2 icons-navbar">
+                                        Servicios
+                                    </div>
+                                </a>
+                                {% endif %}
                             </li>
                             <li class="nav-item mb-4">
                                 <a class="nav-link" href="/FAQ">
