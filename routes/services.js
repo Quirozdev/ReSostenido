@@ -4,7 +4,7 @@ const servicesController = require('../controllers/servicesController');
 const serrvicesValidation = require('../middlewares/validations/serviceValidation');
 const { isAdmin } = require('../middlewares/session');
 
-
+const addServiceMiddleware = [servicesController.imageUpload.single('url_imagen')].concat(serrvicesValidation.addServiceValidation()).concat(servicesController.agregarServicioPost);
 
 
 router.get(
@@ -12,15 +12,10 @@ router.get(
   servicesController.administrarServiciosGet
 );
 router.post(
-  '/agregar_servicio', servicesController.imageUpload.single('url_imagen'),//isAdmin,
+  '/agregar_servicio', addServiceMiddleware,
   servicesController.agregarServicioPost
 );
-/*
-router.post(
-  '/administrar_servicios', //isAdmin,
-  servicesController.administrarServiciosPost
-);
-*/
+
 router.get('/servicios',servicesController.serviciosGet);
 
 module.exports = router;

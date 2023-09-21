@@ -3,6 +3,7 @@ const { body } = require('express-validator');
 const db = require('../../db/db');
 
 function addServiceValidation() {
+  
   return [
     body('grupo', 'Grupo inválido')
       .trim()
