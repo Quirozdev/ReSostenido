@@ -11,10 +11,15 @@ router.get(
   '/administrar_servicios', isAdmin,
   servicesController.administrarServiciosGet
 );
+
 router.post(
   '/agregar_servicio', addServiceMiddleware,
   servicesController.agregarServicioPost
 );
+
+router.post('/deshabilitar_servicio', servicesController.deshabilitarServicioPost);
+router.post('/habilitar_servicio', servicesController.habilitarServicioPost);
+
 
 router.get('/servicios',servicesController.serviciosGet);
 

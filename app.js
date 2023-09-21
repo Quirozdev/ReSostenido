@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const nunjucks = require('nunjucks');
 const path = require('path');
+const morgan = require('morgan');
 const {
   session,
   sendUserSessionDataToTemplates,
@@ -16,7 +17,7 @@ const faqRouter = require('./routes/faq');
 const servicesRouter = require('./routes/services');
 
 const app = express();
-
+app.use(morgan('dev'));
 // view template
 nunjucks.configure('views', {
   autoescape: true,
