@@ -69,25 +69,35 @@
                                 </a>
                             </li>
                         </div>
-
-
                         <div class="mt-5 fs-4 position-absolute bottom-0 mb-5">
                             <li class="nav-item mt-4">
+                                {% if usuario %}
+                                {% if usuario.es_admin %}
+                                <a class="nav-link" href="/perfil">
+                                    <div class="d-flex align-items-center">
+                                        <img src="/images/iniciar-sesion.png" alt="Login"
+                                            class="nav-icon ms-2 icons-navbar">
+                                        Admin
+                                    </div>
+                                </a>
+                                {% else %}
+                                <a class="nav-link" href="/perfil">
+                                    <div class="d-flex align-items-center">
+                                        <img src="/images/iniciar-sesion.png" alt="Login"
+                                            class="nav-icon ms-2 icons-navbar">
+                                        Perfil
+                                    </div>
+                                </a>
+                                {% endif %}
+                                {% else %}
                                 <a class="nav-link" href="/login">
                                     <div class="d-flex align-items-center">
                                         <img src="/images/iniciar-sesion.png" alt="Login"
                                             class="nav-icon ms-2 icons-navbar">
-                                        {% if usuario %}
-                                        {% if usuario.es_admin %}
-                                        Admin
-                                        {% else %}
-                                        Perfil
-                                        {% endif %}
-                                        {% else %}
                                         Iniciar Sesión
-                                        {% endif %}
                                     </div>
                                 </a>
+                                {% endif %}
                             </li>
                             <li class="nav-item mt-4">
                                 {% if usuario %}
@@ -120,8 +130,8 @@
 <body>
     {% block body %}{% endblock %}
     <footer class="container p-3">
-        <p class="text-center small text-muted mb-5"><a href="#">Agendar citas</a> | <a href="#">Servicios</a> | <a
-                href="#">Q&A</a> | <a href="#">Iniciar Sesión</a> | <a href="#">Registrarse</a></p>
+        <p class="text-center small text-muted mb-5"><a href="/agendar_cita">Agendar citas</a> | <a href="/servicios">Servicios</a> | <a
+                href="/FAQ">Q&A</a> | <a href="/login">Iniciar Sesión</a> | <a href="/register">Registrarse</a></p>
         <p class="text-center small text-muted">Copyright &copy; Re Sostenido 2023</p>
     </footer>
 </body>
