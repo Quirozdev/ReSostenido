@@ -45,7 +45,7 @@ app.use(servicesRouter);
 
 // si no se encontro ningun recurso en alguna ruta
 app.use((req, res) => {
-  res.status(404).send('No se encontro esa pagina');
+  res.status(404).render('error.html');
 });
 
 // error handler
