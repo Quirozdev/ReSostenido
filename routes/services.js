@@ -8,17 +8,26 @@ const addServiceMiddleware = [servicesController.imageUpload.single('url_imagen'
 
 
 router.get(
-  '/administrar_servicios', isAdmin,
+  '/administrar_servicios', 
+  isAdmin,
   servicesController.administrarServiciosGet
 );
 
 router.post(
-  '/agregar_servicio', addServiceMiddleware,
+  '/agregar_servicio', 
+  addServiceMiddleware,
   servicesController.agregarServicioPost
 );
 
-router.post('/deshabilitar_servicio', servicesController.deshabilitarServicioPost);
-router.post('/habilitar_servicio', servicesController.habilitarServicioPost);
+router.post('/deshabilitar_servicio', 
+  isAdmin ,
+  servicesController.deshabilitarServicioPost
+);
+
+router.post('/habilitar_servicio', 
+  isAdmin, 
+  servicesController.habilitarServicioPost
+);
 
 
 router.get('/servicios',servicesController.serviciosGet);
