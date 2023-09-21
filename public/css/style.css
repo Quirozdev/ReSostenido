@@ -39,6 +39,15 @@ body{
     
     overflow: hidden;
 }
+.botones{
+    color: #ffffff;
+    background-color: #48649a;
+}
+.botones:hover {
+    color: #48649a;
+    background-color: #ffffff; 
+    border: 1px solid #48649a; 
+}
 @media only screen and (max-width: 768px){
      .box-area{
         margin: 30px 10px;
