@@ -58,6 +58,9 @@ body{
 {
     width: 100%;
 }
+table.table thead th {
+    border-bottom: 2px solid #a8a8a8;
+}
 @media only screen and (max-width: 768px){
      .box-area{
         margin: 30px 10px;
