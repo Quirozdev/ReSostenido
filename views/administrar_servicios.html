@@ -12,7 +12,7 @@
                     <th scope="col" class="fs-5 fw-lighter">Costo</th>
                     <th scope="col" class="fs-5 fw-lighter"></th>
                     <th scope="col" class="fs-5 fw-lighter">
-                        <button id="btnAgregar" class="btn btn-lg w-100 fs-6 color-principal text-light rounded-pill"
+                        <button id="btnAgregar" class="btn btn-lg w-100 fs-6 botones rounded-pill"
                             type="button" onclick="toggleFormulario()">Agregar</button>
                     </th>
                 </tr>
@@ -30,9 +30,9 @@
                     <td><input type="text" class="form-control" placeholder="Descripción" id="descripcion"
                             name="descripcion"></td>
                     <td><input type="text" class="form-control" placeholder="Costo" id="precio" name="precio"></td>
-                    <td><button class="btn btn-lg w-100 fs-6 color-principal text-light rounded-pill" type="button"
+                    <td><button class="btn btn-lg w-100 fs-6 botones rounded-pill" type="button"
                             id="guardar" name="guardar">Guardar</button></td>
-                    <td><button class="btn btn-lg w-100 fs-6 color-principal text-light rounded-pill" type="button"
+                    <td><button class="btn btn-lg w-100 fs-6 botones rounded-pill" type="button"
                             onclick="cancelarFormulario()" id="cancelar" name="cancelar">Cancelar</button></td>
                 </tr>
                 {% for grupo in grupos %}
@@ -46,9 +46,9 @@
                     <td>{{ servicio.grupo }}</td>
                     <td>{{ servicio.descripcion }}</td>
                     <td>${{ servicio.precio }}</td>
-                    <td><button class="btn btn-lg w-100 fs-6 color-principal text-light rounded-pill"
+                    <td><button class="btn btn-lg w-100 fs-6 botones rounded-pill"
                             type="button">Editar</button></td>
-                    <td><button class="btn btn-lg w-100 fs-6 color-principal text-light rounded-pill"
+                    <td><button class="btn btn-lg w-100 fs-6 botones rounded-pill"
                             type="button">Eliminar</button></td>
                 </tr>
                 {% endfor %}
