@@ -8,7 +8,7 @@ const { isAdmin } = require('../middlewares/session');
 
 
 router.get(
-  '/administrar_servicios', //isAdmin,
+  '/administrar_servicios', isAdmin,
   servicesController.administrarServiciosGet
 );
 router.post(
