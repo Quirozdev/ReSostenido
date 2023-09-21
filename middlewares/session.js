@@ -1,7 +1,7 @@
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const db = require('../db/db');
-const querystring = require('querystring');
+const querystring = require('querystring');34
 const sessionStore = new MySQLStore(
   {
     clearExpired: true, // para que en la base de datos borre las sesiones que vayan expirando
@@ -36,7 +36,10 @@ const isAuth = (req, res, next) => {
   if (req.session.usuario) {
     next();
   } else {
-    res.redirect('/login?error=Debes iniciar sesion para acceder a esta pagina');
+    const query = querystring.stringify({
+      unauthorized: true,
+    });
+    res.redirect('/login?' + query);
   }
 };
 
