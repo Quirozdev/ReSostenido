@@ -26,7 +26,7 @@
                         <th scope="row" style="max-width: 150px;">
                             <img id="previewImage" src="/images/agg-image.png" alt="Imagen de servicio"
                                 class="img-fluid" style="max-width: 70%; height: auto;">
-                            <input type="file" id="inputImage" accept="image/*" onchange="previewImage(this);"
+                            <input type="file" id="inputImage" accept="image/*" onchange="mostrarImagen(this)"
                                 itemid="url_imagen" name="url_imagen">
                         </th>
                         <td>
@@ -97,13 +97,16 @@
                 formulario.style.display = 'none';
                 btnAgregar.style.display = 'block';
             }
-            function previewImage(input) {
+            
+            function mostrarImagen(input) {
                 const preview = document.getElementById('previewImage');
                 if (input.files && input.files[0]) {
                     const reader = new FileReader();
+
                     reader.onload = function (e) {
                         preview.src = e.target.result;
                     };
+
                     reader.readAsDataURL(input.files[0]);
                 }
             }
