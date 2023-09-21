@@ -1,99 +1,7 @@
 {% extends "layoult.html" %}
 {% block body %}
-<div class="margin-top-110">
-    <div class="table-responsive">
-        <table class="table table-borderless">
-            <thead>
-                <tr>
-                    <th scope="col" class="fs-4">Servicios</th>
-                    <th scope="col" class="fs-5 fw-lighter">Nombre</th>
-                    <th scope="col" class="fs-5 fw-lighter">Grupo</th>
-                    <th scope="col" class="fs-5 fw-lighter">Descripción</th>
-                    <th scope="col" class="fs-5 fw-lighter">Costo</th>
-                    <th scope="col" class="fs-5 fw-lighter"></th>
-                    <th scope="col" class="fs-5 fw-lighter">
-                        <button id="btnAgregar" class="btn btn-lg w-100 fs-6 botones rounded-pill"
-                            type="button" onclick="toggleFormulario()">Agregar</button>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr id="formulario" style="display: none;">
-                    <th scope="row" style="max-width: 150px;">
-                        <img id="previewImage" src="/images/agg-image.png" alt="Imagen de servicio" class="img-fluid"
-                            style="max-width: 70%; height: auto;">
-                        <input type="file" id="inputImage" accept="image/*" onchange="previewImage(this);" itemid="url_imagen" name="url_imagen">
-                    </th>
-                    <td><input type="text" class="form-control" placeholder="Nombre del instrumento"
-                            id="nombre_instrumento" name="nombre_instrumento"></td>
-                    <td><input type="text" class="form-control" placeholder="Grupo" id="grupo" name="grupo"></td>
-                    <td><input type="text" class="form-control" placeholder="Descripción" id="descripcion"
-                            name="descripcion"></td>
-                    <td><input type="text" class="form-control" placeholder="Costo" id="precio" name="precio"></td>
-                    <td><button class="btn btn-lg w-100 fs-6 botones rounded-pill" type="button"
-                            id="guardar" name="guardar">Guardar</button></td>
-                    <td><button class="btn btn-lg w-100 fs-6 botones rounded-pill" type="button"
-                            onclick="cancelarFormulario()" id="cancelar" name="cancelar">Cancelar</button></td>
-                </tr>
-                {% for grupo in grupos %}
-                {% for servicio in servicios[grupo] %}
-                <tr>
-                    <th scope="row" style="max-width: 150px;">
-                        <img src="/images/landingpage-1.jpg" alt="Imagen de servicio" class="img-fluid rounded-pill"
-                            style="max-width: 100%; height: auto;">
-                    </th>
-                    <td>{{ servicio.nombre_instrumento }}</td>
-                    <td>{{ servicio.grupo }}</td>
-                    <td>{{ servicio.descripcion }}</td>
-                    <td>${{ servicio.precio }}</td>
-                    <td><button class="btn btn-lg w-100 fs-6 botones rounded-pill"
-                            type="button">Editar</button></td>
-                    <td><button class="btn btn-lg w-100 fs-6 botones rounded-pill"
-                            type="button">Eliminar</button></td>
-                </tr>
-                {% endfor %}
-                {% endfor %}
-            </tbody>
-        </table>
-        <script>
-            function toggleFormulario() {
-                const formulario = document.getElementById('formulario');
-                const btnAgregar = document.getElementById('btnAgregar');
 
-                if (formulario.style.display === 'none' || formulario.style.display === '') {
-                    formulario.style.display = 'table-row';
-                    btnAgregar.style.display = 'none';
-                } else {
-                    formulario.style.display = 'none';
-                    btnAgregar.style.display = 'block';
-                }
-            }
 
-            function cancelarFormulario() {
-                const formulario = document.getElementById('formulario');
-                const btnAgregar = document.getElementById('btnAgregar');
-
-                formulario.style.display = 'none';
-                btnAgregar.style.display = 'block';
-            }
-
-            function previewImage(input) {
-                const preview = document.getElementById('previewImage');
-                if (input.files && input.files[0]) {
-                    const reader = new FileReader();
-
-                    reader.onload = function (e) {
-                        preview.src = e.target.result;
-                    };
-
-                    reader.readAsDataURL(input.files[0]);
-                }
-            }
-        </script>
-
-    </div>
-</div>
-{% endblock %}
     <div class="margin-top-110">
         <div class="table-responsive">
             <table class="table table-borderless">
@@ -221,6 +129,6 @@
                                         </script>
                                     </div>
                                 </div>
-                            {% endblock %}
-                        </th>
-                    </tr>
+                           
+                      
+                    {% endblock %}

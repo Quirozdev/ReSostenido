@@ -12,7 +12,7 @@ router.get(
   servicesController.administrarServiciosGet
 );
 router.post(
-  '/agregar_servicio', [servicesController.imageUpload.single('url_imagen'), serrvicesValidation.addServiceValidation()],//isAdmin,
+  '/agregar_servicio', servicesController.imageUpload.single('url_imagen'),//isAdmin,
   servicesController.agregarServicioPost
 );
 /*
