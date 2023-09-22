@@ -187,7 +187,9 @@ async function forgotPasswordPost(req, res) {
 
   if (!result.isEmpty()) {
     const errores = mapErrorValidationResultToObject(result);
+    console.log("ERROR AL VALIDAR LOS DATOS DE ENTRADA");
 
+    console.log(errores);
     return res.render('forgot-password.html', {
       errores: errores,
       datos_ingresados: {
@@ -201,6 +203,8 @@ async function forgotPasswordPost(req, res) {
   );
 
   if (error) {
+    console.log("ERROR AL CREAR EL TOKEN DE RECUPERACION");
+    console.log(error);
     return res.render('forgot-password.html', {
       errores: error,
       datos_ingresados: {
@@ -234,12 +238,14 @@ async function forgotPasswordPost(req, res) {
 }
 
 function changePasswordGet(req, res) {
-  res.render('change-password.html');
+
+  res.render('change-password.html',{token:req.query.verificationToken});
 }
 
 async function changePasswordPost(req, res) {
   const result = validationResult(req);
-
+  console.log("TOKEN QUE LLEGA AL CONTROLADOR")
+  console.log(req.body.token);
   if (!result.isEmpty()) {
     const errores = mapErrorValidationResultToObject(result);
 
@@ -252,7 +258,8 @@ async function changePasswordPost(req, res) {
     });
   }
 
-  const { verificationToken } = req.query;
+  const verificationToken  = req.body.token;
+  console.log(verificationToken);
   if (!verificationToken) {
     return res.render('change-password.html', {
       errores: {

@@ -12,6 +12,10 @@ router.get('/testindex', (req, res) => {
   }
 });
 
+router.get('/prueba_template', (req, res) => {
+  res.render('confirmation.html');
+});
+
 router.get('/test/:id', testController.homePage);
 
 module.exports = router;

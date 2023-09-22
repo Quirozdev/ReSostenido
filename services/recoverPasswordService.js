@@ -36,6 +36,7 @@ async function createRecoveryTokenForUser(email) {
     return {
       error: {
         general: 'Algo salió mal :(, vuelvelo a intentar más tarde',
+        error: err,
       },
     };
   }
