@@ -70,6 +70,11 @@
                             {{ errores.confirmar_contrasenia }}
                         </div>
                         {% endif %}
+                        {% if errores.general %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ errores.general }}
+                        </div>
+                        {% endif %}
                         <div class="input-group mb-3">
                             <input type="submit" name="register" id="register" value="Registrarse"
                                 class="btn btn-lg w-100 fs-6 fw-bold botones">
