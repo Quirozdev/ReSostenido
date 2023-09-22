@@ -5,29 +5,50 @@ const mapErrorValidationResultToObject = require('../utils/validationErrorsMappe
 const { validationResult } = require('express-validator');
 const querystring = require('querystring');
 
-async function administrarServiciosGet(req, res) {
-  const services = await db.execute('SELECT id, grupo, nombre_instrumento, precio, descripcion, url_imagen FROM servicios');
-  const groupedServices = services[0].reduce((groups, instrument) => {
+
+const agruparServicios = (servicios) => {
+  const groupedServices= servicios.reduce((groups, instrument) => {
     const group = instrument.grupo;
     if (!groups[group]) {
       groups[group] = [];
     }
     groups[group].push(instrument);
     return groups;
-  }, {});
+  }, {})
+  return groupedServices;
+}
 
 
-  grups = Object.keys(groupedServices);
-  //Datos que seran enviados si al intentar agregar un servicio surge algun error
+async function administrarServiciosGet(req, res) {
+  const services = await db.execute('SELECT id, grupo, nombre_instrumento, precio, descripcion, url_imagen, activo FROM servicios ');
+  console.log("SERVICIOS");
+  console.log(services[0]);
+  const {activeServices, inactiveServices} = services[0].reduce((groups, instrument) => {
+    if (instrument.activo === 1) {
+      groups.activeServices.push(instrument);
+    } else {
+      groups.inactiveServices.push(instrument);
+    }
+    return groups;
+
+
+  },{inactiveServices: [], activeServices: []});
+  
+  //const groupedInactiveServices = agruparServicios(inactiveServices);
+  //const groupedActiveServices = agruparServicios(activeServices);
+  console.log("SERVICIOS ACTIVOS");
+  console.log(activeServices);
+  console.log("SERVICIOS INACACTIVOS");
+  console.log(inactiveServices);
+
+  //Datos que seran enviados si al intentar agregar un servicio surge algun error cuando es redireccionado desde otro metodo
   const query = querystring.parse(req.query);
-  console.log("Errores que llega a plantilla:");
-  console.log(req.query);
-  console.log(query);
-  res.render('administrar_servicios.html', { servicios: groupedServices, grupos: grups, query: req.query });
+  
+  res.render('administrar_servicios.html', { serviciosActivos: activeServices, serviciosInactivos:inactiveServices, query: req.query });
 }
 
 async function serviciosGet(req, res) {
-  const services = await db.execute('SELECT id, grupo, nombre_instrumento, precio, descripcion, url_imagen FROM servicios');
+  const services = await db.execute('SELECT id, grupo, nombre_instrumento, precio, descripcion, url_imagen FROM servicios where activo = 1');
   const groupedServices = services[0].reduce((groups, instrument) => {
     const group = instrument.grupo;
     if (!groups[group]) {
@@ -57,10 +78,7 @@ async function agregarServicioPost(req, res) {
     const errors = mapErrorValidationResultToObject(result);
     const query_errors = querystring.stringify(errors);
     const query_datos = querystring.stringify(nuevoServicio);
-    console.log("Errores que se mandan a la plantilla:");
-    console.log(errors);
-    console.log(query_datos)
-    console.log(query_errors)
+    
     return res.redirect('/administrar_servicios?' + query_errors + "&" + query_datos);
   }
   const consulta = await db.execute('INSERT INTO servicios (grupo, nombre_instrumento, precio, descripcion, url_imagen) VALUES (?, ?, ?, ?, ?)', [nuevoServicio.grupo, nuevoServicio.nombre_instrumento, nuevoServicio.precio, nuevoServicio.descripcion, nuevoServicio.url_imagen]);
@@ -69,6 +87,18 @@ async function agregarServicioPost(req, res) {
   res.redirect('/administrar_servicios');
 }
 
+async function deshabilitarServicioPost(req, res) {
+  const servicio = req.body.id;
+  const consulta = await db.execute('UPDATE servicios SET activo = 0 WHERE id = ?', [servicio]);
+  //console.log(consulta);
+  res.redirect('/administrar_servicios');
+}
+async function habilitarServicioPost(req, res) {
+  const servicio = req.body.id;
+  const consulta = await db.execute('UPDATE servicios SET activo = 1 WHERE id = ?', [servicio]);
+  //console.log(consulta);
+  res.redirect('/administrar_servicios');
+}
 
 
 const storage = multer.diskStorage({
@@ -96,5 +126,11 @@ function fileFilter(req, file, cb) {
 const imageUpload = multer({ storage: storage, fileFilter: fileFilter });
 
 
-module.exports = { administrarServiciosGet, serviciosGet, agregarServicioPost, imageUpload };
+module.exports = { 
+  habilitarServicioPost,
+  administrarServiciosGet, 
+  serviciosGet, 
+  agregarServicioPost, 
+  imageUpload, 
+  deshabilitarServicioPost };
 

@@ -3,6 +3,7 @@ const { body } = require('express-validator');
 const db = require('../../db/db');
 
 function addServiceValidation() {
+  
   return [
     body('grupo', 'Grupo inválido')
       .trim()
@@ -17,7 +18,15 @@ function addServiceValidation() {
       .notEmpty()
       .withMessage('El nombre no puede estar vacío')
       .isLength({ max: 55 })
-      .withMessage('El nombre debe tener 55 caracteres o menos'),
+      .withMessage('El nombre debe tener 55 caracteres o menos')
+      .custom(async (nombre_instrumento) => {
+        const [servicios, campos] = await db.execute('SELECT `nombre_instrumento` FROM `servicios` WHERE `nombre_instrumento` = ?', [nombre_instrumento]);
+        const servicio = servicios[0];
+        if(servicio){
+          throw new Error('Ya existe un servicio con ese nombre');
+        }
+      })
+      ,
     body('precio', 'Precio inválido')
       .trim()
       .escape()
