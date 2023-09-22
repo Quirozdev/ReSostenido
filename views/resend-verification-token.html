@@ -14,15 +14,18 @@
         class="left-box d-flex flex-column"
       />
     </div>
-    <div id="info-container" class="col-md-6 right-box">
+    <div class="d-flex flex-column justify-content-center col-md-6 right-box">
       <div
         id="error-container"
         class="alert alert-danger"
         role="alert"
         style="display: none"
       ></div>
-
-      <div class="row align-items-center justify-content-between">
+      <div id="info-container" class="text-center"></div>
+      <div
+        id="contenedor-titulo-formulario"
+        class="row align-items-center justify-content-between"
+      >
         <div class="header-text mb-4 text-center">
           <h2>Reenviar token de verificación</h2>
         </div>
@@ -56,6 +59,9 @@
   </div>
 </div>
 <script>
+  const contenedorTituloYFormulario = document.getElementById(
+    'contenedor-titulo-formulario'
+  );
   const formulario = document.querySelector('form');
   const campoEmail = document.getElementById('email');
   const botonReenviar = document.getElementById('btn-resend-token');
@@ -72,7 +78,7 @@
 
   function showSuccessMessage(msg) {
     errorMsgContainer.style.display = 'none';
-    formulario.remove();
+    contenedorTituloYFormulario.remove();
 
     const contenedorTitulo = document.createElement('div');
     contenedorTitulo.classList.add('header-text', 'mb-4', 'text-center');

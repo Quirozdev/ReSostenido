@@ -89,7 +89,7 @@ async function verifyAccount(token) {
 
     return {
       err: null,
-      msg: 'Usuario verificado exitosamente',
+      msg: 'Tu correo se ha confirmado con éxito. Ya puedes iniciar sesión',
     };
   } catch (err) {
     await connection.rollback();
