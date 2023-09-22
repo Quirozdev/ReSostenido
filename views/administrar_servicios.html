@@ -1,6 +1,10 @@
 {% extends "layoult.html" %}
 {% block body %}
+    
 <div class="margin-top-110 ms-5 me-5">
+    <p class="fs-1 ms-4 mt-5 fw-bold ">
+                    Administración de servicios
+                </p>
     <div class="table-responsive">
         <table class="table table-borderless table-hover">
             <thead>
@@ -58,10 +62,11 @@
                 {% for servicio in serviciosActivos %}
                 <form action="/editar_servicio" method="post">
                 <tr>
-                    <th scope="row" style="max-width: 150px; height: 150px; display: flex; align-items: center;"
+                    <th scope="row" style=" height: 150px; display: flex; align-items: center; text-align: center; vertical-align: middle;"
                         class="d-flex flex-column justify-content-center">
+                            <!-- class="img-fluid rounded-pill oval-image"-->
                         <img src="/images/servicios/{{ servicio.url_imagen }}" alt="Imagen de servicio"
-                            class="img-fluid rounded-pill"
+                        class="img-fluid rounded-pill"
                             style="max-width: 100%; max-height: 100%; object-fit: contain;">
                     </th>
                     <td style="vertical-align: middle;">{{ servicio.nombre_instrumento }}</td>
@@ -121,6 +126,7 @@
 </div>
 
 <!--Servicios deshabilitados -->
+{% if serviciosInactivos|length > 0 %}
 <div class="margin-top-110 ms-5 me-5">
     <div class="table-responsive">
         <table class="table table-borderless table-hover">
@@ -137,39 +143,7 @@
             </thead>
             <tbody>
                 
-                <form action="/agregar_servicio" method="post" enctype="multipart/form-data">
-                    <tr id="formulario" style="display: none;">
-                        <th scope="row" style="max-width: 150px;">
-                            <img id="previewImage" src="/images/agg-image.png" alt="Imagen de servicio"
-                                class="img-fluid" style="max-width: 70%; height: auto;">
-                            <input type="file" id="inputImage" accept="image/*" onchange="mostrarImagen(this)"
-                                itemid="url_imagen" name="url_imagen">
-                        </th>
-                        <td>
-                            <input type="text" class="form-control" placeholder="Nombre del instrumento"
-                                id="nombre_instrumento" name="nombre_instrumento">
-                        </td>
-                        <td>
-                            <input type="text" class="form-control" placeholder="Grupo" id="grupo" name="grupo">
-                        </td>
-                        <td>
-                            <input type="text" class="form-control" placeholder="Descripción" id="descripcion"
-                                name="descripcion">
-                        </td>
-                        <td>
-                            <input type="number" class="form-control" placeholder="Costo" id="precio" name="precio"
-                                min="0" step="0.01">
-                        </td>
-                        <td>
-                            <input class="btn btn-lg w-100 fs-6 botones rounded-pill" type="submit" id="guardar"
-                                name="guardar" value="Guardar">
-                        </td>
-                        <td>
-                            <button class="btn btn-lg w-100 fs-6 botones rounded-pill" type="button"
-                                onclick="cancelarFormulario()" id="cancelar" name="cancelar">Cancelar</button>
-                        </td>
-                    </tr>
-                </form>
+               
                 
                 {% for servicio in serviciosInactivos %}
                 <tr>
@@ -200,4 +174,9 @@
       
     </div>
 </div>
+{% else %}
+<p class="fs-1 ms-4 mt-5 fw-bold center-content ">
+No hay servicios deshabilitados
+</p>
+{% endif %}
 {% endblock %}

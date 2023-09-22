@@ -61,6 +61,18 @@ body{
 table.table thead th {
     border-bottom: 2px solid #a8a8a8;
 }
+.center-content {
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.oval-image {
+    max-width: 100%; /* Asegura que la imagen no desborde la celda */
+    max-height: 100%; /* Asegura que la imagen no desborde la celda */
+    object-fit: cover; /* Ajusta la imagen para llenar la celda */
+}
 @media only screen and (max-width: 768px){
      .box-area{
         margin: 30px 10px;
