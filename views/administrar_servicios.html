@@ -1,11 +1,15 @@
 {% extends "layoult.html" %}
 {% block body %}
+    
 <div class="margin-top-110 ms-5 me-5">
+    <p class="fs-1 ms-4 mt-5 fw-bold ">
+                    Administración de servicios
+                </p>
     <div class="table-responsive">
         <table class="table table-borderless table-hover">
             <thead>
                 <tr>
-                    <th scope="col" class="fs-4">Servicios</th>
+                    <th scope="col" class="fs-4">Servicios activos</th>
                     <th scope="col" class="fs-5 fw-lighter">Nombre</th>
                     <th scope="col" class="fs-5 fw-lighter">Grupo</th>
                     <th scope="col" class="fs-5 fw-lighter">Descripción</th>
@@ -25,8 +29,8 @@
                     <tr id="formulario" style="display: none;">
                         <th scope="row" style="max-width: 150px;">
                             <img id="previewImage" src="/images/agg-image.png" alt="Imagen de servicio"
-                                class="img-fluid" style="max-width: 70%; height: auto;">
-                            <input type="file" id="inputImage" accept="image/*" onchange="previewImage(this);"
+                                class="img-fluid" style="max-width: 60%; height: auto;">
+                            <input type="file" id="inputImage" accept="image/*" onchange="mostrarImagen(this)"
                                 itemid="url_imagen" name="url_imagen">
                         </th>
                         <td>
@@ -54,29 +58,35 @@
                         </td>
                     </tr>
                 </form>
-                {% for grupo in grupos %}
-                {% for servicio in servicios[grupo] %}
+                
+                {% for servicio in serviciosActivos %}
+                <form action="/editar_servicio" method="post">
                 <tr>
-                    <th scope="row" style="max-width: 150px; height: 150px; display: flex; align-items: center;"
-                        class="d-flex flex-column justify-content-center">
+                    <th scope="row" style="max-width: 150px; text-align: center;">
                         <img src="/images/servicios/{{ servicio.url_imagen }}" alt="Imagen de servicio"
-                            class="img-fluid rounded-pill"
-                            style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                            class="img-fluid rounded-pill mx-auto d-block" 
+                            style="max-width: 100%; max-height: 150px; object-fit: contain;">
                     </th>
+                    
                     <td style="vertical-align: middle;">{{ servicio.nombre_instrumento }}</td>
                     <td style="vertical-align: middle;">{{ servicio.grupo }}</td>
                     <td style="vertical-align: middle;">{{ servicio.descripcion }}</td>
                     <td style="vertical-align: middle;">${{ servicio.precio }}</td>
                     <td style="vertical-align: middle;">
+                        <input type="text" name="id" id="" value="{{servicio.id}}" style="display:none;">
                         <button class="btn btn-lg w-100 fs-6 botones rounded-pill" type="button">Editar</button>
                     </td>
+                    </form>
+                    <form action="/deshabilitar_servicio" method="post">
                     <td style="vertical-align: middle;">
-                        <button class="btn btn-lg w-100 fs-6 botones rounded-pill" type="button">Eliminar</button>
+                        <input type="text" name="id" id="" value="{{servicio.id}}" style="display:none;">
+                        <button class="btn btn-lg w-100 fs-6 botones rounded-pill" type="submit">Deshabilitar</button>
                     </td>
+                    </form>
                 </tr>
 
                 {% endfor %}
-                {% endfor %}
+                
             </tbody>
         </table>
         <script>
@@ -97,17 +107,68 @@
                 formulario.style.display = 'none';
                 btnAgregar.style.display = 'block';
             }
-            function previewImage(input) {
+            
+            function mostrarImagen(input) {
                 const preview = document.getElementById('previewImage');
                 if (input.files && input.files[0]) {
                     const reader = new FileReader();
+
                     reader.onload = function (e) {
                         preview.src = e.target.result;
                     };
+
                     reader.readAsDataURL(input.files[0]);
                 }
             }
         </script>
     </div>
 </div>
+
+<!--Servicios deshabilitados -->
+{% if serviciosInactivos|length > 0 %}
+<div class="margin-top-110 ms-5 me-5">
+    <div class="table-responsive">
+        <table class="table table-borderless table-hover">
+            <thead>
+                <tr>
+                    <th scope="col" class="fs-4">Servicios inactivos</th>
+                    <th scope="col" class="fs-5 fw-lighter">Nombre</th>
+                    <th scope="col" class="fs-5 fw-lighter">Grupo</th>
+                    <th scope="col" class="fs-5 fw-lighter">Descripción</th>
+                    <th scope="col" class="fs-5 fw-lighter">Costo</th>
+                    <th scope="col" class="fs-5 fw-lighter"></th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for servicio in serviciosInactivos %}
+                <tr>
+                    <th scope="row" style="max-width: 150px; text-align: center;">
+                        <img src="/images/servicios/{{ servicio.url_imagen }}" alt="Imagen de servicio"
+                            class="img-fluid rounded-pill mx-auto d-block"
+                            style="max-width: 100%; max-height: 150px; object-fit: contain;">
+                    </th>
+                    <td style="vertical-align: middle;">{{ servicio.nombre_instrumento }}</td>
+                    <td style="vertical-align: middle;">{{ servicio.grupo }}</td>
+                    <td style="vertical-align: middle;">{{ servicio.descripcion }}</td>
+                    <td style="vertical-align: middle;">${{ servicio.precio }}</td>
+                    
+                    <td style="vertical-align: middle;">
+                        <form action="/habilitar_servicio" method="post">
+                        <input type="text" name="id" id="" value="{{servicio.id}}" style="display:none;">
+
+                        <button type="submit" class="btn btn-lg w-100 fs-6 botones rounded-pill" >Habilitar</button>
+                    </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<p class="fs-1 ms-4 mt-5 fw-bold center-content ">
+No hay servicios deshabilitados
+</p>
+{% endif %}
 {% endblock %}

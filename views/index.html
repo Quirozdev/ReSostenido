@@ -8,7 +8,7 @@
             <div class="row">
                 {% if usuario.es_admin %}
                 <p class="fs-1 ms-4 mt-5 fw-bold">
-                    Hola, Admin
+                    ¡Hola, {{usuario.nombre}}!
                 </p>
                 <div class="col d-flex justify-content-center align-middle">
                     <div class="card mb-5 mt-5 bg-transparent card-style">
@@ -23,7 +23,7 @@
                         <div class="card-index rounded-pill">
                             <img src="/images/servicios-admin.jpeg" class="card-img-top" alt="servicios-admin">
                         </div>
-                        <a href="/administrar_servicios" class="btn botones mt-2 rounded-pill">Servicios</a>
+                        <a href="/administrar_servicios" class="btn botones mt-2 rounded-pill">Administración de servicios</a>
                     </div>
                 </div>
                 {% else %}
@@ -126,7 +126,8 @@
                             Ofrecemos servicios de reparación, ajuste, personalización y restauración para asegurarnos
                             de que tu instrumento suene y se vea exactamente como deseas.
                         </small></p>
-                    <button class="btn btn-lg w-100 fs-6 color-principal text-light rounded-pill">Agendar Cita</button>
+                    <a href="/citas"><button class="btn btn-lg w-100 fs-6 botones rounded-pill">Agendar
+                            Cita</button></a>
                 </div>
             </div>
         </div>

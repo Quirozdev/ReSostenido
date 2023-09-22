@@ -38,6 +38,7 @@ CREATE TABLE servicios (
   nombre_instrumento VARCHAR(55) NOT NULL,
   descripcion VARCHAR(255),
   url_imagen VARCHAR(255),
+  activo BOOLEAN DEFAULT 1,
   PRIMARY KEY(id)
 );
 

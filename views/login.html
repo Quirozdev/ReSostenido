@@ -1,12 +1,10 @@
-{% extends "layoult.html" %}
-
-{% block body %}
+{% extends "layoult.html" %} {% block body %}
 <div class="margin-top-110">
     <div class="container d-flex justify-content-center align-items-center">
         <div class="row p-3 bg-white shadow box-area mt-5">
             <div
                 class="col-md-6 rounded-4 d-none d-md-block d-flex justify-content-center align-items-center flex-column left-box">
-                <img src="/images/login.jpg" width="100%" height="100%" class="left-box d-flex flex-column">
+                <img src="/images/login.jpg" width="100%" height="100%" class="left-box d-flex flex-column" />
             </div>
             <div class="col-md-6 right-box">
                 <div class="row align-items-center justify-content-between">
@@ -25,7 +23,8 @@
                         {% endif %}
                         <div class="input-group mb-1">
                             <input type="password" class="form-control form-control-lg bg-light fs-6"
-                                placeholder="Contraseña" name="contrasenia" id="contrasenia" value="{{ datos_ingresados.contrasenia }}">
+                                placeholder="Contraseña" name="contrasenia" id="contrasenia"
+                                value="{{ datos_ingresados.contrasenia }}">
                         </div>
                         {% if errores.contrasenia %}
                         <div class="alert alert-danger" role="alert">
@@ -42,7 +41,8 @@
                                 class="btn btn-lg w-100 fs-6 fw-bold botones">
                         </div>
                         <div class="input-group mb-3">
-                            <button class="btn btn-lg btn-light w-100 fs-6"><small><a href="/register">Crear una
+                            <button class="btn btn-lg btn-light w-100 fs-6"><small><a href="/register">Crear
+                                        una
                                         cuenta</a></small></button>
                         </div>
                         {% if noAutorizado %}
