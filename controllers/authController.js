@@ -59,7 +59,8 @@ async function registerPost(req, res, next) {
       successfulRegister: true,
     });
 
-    res.redirect('/login?' + query);
+    //res.redirect('/login?' + query);
+    res.render('resend-verification-token.html', {correo:req.body.email});
   } catch (err) {
     return res.render('register.html', {
       errores: {

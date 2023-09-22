@@ -27,8 +27,12 @@
         class="row align-items-center justify-content-between"
       >
         <div class="header-text mb-4 text-center">
-          <h2>Reenviar token de verificación</h2>
+          <h2>Verifica tu correo electrónico</h2>
         </div>
+        <div class="input-group mb-3">
+                            <p class="lead text-secondary"><small>
+Hemos enviado un link de verificación al correo {{correo}}. Recuerda revisar la carpeta de correos no deseados. ¿No has recibido ningún correo electrónico? Presiona el boton para reenviarlo.                           </small></p>    
+                        </div>
         <form
           action="/resend-verification-token"
           method="POST"
@@ -38,10 +42,11 @@
             <input
               type="email"
               class="form-control form-control-lg bg-light fs-6"
+              style="display: none"
               placeholder="E-mail"
               name="email"
               id="email"
-              required
+              value="{{correo}}"
             />
           </div>
           <div class="input-group mb-3">
@@ -50,7 +55,7 @@
               class="btn btn-lg w-100 fs-6 color-principal text-light"
               type="submit"
             >
-              Reenviar token
+              Reenviar correo electrónico
             </button>
           </div>
         </form>
