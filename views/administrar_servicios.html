@@ -35,18 +35,18 @@
                         </th>
                         <td>
                             <input type="text" class="form-control" placeholder="Nombre del instrumento"
-                                id="nombre_instrumento" name="nombre_instrumento">
+                                id="nombre_instrumento" name="nombre_instrumento" value="{{query.nombre_instrumento}}">
                         </td>
                         <td>
-                            <input type="text" class="form-control" placeholder="Grupo" id="grupo" name="grupo">
+                            <input type="text" class="form-control" placeholder="Grupo" id="grupo" name="grupo" value="{{query.grupo}}">
                         </td>
                         <td>
                             <input type="text" class="form-control" placeholder="Descripción" id="descripcion"
-                                name="descripcion">
+                                name="descripcion" value="{{query.descripcion}}">
                         </td>
                         <td>
                             <input type="number" class="form-control" placeholder="Costo" id="precio" name="precio"
-                                min="0" step="0.01">
+                                min="0" step="0.01" value="{{query.precio}}">
                         </td>
                         <td>
                             <input class="btn btn-lg w-100 fs-6 botones rounded-pill" type="submit" id="guardar"
@@ -90,6 +90,15 @@
             </tbody>
         </table>
         <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                if('{{query.error_nombre_instrumento}}' != '' || '{{query.error_descripcion}}' != ''|| '{{query.error_precio}}' != ''|| '{{query.error_grupo}}' != ''|| '{{query.error_url_imagen}}' == ''){
+                    toggleFormulario();
+                }
+                
+            // Tu código JavaScript aquí
+               
+                // Puedes llamar a tu método aquí o ejecutar cualquier código que desees.
+            });
             function toggleFormulario() {
                 const formulario = document.getElementById('formulario');
                 const btnAgregar = document.getElementById('btnAgregar');
@@ -101,6 +110,7 @@
                     btnAgregar.style.display = 'block';
                 }
             }
+            
             function cancelarFormulario() {
                 const formulario = document.getElementById('formulario');
                 const btnAgregar = document.getElementById('btnAgregar');
@@ -120,6 +130,7 @@
                     reader.readAsDataURL(input.files[0]);
                 }
             }
+
         </script>
     </div>
 </div>

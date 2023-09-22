@@ -36,10 +36,7 @@ async function administrarServiciosGet(req, res) {
   
   //const groupedInactiveServices = agruparServicios(inactiveServices);
   //const groupedActiveServices = agruparServicios(activeServices);
-  console.log("SERVICIOS ACTIVOS");
-  console.log(activeServices);
-  console.log("SERVICIOS INACACTIVOS");
-  console.log(inactiveServices);
+  
 
   //Datos que seran enviados si al intentar agregar un servicio surge algun error cuando es redireccionado desde otro metodo
   const query = querystring.parse(req.query);
@@ -76,7 +73,15 @@ async function agregarServicioPost(req, res) {
 
   if (!result.isEmpty()) {
     const errors = mapErrorValidationResultToObject(result);
-    const query_errors = querystring.stringify(errors);
+    const errores_con_prefijo = {};
+
+    for (const key in errors) {
+      if (errors.hasOwnProperty(key)) {
+        errores_con_prefijo[`error_${key}`] = errors[key];
+      }
+    }
+    const query_errors = querystring.stringify(errores_con_prefijo);
+
     const query_datos = querystring.stringify(nuevoServicio);
     
     return res.redirect('/administrar_servicios?' + query_errors + "&" + query_datos);
