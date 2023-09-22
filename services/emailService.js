@@ -11,6 +11,9 @@ class EmailService {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_USER_PASSWORD,
       },
+      tls: {
+        rejectUnauthorized: false,
+      },
     });
 
     this.transporter.verify().then(() => {

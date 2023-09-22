@@ -1,48 +1,36 @@
 {% extends "layoult.html" %} {% block body %}
-<div class="container d-flex justify-content-center align-items-center min-vh-100">
-  <div class="row p-3 bg-white shadow box-area mt-5">
-    <div
-      class="col-md-6 rounded-4 d-none d-md-block d-flex justify-content-center align-items-center flex-column left-box">
-      <img src="/images/resend_verification_token_img.jpg" width="100%" height="100%" style="aspect-ratio: 1 / 1"
-        class="left-box d-flex flex-column" />
-    </div>
-    <div class="d-flex flex-column justify-content-center col-md-6 right-box">
-      <div id="error-container" class="alert alert-danger" role="alert" style="display: none"></div>
-      <div id="info-container" class="text-center"></div>
-      <div id="contenedor-titulo-formulario" class="row align-items-center justify-content-between">
-        <div class="header-text mb-4 text-center">
-          <h2>Verifica tu correo electrónico</h2>
-        </div>
-        <div class="input-group mb-3">
+<div class="margin-top-110">
+  <div class="container d-flex justify-content-center align-items-center">
+    <div class="row p-3 bg-white shadow box-area mt-5">
+      <div
+        class="col-md-6 rounded-4 d-none d-md-block d-flex justify-content-center align-items-center flex-column left-box">
+        <img src="/images/resend_verification_token_img.jpg" width="100%" height="100%"
+          class="left-box d-flex flex-column">
+      </div>
+      <div class="d-flex flex-column justify-content-center col-md-6 right-box">
+        <div id="error-container" class="alert alert-danger" role="alert" style="display: none"></div>
+        <div id="info-container" class="text-center"></div>
+        <div id="contenedor-titulo-formulario" class="row align-items-center justify-content-between">
+          <div class="header-text mb-4 text-center">
+            <h2>Verifica tu correo electrónico</h2>
+          </div>
+          <div class="input-group mb-3">
                             <p class="lead text-secondary"><small>
 Hemos enviado un link de verificación al correo {{correo}}. Recuerda revisar la carpeta de correos no deseados. ¿No has recibido ningún correo electrónico? Presiona el boton para reenviarlo.                           </small></p>    
                         </div>
-        <form
-          action="/resend-verification-token"
-          method="POST"
-          class="row align-items-center justify-content-between"
-        >
-          <div class="input-group mb-3">
-            <input
-              type="email"
-              class="form-control form-control-lg bg-light fs-6"
-              style="display: none"
-              placeholder="E-mail"
-              name="email"
-              id="email"
-              value="{{correo}}"
-            />
-          </div>
-          <div class="input-group mb-3">
-            <button
-              id="btn-resend-token"
-              class="btn btn-lg w-100 fs-6 color-principal text-light"
-              type="submit"
-            >
-              Reenviar correo electrónico
-            </button>
-          </div>
-        </form>
+          <form action="/resend-verification-token" method="POST"
+            class="row align-items-center justify-content-between">
+            <div class="input-group mb-3">
+              <input type="email" style="display:none;" class="form-control form-control-lg bg-light fs-6" placeholder="E-mail" name="email"
+                id="email" value="{{correo}}"  />
+            </div>
+            <div class="input-group mb-3">
+              <button id="btn-resend-token" class="btn btn-lg w-100 fs-6 botones" type="submit">
+                Reenviar token
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
