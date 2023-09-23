@@ -1,66 +1,81 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
-body{
+
+body {
     font-family: 'Poppins', sans-serif;
     background: #ececec;
 }
-.box-area{
+
+.box-area {
     width: 930px;
 }
-.right-box{
+
+.right-box {
     padding: 40px 30px 40px 40px;
 }
-::placeholder{
+
+::placeholder {
     font-size: 16px;
 }
-.rounded-4{
+
+.rounded-4 {
     border-radius: 20px;
 }
-.rounded-5{
+
+.rounded-5 {
     border-radius: 30px;
 }
-.color-principal{
+
+.color-principal {
     background-color: #48649a
 }
-.icons-navbar{
+
+.icons-navbar {
     width: 40px;
     height: 40px;
     margin-right: 10px;
 }
-.margin-top-110{
+
+.margin-top-110 {
     margin-top: 110px;
 }
-.card-style{
-    width: 18rem; 
+
+.card-style {
+    width: 18rem;
     border: none;
 }
-.card-index{
+
+.card-index {
     width: 100%;
     height: 150px;
-    
+
     overflow: hidden;
 }
-.botones{
+
+.botones {
     color: #ffffff;
     background-color: #48649a;
 }
+
 .botones:hover {
     color: #48649a;
-    background-color: #ffffff; 
-    border: 1px solid #48649a; 
+    background-color: #ffffff;
+    border: 1px solid #48649a;
 }
-.page_404
-{
+
+.page_404 {
     padding: 40px 0;
     background: #fff;
     font-family: 'Poppins';
 }
-.page_404 img
-{
+
+.page_404 img {
     width: 100%;
 }
+
 table.table thead th {
     border-bottom: 2px solid #a8a8a8;
 }
+
 .center-content {
     text-align: center;
     display: flex;
@@ -68,20 +83,40 @@ table.table thead th {
     justify-content: center;
     align-items: center;
 }
-.oval-image {
-    max-width: 100%; /* Asegura que la imagen no desborde la celda */
-    max-height: 100%; /* Asegura que la imagen no desborde la celda */
-    object-fit: cover; /* Ajusta la imagen para llenar la celda */
+
+.vertical-align-middle {
+    vertical-align: middle;
 }
-@media only screen and (max-width: 768px){
-     .box-area{
+
+.oval-image {
+    max-width: 100%;
+    /* Asegura que la imagen no desborde la celda */
+    max-height: 100%;
+    /* Asegura que la imagen no desborde la celda */
+    object-fit: cover;
+    /* Ajusta la imagen para llenar la celda */
+}
+
+input[type="file"]::file-selector-button {
+    background-color: #48649a;
+    color: #fff;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+    .box-area {
         margin: 30px 10px;
-     }
-     .left-box{
+    }
+
+    .left-box {
         height: 100px;
         overflow: hidden;
-     }
-     .right-box{
+    }
+
+    .right-box {
         padding: 20px;
-     }
+    }
 }
