@@ -57,7 +57,7 @@ INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_image
 VALUES (450.00, 'Guitarras', 'Guitarra eléctrica 8 cuerdas', 'Calibración', 'landingpage-1.jpg');
 
 INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
-VALUES (550.00, 'Guitarras', 'Guitarra eléctrica con Floyd Rose o Kahler', 'Calibración', 'landingpage-1.jpg');
+VALUES (450.00, 'Guitarras', 'Guitarra eléctrica con Floyd Rose o Kahler', 'Calibración', 'landingpage-1.jpg');
 
 -- Inserta información para Bajos
 INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
