@@ -1,4 +1,4 @@
-describe('Pagina principal', () => {
+describe('Pagina de servicios', () => {
     it('Ingresar al sitio', () => {
       cy.visit('localhost:3000')
     })
