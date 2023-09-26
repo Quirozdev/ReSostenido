@@ -21,23 +21,23 @@
 <div>
   <nav class="navbar bg-body-tertiary fixed-top">
     <div class="container-fluid">
-      <a href="/"><img src="/images/logo.png" alt="Logo" width="100" height="100"
+      <a id="imgLogo" href="/"><img  src="/images/logo.png" alt="Logo" width="100" height="100"
           class="d-inline-block align-text-top" /></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+      <button id="navbar-toggler" class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
         aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
         <div class="offcanvas-header">
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <div class="mb-5 fs-4 mt-5">
               <li class="nav-item mb-4 half-hover">
                 <a class="nav-link" href="/citas">
-                  <div class="d-flex align-items-center">
-                    <img src="/images/citas.jpg" alt="Citas" class="nav-icon ms-2 icons-navbar" />
+                  <div id="citas" class="d-flex align-items-center">
+                    <img id="imgCitas" src="/images/citas.jpg" alt="Citas" id="imgCitas" class="nav-icon ms-2 icons-navbar" />
                     Citas
                   </div>
                 </a>
@@ -45,15 +45,15 @@
               <li class="nav-item mb-4">
                 {% if usuario.es_admin %}
                 <a class="nav-link" href="/administrar_servicios">
-                  <div class="d-flex align-items-center">
-                    <img src="/images/servicios.png" alt="Servicios" class="nav-icon ms-2 icons-navbar" />
+                  <div id="adminServicios" class="d-flex align-items-center">
+                    <img id="imgAdminServicios" src="/images/servicios.png" alt="Servicios" class="nav-icon ms-2 icons-navbar" />
                     Servicios
                   </div>
                 </a>
                 {% else %}
                 <a class="nav-link" href="/servicios">
-                  <div class="d-flex align-items-center">
-                    <img src="/images/servicios.png" alt="Servicios" class="nav-icon ms-2 icons-navbar" />
+                  <div id="servicios" class="d-flex align-items-center">
+                    <img id="imgServicios" src="/images/servicios.png" alt="Servicios" class="nav-icon ms-2 icons-navbar" />
                     Servicios
                   </div>
                 </a>
@@ -61,8 +61,8 @@
               </li>
               <li class="nav-item mb-4">
                 <a class="nav-link" href="/FAQ">
-                  <div class="d-flex align-items-center">
-                    <img src="/images/FAQ.png" alt="FAQ" class="nav-icon ms-2 icons-navbar" />
+                  <div id="faq" class="d-flex align-items-center">
+                    <img id="imgFaq" src="/images/FAQ.png" alt="FAQ" class="nav-icon ms-2 icons-navbar" />
                     FAQ
                   </div>
                 </a>
@@ -72,15 +72,15 @@
               <li class="nav-item mt-4">
                 {% if usuario %} {% if usuario.es_admin %}
                 <a class="nav-link" href="/perfil">
-                  <div class="d-flex align-items-center">
-                    <img src="/images/iniciar-sesion.png" alt="Login" class="nav-icon ms-2 icons-navbar" />
+                  <div id="admin" class="d-flex align-items-center">
+                    <img id="imgAdmin" src="/images/iniciar-sesion.png" alt="Login" class="nav-icon ms-2 icons-navbar" />
                     Admin
                   </div>
                 </a>
                 {% else %}
                 <a class="nav-link" href="/perfil">
-                  <div class="d-flex align-items-center">
-                    <img src="/images/iniciar-sesion.png" alt="Login" class="nav-icon ms-2 icons-navbar" />
+                  <div id="perfil" class="d-flex align-items-center">
+                    <img id="imgPerfil" src="/images/iniciar-sesion.png" alt="Login" class="nav-icon ms-2 icons-navbar" />
                     Perfil
                   </div>
                 </a>
