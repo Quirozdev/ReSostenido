@@ -26,17 +26,22 @@
                     <tr id="formulario" style="display: none;">
                         <th scope="row" style="max-width: 150px;">
                             <img id="previewImage" src="/images/agg-image.png" alt="Imagen de servicio"
-                                class="img-fluid rounded-pill mx-auto d-block mb-2"
-                                style="max-width: 100%; max-height: 150px; object-fit: contain;">
-
+                                class="img-fluid rounded-pill mx-auto d-block mb-2" style="max-width: 100%; max-height: 150px; object-fit: contain;">
                             <div class="input-group">
-                                <input type="file" id="url_imagen" accept="image/*" onchange="mostrarImagen(this)">
+                                <input type="file" id="inputImage" accept="image/*" onchange="mostrarImagen(this)"
+                                    itemid="url_imagen" name="url_imagen">
                             </div>
-
                             {% if query.error_url_imagen %}
                             <div class="alert alert-warning mt-2 fw-normal" role="alert">
                                 {{ query.error_url_imagen }}
                             </div>
+                            {% else %}
+                            {% if query.error_nombre_instrumento or query.error_descripcion or query.error_precio or
+                            query.error_grupo %}
+                            <div class="alert alert-warning mt-2 fw-normal" role="alert">
+                                Favor de ingresar la imagen de nuevo.
+                            </div>
+                            {% endif %}
                             {% endif %}
                         </th>
                         <td>

@@ -21,15 +21,16 @@
 <div>
   <nav class="navbar bg-body-tertiary fixed-top">
     <div class="container-fluid">
-      <a id="imgLogo" href="/"><img  src="/images/logo.png" alt="Logo" width="100" height="100"
+      <a id="imgLogo" href="/"><img src="/images/logo.png" alt="Logo" width="100" height="100"
           class="d-inline-block align-text-top" /></a>
-      <button id="navbar-toggler" class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-        aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+      <button id="navbar-toggler" class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
         <div class="offcanvas-header">
-          <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="offcanvas"
+            aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
@@ -37,7 +38,8 @@
               <li class="nav-item mb-4 half-hover">
                 <a class="nav-link" href="/citas">
                   <div id="citas" class="d-flex align-items-center">
-                    <img id="imgCitas" src="/images/citas.jpg" alt="Citas" id="imgCitas" class="nav-icon ms-2 icons-navbar" />
+                    <img id="imgCitas" src="/images/citas.jpg" alt="Citas" id="imgCitas"
+                      class="nav-icon ms-2 icons-navbar" />
                     Citas
                   </div>
                 </a>
@@ -46,14 +48,16 @@
                 {% if usuario.es_admin %}
                 <a class="nav-link" href="/administrar_servicios">
                   <div id="adminServicios" class="d-flex align-items-center">
-                    <img id="imgAdminServicios" src="/images/servicios.png" alt="Servicios" class="nav-icon ms-2 icons-navbar" />
+                    <img id="imgAdminServicios" src="/images/servicios.png" alt="Servicios"
+                      class="nav-icon ms-2 icons-navbar" />
                     Servicios
                   </div>
                 </a>
                 {% else %}
                 <a class="nav-link" href="/servicios">
                   <div id="servicios" class="d-flex align-items-center">
-                    <img id="imgServicios" src="/images/servicios.png" alt="Servicios" class="nav-icon ms-2 icons-navbar" />
+                    <img id="imgServicios" src="/images/servicios.png" alt="Servicios"
+                      class="nav-icon ms-2 icons-navbar" />
                     Servicios
                   </div>
                 </a>
@@ -73,21 +77,24 @@
                 {% if usuario %} {% if usuario.es_admin %}
                 <a class="nav-link" href="/perfil">
                   <div id="admin" class="d-flex align-items-center">
-                    <img id="imgAdmin" src="/images/iniciar-sesion.png" alt="Login" class="nav-icon ms-2 icons-navbar" />
+                    <img id="imgAdmin" src="/images/iniciar-sesion.png" alt="Login"
+                      class="nav-icon ms-2 icons-navbar" />
                     Admin
                   </div>
                 </a>
                 {% else %}
                 <a class="nav-link" href="/perfil">
                   <div id="perfil" class="d-flex align-items-center">
-                    <img id="imgPerfil" src="/images/iniciar-sesion.png" alt="Login" class="nav-icon ms-2 icons-navbar" />
+                    <img id="imgPerfil" src="/images/iniciar-sesion.png" alt="Login"
+                      class="nav-icon ms-2 icons-navbar" />
                     Perfil
                   </div>
                 </a>
                 {% endif %} {% else %}
                 <a class="nav-link" href="/login">
                   <div id="iniciarSesion" class="d-flex align-items-center">
-                    <img id="imgIniciarSesion" src="/images/iniciar-sesion.png" alt="Login" class="nav-icon ms-2 icons-navbar" />
+                    <img id="imgIniciarSesion" src="/images/iniciar-sesion.png" alt="Login"
+                      class="nav-icon ms-2 icons-navbar" />
                     Iniciar Sesión
                   </div>
                 </a>
@@ -104,7 +111,8 @@
                 {% else %}
                 <a class="nav-link" href="/register">
                   <div id="registrarse" class="d-flex align-items-center">
-                    <img id="imgregistrarse" src="/images/registrarse.png" alt="Registrarse" class="nav-icon ms-2 icons-navbar" />
+                    <img id="imgregistrarse" src="/images/registrarse.png" alt="Registrarse"
+                      class="nav-icon ms-2 icons-navbar" />
                     Registrarse
                   </div>
                 </a>
@@ -120,12 +128,13 @@
 
 <body>
   {% block body %}{% endblock %}
-  <footer class="container p-3 text-center">
+  <footer class=" p-3 text-center color-principal mt-5">
     <p class="text-center small text-muted mb-3 mt-2">
-      <a id="agendarCitas" href="/agendar_cita">Agendar citas</a> |
-      <a id="servicios" href="/servicios">Servicios</a> | <a id="faq" href="/FAQ">Q&A</a> |
-      <a id="iniciarSesion" href="/login">Iniciar Sesión</a> |
-      <a id="registrarse" href="/register">Registrarse</a>
+      <a id="agendarCitas" class="text-light" href="/agendar_cita">Agendar citas</a> |
+      <a id="servicios" class="text-light" href="/servicios">Servicios</a> |
+      <a id="faq" class="text-light" href="/FAQ">Q&A</a> |
+      <a id="iniciarSesion" class="text-light" href="/login">Iniciar Sesión</a> |
+      <a id="registrarse" class="text-light" href="/register">Registrarse</a>
     </p>
     <section class="mb-2 pb-0">
       <a class="btn text-white btn-floating m-3" style="background-color: #3b5998;" href="facebook.com" role="button"><i
@@ -135,9 +144,22 @@
       <a class="btn text-white btn-floating m-3" style="background-color: #ac2bac;" href="instagram.com"
         role="button"><i class="fab fa-instagram"></i></a>
     </section>
-    <p id="copyright" class="text-center small text-muted">
+    <p id="copyright" class="text-center small">
+      <div class="icon-circle">
+        <i class="fa-solid fa-location-dot"></i>
+      </div>
+      <span class="text-light me-3">San Raymundo #64, Villa Verde, 83118 Hermosillo, Son. </span> 
+      <div class="icon-circle">
+        <i class="fa-solid fa-phone-volume"></i>
+      </div>
+      <span class="text-light">+ 52 1 662 351 1195</span>
+      
+    </p>
+   
+    <p id="copyright" class="text-center small text-light">
       Copyright &copy; Re Sostenido 2023
     </p>
   </footer>
 </body>
+
 </html>
