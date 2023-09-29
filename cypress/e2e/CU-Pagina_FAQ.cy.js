@@ -1,32 +1,16 @@
 describe('Pagina principal', () => {
-  it('Ingresar al sitio', () => {
+  before(() => {
     cy.visit('localhost:3000')
   })
 
   it('Encontrar link FAQ footer', () => {
-    cy.get('.mb-3 > [href="/FAQ"]').should('be.visible')
-  })
-
-
-  it('Dar click en el link FAQ footer', () => {
-    cy.get('.mb-3 > [href="/FAQ"]').click()
-  })
-
-
-  it('Encontrar link FAQ menu', () => {
-    // Aqui va pasos para entrar a FAQ por el menu
+    //Encontrar link en el Footer
+    cy.get('.mb-3 > [href="/FAQ"]').should('be.visible').click()
+    //Abrir menu de navegación
     cy.get('.navbar-toggler-icon').click()
-    
-  })
-
-  it('Dar click en el link FAQ menu', () => {
-    // Aqui va pasos para entrar a FAQ por el menu
+    //Click en link a FAQ en el menu
     cy.get(':nth-child(3) > .nav-link > .d-flex').click()
-    
-  })
-
-  it('Leer titulo FAQ ', () => {
+    //Verificar contenido del sitio
     cy.get('.container-sm > .mt-5').should('contain.text', 'Preguntas frecuentes  (FAQ)')
   })
-
 })

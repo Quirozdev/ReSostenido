@@ -26,7 +26,7 @@ body {
 }
 
 .color-principal {
-    background-color: #48649a
+    background-color: #034165
 }
 
 .icons-navbar {
@@ -53,13 +53,13 @@ body {
 
 .botones {
     color: #ffffff;
-    background-color: #48649a;
+    background-color: #034165;
 }
 
 .botones:hover {
     color: #48649a;
     background-color: #ffffff;
-    border: 1px solid #48649a;
+    border: 1px solid #034165;
 }
 
 .page_404 {
@@ -98,13 +98,26 @@ table.table thead th {
 }
 
 input[type="file"]::file-selector-button {
-    background-color: #48649a;
+    background-color: #034165;
     color: #fff;
     border: none;
     padding: 4px 10px;
     border-radius: 16px;
     cursor: pointer;
 }
+.icon-circle {
+    display: inline-block;
+    background-color: #ffffff; 
+    width: 30px; 
+    height: 30px; 
+    border-radius: 50%;
+    text-align: center;
+    line-height: 30px;
+    margin-right: 10px;
+  }
+  .icon-circle i {
+    color: #034165; 
+  }
 
 @media only screen and (max-width: 768px) {
     .box-area {
