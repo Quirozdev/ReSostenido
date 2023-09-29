@@ -6,14 +6,14 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="text-container p-4 d-flex flex-column justify-content-center h-100 mb-5">
-                    <h1 class="fs-3">Servicios</h1>
+                    <h1 id="servicios" class="fs-3">Servicios</h1>
                     <p class="lead text-secondary"><small>
                             Nuestro servicio de calibración de instrumentos musicales está diseñado para elevar tu
                             experiencia musical al máximo. Con una atención meticulosa al detalle, nuestro equipo de
                             expertos se encarga de optimizar el rendimiento de tu instrumento para que puedas disfrutar
                             al máximo de tu música.
                         </small></p>
-                    <h1 class="fs-4">Incluye:</h1>
+                    <h1 id="serviciosIncluye" class="fs-4">Incluye:</h1>
                     <p class="lead text-secondary"><small>
                             - Limpieza exhaustiva del instrumento.
                             - Ajuste del brazo, puente y tuerca.
@@ -23,7 +23,7 @@
                             - Ajuste de la altura de las cuerdas para máxima comodidad.
                             - Revisión de la electrónica en instrumentos eléctricos.
                         </small></p>
-                    <h1 class="fs-4">No incluye:</h1>
+                    <h1 id="serviciosNoIncluye" class="fs-4">No incluye:</h1>
                     <p class="lead text-secondary"><small>
                             - Cuerdas (se recomienda traer un paquete nuevo).
                         </small></p>
@@ -75,7 +75,7 @@
     </div>
     <hr>
     <div class="container-xl">
-        <h2 class="mt-5 mb-5 fs-1">Servicios disponibles</h2>
+        <h2 id="serviciosDisponibles8" class="mt-5 mb-5 fs-1">Servicios disponibles</h2>
         <div class="container">
             {% for grupo in grupos %}
             <h2 class="mt-5 mb-5">{{ grupo }}</h2>
@@ -88,10 +88,10 @@
                         </div>
                         
                         <div class="card-body">
-                            <h5 class="card-title">{{ servicio.nombre_instrumento }}</h5>
-                            <p class="card-text">{{ servicio.descripcion }}</p>
-                            <p class="card-text">Precio: ${{ servicio.precio }}</p>
-                            <a href="/cita"
+                            <h5 id="serviciosNombreInstrumento" class="card-title">{{ servicio.nombre_instrumento }}</h5>
+                            <p id="serviciosDescripcion" class="card-text">{{ servicio.descripcion }}</p>
+                            <p id="servicioPrecio" class="card-text">Precio: ${{ servicio.precio }}</p>
+                            <a id="agendar" href="/cita"
                                 class="btn mt-2 rounded-pill d-flex justify-content-center align-middle botones">Agendar</a>
                         </div>
                     </div>
