@@ -1,17 +1,14 @@
 describe('Pagina de registro', () => {
-  it('Ingresar al sitio', () => {
+  before(() => {
     cy.visit('localhost:3000')
   })
   
-  it('Encontrar el boton de menu', () =>{
-      cy.get('.navbar-toggler-icon').click()  
-  })
-
-  it('Click en el boton de registrarse', () => {
-      cy.get('.position-absolute > :nth-child(2) > .nav-link > .d-flex').click()
-  });
-
-  it('Rellenar formulario', () => {
+  it('Realizar registro', () =>{
+    //Menu de navegación  
+    cy.get('.navbar-toggler-icon').click()
+    //Click en registrar
+    cy.get('.position-absolute > :nth-child(2) > .nav-link > .d-flex').click()
+    //Rellenar formulario
     cy.get('#nombre').type('Adrian', { force: true })
     cy.get('#apellidos').type('Vargas', { force: true })
     cy.get('#email').type('adrianvargasuson@gmail.com', { force: true })
@@ -19,5 +16,5 @@ describe('Pagina de registro', () => {
     cy.get('#contrasenia').type('TacosDeGansito', { force: true })
     cy.get('#confirmar_contrasenia').type('TacosDeGansito', { force: true })
     cy.get('#register').click()
-  });
+  })
 })
