@@ -2,20 +2,20 @@
 {% block body %}
 
 <div class="margin-top-110 ms-5 me-5 mb-5">
-    <p class="fs-3 ms-4 mt-5 fw-bold text-center">
+    <p id="adminservicios" class="fs-3 ms-4 mt-5 fw-bold text-center">
         Administración de servicios
     </p>
     <div class="table-responsive">
         <table class="table table-borderless table-hover">
             <thead>
                 <tr>
-                    <th scope="col" class="fs-4 vertical-align-middle">Servicios activos</th>
-                    <th scope="col" class="fs-5 fw-lighter vertical-align-middle">Nombre</th>
-                    <th scope="col" class="fs-5 fw-lighter vertical-align-middle">Grupo</th>
-                    <th scope="col" class="fs-5 fw-lighter vertical-align-middle">Descripción</th>
-                    <th scope="col" class="fs-5 fw-lighter vertical-align-middle">Costo</th>
-                    <th scope="col" class="fs-5 fw-lighter vertical-align-middle"></th>
-                    <th scope="col" class="fs-5 fw-lighter vertical-align-middle">
+                    <th id="servicios-activos" scope="col" class="fs-4 vertical-align-middle">Servicios activos</th>
+                    <th id="saNombre" scope="col" class="fs-5 fw-lighter vertical-align-middle">Nombre</th>
+                    <th id="saGrupo" scope="col" class="fs-5 fw-lighter vertical-align-middle">Grupo</th>
+                    <th id="saDescripción" scope="col" class="fs-5 fw-lighter vertical-align-middle">Descripción</th>
+                    <th id="saCosto" scope="col" class="fs-5 fw-lighter vertical-align-middle">Costo</th>
+                    <th id="sa1" scope="col" class="fs-5 fw-lighter vertical-align-middle"></th>
+                    <th id="sa2" scope="col" class="fs-5 fw-lighter vertical-align-middle">
                         <button id="btnAgregar" class="btn btn-lg w-100 fs-6 botones rounded-pill vertical-align-middle"
                             type="button" onclick="toggleFormulario()">Agregar</button>
                     </th>
@@ -87,26 +87,26 @@
                 </form>
 
                 {% for servicio in serviciosActivos %}
-                <form action="/editar_servicio" method="post">
+                <form id="serviciosActivos-form" action="/editar_servicio" method="post">
                     <tr>
                         <th scope="row" style="max-width: 150px; text-align: center;">
                             <img src="/images/servicios/{{ servicio.url_imagen }}" alt="Imagen de servicio"
                                 class="img-fluid rounded-pill mx-auto d-block"
                                 style="max-width: 100%; max-height: 150px; object-fit: contain;">
                         </th>
-                        <td class="vertical-align-middle">{{ servicio.nombre_instrumento }}</td>
-                        <td class="vertical-align-middle">{{ servicio.grupo }}</td>
-                        <td class="vertical-align-middle">{{ servicio.descripcion }}</td>
-                        <td class="vertical-align-middle">${{ servicio.precio }}</td>
-                        <td class="vertical-align-middle">
+                        <td id="sanombre_instrumento2" class="vertical-align-middle">{{ servicio.nombre_instrumento }}</td>
+                        <td id="saGrupo2" class="vertical-align-middle">{{ servicio.grupo }}</td>
+                        <td id="saDescripción2" class="vertical-align-middle">{{ servicio.descripcion }}</td>
+                        <td id="saPrecio2" class="vertical-align-middle">${{ servicio.precio }}</td>
+                        <td  class="vertical-align-middle">
                             <input type="text" name="id" id="" value="{{servicio.id}}" style="display:none;">
-                            <button class="btn btn-lg w-100 fs-6 botones rounded-pill" type="button">Editar</button>
+                            <button id="btnEditar" class="btn btn-lg w-100 fs-6 botones rounded-pill" type="button">Editar</button>
                         </td>
                 </form>
-                <form action="/deshabilitar_servicio" method="post">
+                <form  action="/deshabilitar_servicio" method="post">
                     <td class="vertical-align-middle">
                         <input type="text" name="id" id="" value="{{servicio.id}}" style="display:none;">
-                        <button class="btn btn-lg w-100 fs-6 botones rounded-pill" type="submit">Deshabilitar</button>
+                        <button id="btnDeshabilitar" class="btn btn-lg w-100 fs-6 botones rounded-pill" type="submit">Deshabilitar</button>
                     </td>
                 </form>
                 </tr>
@@ -180,12 +180,12 @@
         <table class="table table-borderless table-hover">
             <thead>
                 <tr>
-                    <th scope="col" class="fs-4">Servicios inactivos</th>
-                    <th scope="col" class="fs-5 fw-lighter">Nombre</th>
-                    <th scope="col" class="fs-5 fw-lighter">Grupo</th>
-                    <th scope="col" class="fs-5 fw-lighter">Descripción</th>
-                    <th scope="col" class="fs-5 fw-lighter">Costo</th>
-                    <th scope="col" class="fs-5 fw-lighter"></th>
+                    <th id="sinactivos1" scope="col" class="fs-4">Servicios inactivos</th>
+                    <th id="sinactivos2" scope="col" class="fs-5 fw-lighter">Nombre</th>
+                    <th id="sinactivos3" scope="col" class="fs-5 fw-lighter">Grupo</th>
+                    <th id="sinactivos4" scope="col" class="fs-5 fw-lighter">Descripción</th>
+                    <th id="sinactivos5" scope="col" class="fs-5 fw-lighter">Costo</th>
+                    <th id="sinactivos6" scope="col" class="fs-5 fw-lighter"></th>
 
                 </tr>
             </thead>
@@ -197,16 +197,16 @@
                             class="img-fluid rounded-pill mx-auto d-block"
                             style="max-width: 100%; max-height: 150px; object-fit: contain;">
                     </th>
-                    <td style="vertical-align: middle;">{{ servicio.nombre_instrumento }}</td>
-                    <td style="vertical-align: middle;">{{ servicio.grupo }}</td>
-                    <td style="vertical-align: middle;">{{ servicio.descripcion }}</td>
-                    <td style="vertical-align: middle;">${{ servicio.precio }}</td>
+                    <td id="servicioInstrumento" style="vertical-align: middle;">{{ servicio.nombre_instrumento }}</td>
+                    <td id="servicioGrupo"  style="vertical-align: middle;">{{ servicio.grupo }}</td>
+                    <td id="servicioDescripcion"  style="vertical-align: middle;">{{ servicio.descripcion }}</td>
+                    <td id="servicioPrecio"  style="vertical-align: middle;">${{ servicio.precio }}</td>
 
                     <td style="vertical-align: middle;">
                         <form action="/habilitar_servicio" method="post">
                             <input type="text" name="id" id="" value="{{servicio.id}}" style="display:none;">
 
-                            <button type="submit" class="btn btn-lg w-100 fs-6 botones rounded-pill">Habilitar</button>
+                            <button id="btnHabilitar" type="submit" class="btn btn-lg w-100 fs-6 botones rounded-pill">Habilitar</button>
                         </form>
                     </td>
                 </tr>
@@ -216,7 +216,7 @@
     </div>
 </div>
 {% else %}
-<div class="alert alert-warning mt-2 fw-normal me-5 ms-5 mt-5" role="alert">
+<div id="alertnohay" class="alert alert-warning mt-2 fw-normal me-5 ms-5 mt-5" role="alert">
     No hay servicios deshabilitados
 </div>
 {% endif %}
