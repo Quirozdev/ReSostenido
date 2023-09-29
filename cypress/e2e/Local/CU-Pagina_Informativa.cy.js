@@ -8,10 +8,17 @@ describe('Pagina de servicios', () => {
         cy.get('.navbar-toggler-icon').click() 
         //Click en servicios
         cy.get(':nth-child(1) > :nth-child(2) > .nav-link > .d-flex').click()
+        //Titulo sección de Servicios
+        cy.get('.text-container > #servicios').should('be.visible')
         //Encontrar descripción del servicio de calibración
-        cy.get(':nth-child(2) > small').should('be.visible') 
-        //Descripción detallada del servicio
-        cy.get(':nth-child(4) > small').should('be.visible')
+        cy.get(':nth-child(2) > small').should('be.visible')
+        //Descripción de que incluye el servicio
+        cy.get('#serviciosIncluye').should('be.visible')
+        //Descripción de lo que no incluye
+        cy.get('#serviciosNoIncluye').should('be.visible') 
+        //Sección de Servicios Disponibles
+        cy.get('#serviciosDisponibles8').should('be.visible')
+        
 
         //SECCIÓN DE GUITARRAS:
 
