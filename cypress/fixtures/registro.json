@@ -4,5 +4,10 @@
     "email": "adrianvargasuson@gmail.com",
     "celular": "6623511195",
     "contrasena": "TacosDeGansito",
-    "conf_contra": "TacosDeGansito"
+    "conf_contra": "TacosDeGansito",
+    "imagen": "foto.jpg",
+    "nombre_instrumento": "Guitarra clásica",
+    "grupo": "Guitarras",
+    "descripcion": "Calibración",
+    "precio":"300"
 }
