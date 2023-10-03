@@ -16,10 +16,16 @@ class EmailService {
       },
     });
 
-    this.transporter.verify().then(() => {
-      this.ready = true;
-      console.log('EmailService ready to send emails');
-    });
+    this.transporter
+      .verify()
+      .then(() => {
+        this.ready = true;
+        console.log('EmailService ready to send emails');
+      })
+      .catch((error) => {
+        console.log(`EmailService failed`, error);
+        process.exit(1);
+      });
   }
 
   async sendEmail(destinatario, asunto, mensajeHtml) {
@@ -33,7 +39,13 @@ class EmailService {
       html: mensajeHtml,
     };
 
-    await this.transporter.sendMail(opcionesCorreo);
+    try {
+      await this.transporter.sendMail(opcionesCorreo);
+      console.log(`Email sent successfully to ${destinatario}`);
+    } catch (error) {
+      console.log(`Failed to send email to ${destinatario}`);
+      console.log('EmailError:', error);
+    }
   }
 }
 
