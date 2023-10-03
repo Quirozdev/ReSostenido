@@ -40,8 +40,9 @@ class EmailService {
     };
 
     try {
-      await this.transporter.sendMail(opcionesCorreo);
+      const results = await this.transporter.sendMail(opcionesCorreo);
       console.log(`Email sent successfully to ${destinatario}`);
+      console.log('Email details: ', results);
     } catch (error) {
       console.log(`Failed to send email to ${destinatario}`);
       console.log('EmailError:', error);
