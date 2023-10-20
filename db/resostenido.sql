@@ -42,6 +42,56 @@ CREATE TABLE servicios (
   PRIMARY KEY(id)
 );
 
+CREATE TABLE citas (
+  id int(11) AUTO_INCREMENT,
+  fecha DATE NOT NULL,
+  hora TIME NOT NULL,
+  motivo VARCHAR(255),
+  id_servicio int(11) NOT NULL,
+  id_usuario int(11) NOT NULL,
+  CONSTRAINT fk_servicio_cita
+  FOREIGN KEY (id_servicio) REFERENCES servicios(id),
+  CONSTRAINT fk_servicio_usuario
+  FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
+  PRIMARY KEY(id)
+);
+
+DELIMITER $$
+DROP FUNCTION IF EXISTS validar_disponibilidad_fecha_cita;
+CREATE FUNCTION validar_disponibilidad_fecha_cita(fecha DATE, hora TIME)
+  RETURNS JSON 
+  BEGIN
+
+    DECLARE indice_dia_en_la_semana INT;
+    DECLARE cantidad_citas INT;
+
+    SET indice_dia_en_la_semana = WEEKDAY(fecha);
+
+    IF indice_dia_en_la_semana = 6 THEN
+      RETURN JSON_OBJECT('disponible', 'false', 'mensaje', 'El taller no se encuentra abierto los domingos');
+    END IF;
+    
+    IF NOT hora >= '09:00:00' OR NOT hora <= '18:00:00' THEN
+      RETURN JSON_OBJECT('disponible', 'false', 'mensaje', 'El taller se encuentra abierto desde las 9:00 AM hasta las 6:00 PM');
+    END IF;
+
+    IF ADDTIME(CONVERT(fecha, DATETIME), hora) <= NOW() THEN
+      RETURN JSON_OBJECT('disponible', 'false', 'mensaje', 'Esa fecha ya pasó');
+    END IF;
+
+    SET cantidad_citas = (
+      SELECT COUNT(*)
+      FROM citas
+      WHERE citas.fecha = fecha
+    );
+
+    IF cantidad_citas >= 8 THEN
+      RETURN JSON_OBJECT('disponible', 'false', 'mensaje', 'Ya hay 8 citas para este dia');
+    END IF;
+    
+    RETURN JSON_OBJECT('disponible', 'true', 'mensaje', NULL);
+  END;$$
+DELIMITER ;
 
 /*-- Inserta información para Guitarras
 INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
@@ -79,4 +129,10 @@ VALUES (450.00, 'Otros', 'Docerola', 'Calibración', 'landingpage-1.jpg');
 INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
 VALUES (450.00, 'Otros', 'Bajo sexto', 'Calibración', 'landingpage-1.jpg');
 
+
+
+
+INSERT INTO usuarios (email, nombre, apellidos, numero_telefono, contrasenia, es_admin, verificado) VALUES ('si@gmail.com', 'asd', 'pasdo', '1234124', 'axf234', 0, 1);
+
+INSERT INTO citas (fecha, hora, motivo, id_servicio, id_usuario) VALUES ('2023-10-19', '08:28', 'test', 1, 1);
 */
