@@ -58,25 +58,27 @@ CREATE TABLE citas (
 
 DELIMITER $$
 DROP FUNCTION IF EXISTS validar_disponibilidad_fecha_cita;
-CREATE FUNCTION validar_disponibilidad_fecha_cita(fecha DATE, hora TIME)
+CREATE FUNCTION validar_disponibilidad_fecha_cita(fecha DATE, hora TIME, fecha_y_hora_actual DATETIME)
   RETURNS JSON 
   BEGIN
 
     DECLARE indice_dia_en_la_semana INT;
     DECLARE cantidad_citas INT;
 
+    SET fecha_y_hora_actual = IFNULL(fecha_y_hora_actual, CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '-07:00'));
+
     SET indice_dia_en_la_semana = WEEKDAY(fecha);
 
     IF indice_dia_en_la_semana = 6 THEN
-      RETURN JSON_OBJECT('disponible', 'false', 'mensaje', 'El taller no se encuentra abierto los domingos');
+      RETURN JSON_OBJECT('disponible', false, 'mensaje', 'El taller no se encuentra abierto los domingos');
     END IF;
     
-    IF NOT hora >= '09:00:00' OR NOT hora <= '18:00:00' THEN
-      RETURN JSON_OBJECT('disponible', 'false', 'mensaje', 'El taller se encuentra abierto desde las 9:00 AM hasta las 6:00 PM');
+    IF NOT hora >= '09:00:00' OR NOT hora <= '17:00:00' THEN
+      RETURN JSON_OBJECT('disponible', false, 'mensaje', 'El taller se encuentra abierto desde las 9:00 AM hasta las 6:00 PM, solo se pueden agendar citas desde las 9:00 AM hasta las 5:00 PM');
     END IF;
 
-    IF ADDTIME(CONVERT(fecha, DATETIME), hora) <= NOW() THEN
-      RETURN JSON_OBJECT('disponible', 'false', 'mensaje', 'Esa fecha ya pasó');
+    IF ADDTIME(CONVERT(fecha, DATETIME), hora) <= fecha_y_hora_actual THEN
+      RETURN JSON_OBJECT('disponible', false, 'mensaje', 'Esa fecha ya pasó');
     END IF;
 
     SET cantidad_citas = (
@@ -86,10 +88,10 @@ CREATE FUNCTION validar_disponibilidad_fecha_cita(fecha DATE, hora TIME)
     );
 
     IF cantidad_citas >= 8 THEN
-      RETURN JSON_OBJECT('disponible', 'false', 'mensaje', 'Ya hay 8 citas para este dia');
+      RETURN JSON_OBJECT('disponible', false, 'mensaje', 'Ya hay 8 citas para este dia');
     END IF;
     
-    RETURN JSON_OBJECT('disponible', 'true', 'mensaje', NULL);
+    RETURN JSON_OBJECT('disponible', true, 'mensaje', NULL);
   END;$$
 DELIMITER ;
 
