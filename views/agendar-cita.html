@@ -1,0 +1,54 @@
+<form id="formulario-checar-disponibilidad">
+  <label for="fecha">fecha</label>
+  <input type="date" id="fecha" name="fecha" />
+  <label for="hora">hora</label>
+  <input type="time" id="hora" name="hora" />
+  <button type="submit">Checar disponibilidad</button>
+</form>
+<p id="mensaje"></p>
+
+<script>
+  const formularioDisponibilidad = document.getElementById(
+    'formulario-checar-disponibilidad'
+  );
+  const inputDia = document.getElementById('fecha');
+  const inputHora = document.getElementById('hora');
+
+  const parrafoMensaje = document.getElementById('mensaje');
+
+  const diaActual = new Date();
+
+  // para poner valor por defecto y como minimo el dia actual
+  inputDia.value = `${diaActual.getFullYear()}-${
+    diaActual.getMonth() + 1
+  }-${diaActual.getDate()}`;
+  inputDia.min = `${diaActual.getFullYear()}-${
+    diaActual.getMonth() + 1
+  }-${diaActual.getDate()}`;
+
+  inputHora.value = `${diaActual.getHours()}:${diaActual.getMinutes()}:00`;
+
+  formularioDisponibilidad.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    fetch(`${location.origin}/checar-disponibilidad-fecha`, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ fecha: inputDia.value, hora: inputHora.value }),
+    })
+      .then((res) => res.json())
+      .then(({ disponibilidad, mensaje }) => {
+        console.log({ disponibilidad, mensaje });
+        parrafoMensaje.textContent = `Disponibilidad: ${
+          disponibilidad ? 'Si' : `No, ${mensaje}`
+        }`;
+      })
+      .catch((error) => {
+        parrafoMensaje.textContent = 'Algo salio mal';
+        console.error(error);
+      });
+  });
+</script>

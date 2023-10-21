@@ -44,13 +44,13 @@ describe('En la funcionalidad de citas', () => {
       });
 
       test('Estan disponibles cuando la hora se encuentre en el horario valido, no sea un domingo y no haya 8 citas ese dia', async () => {
-        const { disponible, mensaje } =
+        const { disponibilidad, mensaje } =
           await servicioCitas.verificarDisponibilidadCita(
             '2023-10-20',
-            '14:00',
+            '17:40',
             '2023-10-20 13:00' // el dia actual es 20/10/2023 y son las 13:00 horas
           );
-        expect(disponible).toBe(true);
+        expect(disponibilidad).toBe(true);
         expect(mensaje).toBeNull();
 
         const resultados = await servicioCitas.verificarDisponibilidadCita(
@@ -58,18 +58,18 @@ describe('En la funcionalidad de citas', () => {
           '09:00',
           '2023-10-20 13:00' // el dia actual es 20/10/2023 y son las 13:00 horas
         );
-        expect(resultados.disponible).toBe(true);
+        expect(resultados.disponibilidad).toBe(true);
         expect(resultados.mensaje).toBeNull();
       });
 
       test('NO estan disponibles cuando el dia es un domingo', async () => {
-        const { disponible, mensaje } =
+        const { disponibilidad, mensaje } =
           await servicioCitas.verificarDisponibilidadCita(
             '2023-10-22', // domingo
             '14:00',
             '2023-10-20 13:00' // el dia actual es 20/10/2023 y son las 13:00 horas
           );
-        expect(disponible).toBe(false);
+        expect(disponibilidad).toBe(false);
         expect(mensaje).not.toBeNull();
 
         const resultados = await servicioCitas.verificarDisponibilidadCita(
@@ -77,32 +77,32 @@ describe('En la funcionalidad de citas', () => {
           '15:00',
           '2023-10-20 13:00' // el dia actual es 20/10/2023 y son las 13:00 horas
         );
-        expect(resultados.disponible).toBe(false);
+        expect(resultados.disponibilidad).toBe(false);
         expect(resultados.mensaje).not.toBeNull();
       });
 
-      test('NO estan disponibles cuando la hora esta fuera del horario de trabajo (09:00 AM - 18:00 PM) y no se puede agendar despues de las 17:00 PM', async () => {
-        const { disponible, mensaje } =
+      test('NO estan disponibles cuando la hora esta fuera del intervalo 9:00 AM - 17:40 PM', async () => {
+        const { disponibilidad, mensaje } =
           await servicioCitas.verificarDisponibilidadCita(
             '2023-10-23',
-            '06:00',
+            '08:59',
             '2023-10-20 13:00' // el dia actual es 20/10/2023 y son las 13:00 horas
           );
-        expect(disponible).toBe(false);
+        expect(disponibilidad).toBe(false);
         expect(mensaje).not.toBeNull();
 
         const resultados = await servicioCitas.verificarDisponibilidadCita(
           '2023-10-26',
-          '18:00', // a las 6 de la tarde ya no deberia poder agendarse una cita
+          '17:41',
           '2023-10-20 13:00' // el dia actual es 20/10/2023 y son las 13:00 horas
         );
-        expect(resultados.disponible).toBe(false);
+        expect(resultados.disponibilidad).toBe(false);
         expect(resultados.mensaje).not.toBeNull();
       });
     });
   });
 
-  describe('cuando hay 8 citas registradas para ese dia', () => {
+  describe('cuando hay 8 citas registradas para el dia 21-10-2023', () => {
     beforeAll(async () => {
       await Promise.all([
         testDatabase
@@ -157,14 +157,122 @@ describe('En la funcionalidad de citas', () => {
     });
 
     test('no hay disponibilidad para una nueva cita', async () => {
-      const { disponible, mensaje } =
+      const { disponibilidad, mensaje } =
         await servicioCitas.verificarDisponibilidadCita(
           '2023-10-21',
-          '17:00',
+          '13:00',
           '2023-10-20 13:00' // el dia actual es 20/10/2023 y son las 13:00 horas
         );
-      expect(disponible).toBe(false);
+      expect(disponibilidad).toBe(false);
       expect(mensaje).not.toBeNull();
+    });
+
+    afterAll(async () => {
+      await testDatabase.getConnection().execute('DELETE FROM citas');
+    });
+  });
+
+  describe('cuando hay algunas citas registradas para el dia 21-10-2023', () => {
+    beforeEach(async () => {
+      await Promise.all([
+        testDatabase
+          .getConnection()
+          .execute(
+            "INSERT INTO citas (fecha, hora, motivo, id_servicio, id_usuario) VALUES ('2023-10-21', '09:00', 'test', ?, ?)",
+            [servicioId, usuarioId]
+          ),
+        testDatabase
+          .getConnection()
+          .execute(
+            "INSERT INTO citas (fecha, hora, motivo, id_servicio, id_usuario) VALUES ('2023-10-21', '10:00', 'test', ?, ?)",
+            [servicioId, usuarioId]
+          ),
+        testDatabase
+          .getConnection()
+          .execute(
+            "INSERT INTO citas (fecha, hora, motivo, id_servicio, id_usuario) VALUES ('2023-10-21', '10:40', 'test', ?, ?)",
+            [servicioId, usuarioId]
+          ),
+        testDatabase
+          .getConnection()
+          .execute(
+            "INSERT INTO citas (fecha, hora, motivo, id_servicio, id_usuario) VALUES ('2023-10-21', '16:03', 'test', ?, ?)",
+            [servicioId, usuarioId]
+          ),
+        testDatabase
+          .getConnection()
+          .execute(
+            "INSERT INTO citas (fecha, hora, motivo, id_servicio, id_usuario) VALUES ('2023-10-21', '16:24', 'test', ?, ?)",
+            [servicioId, usuarioId]
+          ),
+        testDatabase
+          .getConnection()
+          .execute(
+            "INSERT INTO citas (fecha, hora, motivo, id_servicio, id_usuario) VALUES ('2023-10-21', '17:20', 'test', ?, ?)",
+            [servicioId, usuarioId]
+          ),
+      ]);
+    });
+
+    afterEach(async () => {
+      await testDatabase.getConnection().execute('DELETE FROM citas');
+    });
+
+    test('No permitir solapamientos entre citas, margen de 20 minutos', async () => {
+      const { disponibilidad, mensaje } =
+        await servicioCitas.verificarDisponibilidadCita(
+          '2023-10-21',
+          '09:00', // ya hay una cita con esta hora
+          '2023-10-20 13:00' // el dia actual es 20/10/2023 y son las 13:00 horas
+        );
+      expect(disponibilidad).toBe(false);
+      expect(mensaje).not.toBeNull();
+
+      const resultados = await servicioCitas.verificarDisponibilidadCita(
+        '2023-10-21',
+        '10:21', // hay 2 citas, una a las 10:00 y otra a las 10:41, solapa a la de las 10:41
+        '2023-10-20 13:00' // el dia actual es 20/10/2023 y son las 13:00 horas
+      );
+      expect(resultados.disponibilidad).toBe(false);
+      expect(resultados.mensaje).not.toBeNull();
+
+      const resultadosSegundoTest =
+        await servicioCitas.verificarDisponibilidadCita(
+          '2023-10-21',
+          '10:01', // solapa a la cita de las 10:00
+          '2023-10-20 13:00' // el dia actual es 20/10/2023 y son las 13:00 horas
+        );
+      expect(resultadosSegundoTest.disponibilidad).toBe(false);
+      expect(resultadosSegundoTest.mensaje).not.toBeNull();
+
+      const resultadosTercerTest =
+        await servicioCitas.verificarDisponibilidadCita(
+          '2023-10-21',
+          '16:23', // solapa a la cita de las 16:24
+          '2023-10-20 13:00' // el dia actual es 20/10/2023 y son las 13:00 horas
+        );
+      expect(resultadosTercerTest.disponibilidad).toBe(false);
+      expect(resultadosTercerTest.mensaje).not.toBeNull();
+    });
+
+    test('es posible agendar cuando no hay solapamientos', async () => {
+      const resultados = await servicioCitas.verificarDisponibilidadCita(
+        '2023-10-21',
+        '10:20', // hay una registrada a las 10:00 y a las 10:40, por lo que si es posible a las 10:20
+        '2023-10-20 13:00' // el dia actual es 20/10/2023 y son las 13:00 horas
+      );
+      expect(resultados.disponibilidad).toBe(true);
+      expect(resultados.mensaje).toBeNull();
+
+      const resultadosSegundoTest =
+        await servicioCitas.verificarDisponibilidadCita(
+          '2023-10-21',
+          '17:40', // todavia tiene chanza, es el limite
+          '2023-10-20 13:00' // el dia actual es 20/10/2023 y son las 13:00 horas
+        );
+      console.log(resultadosSegundoTest);
+      expect(resultadosSegundoTest.disponibilidad).toBe(true);
+      expect(resultadosSegundoTest.mensaje).toBeNull();
     });
   });
 

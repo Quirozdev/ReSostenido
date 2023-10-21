@@ -15,6 +15,7 @@ const authRouter = require('./routes/authRoutes');
 const indexRouter = require('./routes/index');
 const faqRouter = require('./routes/faq');
 const servicesRouter = require('./routes/services');
+const citasRouter = require('./routes/citas');
 
 const app = express();
 app.use(morgan('dev'));
@@ -43,6 +44,7 @@ app.use(authRouter);
 app.use(indexRouter);
 app.use(faqRouter);
 app.use(servicesRouter);
+app.use(citasRouter);
 
 // si no se encontro ningun recurso en alguna ruta
 app.use((req, res) => {

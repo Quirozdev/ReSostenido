@@ -9,7 +9,8 @@ class CitasService {
         'SELECT validar_disponibilidad_fecha_cita(?, ?, ?)',
         [fecha, hora, fechaYHoraActual]
       );
-      return Object.values(result[0][0])[0];
+      const { disponibilidad, mensaje } = Object.values(result[0][0])[0];
+      return { disponibilidad, mensaje };
     } catch (err) {
       console.error(err);
     }

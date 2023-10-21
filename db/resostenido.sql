@@ -58,40 +58,57 @@ CREATE TABLE citas (
 
 DELIMITER $$
 DROP FUNCTION IF EXISTS validar_disponibilidad_fecha_cita;
-CREATE FUNCTION validar_disponibilidad_fecha_cita(fecha DATE, hora TIME, fecha_y_hora_actual DATETIME)
+CREATE FUNCTION validar_disponibilidad_fecha_cita(fecha_a_checar DATE, hora_a_checar TIME, fecha_y_hora_actual DATETIME)
   RETURNS JSON 
   BEGIN
 
     DECLARE indice_dia_en_la_semana INT;
     DECLARE cantidad_citas INT;
+    DECLARE existe_una_cita_entre_el_intervalo BOOLEAN;
+    DECLARE hora_ya_registrada TIME;
+    DECLARE hora_20_minutos_antes TIME;
+    DECLARE hora_20_minutos_despues TIME;
 
     SET fecha_y_hora_actual = IFNULL(fecha_y_hora_actual, CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '-07:00'));
 
-    SET indice_dia_en_la_semana = WEEKDAY(fecha);
+    SET indice_dia_en_la_semana = WEEKDAY(fecha_a_checar);
 
     IF indice_dia_en_la_semana = 6 THEN
-      RETURN JSON_OBJECT('disponible', false, 'mensaje', 'El taller no se encuentra abierto los domingos');
+      RETURN JSON_OBJECT('disponibilidad', false, 'mensaje', 'El taller no se encuentra abierto los domingos');
     END IF;
     
-    IF NOT hora >= '09:00:00' OR NOT hora <= '17:00:00' THEN
-      RETURN JSON_OBJECT('disponible', false, 'mensaje', 'El taller se encuentra abierto desde las 9:00 AM hasta las 6:00 PM, solo se pueden agendar citas desde las 9:00 AM hasta las 5:00 PM');
+    IF NOT hora_a_checar >= '09:00:00' OR NOT hora_a_checar <= '17:40:00' THEN
+      RETURN JSON_OBJECT('disponibilidad', false, 'mensaje', 'Solo se pueden agendar citas desde las 9:00 AM hasta las 5:40 PM');
     END IF;
 
-    IF ADDTIME(CONVERT(fecha, DATETIME), hora) <= fecha_y_hora_actual THEN
-      RETURN JSON_OBJECT('disponible', false, 'mensaje', 'Esa fecha ya pasó');
+    IF ADDTIME(CONVERT(fecha_a_checar, DATETIME), hora_a_checar) <= fecha_y_hora_actual THEN
+      RETURN JSON_OBJECT('disponibilidad', false, 'mensaje', 'Esa fecha ya pasó');
+    END IF;
+
+    SET hora_20_minutos_antes = SUBTIME(hora_a_checar, '00:20:00');
+    SET hora_20_minutos_despues = ADDTIME(hora_a_checar, '00:20:00');
+
+    SELECT hora INTO hora_ya_registrada FROM citas WHERE((citas.hora >= hora_a_checar AND citas.hora < hora_20_minutos_despues) OR (citas.hora > hora_20_minutos_antes AND citas.hora < hora_a_checar)) LIMIT 1;
+
+    SET existe_una_cita_entre_el_intervalo = (
+      SELECT hora_ya_registrada IS NOT NULL
+    );
+
+    IF existe_una_cita_entre_el_intervalo = true THEN
+      RETURN JSON_OBJECT('disponibilidad', false, 'mensaje', CONCAT('Ya hay una cita entre las ', hora_ya_registrada, ' y las ', ADDTIME(hora_ya_registrada, '00:20:00')));
     END IF;
 
     SET cantidad_citas = (
       SELECT COUNT(*)
       FROM citas
-      WHERE citas.fecha = fecha
+      WHERE citas.fecha = fecha_a_checar
     );
 
     IF cantidad_citas >= 8 THEN
-      RETURN JSON_OBJECT('disponible', false, 'mensaje', 'Ya hay 8 citas para este dia');
+      RETURN JSON_OBJECT('disponibilidad', false, 'mensaje', 'Ya hay 8 citas para este dia');
     END IF;
     
-    RETURN JSON_OBJECT('disponible', true, 'mensaje', NULL);
+    RETURN JSON_OBJECT('disponibilidad', true, 'mensaje', NULL);
   END;$$
 DELIMITER ;
 
@@ -136,5 +153,5 @@ VALUES (450.00, 'Otros', 'Bajo sexto', 'Calibración', 'landingpage-1.jpg');
 
 INSERT INTO usuarios (email, nombre, apellidos, numero_telefono, contrasenia, es_admin, verificado) VALUES ('si@gmail.com', 'asd', 'pasdo', '1234124', 'axf234', 0, 1);
 
-INSERT INTO citas (fecha, hora, motivo, id_servicio, id_usuario) VALUES ('2023-10-19', '08:28', 'test', 1, 1);
+INSERT INTO citas (fecha, hora, motivo, id_servicio, id_usuario) VALUES ('2023-10-19', '10:20', 'test', 1, 1);
 */
