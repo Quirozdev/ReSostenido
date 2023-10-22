@@ -1,12 +1,123 @@
-<form id="formulario-checar-disponibilidad">
-  <label for="fecha">fecha</label>
-  <input type="date" id="fecha" name="fecha" />
-  <label for="hora">hora</label>
-  <input type="time" id="hora" name="hora" />
-  <button type="submit">Checar disponibilidad</button>
-</form>
-<p id="mensaje"></p>
-<button id="agendar-cita-btn">agendar cita</button>
+{% extends "layout.html" %}
+{% block body %}
+<div class="margin-top-110">
+  <h1 class="text-center"></h1>
+  <section>
+    <div class="container">
+      <div class="accordion" id="accordionExample">
+        <div class="steps">
+          <progress id="progress" value=0 max=100></progress>
+          <div class="step-item">
+            <button class="step-button text-center" type="button" data-target="#content-1">
+              1
+            </button>
+            <div class="step-title">
+              Agendar
+            </div>
+          </div>
+          <div class="step-item">
+            <button class="step-button text-center collapsed" type="button" data-target="#content-2">
+              2
+            </button>
+            <div class="step-title">
+              Pagar
+            </div>
+          </div>
+          <div class="step-item">
+            <button class="step-button text-center collapsed" type="button" data-target="#content-3">
+              3
+            </button>
+            <div class="step-title">
+              Confirmar
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div id="content-1" class="step-content active" data-parent="#accordionExample">
+            <div class="container d-flex justify-content-center align-items-center">
+
+              <div class="col-md-6 right-box">
+                <div class="row align-items-center justify-content-between">
+                  <div id="registrarse" class="header-text mb-4 text-center">
+                    <h2>Agendar Cita</h2>
+                  </div>
+                  <div class="input-group mb-3">
+                    <select class="form-select form-control-lg" aria-label="Default select example" disabled>
+                      <option selected>Servicio</option>
+                    </select>
+                  </div>
+
+                  <div class="input-group mb-3">
+                    <div class="form-floating">
+                      <input type="date" class="form-control form-control-lg fs-6 " placeholder="Fecha"
+                        name="fecha" id="fecha">
+                      <label for="floatingSelectGrid">Fecha</label>
+                    </div>
+                    <div class="form-floating ms-3">
+                      <input type="time" class="form-control form-control-lg fs-6" placeholder="Hora"
+                      name="hora" id="hora">
+                      <label for="floatingSelectGrid">Hora</label>
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="form-check">
+                      <label class="form-check-label" for="flexCheckIndeterminate">
+                        Incluir cuerdas
+                      </label>
+                      <input class="form-check-input" type="checkbox" value="" id="incluye_cuerdas"
+                        name="incluye_cuerdas">
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="form-floating">
+                      <textarea class="form-control form-control-lg" placeholder="Leave a comment here" id="descripcion"
+                        name="descripcion"></textarea>
+                      <label for="floatingTextarea">Escribe su problema...</label>
+                    </div>
+                  </div>
+                  <div class="input-group mb-1">
+                    <p class="text-xl-start fw-bold">Nombre: </p>
+                    <p class="text-xl-start text-decoration-underline ms-3"></p>
+                  </div>
+                  <div class="input-group mb-1">
+                    <p class="text-xl-start fw-bold">Grupo: </p>
+                    <p class="text-xl-start text-decoration-underline ms-3"></p>
+                  </div>
+                  <div class="input-group mb-1">
+                    <p class="text-xl-start fw-bold">Descripción: </p>
+                    <p class="text-xl-start text-decoration-underline ms-3"></p>
+                  </div>
+                  <div class="input-group mb-1">
+                    <p class="text-xl-start fw-bold">Costo: </p>
+                    <p class="text-xl-start text-decoration-underline ms-3"></p>
+                  </div>
+                  <div class="input-group mb-1">
+                    <button id="agendar-cita-btn" class="btn btn-lg w-100 fs-6 fw-bold botones">Agendar</button>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col-md-6 rounded-4 d-none d-md-block d-flex justify-content-center align-items-center flex-column right-box">
+                <img src="/images/resend_verification_token_img.jpg" width="100%" height="100%"
+                  class="right-box d-flex flex-column">
+              </div>
+            </div>
+          </div>
+          <div id="content-2" class="step-content" data-parent="#accordionExample">
+            <div class="card-body">
+              <p>Content for Step 2</p>
+            </div>
+          </div>
+          <div id="content-3" class="step-content" data-parent="#accordionExample">
+            <div class="card-body">
+              <p>Content for Step 3</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
 
 <script>
   const formularioDisponibilidad = document.getElementById(
@@ -38,36 +149,52 @@
   const diaActual = new Date();
 
   // para poner valor por defecto y como minimo el dia actual
-  inputDia.value = `${diaActual.getFullYear()}-${
-    diaActual.getMonth() + 1
-  }-${diaActual.getDate()}`;
-  inputDia.min = `${diaActual.getFullYear()}-${
-    diaActual.getMonth() + 1
-  }-${diaActual.getDate()}`;
+  inputDia.value = `${diaActual.getFullYear()}-${diaActual.getMonth() + 1
+    }-${diaActual.getDate()}`;
+  inputDia.min = `${diaActual.getFullYear()}-${diaActual.getMonth() + 1
+    }-${diaActual.getDate()}`;
 
   inputHora.value = `${diaActual.getHours()}:${diaActual.getMinutes()}:00`;
 
-  formularioDisponibilidad.addEventListener('submit', (e) => {
-    e.preventDefault();
+  const stepButtons = document.querySelectorAll('.step-button');
+  const progress = document.querySelector('#progress');
+  const stepContent = document.querySelectorAll('.step-content');
 
-    fetch(`${location.origin}/citas/checar-disponibilidad-fecha`, {
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ fecha: inputDia.value, hora: inputHora.value }),
-    })
-      .then((res) => res.json())
-      .then(({ disponibilidad, mensaje }) => {
-        console.log({ disponibilidad, mensaje });
-        parrafoMensaje.textContent = `Disponibilidad: ${
-          disponibilidad ? 'Si' : `No, ${mensaje}`
-        }`;
-      })
-      .catch((error) => {
-        parrafoMensaje.textContent = 'Algo salio mal';
-        console.error(error);
+  // Activa el Step 1 por defecto
+  stepButtons[0].setAttribute('aria-expanded', 'true');
+  stepButtons[0].classList.add('done');
+
+  // Establece el valor del progreso por defecto
+  progress.setAttribute('value', 0);
+
+  Array.from(stepButtons).forEach((button, index) => {
+    button.addEventListener('click', () => {
+      // Cambia el atributo aria-expanded
+      stepButtons.forEach((btn, btnIndex) => {
+        btn.setAttribute('aria-expanded', index === btnIndex ? 'true' : 'false');
       });
+
+      // Actualiza el progreso
+      progress.setAttribute('value', index * 100 / (stepButtons.length - 1));
+
+      // Oculta todos los contenidos de paso
+      stepContent.forEach(item => {
+        item.classList.remove('active');
+      });
+
+      // Muestra el contenido del paso actual
+      stepContent[index].classList.add('active');
+
+      // Marca los botones anteriores como "hechos"
+      stepButtons.forEach((item, secindex) => {
+        if (index > secindex) {
+          item.classList.add('done');
+        } else {
+          item.classList.remove('done');
+        }
+      });
+    });
   });
+
 </script>
+{% endblock %}
