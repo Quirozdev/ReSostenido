@@ -51,6 +51,7 @@ CREATE TABLE citas (
   descripcion VARCHAR(255),
   incluye_cuerdas BOOLEAN DEFAULT 0,
   precio_anticipo_total DECIMAL(10, 2) NOT NULL,
+  pagada BOOLEAN DEFAULT 0,
   id_servicio int(11) NOT NULL,
   id_usuario int(11) NOT NULL,
   CONSTRAINT fk_servicio_cita
@@ -92,7 +93,7 @@ CREATE FUNCTION validar_disponibilidad_fecha_cita(fecha_a_checar DATE, hora_a_ch
     SET hora_20_minutos_antes = SUBTIME(hora_a_checar, '00:20:00');
     SET hora_20_minutos_despues = ADDTIME(hora_a_checar, '00:20:00');
 
-    SELECT hora INTO hora_ya_registrada FROM citas WHERE((citas.hora >= hora_a_checar AND citas.hora < hora_20_minutos_despues) OR (citas.hora > hora_20_minutos_antes AND citas.hora < hora_a_checar)) LIMIT 1;
+    SELECT hora INTO hora_ya_registrada FROM citas WHERE(citas.pagada = true AND ((citas.hora >= hora_a_checar AND citas.hora < hora_20_minutos_despues) OR (citas.hora > hora_20_minutos_antes AND citas.hora < hora_a_checar))) LIMIT 1;
 
     SET existe_una_cita_entre_el_intervalo = (
       SELECT hora_ya_registrada IS NOT NULL
@@ -105,7 +106,7 @@ CREATE FUNCTION validar_disponibilidad_fecha_cita(fecha_a_checar DATE, hora_a_ch
     SET cantidad_citas = (
       SELECT COUNT(*)
       FROM citas
-      WHERE citas.fecha = fecha_a_checar
+      WHERE citas.fecha = fecha_a_checar AND citas.pagada = true
     );
 
     IF cantidad_citas >= 8 THEN

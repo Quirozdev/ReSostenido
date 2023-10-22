@@ -102,55 +102,55 @@ describe('En la funcionalidad de citas', () => {
     });
   });
 
-  describe('cuando hay 8 citas registradas para el dia 21-10-2023', () => {
+  describe('cuando hay 8 citas registradas y pagadas para el dia 21-10-2023', () => {
     beforeAll(async () => {
       await Promise.all([
         testDatabase
           .getConnection()
           .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, id_servicio, id_usuario) VALUES ('2023-10-21', '09:00', 'test', 125.00, ?, ?)",
+            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '09:00', 'test', 125.00, true, ?, ?)",
             [servicioId, usuarioId]
           ),
         testDatabase
           .getConnection()
           .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, id_servicio, id_usuario) VALUES ('2023-10-21', '10:00', 'test', 125.00, ?, ?)",
+            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '10:00', 'test', 125.00, true, ?, ?)",
             [servicioId, usuarioId]
           ),
         testDatabase
           .getConnection()
           .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, id_servicio, id_usuario) VALUES ('2023-10-21', '11:00', 'test', 125.00, ?, ?)",
+            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '11:00', 'test', 125.00, true, ?, ?)",
             [servicioId, usuarioId]
           ),
         testDatabase
           .getConnection()
           .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, id_servicio, id_usuario) VALUES ('2023-10-21', '12:00', 'test', 125.00, ?, ?)",
+            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '12:00', 'test', 125.00, true, ?, ?)",
             [servicioId, usuarioId]
           ),
         testDatabase
           .getConnection()
           .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, id_servicio, id_usuario) VALUES ('2023-10-21', '13:00', 'test', 125.00, ?, ?)",
+            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '13:00', 'test', 125.00, true, ?, ?)",
             [servicioId, usuarioId]
           ),
         testDatabase
           .getConnection()
           .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, id_servicio, id_usuario) VALUES ('2023-10-21', '14:00', 'test', 125.00, ?, ?)",
+            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '14:00', 'test', 125.00, true, ?, ?)",
             [servicioId, usuarioId]
           ),
         testDatabase
           .getConnection()
           .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, id_servicio, id_usuario) VALUES ('2023-10-21', '15:00', 'test', 125.00, ?, ?)",
+            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '15:00', 'test', 125.00, true, ?, ?)",
             [servicioId, usuarioId]
           ),
         testDatabase
           .getConnection()
           .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, id_servicio, id_usuario) VALUES ('2023-10-21', '16:00', 'test', 125.00, ?, ?)",
+            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '16:00', 'test', 125.00, true, ?, ?)",
             [servicioId, usuarioId]
           ),
       ]);
@@ -172,43 +172,43 @@ describe('En la funcionalidad de citas', () => {
     });
   });
 
-  describe('cuando hay algunas citas registradas para el dia 21-10-2023', () => {
+  describe('cuando hay algunas citas registradas y pagadas para el dia 21-10-2023', () => {
     beforeEach(async () => {
       await Promise.all([
         testDatabase
           .getConnection()
           .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, id_servicio, id_usuario) VALUES ('2023-10-21', '09:00', 'test', 125.00, ?, ?)",
+            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '09:00', 'test', 125.00, true, ?, ?)",
             [servicioId, usuarioId]
           ),
         testDatabase
           .getConnection()
           .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, id_servicio, id_usuario) VALUES ('2023-10-21', '10:00', 'test', 125.00, ?, ?)",
+            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '10:00', 'test', 125.00, true, ?, ?)",
             [servicioId, usuarioId]
           ),
         testDatabase
           .getConnection()
           .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, id_servicio, id_usuario) VALUES ('2023-10-21', '10:40', 'test', 125.00, ?, ?)",
+            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '10:40', 'test', 125.00, true, ?, ?)",
             [servicioId, usuarioId]
           ),
         testDatabase
           .getConnection()
           .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, id_servicio, id_usuario) VALUES ('2023-10-21', '16:03', 'test', 125.00, ?, ?)",
+            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '16:03', 'test', 125.00, true, ?, ?)",
             [servicioId, usuarioId]
           ),
         testDatabase
           .getConnection()
           .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, id_servicio, id_usuario) VALUES ('2023-10-21', '16:24', 'test', 125.00, ?, ?)",
+            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '16:24', 'test', 125.00, true, ?, ?)",
             [servicioId, usuarioId]
           ),
         testDatabase
           .getConnection()
           .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, id_servicio, id_usuario) VALUES ('2023-10-21', '17:20', 'test', 125.00, ?, ?)",
+            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '17:20', 'test', 125.00, true, ?, ?)",
             [servicioId, usuarioId]
           ),
       ]);

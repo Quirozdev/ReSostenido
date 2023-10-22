@@ -103,7 +103,7 @@ async function verifyAccount(token) {
 async function loginUser(email, contrasenia) {
   try {
     const [usuarios, campos] = await db.execute(
-      'SELECT `nombre`, `apellidos`, `es_admin`, `verificado`, `contrasenia` FROM `usuarios` WHERE `email` = ?',
+      'SELECT `id`, `nombre`, `apellidos`, `es_admin`, `verificado`, `contrasenia` FROM `usuarios` WHERE `email` = ?',
       [email]
     );
 

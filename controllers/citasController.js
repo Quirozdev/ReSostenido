@@ -1,9 +1,11 @@
 const db = require('../db/db');
+const { validationResult } = require('express-validator');
 const CitasService = require('../services/citasService');
 const { getActiveServiceById } = require('../services/serviciosService');
 
 const PaypalController = require('../controllers/paypalController');
 
+const CitasServiceInstance = new CitasService(db);
 const PaypalInstance = new PaypalController();
 
 async function agendarCitaGet(req, res, next) {
@@ -30,9 +32,8 @@ async function agendarCitaGet(req, res, next) {
 async function checarDisponibilidadParaNuevaCita(req, res, next) {
   const { fecha, hora } = req.body;
   try {
-    const { disponibilidad, mensaje } = await new CitasService(
-      db
-    ).verificarDisponibilidadCita(fecha, hora);
+    const { disponibilidad, mensaje } =
+      await CitasServiceInstance.verificarDisponibilidadCita(fecha, hora);
     res.json({ disponibilidad, mensaje });
   } catch (error) {
     next(error);
@@ -40,8 +41,78 @@ async function checarDisponibilidadParaNuevaCita(req, res, next) {
 }
 
 async function crearOrdenPago(req, res, next) {
+  const result = validationResult(req);
+
+  if (!result.isEmpty()) {
+    const errores = result.array();
+
+    const primerError = errores[0];
+
+    return res.status(400).json({
+      error: primerError.msg,
+    });
+  }
+
+  const { idServicio, incluyeCuerdas, motivo, fecha, hora } = req.body;
   try {
-    const { link } = await PaypalInstance.crearLinkDePago();
+    const servicio = await getActiveServiceById(idServicio);
+
+    if (!servicio) {
+      return res.status(404).json({
+        error:
+          'No se encontró ese servicio o ese servicio no se encuentra activo',
+      });
+    }
+
+    const { disponibilidad, mensaje } =
+      await CitasServiceInstance.verificarDisponibilidadCita(fecha, hora);
+
+    if (!disponibilidad) {
+      return res.status(400).json({
+        error: mensaje,
+      });
+    }
+
+    const items = [
+      {
+        name: `Servicio ${servicio.grupo} - ${servicio.nombre_instrumento}`,
+        description: servicio.descripcion,
+        quantity: 1,
+        unit_amount: {
+          value: servicio.precio_anticipo_cita,
+          currency_code: 'MXN',
+        },
+      },
+    ];
+
+    if (incluyeCuerdas && servicio.precio_cuerdas) {
+      items.push({
+        name: `Cuerdas para ${servicio.nombre_instrumento}`,
+        description: 'Cuerdas',
+        quantity: 1,
+        unit_amount: {
+          value: servicio.precio_cuerdas,
+          currency_code: 'MXN',
+        },
+      });
+    }
+
+    const total = items.reduce((acc, curr) => {
+      return acc + Number(curr.unit_amount.value);
+    }, 0);
+
+    const idCita = await CitasServiceInstance.crearCitaNoPagada({
+      fecha,
+      hora,
+      descripcion: motivo,
+      incluye_cuerdas: incluyeCuerdas ? true : false,
+      precio_anticipo_total: total,
+      id_servicio: idServicio,
+      id_usuario: req.session.usuario.id_usuario,
+    });
+
+    const { link } = await PaypalInstance.crearLinkDePago(idCita, items, total);
+
     console.log(link);
     res.status(200).json({ link });
   } catch (error) {
@@ -66,6 +137,10 @@ async function procesarPago(req, res, next) {
     });
 
     const data = await response.json();
+
+    const idCita = data.purchase_units[0].payments.captures[0].custom_id;
+
+    await CitasServiceInstance.actualizarCitaAEstadoPagada(idCita);
     res.json(data);
   } catch (error) {
     next(error);

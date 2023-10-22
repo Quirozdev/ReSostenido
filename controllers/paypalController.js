@@ -14,7 +14,7 @@ class PaypalController {
     };
   }
 
-  async crearLinkDePago(price = 100) {
+  async crearLinkDePago(idCita, items, total) {
     const url = `${this.paypal.url}/v2/checkout/orders`;
     const token = await this.generateAccessToken();
 
@@ -30,23 +30,14 @@ class PaypalController {
         intent: 'CAPTURE',
         purchase_units: [
           {
-            items: [
-              {
-                name: 'Servicio de prueba',
-                description: 'wowwww',
-                quantity: 1,
-                unit_amount: {
-                  value: price.toString(),
-                  currency_code: 'MXN',
-                },
-              },
-            ],
+            items: items,
+            custom_id: idCita,
             amount: {
               currency_code: 'MXN',
-              value: price.toString(),
+              value: total,
               breakdown: {
                 item_total: {
-                  value: price.toString(),
+                  value: total,
                   currency_code: 'MXN',
                 },
               },
@@ -71,8 +62,6 @@ class PaypalController {
     });
 
     const data = await response.json();
-
-    console.log(data);
 
     if (data && data.links) {
       const approvalLink = data.links.find((link) => {
