@@ -44,7 +44,7 @@ app.use(authRouter);
 app.use(indexRouter);
 app.use(faqRouter);
 app.use(servicesRouter);
-app.use(citasRouter);
+app.use('/citas', citasRouter);
 
 // si no se encontro ningun recurso en alguna ruta
 app.use((req, res) => {

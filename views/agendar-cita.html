@@ -6,6 +6,7 @@
   <button type="submit">Checar disponibilidad</button>
 </form>
 <p id="mensaje"></p>
+<button id="agendar-cita-btn">agendar cita</button>
 
 <script>
   const formularioDisponibilidad = document.getElementById(
@@ -15,6 +16,24 @@
   const inputHora = document.getElementById('hora');
 
   const parrafoMensaje = document.getElementById('mensaje');
+
+  const agendarCitaBtn = document.getElementById('agendar-cita-btn');
+  agendarCitaBtn.addEventListener('click', async () => {
+    const response = await fetch(`${location.origin}/citas/agendar-cita`, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({}),
+    });
+
+    const data = await response.json();
+
+    const linkPago = data.link;
+
+    location.href = linkPago;
+  });
 
   const diaActual = new Date();
 
@@ -31,7 +50,7 @@
   formularioDisponibilidad.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    fetch(`${location.origin}/checar-disponibilidad-fecha`, {
+    fetch(`${location.origin}/citas/checar-disponibilidad-fecha`, {
       method: 'POST',
       mode: 'cors',
       headers: {

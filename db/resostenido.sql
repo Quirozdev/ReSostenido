@@ -34,6 +34,8 @@ CREATE TABLE tokens_recuperacion_contrasenia (
 CREATE TABLE servicios (
   id int(11) AUTO_INCREMENT,
   precio DECIMAL(10, 2) NOT NULL,
+  precio_cuerdas DECIMAL(10, 2), -- Si es NULL, significa que el servicio no ofrece cuerdas
+  precio_anticipo_cita DECIMAL(10, 2) DEFAULT 125.00 NOT NULL, -- El cliente propuso un rango de entre 100 y 150 pesos para el anticipo de todas las citas
   grupo VARCHAR(55),
   nombre_instrumento VARCHAR(55) NOT NULL,
   descripcion VARCHAR(255),
@@ -46,7 +48,9 @@ CREATE TABLE citas (
   id int(11) AUTO_INCREMENT,
   fecha DATE NOT NULL,
   hora TIME NOT NULL,
-  motivo VARCHAR(255),
+  descripcion VARCHAR(255),
+  incluye_cuerdas BOOLEAN DEFAULT 0,
+  precio_anticipo_total DECIMAL(10, 2) NOT NULL,
   id_servicio int(11) NOT NULL,
   id_usuario int(11) NOT NULL,
   CONSTRAINT fk_servicio_cita
@@ -153,5 +157,5 @@ VALUES (450.00, 'Otros', 'Bajo sexto', 'Calibración', 'landingpage-1.jpg');
 
 INSERT INTO usuarios (email, nombre, apellidos, numero_telefono, contrasenia, es_admin, verificado) VALUES ('si@gmail.com', 'asd', 'pasdo', '1234124', 'axf234', 0, 1);
 
-INSERT INTO citas (fecha, hora, motivo, id_servicio, id_usuario) VALUES ('2023-10-19', '10:20', 'test', 1, 1);
+INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, id_servicio, id_usuario) VALUES ('2023-10-19', '10:20', 'test', 125.00, 1, 1);
 */

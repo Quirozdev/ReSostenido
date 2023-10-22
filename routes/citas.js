@@ -12,4 +12,10 @@ router.post(
   citasController.checarDisponibilidadParaNuevaCita
 );
 
+router.post('/agendar-cita', citasController.crearOrdenPago);
+
+router.get('/procesar-pago', citasController.procesarPago);
+
+router.get('/cancelar-pago', citasController.cancelarPago);
+
 module.exports = router;
