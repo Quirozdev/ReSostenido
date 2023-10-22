@@ -1,6 +1,7 @@
 const querystring = require('node:querystring');
 
 // https://courseit.io/articulo/como-integrar-paypal-a-tu-web-x7f1yxv10
+// https://www.youtube.com/watch?v=Zm8_c8tnOkQ&ab_channel=LeiferMendez
 class PaypalController {
   constructor() {
     this.paypal = {

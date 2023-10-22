@@ -90,7 +90,7 @@
                             <h5 id="serviciosNombreInstrumento" class="card-title">{{ servicio.nombre_instrumento }}</h5>
                             <p id="serviciosDescripcion" class="card-text">{{ servicio.descripcion }}</p>
                             <p id="servicioPrecio" class="card-text">Precio: ${{ servicio.precio }}</p>
-                            <a id="agendar" href="/citas/agendar-cita?servicio={{ servicio.id }}"
+                            <a id="agendar" href="/citas/agendar-cita/{{ servicio.id }}"
                                 class="btn mt-2 rounded-pill d-flex justify-content-center align-middle botones">Agendar</a>
                         </div>
                     </div>

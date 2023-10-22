@@ -3,9 +3,7 @@ const router = express.Router();
 
 const citasController = require('../controllers/citasController');
 
-router.get('/agendar-cita', (req, res) => {
-  res.render('agendar-cita.html');
-});
+router.get('/agendar-cita/:idServicio', citasController.agendarCitaGet);
 
 router.post(
   '/checar-disponibilidad-fecha',

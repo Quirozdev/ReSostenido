@@ -1,9 +1,31 @@
 const db = require('../db/db');
 const CitasService = require('../services/citasService');
+const { getActiveServiceById } = require('../services/serviciosService');
 
 const PaypalController = require('../controllers/paypalController');
 
 const PaypalInstance = new PaypalController();
+
+async function agendarCitaGet(req, res, next) {
+  const idServicio = req.params.idServicio;
+
+  try {
+    const servicio = await getActiveServiceById(idServicio);
+
+    if (!servicio) {
+      return res.status(404).render('agendar-cita.html', {
+        error:
+          'No se encontró ese servicio o ese servicio no se encuentra activo',
+      });
+    }
+
+    res.render('agendar-cita.html', {
+      servicio,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
 
 async function checarDisponibilidadParaNuevaCita(req, res, next) {
   const { fecha, hora } = req.body;
@@ -55,6 +77,7 @@ function cancelarPago(req, res) {
 }
 
 module.exports = {
+  agendarCitaGet,
   checarDisponibilidadParaNuevaCita,
   crearOrdenPago,
   procesarPago,
