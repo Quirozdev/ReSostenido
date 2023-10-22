@@ -37,63 +37,66 @@
           <div id="content-1" class="step-content active" data-parent="#accordionExample">
             <div class="container d-flex justify-content-center align-items-center">
               <div class="col-md-6 right-box">
-                <div class="row align-items-center justify-content-between">
-                  <div id="agendar_cita" class="header-text mb-4 text-center">
-                    <h2>Agendar Cita</h2>
-                  </div>
-                  <div class="input-group mb-3">
-                    <select class="form-select form-control-lg" aria-label="Default select example" disabled>
-                      <option selected>Servicio</option>
-                    </select>
-                  </div>
-                  <div class="input-group mb-3">
-                    <div class="form-floating">
-                      <input type="date" class="form-control form-control-lg fs-6 " placeholder="Fecha" name="fecha"
-                        id="fecha">
-                      <label for="floatingSelectGrid">Fecha</label>
+                <form id="agendar_cita">
+                  <div class="row align-items-center justify-content-between">
+                    <div id="agendar_cita" class="header-text mb-4 text-center">
+                      <h2>Agendar Cita</h2>
                     </div>
-                    <div class="form-floating ms-3">
-                      <input type="time" class="form-control form-control-lg fs-6" placeholder="Hora" name="hora"
-                        id="hora">
-                      <label for="floatingSelectGrid">Hora</label>
+
+                    <div class="input-group mb-3">
+                      <select class="form-select form-control-lg" aria-label="Default select example" disabled>
+                        <option selected>Servicio</option>
+                      </select>
+                    </div>
+                    <div class="input-group mb-3">
+                      <div class="form-floating">
+                        <input type="date" class="form-control form-control-lg fs-6 " placeholder="Fecha" name="fecha"
+                          id="fecha">
+                        <label for="floatingSelectGrid">Fecha</label>
+                      </div>
+                      <div class="form-floating ms-3">
+                        <input type="time" class="form-control form-control-lg fs-6" placeholder="Hora" name="hora"
+                          id="hora">
+                        <label for="floatingSelectGrid">Hora</label>
+                      </div>
+                    </div>
+                    <div class="input-group mb-3">
+                      <div class="form-check">
+                        <label class="form-check-label" for="flexCheckIndeterminate">
+                          Incluir cuerdas
+                        </label>
+                        <input class="form-check-input" type="checkbox" value="" id="incluye_cuerdas"
+                          name="incluye_cuerdas">
+                      </div>
+                    </div>
+                    <div class="input-group mb-3">
+                      <div class="form-floating">
+                        <textarea class="form-control form-control-lg" placeholder="Leave a comment here"
+                          id="descripcion" name="descripcion"></textarea>
+                        <label for="floatingTextarea">Escribe su problema...</label>
+                      </div>
+                    </div>
+                    <div class="input-group mb-1">
+                      <p class="text-xl-start fw-bold">Nombre: </p>
+                      <p class="text-xl-start text-decoration-underline ms-3"></p>
+                    </div>
+                    <div class="input-group mb-1">
+                      <p class="text-xl-start fw-bold">Grupo: </p>
+                      <p class="text-xl-start text-decoration-underline ms-3"></p>
+                    </div>
+                    <div class="input-group mb-1">
+                      <p class="text-xl-start fw-bold">Descripción: </p>
+                      <p class="text-xl-start text-decoration-underline ms-3"></p>
+                    </div>
+                    <div class="input-group mb-1">
+                      <p class="text-xl-start fw-bold">Costo: </p>
+                      <p class="text-xl-start text-decoration-underline ms-3"></p>
+                    </div>
+                    <div class="input-group mb-1">
+                      <button id="agendar-cita-btn" class="btn btn-lg w-100 fs-6 fw-bold botones">Agendar</button>
                     </div>
                   </div>
-                  <div class="input-group mb-3">
-                    <div class="form-check">
-                      <label class="form-check-label" for="flexCheckIndeterminate">
-                        Incluir cuerdas
-                      </label>
-                      <input class="form-check-input" type="checkbox" value="" id="incluye_cuerdas"
-                        name="incluye_cuerdas">
-                    </div>
-                  </div>
-                  <div class="input-group mb-3">
-                    <div class="form-floating">
-                      <textarea class="form-control form-control-lg" placeholder="Leave a comment here" id="descripcion"
-                        name="descripcion"></textarea>
-                      <label for="floatingTextarea">Escribe su problema...</label>
-                    </div>
-                  </div>
-                  <div class="input-group mb-1">
-                    <p class="text-xl-start fw-bold">Nombre: </p>
-                    <p class="text-xl-start text-decoration-underline ms-3"></p>
-                  </div>
-                  <div class="input-group mb-1">
-                    <p class="text-xl-start fw-bold">Grupo: </p>
-                    <p class="text-xl-start text-decoration-underline ms-3"></p>
-                  </div>
-                  <div class="input-group mb-1">
-                    <p class="text-xl-start fw-bold">Descripción: </p>
-                    <p class="text-xl-start text-decoration-underline ms-3"></p>
-                  </div>
-                  <div class="input-group mb-1">
-                    <p class="text-xl-start fw-bold">Costo: </p>
-                    <p class="text-xl-start text-decoration-underline ms-3"></p>
-                  </div>
-                  <div class="input-group mb-1">
-                    <button id="agendar-cita-btn" class="btn btn-lg w-100 fs-6 fw-bold botones">Agendar</button>
-                  </div>
-                </div>
+                </form>
               </div>
               <div
                 class="col-md-6 rounded-4 d-none d-md-block d-flex justify-content-center align-items-center flex-column right-box">
@@ -155,40 +158,42 @@
                 class="col-md-6 rounded-4 d-none d-md-block d-flex justify-content-center align-items-center flex-column right-box">
                 <div class="border">
                   <div class="row align-items-center justify-content-between mb-3 ms-3 mt-3 me-3">
-                    <div id="metodo_de_pago" class="header-text mb-4">
-                      <h2>Método de Pago</h2>
-                    </div>
-                    <div class="input-group mb-5">
-                      <div class="form-floating">
-                        <input type="text" class="form-control" id="nombre_beneficiario"
-                          placeholder="Nombre del Beneficiario">
-                        <label for="floatingPassword">Nombre del Beneficiario</label>
+                    <form id="metodo_pago">
+                      <div id="metodo_de_pago" class="header-text mb-4">
+                        <h2>Método de Pago</h2>
                       </div>
-                    </div>
-                    <div class="input-group mb-5">
-                      <div class="form-floating">
-                        <input type="number" class="form-control" id="numero_tarjeta" placeholder="Número de Tarjeta">
-                        <label for="floatingPassword">Número de Tarjeta</label>
+                      <div class="input-group mb-5">
+                        <div class="form-floating">
+                          <input type="text" class="form-control" id="nombre_beneficiario"
+                            placeholder="Nombre del Beneficiario">
+                          <label for="floatingPassword">Nombre del Beneficiario</label>
+                        </div>
                       </div>
-                    </div>
-                    <div class="input-group mb-5">
-                      <div class="form-floating">
-                        <input type="password" class="form-control" id="mes" name="mes" placeholder="Mes">
-                        <label for="floatingPassword">Mes</label>
+                      <div class="input-group mb-5">
+                        <div class="form-floating">
+                          <input type="number" class="form-control" id="numero_tarjeta" placeholder="Número de Tarjeta">
+                          <label for="floatingPassword">Número de Tarjeta</label>
+                        </div>
                       </div>
-                      <div class="form-floating ms-2">
-                        <input type="password" class="form-control" id="anio" name="anio" placeholder="Año">
-                        <label for="floatingPassword">Año</label>
+                      <div class="input-group mb-5">
+                        <div class="form-floating">
+                          <input type="password" class="form-control" id="mes" name="mes" placeholder="Mes">
+                          <label for="floatingPassword">Mes</label>
+                        </div>
+                        <div class="form-floating ms-2">
+                          <input type="password" class="form-control" id="anio" name="anio" placeholder="Año">
+                          <label for="floatingPassword">Año</label>
+                        </div>
+                        <div class="form-floating ms-5">
+                          <input type="number" class="form-control form-control-lg fs-6" placeholder="CCV" name="ccv"
+                            id="ccv" maxlength=3>
+                          <label for="floatingSelectGrid">CCV</label>
+                        </div>
                       </div>
-                      <div class="form-floating ms-5">
-                        <input type="number" class="form-control form-control-lg fs-6" placeholder="CCV" name="ccv"
-                          id="ccv" maxlength=3>
-                        <label for="floatingSelectGrid">CCV</label>
+                      <div class="input-group mb-1">
+                        <button id="pagar-btn" class="btn btn-lg w-100 fs-6 fw-bold botones">Pagar</button>
                       </div>
-                    </div>
-                    <div class="input-group mb-1">
-                      <button id="pagar-btn" class="btn btn-lg w-100 fs-6 fw-bold botones">Pagar</button>
-                    </div>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -365,5 +370,43 @@
     });
   });
   */
+
+  //Mandar informacion de form de agendar_cita
+  document.getElementById('agendar_cita').addEventListener('submit', function (e) {
+    e.preventDefault(); // Evita que el formulario se envíe de manera convencional
+
+    const formData = new FormData(this); // Captura los datos del formulario
+
+    fetch('/citas/agendar-cita', {
+      method: 'POST',
+      body: formData,
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Respuesta del servidor:', data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  });
+
+  document.getElementById('metodo_pago').addEventListener('submit', function (e) {
+    e.preventDefault(); 
+    const formData = new FormData(this);
+    fetch('/citas/agendar-cita', {
+      method: 'POST',
+      body: formData,
+    })
+      .then(response => response.json()) 
+      .then(data => {
+        console.log('Respuesta del servidor:', data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  });
+
+
+
 </script>
 {% endblock %}
