@@ -1,0 +1,7 @@
+<p>Estado: {{ estado }}</p>
+<p>{{ mensaje }}</p>
+{% if estado === 'EXITOSO' %}
+<p>Servicio: {{ detalles_cita.servicio }}</p>
+<p>Fecha: {{ detalles_cita.fecha | date("DD-MM-YYYY") }}</p>
+<p>Hora: {{ detalles_cita.hora }}</p>
+{% endif %}

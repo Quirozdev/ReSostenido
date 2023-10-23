@@ -278,6 +278,8 @@ describe('En la funcionalidad de citas', () => {
 
   afterAll(async () => {
     await testDatabase.getConnection().execute('DELETE FROM citas');
+    await testDatabase.getConnection().execute('DELETE FROM usuarios');
+    await testDatabase.getConnection().execute('DELETE FROM servicios');
     await testDatabase.closeConnection();
   });
 });

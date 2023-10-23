@@ -7,6 +7,8 @@ const {
   validateAgendarCita,
 } = require('../middlewares/validations/agendarCitaValidation');
 
+router.get('/agendar-cita/estado-pago', isAuth, citasController.procesarPago);
+
 router.get(
   '/agendar-cita/:id_servicio',
   isAuth,
@@ -25,9 +27,5 @@ router.post(
   validateAgendarCita,
   citasController.crearOrdenPago
 );
-
-router.get('/procesar-pago', isAuth, citasController.procesarPago);
-
-router.get('/cancelar-pago', isAuth, citasController.cancelarPago);
 
 module.exports = router;

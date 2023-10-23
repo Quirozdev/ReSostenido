@@ -3,6 +3,15 @@ class CitasService {
     this.database = database;
   }
 
+  async getCitaNoPagadaAndCorrespondingServiceById(id) {
+    const [citas, campos] = await this.database.execute(
+      'SELECT citas.id, citas.precio_anticipo_total, citas.incluye_cuerdas, citas.pagada, citas.fecha, citas.hora, servicios.descripcion AS descripcion_servicio, servicios.nombre_instrumento FROM citas INNER JOIN servicios ON citas.id_servicio = servicios.id AND citas.id = ? AND pagada = false AND servicios.activo = true',
+      [id]
+    );
+
+    return citas[0];
+  }
+
   async verificarDisponibilidadCita(fecha, hora, fechaYHoraActual = null) {
     try {
       const result = await this.database.execute(

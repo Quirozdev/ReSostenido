@@ -396,9 +396,15 @@
       .then(data => {
         console.log('Respuesta del servidor:', data);
 
+        if (data.error) {
+          console.log(data.error);
+          return;
+        }
+
         const linkPago = data.link;
         console.log(linkPago);
 
+        // redireccion al sitio de pago de paypal
         location.href = linkPago;
       })
       .catch(error => {

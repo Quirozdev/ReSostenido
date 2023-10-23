@@ -15,10 +15,7 @@ async function agendarCitaGet(req, res, next) {
     const servicio = await getActiveServiceById(id_servicio);
 
     if (!servicio) {
-      return res.status(404).render('agendar-cita.html', {
-        error:
-          'No se encontró ese servicio o ese servicio no se encuentra activo',
-      });
+      return res.status(404).render('error.html');
     }
 
     res.render('agendar-cita.html', {
@@ -123,8 +120,53 @@ async function crearOrdenPago(req, res, next) {
 
 async function procesarPago(req, res, next) {
   const tokenOrden = req.query.token;
+  console.log('amog ussad asdasfsafvaxcv ascv as');
+
+  if (!tokenOrden) {
+    return res.status(404).render('error.html');
+  }
+
+  const pagoCancelado = req.query.pago_cancelado;
+
+  if (pagoCancelado) {
+    return res.render('estado-pago-cita.html', {
+      estado: 'CANCELADO',
+      mensaje: 'La cita fue cancelada, no se te realizó ningún cobro.',
+    });
+  }
 
   try {
+    const idCita = req.query.id_cita;
+
+    if (!idCita) {
+      return res.status(404).render('error.html');
+    }
+
+    const cita =
+      await CitasServiceInstance.getCitaNoPagadaAndCorrespondingServiceById(
+        idCita
+      );
+
+    if (!cita) {
+      return res.status(404).render('error.html');
+    }
+
+    // hay que checar si mientras el usuario pagaba para su cita, otro usuario le gano ese horario y pago primero
+    const { disponibilidad, mensaje } =
+      await CitasServiceInstance.verificarDisponibilidadCita(
+        cita.fecha,
+        cita.hora
+      );
+
+    if (!disponibilidad) {
+      return res.render('estado-pago-cita.html', {
+        estado: 'FALLIDO',
+        mensaje: `Mientras pagabas, ocurrió lo siguiente: ${mensaje}. No se te realizó ningún cobro, por favor, intenta con otra fecha y/o hora.`,
+      });
+    }
+
+    // si todo salio bien
+
     const tokenAcceso = await PaypalInstance.generateAccessToken();
 
     const url = `${PaypalInstance.paypal.url}/v2/checkout/orders/${tokenOrden}/capture`;
@@ -137,19 +179,26 @@ async function procesarPago(req, res, next) {
       },
     });
 
+    await CitasServiceInstance.actualizarCitaAEstadoPagada(idCita);
+
+    // const idCita = data.purchase_units[0].payments.captures[0].custom_id;
+
     const data = await response.json();
 
-    const idCita = data.purchase_units[0].payments.captures[0].custom_id;
+    console.log(data);
 
-    await CitasServiceInstance.actualizarCitaAEstadoPagada(idCita);
-    res.json(data);
+    return res.render('estado-pago-cita.html', {
+      estado: 'EXITOSO',
+      mensaje: `Reservación de cita exitosa!`,
+      detalles_cita: {
+        servicio: `${cita.descripcion_servicio} - ${cita.nombre_instrumento}`,
+        fecha: cita.fecha,
+        hora: cita.hora,
+      },
+    });
   } catch (error) {
     next(error);
   }
-}
-
-function cancelarPago(req, res) {
-  res.send('pago cancelado');
 }
 
 module.exports = {
@@ -157,5 +206,4 @@ module.exports = {
   checarDisponibilidadParaNuevaCita,
   crearOrdenPago,
   procesarPago,
-  cancelarPago,
 };

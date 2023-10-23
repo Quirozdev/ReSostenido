@@ -93,14 +93,14 @@ CREATE FUNCTION validar_disponibilidad_fecha_cita(fecha_a_checar DATE, hora_a_ch
     SET hora_20_minutos_antes = SUBTIME(hora_a_checar, '00:20:00');
     SET hora_20_minutos_despues = ADDTIME(hora_a_checar, '00:20:00');
 
-    SELECT hora INTO hora_ya_registrada FROM citas WHERE(citas.pagada = true AND ((citas.hora >= hora_a_checar AND citas.hora < hora_20_minutos_despues) OR (citas.hora > hora_20_minutos_antes AND citas.hora < hora_a_checar))) LIMIT 1;
+    SELECT hora INTO hora_ya_registrada FROM citas WHERE(citas.pagada = true AND citas.fecha = fecha_a_checar AND ((citas.hora >= hora_a_checar AND citas.hora < hora_20_minutos_despues) OR (citas.hora > hora_20_minutos_antes AND citas.hora < hora_a_checar))) LIMIT 1;
 
     SET existe_una_cita_entre_el_intervalo = (
       SELECT hora_ya_registrada IS NOT NULL
     );
 
     IF existe_una_cita_entre_el_intervalo = true THEN
-      RETURN JSON_OBJECT('disponibilidad', false, 'mensaje', CONCAT('Ya hay una cita entre las ', hora_ya_registrada, ' y las ', ADDTIME(hora_ya_registrada, '00:20:00')));
+      RETURN JSON_OBJECT('disponibilidad', false, 'mensaje', CONCAT('Ya hay una cita el día ', fecha_a_checar, ' entre las ', hora_ya_registrada, ' y las ', ADDTIME(hora_ya_registrada, '00:20:00')));
     END IF;
 
     SET cantidad_citas = (
@@ -152,11 +152,4 @@ VALUES (450.00, 'Otros', 'Docerola', 'Calibración', 'landingpage-1.jpg');
 
 INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
 VALUES (450.00, 'Otros', 'Bajo sexto', 'Calibración', 'landingpage-1.jpg');
-
-
-
-
-INSERT INTO usuarios (email, nombre, apellidos, numero_telefono, contrasenia, es_admin, verificado) VALUES ('si@gmail.com', 'asd', 'pasdo', '1234124', 'axf234', 0, 1);
-
-INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, id_servicio, id_usuario) VALUES ('2023-10-19', '10:20', 'test', 125.00, 1, 1);
 */

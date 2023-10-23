@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const nunjucks = require('nunjucks');
+const dateFilter = require('nunjucks-date-filter');
 const path = require('path');
 const morgan = require('morgan');
 const {
@@ -20,10 +21,12 @@ const citasRouter = require('./routes/citas');
 const app = express();
 app.use(morgan('dev'));
 // view template
-nunjucks.configure('views', {
+const env = nunjucks.configure('views', {
   autoescape: true,
   express: app,
 });
+
+env.addFilter('date', dateFilter);
 
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static('public'));
