@@ -7,7 +7,11 @@ const {
   validateAgendarCita,
 } = require('../middlewares/validations/agendarCitaValidation');
 
-router.get('/agendar-cita/:idServicio', isAuth, citasController.agendarCitaGet);
+router.get(
+  '/agendar-cita/:id_servicio',
+  isAuth,
+  citasController.agendarCitaGet
+);
 
 router.post(
   '/checar-disponibilidad-fecha',

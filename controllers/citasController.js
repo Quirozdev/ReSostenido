@@ -9,10 +9,10 @@ const CitasServiceInstance = new CitasService(db);
 const PaypalInstance = new PaypalController();
 
 async function agendarCitaGet(req, res, next) {
-  const idServicio = req.params.idServicio;
+  const id_servicio = req.params.id_servicio;
 
   try {
-    const servicio = await getActiveServiceById(idServicio);
+    const servicio = await getActiveServiceById(id_servicio);
 
     if (!servicio) {
       return res.status(404).render('agendar-cita.html', {
@@ -43,6 +43,8 @@ async function checarDisponibilidadParaNuevaCita(req, res, next) {
 async function crearOrdenPago(req, res, next) {
   const result = validationResult(req);
 
+  console.log(req.body);
+
   if (!result.isEmpty()) {
     const errores = result.array();
 
@@ -53,9 +55,9 @@ async function crearOrdenPago(req, res, next) {
     });
   }
 
-  const { idServicio, incluyeCuerdas, motivo, fecha, hora } = req.body;
+  const { id_servicio, incluye_cuerdas, descripcion, fecha, hora } = req.body;
   try {
-    const servicio = await getActiveServiceById(idServicio);
+    const servicio = await getActiveServiceById(id_servicio);
 
     if (!servicio) {
       return res.status(404).json({
@@ -85,7 +87,7 @@ async function crearOrdenPago(req, res, next) {
       },
     ];
 
-    if (incluyeCuerdas && servicio.precio_cuerdas) {
+    if (Boolean(incluye_cuerdas) && servicio.precio_cuerdas) {
       items.push({
         name: `Cuerdas para ${servicio.nombre_instrumento}`,
         description: 'Cuerdas',
@@ -104,16 +106,15 @@ async function crearOrdenPago(req, res, next) {
     const idCita = await CitasServiceInstance.crearCitaNoPagada({
       fecha,
       hora,
-      descripcion: motivo,
-      incluye_cuerdas: incluyeCuerdas ? true : false,
+      descripcion: descripcion,
+      incluye_cuerdas: incluye_cuerdas ? true : false,
       precio_anticipo_total: total,
-      id_servicio: idServicio,
+      id_servicio: id_servicio,
       id_usuario: req.session.usuario.id_usuario,
     });
 
     const { link } = await PaypalInstance.crearLinkDePago(idCita, items, total);
 
-    console.log(link);
     res.status(200).json({ link });
   } catch (error) {
     next(error);
