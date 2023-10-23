@@ -194,14 +194,14 @@ async function procesarPago(req, res, next) {
       usuario.email,
       `Tu cita fue agendada exitosamente ${usuario.nombre} ${usuario.apellidos}`,
       `
-      <p>Tu numero de cita es ${idCita}</p>
-      <p>El servicio que seleccionaste: ${cita.descripcion_servicio} - ${
-        cita.nombre_instrumento
-      }</p>
-      <p>El costo total: $${cita.precio_anticipo_total} MXN</p>
-      <p>Fecha: ${moment(cita.fecha).format('DD-MM-YYYY')}</p>
-      <p>Hora: ${moment(cita.hora, 'h:mm').format('LT')}</p>
-      <p>Consulta todas tus citas en: </p>
+      <p>Tu numero de cita es <strong>${idCita}</strong></p>
+      <p><strong>El servicio que seleccionaste:</strong> ${
+        cita.descripcion_servicio
+      } - ${cita.nombre_instrumento}</p>
+      <p><strong>El costo total:</strong> $${cita.precio_anticipo_total} MXN</p>
+      <p><strong>Fecha:</strong> ${moment(cita.fecha).format('DD-MM-YYYY')}</p>
+      <p><strong>Hora:</strong> ${moment(cita.hora, 'h:mm').format('LT')}</p>
+      <p><strong>Consulta todas tus citas en:</strong> </p>
       <a href=${hostname}/citas}>Citas</a>
       `
     );
