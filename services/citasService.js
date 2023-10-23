@@ -12,6 +12,31 @@ class CitasService {
     return citas[0];
   }
 
+  async getCitasFilteredByState(id_usuario = null) {
+    let citas;
+
+    const resultado = await this.database.execute(
+      'CALL obtenerCitasConCorrespondienteEstado(?)',
+      [id_usuario]
+    );
+
+    citas = resultado[0][0];
+
+    const citasPendientes = [];
+    const citasTerminadas = [];
+
+    for (let i = 0; i < citas.length; i++) {
+      const cita = citas[i];
+      if (cita.estado === 'Terminada') {
+        citasTerminadas.push(cita);
+      } else {
+        citasPendientes.push(cita);
+      }
+    }
+
+    return [citasPendientes, citasTerminadas];
+  }
+
   async verificarDisponibilidadCita(fecha, hora, fechaYHoraActual = null) {
     try {
       const result = await this.database.execute(

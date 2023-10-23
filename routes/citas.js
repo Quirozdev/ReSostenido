@@ -7,6 +7,9 @@ const {
   validateAgendarCita,
 } = require('../middlewares/validations/agendarCitaValidation');
 
+// historial de todas las citas
+router.get('/', isAuth, citasController.citasGet);
+
 router.get('/agendar-cita/estado-pago', isAuth, citasController.procesarPago);
 
 router.get(
@@ -27,5 +30,8 @@ router.post(
   validateAgendarCita,
   citasController.crearOrdenPago
 );
+
+// cita en especifico - falta implementar
+// router.get('/:id', isAuth, citasController.citasGet);
 
 module.exports = router;

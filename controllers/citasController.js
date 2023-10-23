@@ -11,6 +11,23 @@ const PaypalController = require('../controllers/paypalController');
 const CitasServiceInstance = new CitasService(db);
 const PaypalInstance = new PaypalController();
 
+async function citasGet(req, res, next) {
+  const usuario_loggeado = req.session.usuario;
+  try {
+    const [citasPendientes, citasTerminadas] =
+      await CitasServiceInstance.getCitasFilteredByState(
+        usuario_loggeado.es_admin ? null : usuario_loggeado.id_usuario
+      );
+
+    res.status(200).json({
+      citasPendientes,
+      citasTerminadas,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function agendarCitaGet(req, res, next) {
   const id_servicio = req.params.id_servicio;
 
@@ -225,6 +242,7 @@ async function procesarPago(req, res, next) {
 }
 
 module.exports = {
+  citasGet,
   agendarCitaGet,
   checarDisponibilidadParaNuevaCita,
   crearOrdenPago,
