@@ -6,6 +6,15 @@ const {
   compare,
 } = require('../services/encryptionService');
 
+async function getUserById(id) {
+  const [usuarios, campos] = await db.execute(
+    'SELECT `id`, `nombre`, `apellidos`, `email` FROM `usuarios` WHERE `id` = ?',
+    [id]
+  );
+
+  return usuarios[0];
+}
+
 async function registerUserWithVerificationToken({
   email,
   nombre,
@@ -155,6 +164,7 @@ async function loginUser(email, contrasenia) {
 }
 
 module.exports = {
+  getUserById,
   registerUserWithVerificationToken,
   verifyAccount,
   loginUser,

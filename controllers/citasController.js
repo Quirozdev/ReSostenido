@@ -1,5 +1,8 @@
 const db = require('../db/db');
 const { validationResult } = require('express-validator');
+const emailService = require('../services/emailService');
+const moment = require('moment');
+const { getUserById } = require('../services/userService');
 const CitasService = require('../services/citasService');
 const { getActiveServiceById } = require('../services/serviciosService');
 
@@ -183,6 +186,26 @@ async function procesarPago(req, res, next) {
 
     // const idCita = data.purchase_units[0].payments.captures[0].custom_id;
 
+    const usuario = await getUserById(req.session.usuario.id_usuario);
+
+    const hostname = process.env.RAILWAY_PUBLIC_DOMAIN || process.env.HOST_NAME;
+
+    await emailService.sendEmail(
+      usuario.email,
+      `Tu cita fue agendada exitosamente ${usuario.nombre} ${usuario.apellidos}`,
+      `
+      <p>Tu numero de cita es ${idCita}</p>
+      <p>El servicio que seleccionaste: ${cita.descripcion_servicio} - ${
+        cita.nombre_instrumento
+      }</p>
+      <p>El costo total: $${cita.precio_anticipo_total} MXN</p>
+      <p>Fecha: ${moment(cita.fecha).format('DD-MM-YYYY')}</p>
+      <p>Hora: ${moment(cita.hora, 'h:mm').format('LT')}</p>
+      <p>Consulta todas tus citas en: </p>
+      <a href=${hostname}/citas}>Citas</a>
+      `
+    );
+
     const data = await response.json();
 
     console.log(data);
@@ -192,8 +215,8 @@ async function procesarPago(req, res, next) {
       mensaje: `Reservación de cita exitosa!`,
       detalles_cita: {
         servicio: `${cita.descripcion_servicio} - ${cita.nombre_instrumento}`,
-        fecha: cita.fecha,
-        hora: cita.hora,
+        fecha: moment(cita.fecha).format('DD-MM-YYYY'),
+        hora: moment(cita.hora, 'h:mm').format('LT'),
       },
     });
   } catch (error) {

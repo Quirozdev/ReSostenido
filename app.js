@@ -2,7 +2,6 @@ require('dotenv').config();
 
 const express = require('express');
 const nunjucks = require('nunjucks');
-const dateFilter = require('nunjucks-date-filter');
 const path = require('path');
 const morgan = require('morgan');
 const {
@@ -25,8 +24,6 @@ const env = nunjucks.configure('views', {
   autoescape: true,
   express: app,
 });
-
-env.addFilter('date', dateFilter);
 
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static('public'));
