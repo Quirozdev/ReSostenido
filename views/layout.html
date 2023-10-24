@@ -45,25 +45,47 @@
                   </div>
                 </a>
               </li>
-              <li class="nav-item mb-4">
-                {% if usuario.es_admin %}
-                <a class="nav-link" href="/administrar_servicios">
-                  <div id="adminServicios" class="d-flex align-items-center">
-                    <img id="imgAdminServicios" src="/images/servicios.png" alt="Servicios"
+              <li class="nav-item mb-4 half-hover">
+                <a class="nav-link" href="/foro">
+                  <div id="citas" class="d-flex align-items-center">
+                    <img id="imgCitas" src="/images/citas.jpg" alt="Citas" id="imgCitas"
                       class="nav-icon ms-2 icons-navbar" />
-                    Servicios
+                    Foro
                   </div>
                 </a>
-                {% else %}
-                <a class="nav-link" href="/servicios">
-                  <div id="servicios" class="d-flex align-items-center">
-                    <img id="imgServicios" src="/images/servicios.png" alt="Servicios"
-                      class="nav-icon ms-2 icons-navbar" />
-                    Servicios
-                  </div>
-                </a>
-                {% endif %}
               </li>
+              
+                {% if usuario.es_admin %}
+                  <li class="nav-item mb-4">
+                    <a class="nav-link" href="/administrar_servicios">
+                      <div id="adminServicios" class="d-flex align-items-center">
+                        <img id="imgAdminServicios" src="/images/servicios.png" alt="Servicios"
+                          class="nav-icon ms-2 icons-navbar" />
+                        Servicios
+                      </div>
+                    </a>
+                  </li>
+                  <li class="nav-item mb-4">
+                    <a class="nav-link" href="/solicitudes_preguntas">
+                      <div id="adminServicios" class="d-flex align-items-center">
+                        <img id="imgAdminServicios" src="/images/servicios.png" alt="Servicios"
+                          class="nav-icon ms-2 icons-navbar" />
+                        Solicitudes de preguntas
+                      </div>
+                    </a>
+                  </li>
+                {% else %}
+                  <li class="nav-item mb-4">
+                    <a class="nav-link" href="/servicios">
+                      <div id="servicios" class="d-flex align-items-center">
+                        <img id="imgServicios" src="/images/servicios.png" alt="Servicios"
+                          class="nav-icon ms-2 icons-navbar" />
+                        Servicios
+                      </div>
+                    </a>
+                  </li>
+                {% endif %}
+              
               <li class="nav-item mb-4">
                 <a class="nav-link" href="/FAQ">
                   <div id="faq" class="d-flex align-items-center">
