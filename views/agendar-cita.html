@@ -16,8 +16,7 @@
             </div>
           </div>
           <div class="step-item">
-            <!-- Aqui deberia de tener un disabled para que no se permita ir a pasos siguientes en step 2 y 3 -->
-            <button class="step-button text-center collapsed" type="button" data-target="#content-2">
+            <button class="step-button text-center collapsed" type="button" data-target="#content-2" disabled>
               2
             </button>
             <div class="step-title">
@@ -25,7 +24,7 @@
             </div>
           </div>
           <div class="step-item">
-            <button class="step-button text-center collapsed" type="button" data-target="#content-3">
+            <button class="step-button text-center collapsed" type="button" data-target="#content-3" disabled>
               3
             </button>
             <div class="step-title">
@@ -44,7 +43,8 @@
                     </div>
 
                     <div class="input-group mb-3">
-                      <select class="form-select form-control-lg" aria-label="Default select example" id="id_servicio" name="id_servicio" disabled>
+                      <select class="form-select form-control-lg" aria-label="Default select example" id="id_servicio"
+                        name="id_servicio" disabled>
                         <option selected value="{{ servicio.id }}">Servicio</option>
                       </select>
                     </div>
@@ -106,98 +106,7 @@
             </div>
           </div>
           <div id="content-2" class="step-content" data-parent="#accordionExample">
-            <div class="container d-flex justify-content-center align-items-center">
-              <div class="col-md-6 right-box">
-                <div class="border mb-4">
-                  <div class="row align-items-center justify-content-between mb-3 ms-3 mt-3 me-3">
-                    <div id="informacion_cita" class="header-text mb-4">
-                      <h2>Información de cita</h2>
-                    </div>
-                    <div class="input-group mb-1">
-                      <p class="text-xl-start fw-bold">Nombre: </p>
-                      <p class="text-xl-start text-decoration-underline ms-3"></p>
-                    </div>
-                    <div class="input-group mb-1">
-                      <p class="text-xl-start fw-bold">Grupo: </p>
-                      <p class="text-xl-start text-decoration-underline ms-3"></p>
-                    </div>
-                    <div class="input-group mb-1">
-                      <p class="text-xl-start fw-bold">Descripción: </p>
-                      <p class="text-xl-start text-decoration-underline ms-3"></p>
-                    </div>
-                    <div class="input-group mb-1">
-                      <p class="text-xl-start fw-bold">Fecha: </p>
-                      <p class="text-xl-start text-decoration-underline ms-3"></p>
-                    </div>
-                    <div class="input-group mb-1">
-                      <p class="text-xl-start fw-bold">Hora: </p>
-                      <p class="text-xl-start text-decoration-underline ms-3"></p>
-                    </div>
-                    <div class="input-group mb-1">
-                      <p class="text-xl-start fw-bold">Costo: </p>
-                      <p class="text-xl-start text-decoration-underline ms-3"></p>
-                    </div>
-                  </div>
-                </div>
-                <div class="border">
-                  <div class="row align-items-center justify-content-between mb-3 ms-3 mt-3 me-3">
-                    <div id="total" class="header-text mb-4">
-                      <div class="d-flex align-items-center justify-content-between">
-                        <h2 class="me-3">Total</h2>
-                        <form class="form-floating">
-                          <input type="text" class="form-control text-end" id="precio_anticipo_total" value="$"
-                            disabled>
-                          <label for="floatingInputValue">Total</label>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="col-md-6 rounded-4 d-none d-md-block d-flex justify-content-center align-items-center flex-column right-box">
-                <div class="border">
-                  <div class="row align-items-center justify-content-between mb-3 ms-3 mt-3 me-3">
-                    <form id="metodo_pago">
-                      <div id="metodo_de_pago" class="header-text mb-4">
-                        <h2>Método de Pago</h2>
-                      </div>
-                      <div class="input-group mb-5">
-                        <div class="form-floating">
-                          <input type="text" class="form-control" id="nombre_beneficiario"
-                            placeholder="Nombre del Beneficiario">
-                          <label for="floatingPassword">Nombre del Beneficiario</label>
-                        </div>
-                      </div>
-                      <div class="input-group mb-5">
-                        <div class="form-floating">
-                          <input type="number" class="form-control" id="numero_tarjeta" placeholder="Número de Tarjeta">
-                          <label for="floatingPassword">Número de Tarjeta</label>
-                        </div>
-                      </div>
-                      <div class="input-group mb-5">
-                        <div class="form-floating">
-                          <input type="password" class="form-control" id="mes" name="mes" placeholder="Mes">
-                          <label for="floatingPassword">Mes</label>
-                        </div>
-                        <div class="form-floating ms-2">
-                          <input type="password" class="form-control" id="anio" name="anio" placeholder="Año">
-                          <label for="floatingPassword">Año</label>
-                        </div>
-                        <div class="form-floating ms-5">
-                          <input type="number" class="form-control form-control-lg fs-6" placeholder="CCV" name="ccv"
-                            id="ccv" maxlength=3>
-                          <label for="floatingSelectGrid">CCV</label>
-                        </div>
-                      </div>
-                      <div class="input-group mb-1">
-                        <button id="pagar-btn" class="btn btn-lg w-100 fs-6 fw-bold botones">Pagar</button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
+            
           </div>
           <div id="content-3" class="step-content" data-parent="#accordionExample">
             <div class="container justify-content-center align-items-center">
@@ -243,23 +152,6 @@
   const parrafoMensaje = document.getElementById('mensaje');
 
   const agendarCitaBtn = document.getElementById('agendar-cita-btn');
-  // agendarCitaBtn.addEventListener('click', async () => {
-  //   const response = await fetch(`${location.origin}/citas/agendar-cita`, {
-  //     method: 'POST',
-  //     mode: 'cors',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({}),
-  //   });
-
-  //   const data = await response.json();
-
-  //   const linkPago = data.link;
-
-  //   location.href = linkPago;
-  // });
-
   const diaActual = new Date();
 
   inputDia.value = `${diaActual.getFullYear()}-${diaActual.getMonth() + 1
@@ -329,55 +221,12 @@
       e.target.value = horaAjustada;
     }
   });
-
-  /* este lo que hace es deshabilitar los botones de los pasos siguientes si no se ha dado click en el paso anterior
-  // Añade esta variable para rastrear el paso actual
-  let currentStep = 0;
-
-  stepButtons[0].setAttribute('aria-expanded', 'true');
-  stepButtons[0].classList.add('done');
-
-  progress.setAttribute('value', 0);
-
-  Array.from(stepButtons).forEach((button, index) => {
-    button.addEventListener('click', () => {
-      if (index === currentStep + 1) {
-        // Solo permitir avanzar al siguiente paso
-        currentStep = index;
-
-        // Habilitar los botones correspondientes
-        stepButtons.forEach((btn, btnIndex) => {
-          btn.disabled = false;
-          btn.setAttribute('aria-expanded', index === btnIndex ? 'true' : 'false');
-        });
-
-        progress.setAttribute('value', index * 100 / (stepButtons.length - 1));
-
-        stepContent.forEach(item => {
-          item.classList.remove('active');
-        });
-
-        stepContent[index].classList.add('active');
-
-        stepButtons.forEach((item, secindex) => {
-          if (index > secindex) {
-            item.classList.add('done');
-          } else {
-            item.classList.remove('done');
-          }
-        });
-      }
-    });
-  });
-  */
-
   //Mandar informacion de form de agendar_cita
   document.getElementById('agendar_cita_formulario').addEventListener('submit', function (e) {
-    e.preventDefault(); // Evita que el formulario se envíe de manera convencional
+    e.preventDefault();
 
-    const formData = new FormData(this); // Captura los datos del formulario
+    const formData = new FormData(this);
 
-    // por defecto los checkbox y select disabled no envian ningun dato aunque esten seleccionados o tengan datos
     const checkboxCuerdas = document.getElementById('incluye_cuerdas');
     formData.append('incluye_cuerdas', checkboxCuerdas.checked ? true : false)
 
@@ -403,9 +252,8 @@
 
         const linkPago = data.link;
         console.log(linkPago);
-
-        // redireccion al sitio de pago de paypal
         location.href = linkPago;
+
       })
       .catch(error => {
         console.error('Error:', error);
@@ -413,13 +261,13 @@
   });
 
   document.getElementById('metodo_pago').addEventListener('submit', function (e) {
-    e.preventDefault(); 
+    e.preventDefault();
     const formData = new FormData(this);
     fetch('/citas/agendar-cita', {
       method: 'POST',
       body: formData,
     })
-      .then(response => response.json()) 
+      .then(response => response.json())
       .then(data => {
         console.log('Respuesta del servidor:', data);
       })

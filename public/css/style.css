@@ -155,6 +155,12 @@ input[type="file"]::file-selector-button {
     color: #fff;
 }
 
+.step-disabled {
+    background-color: #034165;
+    cursor: not-allowed;
+    color: #fff;
+}
+
 .done {
     background-color: var(--prm-color);
     color: #fff;
