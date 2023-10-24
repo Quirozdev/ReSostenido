@@ -45,7 +45,7 @@
                     <div class="input-group mb-3">
                       <select class="form-select form-control-lg" aria-label="Default select example" id="id_servicio"
                         name="id_servicio" disabled>
-                        <option selected value="{{ servicio.id }}">Servicio</option>
+                        <option selected value="{{ servicio.id }}">{{servicio.descripcion}}</option>
                       </select>
                     </div>
                     <div class="input-group mb-3">
@@ -77,19 +77,19 @@
                       </div>
                     </div>
                     <div class="input-group mb-1">
-                      <p class="text-xl-start fw-bold">Nombre: </p>
+                      <p class="text-xl-start fw-bold">Nombre del instrumento: {{servicio.nombre_instrumento}}</p>
                       <p class="text-xl-start text-decoration-underline ms-3"></p>
                     </div>
                     <div class="input-group mb-1">
-                      <p class="text-xl-start fw-bold">Grupo: </p>
+                      <p class="text-xl-start fw-bold">Grupo del instrumento: {{servicio.grupo}}</p>
                       <p class="text-xl-start text-decoration-underline ms-3"></p>
                     </div>
                     <div class="input-group mb-1">
-                      <p class="text-xl-start fw-bold">Descripción: </p>
+                      <p class="text-xl-start fw-bold">Descripción del servicio: {{servicio.descripcion}}</p>
                       <p class="text-xl-start text-decoration-underline ms-3"></p>
                     </div>
                     <div class="input-group mb-1">
-                      <p class="text-xl-start fw-bold">Costo: </p>
+                      <p class="text-xl-start fw-bold">Anticipo: ${{servicio.precio_anticipo_cita}}</p>
                       <p class="text-xl-start text-decoration-underline ms-3"></p>
                     </div>
                     <div class="input-group mb-1">
