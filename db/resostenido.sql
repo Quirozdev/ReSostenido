@@ -61,6 +61,21 @@ CREATE TABLE citas (
   PRIMARY KEY(id)
 );
 
+
+CREATE TABLE preguntas (
+  id int(11) AUTO_INCREMENT,
+  pregunta TEXT NOT NULL,
+  respuesta TEXT,
+  estado ENUM('pendiente', 'respondida') DEFAULT 'pendiente',
+  id_usuario_pregunta int(11) NOT NULL,
+  id_usuario_respuesta int(11),
+  fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(id)
+);
+
+
+
+
 DELIMITER $$
 DROP FUNCTION IF EXISTS validar_disponibilidad_fecha_cita;
 CREATE FUNCTION validar_disponibilidad_fecha_cita(fecha_a_checar DATE, hora_a_checar TIME, fecha_y_hora_actual DATETIME)
