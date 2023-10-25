@@ -155,37 +155,37 @@ DELIMITER ;
 
 /*-- Inserta información para Guitarras
 INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
-VALUES (350.00, 'Guitarras', 'Guitarra acústica', 'Calibración', 'landingpage-1.jpg');
+VALUES (350.00, 'Guitarras', 'Guitarra acústica', 'Calibración', 'landingpage-1.webp');
 
 INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
-VALUES (350.00, 'Guitarras', 'Guitarra eléctrica 6 cuerdas', 'Calibración', 'landingpage-1.jpg');
+VALUES (350.00, 'Guitarras', 'Guitarra eléctrica 6 cuerdas', 'Calibración', 'landingpage-1.webp');
 
 INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
-VALUES (400.00, 'Guitarras', 'Guitarra eléctrica 7 cuerdas', 'Calibración', 'landingpage-1.jpg');
+VALUES (400.00, 'Guitarras', 'Guitarra eléctrica 7 cuerdas', 'Calibración', 'landingpage-1.webp');
 
 INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
-VALUES (450.00, 'Guitarras', 'Guitarra eléctrica 8 cuerdas', 'Calibración', 'landingpage-1.jpg');
+VALUES (450.00, 'Guitarras', 'Guitarra eléctrica 8 cuerdas', 'Calibración', 'landingpage-1.webp');
 
 INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
-VALUES (450.00, 'Guitarras', 'Guitarra eléctrica con Floyd Rose o Kahler', 'Calibración', 'landingpage-1.jpg');
+VALUES (450.00, 'Guitarras', 'Guitarra eléctrica con Floyd Rose o Kahler', 'Calibración', 'landingpage-1.webp');
 
 -- Inserta información para Bajos
 INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
-VALUES (350.00, 'Bajos', 'Bajo 4 cuerdas', 'Calibración', 'landingpage-1.jpg');
+VALUES (350.00, 'Bajos', 'Bajo 4 cuerdas', 'Calibración', 'landingpage-1.webp');
 
 INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
-VALUES (400.00, 'Bajos', 'Bajo 5 cuerdas', 'Calibración', 'landingpage-1.jpg');
+VALUES (400.00, 'Bajos', 'Bajo 5 cuerdas', 'Calibración', 'landingpage-1.webp');
 
 INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
-VALUES (450.00, 'Bajos', 'Bajo 6 cuerdas', 'Calibración', 'landingpage-1.jpg');
+VALUES (450.00, 'Bajos', 'Bajo 6 cuerdas', 'Calibración', 'landingpage-1.webp');
 
 -- Inserta información para otros instrumentos
 INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
-VALUES (450.00, 'Otros', 'Bajo quinto', 'Calibración', 'landingpage-1.jpg');
+VALUES (450.00, 'Otros', 'Bajo quinto', 'Calibración', 'landingpage-1.webp');
 
 INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
-VALUES (450.00, 'Otros', 'Docerola', 'Calibración', 'landingpage-1.jpg');
+VALUES (450.00, 'Otros', 'Docerola', 'Calibración', 'landingpage-1.webp');
 
 INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
-VALUES (450.00, 'Otros', 'Bajo sexto', 'Calibración', 'landingpage-1.jpg');
+VALUES (450.00, 'Otros', 'Bajo sexto', 'Calibración', 'landingpage-1.webp');
 */
