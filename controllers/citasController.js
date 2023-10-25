@@ -19,10 +19,13 @@ async function citasGet(req, res, next) {
         usuario_loggeado.es_admin ? null : usuario_loggeado.id_usuario
       );
 
-    res.status(200).json({
-      citasPendientes,
-      citasTerminadas,
-    });
+    return res.render(
+      usuario_loggeado.es_admin ? 'citas_admin.html' : 'citas_cliente.html',
+      {
+        citasPendientes,
+        citasTerminadas,
+      }
+    );
   } catch (error) {
     next(error);
   }

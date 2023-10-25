@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 class CitasService {
   constructor(database) {
     this.database = database;
@@ -27,6 +29,8 @@ class CitasService {
 
     for (let i = 0; i < citas.length; i++) {
       const cita = citas[i];
+      cita.fecha = moment(cita.fecha).format('DD-MM-YYYY');
+      cita.hora = moment(cita.hora, 'h:mm').format('LT');
       if (cita.estado === 'Terminada') {
         citasTerminadas.push(cita);
       } else {
