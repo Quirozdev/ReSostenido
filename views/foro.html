@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<form action="/hacer_pregunta" method="POST" style="margin-top:10rem;">
+    <input class="form-control" type="text" name="pregunta" id="hacer_pregunta" placeholder="Haga su pregunta...">
+    <button class="btn btn-lg w-100 fs-6 botones rounded-pill" type="submit" class="btn btn-primary">Preguntar</button>
+</form>
+
+<h4> {{query.mensaje_confirmacion}}</h4>
+{% if errores %}
+    <div class="alert alert-success" role="alert">
+        <h1>{{errores.pregunta}}</h1>
+    </div>
+{% endif %}
+{% if not es_admin %}
+    {% for pregunta in preguntas %}
+        <div class="card">
+            <div class="card-body">
+                
+                <h5 class="card-title">{{pregunta.pregunta}}</h5>
+                <p class="card-text">{{pregunta.respuesta}}</p>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    {% for pregunta in preguntas %}
+        <form action="/eliminar_pregunta" method="POST">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{pregunta.pregunta}}</h5>
+                    <p class="card-text">{{pregunta.respuesta}}</p>
+                    <input type="hidden" name="id_pregunta" value={{pregunta.id}}>
+                    <button class="btn btn-lg w-100 fs-6 botones rounded-pill" type="submit" class="btn btn-primary">Eliminar pregunta</button>
+                </div>
+            </div>
+        </form>
+    {% endfor %}
+{% endif %}
+{% endblock %}

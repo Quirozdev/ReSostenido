@@ -1,0 +1,117 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="margin-top-110">
+    <h1 class="text-center"></h1>
+    <section>
+        <div class="container">
+            <div class="accordion" id="accordionExample">
+                <div class="steps">
+                    <progress id="progress" value=0 max=100></progress>
+                    <div class="step-item">
+                        <button class="step-button text-center step-disabled" type="button" data-target="#content-1"
+                            disabled>
+                            1
+                        </button>
+                        <div class="step-title">
+                            Agendar
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <button class="step-button text-center step-disabled" type="button" data-target="#content-2"
+                            disabled>
+                            2
+                        </button>
+                        <div class="step-title">
+                            Pagar
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <button class="step-button text-center" type="button" data-target="#content-3">
+                            3
+                        </button>
+                        <div class="step-title">
+                            Confirmar
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+
+                    <div id="content-3" class="step-content active" data-parent="#accordionExample">
+                        <div class="container justify-content-center align-items-center">
+                            <div class="row align-items-center justify-content-between mb-3 ms-3 mt-3 me-3">
+
+                                {% if estado === 'EXITOSO' %}
+                                <div id="estado_reservación" class="header-text mb-4 text-center mt-5">
+                                    <h2 class="mb-4">{{ mensaje }}</h2>
+                                    <a href="https://www.flaticon.es/iconos-gratis/garrapata"
+                                        title="garrapata iconos"><img src="/images/correcto.webp" alt="Exitoso"
+                                            width="200px" height="200px" class="mt-4 mb-5"></a>
+                                </div>
+                                <div class="text-center">
+                                    <p class="fs-5 fw-bold">Detalles de la cita</p>
+                                    <p class="fs-6">Servicio: {{ detalles_cita.servicio }}</p>
+                                    <p class="fs-6">Fecha de la cita: {{ detalles_cita.fecha }}</p>
+                                    <p class="fs-6">Hora de la cita: {{ detalles_cita.hora }}</p>
+                                </div>
+                                <p class="fs-5 fw-bold mt-4 text-center">Gracias por reservar tu cita. Hemos enviado un
+                                    correo de
+                                    confirmación</p>
+                                <p class="fs-6 mt-4 text-center">Por favor revisa tu bandeja de entrada. Si no
+                                    encuentras el correo en tu bandeja de entrada, verifica en la carpeta de correo no
+                                    deseado.</p>
+                                {% endif %}
+
+                                {% if estado === 'FALLIDO' %}
+                                <div id="estado_reservación" class="header-text mb-4 text-center mt-5">
+                                    <h2 class="mb-4">¡Algo falló!</h2>
+                                    <a href="https://www.flaticon.es/iconos-gratis/garrapata"
+                                        title="garrapata iconos"><img src="/images/fallo.webp" alt="Exitoso"
+                                            width="200px" height="200px" class="mt-4 mb-5"></a>
+                                    <p class="fs-6 mt-4 text-center">{{ mensaje }}</p>
+                                </div>
+                                {% endif %}
+
+                                {% if estado === 'CANCELADO' %}
+                                <div id="estado_reservación" class="header-text mb-4 text-center mt-5">
+                                    <h2 class="mb-4">El proceso ha sido cancelado</h2>
+                                    <a href="https://www.flaticon.es/iconos-gratis/garrapata"
+                                        title="garrapata iconos"><img src="/images/cancelado.webp" alt="Exitoso"
+                                            width="200px" height="200px" class="mt-4 mb-5"></a>
+                                    <p class="fs-6 mt-4 text-center">{{ mensaje }}</p>
+                                </div>
+                                {% endif %}
+
+
+                                <div class="d-flex flex-row mt-4">
+                                    <div class="flex-fill text-center">
+                                        <button id="pagar-btn-1" class="btn btn-lg fw-bold botones">Ir a
+                                            servicios</button>
+                                    </div>
+                                    <div class="flex-fill text-center">
+                                        <button id="pagar-btn-2" class="btn btn-lg fw-bold botones">Ver mis
+                                            citas</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+</section>
+</div>
+
+<script>
+    const stepButtons = document.querySelectorAll('.step-button');
+    const progress = document.querySelector('#progress');
+    const stepContent = document.querySelectorAll('.step-content');
+
+    stepButtons[2].setAttribute('aria-expanded', 'true');
+    stepButtons[2].classList.remove('collapsed');
+    stepButtons[2].classList.add('done');
+
+    progress.setAttribute('value', 100);
+    stepContent[2].classList.add('active');
+</script>
+{% endblock %}

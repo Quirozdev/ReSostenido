@@ -4,6 +4,7 @@ const multer = require('multer');
 const mapErrorValidationResultToObject = require('../utils/validationErrorsMapper');
 const { validationResult } = require('express-validator');
 const querystring = require('querystring');
+const e = require('express');
 
 
 const agruparServicios = (servicios) => {
@@ -21,8 +22,7 @@ const agruparServicios = (servicios) => {
 
 async function administrarServiciosGet(req, res) {
   const services = await db.execute('SELECT id, grupo, nombre_instrumento, precio, descripcion, url_imagen, activo FROM servicios ');
-  console.log("SERVICIOS");
-  console.log(services[0]);
+  
   const {activeServices, inactiveServices} = services[0].reduce((groups, instrument) => {
     if (instrument.activo === 1) {
       groups.activeServices.push(instrument);
@@ -92,12 +92,54 @@ async function agregarServicioPost(req, res) {
   res.redirect('/administrar_servicios');
 }
 
+async function editarServicioPost(req, res) {
+  const result = validationResult(req);
+
+  const servicioActualizado = {
+    id: req.body.id,
+    grupo: req.body.grupo,
+    nombre_instrumento: req.body.nombre_instrumento,
+    precio: req.body.precio,
+    descripcion: req.body.descripcion,
+    url_imagen: req.body.url_imagen
+  }
+
+  if (!result.isEmpty()) {
+    const errors = mapErrorValidationResultToObject(result);
+    const errores_con_prefijo = {};
+
+    for (const key in errors) {
+      if (errors.hasOwnProperty(key)) {
+        errores_con_prefijo[`upd_error_${key}`] = errors[key];
+      }
+    }
+
+    errores_con_prefijo['id_servicio_devuelto'] = servicioActualizado.id;
+    const query_errors = querystring.stringify(errores_con_prefijo);
+    const query_datos = querystring.stringify(servicioActualizado);
+    
+    return res.redirect('/administrar_servicios?' + query_errors + "&" + query_datos);
+  }
+  console.log("Contenido de la imagen: "+servicioActualizado.url_imagen);
+  if(servicioActualizado.url_imagen === "undefined" || servicioActualizado.url_imagen === undefined || servicioActualizado.url_imagen === null || servicioActualizado.url_imagen === "") {
+    const consulta = await db.execute('UPDATE servicios SET grupo = ?, nombre_instrumento = ?, precio = ?, descripcion = ? WHERE id = ?', [servicioActualizado.grupo, servicioActualizado.nombre_instrumento, servicioActualizado.precio, servicioActualizado.descripcion, req.body.id]);
+
+  }else{
+    const consulta = await db.execute('UPDATE servicios SET grupo = ?, nombre_instrumento = ?, precio = ?, descripcion = ?, url_imagen = ? WHERE id = ?', [servicioActualizado.grupo, servicioActualizado.nombre_instrumento, servicioActualizado.precio, servicioActualizado.descripcion, servicioActualizado.url_imagen, req.body.id]);
+ 
+  }
+
+
+  res.redirect('/administrar_servicios');
+}
+
 async function deshabilitarServicioPost(req, res) {
   const servicio = req.body.id;
   const consulta = await db.execute('UPDATE servicios SET activo = 0 WHERE id = ?', [servicio]);
   //console.log(consulta);
   res.redirect('/administrar_servicios');
 }
+
 async function habilitarServicioPost(req, res) {
   const servicio = req.body.id;
   const consulta = await db.execute('UPDATE servicios SET activo = 1 WHERE id = ?', [servicio]);
@@ -137,5 +179,6 @@ module.exports = {
   serviciosGet, 
   agregarServicioPost, 
   imageUpload, 
-  deshabilitarServicioPost };
+  deshabilitarServicioPost,
+  editarServicioPost };
 

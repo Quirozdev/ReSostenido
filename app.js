@@ -15,11 +15,13 @@ const authRouter = require('./routes/authRoutes');
 const indexRouter = require('./routes/index');
 const faqRouter = require('./routes/faq');
 const servicesRouter = require('./routes/services');
+const citasRouter = require('./routes/citas');
+const foroRouter = require('./routes/foro');
 
 const app = express();
 app.use(morgan('dev'));
 // view template
-nunjucks.configure('views', {
+const env = nunjucks.configure('views', {
   autoescape: true,
   express: app,
 });
@@ -43,6 +45,8 @@ app.use(authRouter);
 app.use(indexRouter);
 app.use(faqRouter);
 app.use(servicesRouter);
+app.use('/citas', citasRouter);
+app.use(foroRouter);
 
 // si no se encontro ningun recurso en alguna ruta
 app.use((req, res) => {

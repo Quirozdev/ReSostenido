@@ -1,0 +1,282 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="margin-top-110">
+  <h1 class="text-center"></h1>
+  <section>
+    <div class="container">
+      <div class="accordion" id="accordionExample">
+        <div class="steps">
+          <progress id="progress" value=0 max=100></progress>
+          <div class="step-item">
+            <button class="step-button text-center" type="button" data-target="#content-1">
+              1
+            </button>
+            <div class="step-title">
+              Agendar
+            </div>
+          </div>
+          <div class="step-item">
+            <button class="step-button text-center collapsed" type="button" data-target="#content-2" disabled>
+              2
+            </button>
+            <div class="step-title">
+              Pagar
+            </div>
+          </div>
+          <div class="step-item">
+            <button class="step-button text-center collapsed" type="button" data-target="#content-3" disabled>
+              3
+            </button>
+            <div class="step-title">
+              Confirmar
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div id="content-1" class="step-content active" data-parent="#accordionExample">
+            <div class="container d-flex justify-content-center align-items-center">
+              <div class="col-md-6 right-box">
+                <form id="agendar_cita_formulario">
+                  <div class="row align-items-center justify-content-between">
+                    <div id="agendar_cita" class="header-text mb-4 text-center">
+                      <h2>Agendar Cita</h2>
+                    </div>
+
+                    <div class="input-group mb-3">
+                      <select class="form-select form-control-lg" aria-label="Default select example" id="id_servicio"
+                        name="id_servicio" disabled>
+                        <option selected value="{{ servicio.id }}">{{servicio.descripcion}}</option>
+                      </select>
+                    </div>
+                    <div class="input-group mb-3">
+                      <div class="form-floating">
+                        <input type="date" class="form-control form-control-lg fs-6 " placeholder="Fecha" name="fecha"
+                          id="fecha">
+                        <label for="floatingSelectGrid">Fecha</label>
+                      </div>
+                      <div class="form-floating ms-3">
+                        <input type="time" class="form-control form-control-lg fs-6" placeholder="Hora" name="hora"
+                          id="hora">
+                        <label for="floatingSelectGrid">Hora</label>
+                      </div>
+                    </div>
+                    <div class="input-group mb-3">
+                      <div class="form-check">
+                        <label class="form-check-label" for="flexCheckIndeterminate">
+                          Incluir cuerdas
+                        </label>
+                        <input class="form-check-input" type="checkbox" value="true" id="incluye_cuerdas"
+                          name="incluye_cuerdas">
+                      </div>
+                    </div>
+                    <div class="input-group mb-3">
+                      <div class="form-floating">
+                        <textarea class="form-control form-control-lg" placeholder="Leave a comment here"
+                          id="descripcion" name="descripcion"></textarea>
+                        <label for="floatingTextarea">Escribe su problema...</label>
+                      </div>
+                    </div>
+                    <div class="input-group mb-1">
+                      <p class="text-xl-start fw-bold">Nombre del instrumento: {{servicio.nombre_instrumento}}</p>
+                      <p class="text-xl-start text-decoration-underline ms-3"></p>
+                    </div>
+                    <div class="input-group mb-1">
+                      <p class="text-xl-start fw-bold">Grupo del instrumento: {{servicio.grupo}}</p>
+                      <p class="text-xl-start text-decoration-underline ms-3"></p>
+                    </div>
+                    <div class="input-group mb-1">
+                      <p class="text-xl-start fw-bold">Descripción del servicio: {{servicio.descripcion}}</p>
+                      <p class="text-xl-start text-decoration-underline ms-3"></p>
+                    </div>
+                    <div class="input-group mb-1">
+                      <p class="text-xl-start fw-bold">Anticipo: ${{servicio.precio_anticipo_cita}}</p>
+                      <p class="text-xl-start text-decoration-underline ms-3"></p>
+                    </div>
+                    <div class="input-group mb-1">
+                      <button id="agendar-cita-btn" class="btn btn-lg w-100 fs-6 fw-bold botones">Agendar</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div
+                class="col-md-6 rounded-4 d-none d-md-block d-flex justify-content-center align-items-center flex-column right-box">
+                <img src="/images/resend_verification_token_img.webp" width="100%" height="100%"
+                  class="right-box d-flex flex-column">
+              </div>
+            </div>
+          </div>
+          <div id="content-2" class="step-content" data-parent="#accordionExample">
+            
+          </div>
+          <div id="content-3" class="step-content" data-parent="#accordionExample">
+            <div class="container justify-content-center align-items-center">
+              <div class="row align-items-center justify-content-between mb-3 ms-3 mt-3 me-3">
+                <div id="reservacion_exitosa" class="header-text mb-4 text-center">
+                  <h2>¡Reservación de cita exitosa!</h2>
+                </div>
+                <p class="fs-5 fw-bold">Detalles de la cita</p>
+                <p class="fs-6">Servicio</p>
+                <p class="fs-6">Fecha de la cita</p>
+                <p class="fs-6">Hora de la cita</p>
+                <p class="fs-5 fw-bold mt-4">Método de pago utilizado</p>
+                <p class="fs-6">Tarjeta de : [Ultimos tres digitos de la tarjeta]</p>
+                <p class="fs-6 fw-bold mt-4">Gracias por reservaar tu cita. Hemos enviado un correo de confirmación</p>
+                <p class="fs-6">El correo es : [Correo]</p>
+                <p class="fs-6 mt-4">Por favor revisa tu bandeja de entrada</p>
+
+                <div class="d-flex flex-row mt-4">
+                  <div class="flex-fill text-center">
+                    <button id="pagar-btn-1" class="btn btn-lg fw-bold botones">Ir a servicios</button>
+                  </div>
+                  <div class="flex-fill text-center">
+                    <button id="pagar-btn-2" class="btn btn-lg fw-bold botones">Ver mis citas</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+</section>
+</div>
+
+<script>
+  const formularioDisponibilidad = document.getElementById(
+    'formulario-checar-disponibilidad'
+  );
+  const inputDia = document.getElementById('fecha');
+  const inputHora = document.getElementById('hora');
+
+  const parrafoMensaje = document.getElementById('mensaje');
+
+  const agendarCitaBtn = document.getElementById('agendar-cita-btn');
+  const diaActual = new Date();
+
+  inputDia.value = `${diaActual.getFullYear()}-${diaActual.getMonth() + 1
+    }-${diaActual.getDate()}`;
+  inputDia.min = `${diaActual.getFullYear()}-${diaActual.getMonth() + 1
+    }-${diaActual.getDate()}`;
+
+  inputHora.value = `${diaActual.getHours()}:${diaActual.getMinutes()}:00`;
+
+  const stepButtons = document.querySelectorAll('.step-button');
+  const progress = document.querySelector('#progress');
+  const stepContent = document.querySelectorAll('.step-content');
+
+  stepButtons[0].setAttribute('aria-expanded', 'true');
+  stepButtons[0].classList.add('done');
+
+  progress.setAttribute('value', 0);
+
+  Array.from(stepButtons).forEach((button, index) => {
+    button.addEventListener('click', () => {
+      stepButtons.forEach((btn, btnIndex) => {
+        btn.setAttribute('aria-expanded', index === btnIndex ? 'true' : 'false');
+      });
+
+      progress.setAttribute('value', index * 100 / (stepButtons.length - 1));
+
+      stepContent.forEach(item => {
+        item.classList.remove('active');
+      });
+
+      stepContent[index].classList.add('active');
+
+      stepButtons.forEach((item, secindex) => {
+        if (index > secindex) {
+          item.classList.add('done');
+        } else {
+          item.classList.remove('done');
+        }
+      });
+    });
+  });
+  const horaInput = document.getElementById('hora');
+
+  horaInput.addEventListener('input', (e) => {
+    const horaIngresada = e.target.value;
+    const horaDividida = horaIngresada.split(':');
+
+    if (horaDividida.length === 2) {
+      let horas = parseInt(horaDividida[0]);
+      let minutos = parseInt(horaDividida[1]);
+
+      minutos = Math.round(minutos / 20) * 20;
+
+      if (minutos === 60) {
+        minutos = 0;
+        horas += 1;
+      }
+
+      if (horas < 0) {
+        horas = 0;
+      } else if (horas > 23) {
+        horas = 23;
+      }
+
+      const horaAjustada = `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}`;
+
+      e.target.value = horaAjustada;
+    }
+  });
+  //Mandar informacion de form de agendar_cita
+  document.getElementById('agendar_cita_formulario').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+
+    const checkboxCuerdas = document.getElementById('incluye_cuerdas');
+    formData.append('incluye_cuerdas', checkboxCuerdas.checked ? true : false)
+
+    const servicioSelect = document.getElementById('id_servicio');
+    formData.append('id_servicio', servicioSelect.value)
+
+    fetch('/citas/agendar-cita', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(Object.fromEntries(formData.entries())),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Respuesta del servidor:', data);
+
+        if (data.error) {
+          console.log(data.error);
+          return;
+        }
+
+        const linkPago = data.link;
+        console.log(linkPago);
+        location.href = linkPago;
+
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  });
+
+  document.getElementById('metodo_pago').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    fetch('/citas/agendar-cita', {
+      method: 'POST',
+      body: formData,
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Respuesta del servidor:', data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  });
+
+
+
+</script>
+{% endblock %}

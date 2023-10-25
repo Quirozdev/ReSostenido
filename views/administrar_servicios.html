@@ -1,4 +1,4 @@
-{% extends "layoult.html" %}
+{% extends "layout.html" %}
 {% block body %}
 
 <div class="margin-top-110 ms-5 me-5 mb-5">
@@ -25,10 +25,10 @@
                 <form action="/agregar_servicio" method="post" enctype="multipart/form-data">
                     <tr id="formulario" style="display: none;">
                         <th scope="row" style="max-width: 150px;">
-                            <img id="previewImage" src="/images/agg-image.png" alt="Imagen de servicio"
+                            <img id="previewImage" src="/images/agg-image.webp" alt="Imagen de servicio"
                                 class="img-fluid rounded-pill mx-auto d-block mb-2" style="max-width: 100%; max-height: 150px; object-fit: contain;">
                             <div class="input-group">
-                                <input type="file" id="inputImage" accept="image/*" onchange="mostrarImagen(this)"
+                                <input type="file" id="inputImage" accept="image/*" onchange="mostrarImagen(this, 'previewImage')"
                                     itemid="url_imagen" name="url_imagen">
                             </div>
                             {% if query.error_url_imagen %}
@@ -92,30 +92,98 @@
                 </form>
 
                 {% for servicio in serviciosActivos %}
-                <form id="serviciosActivos-form" action="/editar_servicio" method="post">
-                    <tr>
-                        <th scope="row" style="max-width: 150px; text-align: center;">
-                            <img src="/images/servicios/{{ servicio.url_imagen }}" alt="Imagen de servicio"
-                                class="img-fluid rounded-pill mx-auto d-block"
-                                style="max-width: 100%; max-height: 150px; object-fit: contain;">
+                <tr id="contenido_servicio_{{servicio.id}}">
+                        {% if query.id_servicio_devuelto == servicio.id %}
+                        <th scope="row" style="max-width: 150px;">
+                            <img id="previewImageEdit" src="/images/servicios/{{servicio.url_imagen}}" alt="Imagen de servicio"
+                                class="img-fluid rounded-pill mx-auto d-block mb-2" style="max-width: 100%; max-height: 150px; object-fit: contain;">
+                            <div class="input-group">
+                                <input type="file" id="inputImage" accept="image/*" value="/images/servicios/{{servicio.url_imagen}}" onchange="mostrarImagen(this, 'previewImageEdit')"
+                                    itemid="upd_url_imagen" name="url_imagen">
+                            </div>
+                            {% if query.upd_error_url_imagen %}
+                            <div class="alert alert-warning mt-2 fw-normal" role="alert">
+                                {{ query.upd_error_url_imagen }}
+                            </div>
+                            {% else %}
+                            {% if query.upd_error_nombre_instrumento or query.upd_error_descripcion or query.upd_error_precio or
+                            query.upd_error_grupo %}
+                            <div class="alert alert-warning mt-2 fw-normal" role="alert">
+                                Favor de ingresar la imagen de nuevo si es que desea cambiarla.
+                            </div>
+                            {% endif %}
+                            {% endif %}
                         </th>
-                        <td id="sanombre_instrumento2" class="vertical-align-middle">{{ servicio.nombre_instrumento }}</td>
-                        <td id="saGrupo2" class="vertical-align-middle">{{ servicio.grupo }}</td>
-                        <td id="saDescripción2" class="vertical-align-middle">{{ servicio.descripcion }}</td>
-                        <td id="saPrecio2" class="vertical-align-middle">${{ servicio.precio }}</td>
-                        <td  class="vertical-align-middle">
-                            <input type="text" name="id" id="" value="{{servicio.id}}" style="display:none;">
-                            <button id="btnEditar" class="btn btn-lg w-100 fs-6 botones rounded-pill" type="button">Editar</button>
+                        <td>
+                            <input type="text" class="form-control" placeholder="Nombre del instrumento"
+                                id="upd_nombre_instrumento" name="nombre_instrumento" value="{{query.nombre_instrumento}}">
+                            {% if query.upd_error_nombre_instrumento %}
+                            <div class="alert alert-warning mt-2" role="alert">
+                                {{ query.upd_error_nombre_instrumento }}
+                            </div>
+                            {% endif %}
                         </td>
-                </form>
-                <form  action="/deshabilitar_servicio" method="post">
-                    <td class="vertical-align-middle">
-                        <input type="text" name="id" id="" value="{{servicio.id}}" style="display:none;">
-                        <button id="btnDeshabilitar" class="btn btn-lg w-100 fs-6 botones rounded-pill" type="submit">Deshabilitar</button>
-                    </td>
-                </form>
+                        <td>
+                            <input type="text" class="form-control" placeholder="Grupo" id="upd_grupo" name="grupo"
+                                value="{{query.grupo}}">
+                            {% if query.upd_error_grupo %}
+                            <div class="alert alert-warning mt-2" role="alert">
+                                {{ query.upd_error_grupo }}
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" placeholder="Descripción" id="upd_descripcion"
+                                name="descripcion" value="{{query.descripcion}}">
+                            {% if query.upd_error_descripcion %}
+                            <div class="alert alert-warning mt-2" role="alert">
+                                {{ query.upd_error_descripcion }}
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" placeholder="Costo" id="upd_precio" name="precio"
+                                min="0" step="0.01" value="{{query.precio}}">
+                            {% if query.upd_error_precio %}
+                            <div class="alert alert-warning mt-2" role="alert">
+                                {{ query.upd_error_precio }}
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <input class="btn btn-lg w-100 fs-6 botones rounded-pill" onclick="guardarCambiosServicio({{servicio.id}})" type="button" id="guardar"
+                                name="guardar" value="Guardar">
+                        </td>
+                        <td>
+                            <button class="btn btn-lg w-100 fs-6 botones rounded-pill" type="button"
+                                onclick="cancelarEdicion({{servicio.id}})" id="cancelar" name="cancelar">Cancelar</button>
+                        </td>
+                        {% else %}
+                            
+                                <th scope="row" style="max-width: 150px; text-align: center;">
+                                    <img id="url_imagen_{{servicio.id}}" src="/images/servicios/{{ servicio.url_imagen }}" alt="Imagen de servicio"
+                                        class="img-fluid rounded-pill mx-auto d-block"
+                                        style="max-width: 100%; max-height: 150px; object-fit: contain;">
+                                </th>
+                                <td id="sanombre_instrumento2_{{servicio.id}}" class="vertical-align-middle">{{ servicio.nombre_instrumento }}</td>
+                                <td id="saGrupo2_{{servicio.id}}" class="vertical-align-middle">{{ servicio.grupo }}</td>
+                                <td id="saDescripción2_{{servicio.id}}" class="vertical-align-middle">{{ servicio.descripcion }}</td>
+                                <td id="saPrecio2_{{servicio.id}}" class="vertical-align-middle">${{ servicio.precio }}</td>
+                                <td  class="vertical-align-middle">
+                                    <input type="text" name="id" id="" value="{{servicio.id}}" style="display:none;">
+                                    <button id="btnEditar_{{servicio.id}}" class="btn btn-lg w-100 fs-6 botones rounded-pill" onclick="hacerServicioEditable({{servicio.id}})" type="button"   >Editar</button>
+                                </td>
+                                
+                        
+                        <form  action="/deshabilitar_servicio" method="post">
+                            <td class="vertical-align-middle">
+                                <input type="text" name="id" id="" value="{{servicio.id}}" style="display:none;">
+                                <button id="btnDeshabilitar" class="btn btn-lg w-100 fs-6 botones rounded-pill" type="submit">Deshabilitar</button>
+                            </td>
+                        </form>
+                    
+                        {% endif %}
                 </tr>
-
                 {% endfor %}
 
             </tbody>
@@ -145,8 +213,8 @@
                 btnAgregar.style.display = 'block';
             }
 
-            function mostrarImagen(input) {
-                const preview = document.getElementById('previewImage');
+            function mostrarImagen(input, show) {
+                const preview = document.getElementById(show);
                 if (input.files && input.files[0]) {
                     const reader = new FileReader();
                     reader.onload = function (e) {
@@ -173,6 +241,126 @@
                 formulario.style.display = 'none';
                 btnAgregar.style.display = 'block';
             }
+
+            let servicioSiendoEditado = "";
+            let enEdicion = [false,0];
+
+            function hacerServicioEditable(id){
+                if (enEdicion[0]){
+                    cancelarEdicion(enEdicion[1]);
+                }
+                enEdicion = [true,id];
+                
+                servicio = document.getElementById('contenido_servicio_'+id);
+                servicioSiendoEditado = servicio.innerHTML;
+                console.log("Servicio siendo editado: "+servicioSiendoEditado);
+                const nombreInstrumento = document.getElementById('sanombre_instrumento2_'+id).innerHTML;
+
+                const grupo = document.getElementById('saGrupo2_'+id).innerHTML;
+                const descripcion = document.getElementById('saDescripción2_'+id).innerHTML;
+                const precio = document.getElementById('saPrecio2_'+id).innerHTML.replace("$","");
+                const url_imagen = document.getElementById('url_imagen_'+id).src;
+                console.log("Nombre instrumento: "+nombreInstrumento);
+                console.log("Grupo: "+grupo);
+                console.log("Descripcion: "+descripcion);
+                console.log("Precio: "+precio);
+                console.log("URL imagen: "+url_imagen);
+
+                 
+                let servicioEditable = ` 
+                    
+                        <th scope="row" style="max-width: 150px;">
+                            <img id="previewImageEdit" src="${url_imagen}" alt="Imagen de servicio"
+                                class="img-fluid rounded-pill mx-auto d-block mb-2" style="max-width: 100%; max-height: 150px; object-fit: contain;">
+                            <div class="input-group">
+                                <input type="file" value="${url_imagen}" id="upd_inputImage" accept="image/*" onchange="mostrarImagen(this, 'previewImageEdit')"
+                                    itemid="url_imagen" name="upd_url_imagen">
+                            </div>
+                            
+                            
+                        </th>
+                        <td>
+                            <input type="text" class="form-control" placeholder="Nombre del instrumento"
+                                id="upd_nombre_instrumento" name="nombre_instrumento" value="${nombreInstrumento}">
+                            
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" placeholder="Grupo" id="upd_grupo" name="upd_grupo"
+                                value="${grupo}">
+                            
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" placeholder="Descripción" id="upd_descripcion"
+                                name="upd_descripcion" value="${descripcion}">
+                            
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" placeholder="Costo" id="upd_precio" name="upd_precio"
+                                min="0" step="1" value="${precio}">
+                            
+                        </td>
+                        <td>
+                            <input class="btn btn-lg w-100 fs-6 botones rounded-pill" onclick="guardarCambiosServicio(${id})" type="button" id="guardar"
+                                name="guardar" value="Guardar">
+                        </td>
+                        <td>
+                            <button class="btn btn-lg w-100 fs-6 botones rounded-pill" type="button"
+                                onclick="cancelarEdicion(${id})" id="cancelar" name="cancelar">Cancelar</button>
+                        </td>
+                    
+                 `
+
+                    servicio.innerHTML = servicioEditable;
+            
+            }
+
+            function cancelarEdicion(id){
+            document.getElementById('contenido_servicio_'+id).innerHTML = servicioSiendoEditado;
+            enEdicion = [false,0];
+            
+            }
+
+            function guardarCambiosServicio(id) {
+                
+                const nombreInstrumento = document.getElementById('upd_nombre_instrumento').value;
+                const grupo = document.getElementById('upd_grupo').value;
+                const descripcion = document.getElementById('upd_descripcion').value;
+                const precio = document.getElementById('upd_precio').value;
+
+                const inputImage = document.getElementById('upd_inputImage');
+                let file = ""
+                if (inputImage && inputImage.files && inputImage.files[0]) {
+                    file = inputImage.files[0];
+                }
+
+                
+
+                const formData = new FormData();
+                formData.append('id', id);
+                formData.append('nombre_instrumento', nombreInstrumento);
+                formData.append('grupo', grupo);
+                formData.append('descripcion', descripcion);
+                formData.append('precio', precio);
+                formData.append('url_imagen', file);
+
+                fetch('/editar_servicio', {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Cambios guardados correctamente.');
+                        // Redirige manualmente
+                        window.location.replace(response.url);
+                    } else {
+                        console.error('Error al guardar los cambios.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error en la solicitud: ', error);
+                });
+            }
+
         </script>
     </div>
 </div>

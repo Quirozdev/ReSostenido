@@ -60,7 +60,7 @@ async function registerPost(req, res, next) {
     });
 
     //res.redirect('/login?' + query);
-    res.render('resend-verification-token.html', {correo:req.body.email});
+    res.render('resend-verification-token.html', { correo: req.body.email });
   } catch (err) {
     return res.render('register.html', {
       errores: {
@@ -117,7 +117,8 @@ function loginGet(req, res) {
   // y haya redireccionado al login.
   // successfulPasswordChange solo va a tener un valor de true cuando el cambio de contrasenia haya sido exitoso
   // y haya redireccionado al login.
-  const { successfulRegister, successfulPasswordChange, unauthorized } = req.query;
+  const { successfulRegister, successfulPasswordChange, unauthorized } =
+    req.query;
 
   res.render('login.html', {
     registroExitoso: successfulRegister,
@@ -162,6 +163,7 @@ async function loginPost(req, res) {
   // sesion que podrian usarse en los templates
 
   req.session.usuario = {
+    id_usuario: usuario.id,
     nombre: usuario.nombre,
     apellidos: usuario.apellidos,
     es_admin: usuario.es_admin,
@@ -188,7 +190,7 @@ async function forgotPasswordPost(req, res) {
 
   if (!result.isEmpty()) {
     const errores = mapErrorValidationResultToObject(result);
-    console.log("ERROR AL VALIDAR LOS DATOS DE ENTRADA");
+    console.log('ERROR AL VALIDAR LOS DATOS DE ENTRADA');
 
     console.log(errores);
     return res.render('forgot-password.html', {
@@ -204,7 +206,7 @@ async function forgotPasswordPost(req, res) {
   );
 
   if (error) {
-    console.log("ERROR AL CREAR EL TOKEN DE RECUPERACION");
+    console.log('ERROR AL CREAR EL TOKEN DE RECUPERACION');
     console.log(error);
     return res.render('forgot-password.html', {
       errores: error,
@@ -239,13 +241,12 @@ async function forgotPasswordPost(req, res) {
 }
 
 function changePasswordGet(req, res) {
-
-  res.render('change-password.html',{token:req.query.verificationToken});
+  res.render('change-password.html', { token: req.query.verificationToken });
 }
 
 async function changePasswordPost(req, res) {
   const result = validationResult(req);
-  console.log("TOKEN QUE LLEGA AL CONTROLADOR")
+  console.log('TOKEN QUE LLEGA AL CONTROLADOR');
   console.log(req.body.token);
   if (!result.isEmpty()) {
     const errores = mapErrorValidationResultToObject(result);
@@ -259,7 +260,7 @@ async function changePasswordPost(req, res) {
     });
   }
 
-  const verificationToken  = req.body.token;
+  const verificationToken = req.body.token;
   console.log(verificationToken);
   if (!verificationToken) {
     return res.render('change-password.html', {

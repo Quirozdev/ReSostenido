@@ -1,7 +1,8 @@
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const db = require('../db/db');
-const querystring = require('querystring');34
+const querystring = require('querystring');
+34;
 const sessionStore = new MySQLStore(
   {
     clearExpired: true, // para que en la base de datos borre las sesiones que vayan expirando
@@ -20,7 +21,7 @@ sessionStore
   });
 
 // para que todos los templates puedan acceder a la variable 'usuario' dentro de ellos,
-// esta variable tiene nombre, apellidos y si el usuario es_admin
+// esta variable tiene id_usuario, nombre, apellidos y si el usuario es_admin
 const sendUserSessionDataToTemplates = (req, res, next) => {
   res.locals.usuario = req.session.usuario;
   next();
@@ -45,9 +46,9 @@ const isAuth = (req, res, next) => {
 
 const isAdmin = (req, res, next) => {
   if (req.session.usuario) {
-    if(req.session.usuario.es_admin){
+    if (req.session.usuario.es_admin) {
       next();
-    }else{
+    } else {
       res.redirect('/');
     }
   } else {
