@@ -1,39 +1,134 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<form action="/hacer_pregunta" method="POST" style="margin-top:10rem;">
-    <input class="form-control" type="text" name="pregunta" id="hacer_pregunta" placeholder="Haga su pregunta...">
-    <button class="btn btn-lg w-100 fs-6 botones rounded-pill" type="submit" class="btn btn-primary">Preguntar</button>
-</form>
-
-<h4> {{query.mensaje_confirmacion}}</h4>
-{% if errores %}
-    <div class="alert alert-success" role="alert">
-        <h1>{{errores.pregunta}}</h1>
-    </div>
-{% endif %}
-{% if not es_admin %}
-    {% for pregunta in preguntas %}
-        <div class="card">
-            <div class="card-body">
-                
-                <h5 class="card-title">{{pregunta.pregunta}}</h5>
-                <p class="card-text">{{pregunta.respuesta}}</p>
-            </div>
+<div class="margin-top-110">
+    <div class="header-waves">
+        <div class="inner-header flex">
+            <form action="/hacer_pregunta" method="POST">
+                <p class="fs-1 ms-4 mt-5 mb-5 fw-bold text-white">
+                    ¿En qué podemos ayudarte?
+                </p>
+                <div class="input-group">
+                    <div class="form-floating d-flex flex-row">
+                        <textarea class="form-control form-control-lg" placeholder="Escriba su pregunta aquí"
+                            name="pregunta" id="hacer_pregunta"></textarea>
+                        <label for="floatingTextarea">Escriba su pregunta aquí</label>
+                        <button id="question-button" type="submit" class="btn botones">
+                            Preguntar
+                        </button>
+                    </div>
+                </div>
+                {% if query.mensaje_confirmacion %}
+                <div class="alert alert-info mt-4 ms-5 me-5" role="alert">
+                    {{query.mensaje_confirmacion}}
+                </div>
+                {% endif %}
+                {% if errores %}
+                <div class="alert alert-danger mt-4 ms-5 me-5" role="alert">
+                    {{errores.pregunta}}
+                </div>
+                {% endif %}
+            </form>
+            
         </div>
-    {% endfor %}
-{% else %}
-    {% for pregunta in preguntas %}
-        <form action="/eliminar_pregunta" method="POST">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">{{pregunta.pregunta}}</h5>
-                    <p class="card-text">{{pregunta.respuesta}}</p>
-                    <input type="hidden" name="id_pregunta" value={{pregunta.id}}>
-                    <button class="btn btn-lg w-100 fs-6 botones rounded-pill" type="submit" class="btn btn-primary">Eliminar pregunta</button>
+        <div>
+            <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                <defs>
+                    <path id="gentle-wave"
+                        d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                </defs>
+                <g class="parallax">
+                    <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
+                    <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+                    <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+                    <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+                </g>
+            </svg>
+        </div>
+    </div>
+    <div class="container-xl mt-5">
+        <div class="container">
+            <p class="fs-2 ms-4 mt-5 mb-5 fw-bold text-center letra-principal">
+                Preguntas de otros usuarios
+            </p>
+            {% if not es_admin %}
+            {% for pregunta in preguntas %}
+            <div class="container-fluid mt-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <div class="media flex-wrap w-100 align-items-center">
+                                    <div class="media-body ml-3 fs-5">
+                                        Anónimo
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <p class="fs-5">
+                                    {{pregunta.pregunta}}
+                                </p>
+                                <p class="fs-5">
+                                    {{pregunta.respuesta}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </form>
-    {% endfor %}
-{% endif %}
+            {% endfor %}
+            {% else %}
+            {% for pregunta in preguntas %}
+            <div class="container-fluid mt-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card mb-4">
+                            <form action="/eliminar_pregunta" method="POST">
+                                <div class="card-header">
+                                    <div class="media flex-wrap w-100 align-items-center">
+                                        <div class="media-body ml-3 fs-5">
+                                            Anónimo
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <p class="fs-5">
+                                        {{pregunta.pregunta}}
+                                    </p>
+                                    <p class="fs-5">
+                                        {{pregunta.respuesta}}
+                                    </p>
+                                </div>
+                                <div
+                                    class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+                                    <div class="px-4 pt-3">
+                                        <input type="hidden" name="id_pregunta" value={{pregunta.id}}>
+                                        <button type="submit" class="btn botones">
+                                            Eliminar pregunta
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+    let root = document.documentElement;
+    const section1 = document.querySelector('.header')
+
+    window.addEventListener('scroll', () => {
+        const y = 1 + (window.scrollY || window.pageYOffset);
+        root.style.setProperty('--gradient-percent', y * 4 + "px");
+        console.log(y)
+    })
+</script>
+
 {% endblock %}
