@@ -2,6 +2,7 @@ const db = require('../db/db');
 const mapErrorValidationResultToObject = require('../utils/validationErrorsMapper');
 const { validationResult } = require('express-validator');
 const { hacerSolicitudDePregunta, contestarPregunta, rechazarPregunta, eliminarPregunta } = require('../services/foroService');
+const querystring = require('querystring');
 
 async function foroGet(req, res) {
   const preguntas = await db.execute('SELECT id, pregunta, respuesta FROM preguntas WHERE estado = "respondida" ORDER BY fecha DESC');
@@ -22,11 +23,16 @@ async function hacerPreguntaPost(req, res) {
     const result = validationResult(req);
 
     if (!result.isEmpty()) {
-      const errores = mapErrorValidationResultToObject(result);
-      return res.render('foro.html', {
-        errores: errores,
-        
-      });
+      const errors = mapErrorValidationResultToObject(result);
+      const errores_con_prefijo = {};
+
+      for (const key in errors) {
+        if (errors.hasOwnProperty(key)) {
+          errores_con_prefijo[`error_${key}`] = errors[key];
+        }
+      }
+      const query_errores = querystring.stringify(errores_con_prefijo);
+      return res.redirect('/foro?'+query_errores);
     }
 
     const pregunta = req.body.pregunta;
@@ -46,12 +52,17 @@ async function responderPreguntaPost(req, res) {
     const result = validationResult(req);
 
     if (!result.isEmpty()) {
-      const errores = mapErrorValidationResultToObject(result);
-      console.log("HORROROSO ERROR QUE NO SE PORQUE FGUNCIONA")
-      return res.render('solicitudes_preguntas.html', {
-        errores: errores,
-        id_pregunta: req.body.id_pregunta,
-      });
+      const errors = mapErrorValidationResultToObject(result);
+      const errores_con_prefijo = {};
+
+      for (const key in errors) {
+        if (errors.hasOwnProperty(key)) {
+          errores_con_prefijo[`error_${key}`] = errors[key];
+        }
+      }
+      const query_errores = querystring.stringify(errores_con_prefijo);
+
+      return res.redirect('/solicitudes_preguntas?'+query_errores+'&error_id_pregunta='+req.body.id_pregunta);
     }
 
     contestarPregunta(req.body.id_pregunta, req.body.respuesta, req.session.usuario.id_usuario)
@@ -63,9 +74,8 @@ async function eliminarPreguntaPost(req, res) {
 
     if (!result.isEmpty()) {
       const errores = mapErrorValidationResultToObject(result);
-      return res.render('solicitudes_preguntas.html', {
-        errores: errores,
-        });
+
+      return res.redirect('/foro?mensaje_confirmacion=La pregunta no ha podido ser eliminada');
     }
     eliminarPregunta(req.body.id_pregunta);
     return res.redirect('/foro?mensaje_confirmacion=La pregunta ha sido eliminada');
@@ -74,12 +84,9 @@ async function eliminarPreguntaPost(req, res) {
 
 async function rechazarSolicitudPreguntaPost(req, res) {
     const result = validationResult(req);
-
+    
     if (!result.isEmpty()) {
-      const errores = mapErrorValidationResultToObject(result);
-      return res.render('solicitudes_preguntas.html', {
-        errores: errores,
-      });
+      return res.redirect('/solicitudes_preguntas?error_rechazo=La pregunta no ha podido ser rechazada');
     }
 
     const id_pregunta = req.body.id_pregunta;

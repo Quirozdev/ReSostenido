@@ -20,12 +20,12 @@
                 </div>
                 {% if query.mensaje_confirmacion %}
                 <div class="alert alert-info mt-4 ms-5 me-5" role="alert">
-                    {{query.mensaje_confirmacion}}
+                    {{query.mensaje_confirmacion}} <!-- En caso que la pregunta se haya enviado correctamente -->
                 </div>
                 {% endif %}
-                {% if errores %}
+                {% if query.error_pregunta %}
                 <div class="alert alert-danger mt-4 ms-5 me-5" role="alert">
-                    {{errores.pregunta}}
+                    {{query.error_pregunta}} <!-- En caso que la pregunta este vacia -->
                 </div>
                 {% endif %}
             </form>

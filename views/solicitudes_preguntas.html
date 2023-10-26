@@ -78,14 +78,19 @@
 
 
 <div style="margin-top:8rem; ">
-    <h2>{{query.mensaje_confirmacion}}</h2>
-    <h2>{{errores.respuesta}}</h2>
+    <h2>{{query.mensaje_confirmacion}}</h2> <!--En caso de que se haya respondido una pregunta-->
+    <!--En caso de que suceda este error (muy dificil) no podria atribuirse a ninguna pregunta.-->
+    <h2>{{query.error_rechazo}}</h2> <!--En caso de error al rechazar pregunta-->
+    
     {% for pregunta in preguntas %}
     <div style="display:flex;">
         <form action="/responder_pregunta" method="post">
             <h5> {{pregunta.pregunta}}</h5>
-            <input type="hidden" name="id_pregunta" value="{{pregunta.id}}}">
+            <input type="hidden" name="id_pregunta" value="{{pregunta.id}}">
             <input class="form-control" type="text" name="respuesta" id="respuesta_{{pregunta.id}}">
+            {% if query.error_id_pregunta == pregunta.id %}
+            <h4>{{query.error_respuesta}}</h4> <!--En caso de que no se haya ingresado una respuesta-->
+            {% endif %}
             <button class="btn btn-lg w-100 fs-6 botones rounded-pill" type="submit">Responder</button>
 
         </form>
