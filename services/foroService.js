@@ -9,15 +9,14 @@ async function hacerSolicitudDePregunta(pregunta, id_usuario_pregunta){
 }
 
 async function contestarPregunta(id_pregunta, respuesta, id_usuario_respuesta){
-  const fechaActual = new Date();
-    
-    // Formatear la fecha en el formato 'YYYY-MM-DD HH:MM:SS'
-  const formattedFecha = fechaActual.toISOString().slice(0, 19).replace('T', ' ');
+  
 
-console.log(fechaActual)
+// Define la zona horaria de Hermosillo
+
+
     const [result, campos] = await db.execute(
-        'UPDATE preguntas SET respuesta = ?, estado = "respondida", id_usuario_respuesta = ?, fecha_respuesta = ? WHERE id = ?',
-        [respuesta, id_usuario_respuesta, ,formattedFecha, id_pregunta]
+        'UPDATE preguntas SET respuesta = ?, estado = "respondida", id_usuario_respuesta = ?, fecha_respuesta = CURRENT_TIMESTAMP WHERE id = ?',
+        [respuesta, id_usuario_respuesta,  id_pregunta]
       );
     return result;
 }
