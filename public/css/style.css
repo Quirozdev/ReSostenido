@@ -66,6 +66,16 @@ body {
     border: 1px solid #034165;
 }
 
+.btn-delete {
+    color: #ffffff;
+    background-color: #034165;
+}
+
+.btn-delete:hover {
+    color: rgb(255, 255, 255);
+    background-color: rgb(189, 39, 39);
+}
+
 .page_404 {
     padding: 40px 0;
     background: #fff;
@@ -306,6 +316,12 @@ input[type="file"]::file-selector-button {
         transform: translate3d(85px, 0, 0);
     }
 }
+
+/* Aplicar estilo al icono cuando se pasa el mouse sobre el botón */
+button:hover i.fa-trash {
+    color: #d21717 !important; /* Cambia el color al color que desees en hover */
+}
+
 
 /*Shrinking for mobile*/
 @media (max-width: 768px) {
