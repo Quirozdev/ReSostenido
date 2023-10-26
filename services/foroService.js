@@ -9,9 +9,15 @@ async function hacerSolicitudDePregunta(pregunta, id_usuario_pregunta){
 }
 
 async function contestarPregunta(id_pregunta, respuesta, id_usuario_respuesta){
+  const fechaActual = new Date();
+    
+    // Formatear la fecha en el formato 'YYYY-MM-DD HH:MM:SS'
+  const formattedFecha = fechaActual.toISOString().slice(0, 19).replace('T', ' ');
+
+console.log(fechaActual)
     const [result, campos] = await db.execute(
-        'UPDATE preguntas SET respuesta = ?, estado = "respondida", id_usuario_respuesta = ? WHERE id = ?',
-        [respuesta, id_usuario_respuesta, id_pregunta]
+        'UPDATE preguntas SET respuesta = ?, estado = "respondida", id_usuario_respuesta = ?, fecha_respuesta = ? WHERE id = ?',
+        [respuesta, id_usuario_respuesta, ,formattedFecha, id_pregunta]
       );
     return result;
 }
@@ -34,12 +40,13 @@ async function eliminarPregunta(id_pregunta){
 
 async function obtenerPreguntasPublicadas() {
   const [result, campos] = await db.execute(
-      "SELECT  A.id AS id, A.pregunta AS pregunta, A.respuesta AS respuesta, A.fecha AS fecha, B.nombre AS nombre, B.apellidos AS apellidos FROM preguntas A, usuarios B WHERE A.id_usuario_pregunta = B.id  AND A.estado = 'respondida'  ORDER BY fecha DESC;"
+      "SELECT  A.id AS id, A.pregunta AS pregunta, A.respuesta AS respuesta, A.fecha_pregunta AS fecha_pregunta, A.fecha_respuesta AS fecha_respuesta, B.nombre AS nombre, B.apellidos AS apellidos FROM preguntas A, usuarios B WHERE A.id_usuario_pregunta = B.id  AND A.estado = 'respondida'  ORDER BY fecha_pregunta, fecha_respuesta DESC;"
   );
 
   // Formatear la fecha en cada resultado del conjunto de resultados
   const formattedResult = result.map(row => {
-      const fecha = new Date(row.fecha);
+      const fechaPregunta = new Date(row.fecha_pregunta);
+      const fechaRespuesta = new Date(row.fecha_respuesta);
       const options = {
           year: 'numeric',
           month: 'long',
@@ -48,13 +55,14 @@ async function obtenerPreguntasPublicadas() {
           minute: 'numeric',
           hour12: true,
       };
-      const formattedFecha = fecha.toLocaleString('es-ES', options);
-
+      const formattedFechaPregunta = fechaPregunta.toLocaleString('es-ES', options);
+      const formattedFechaRespuesta = fechaRespuesta.toLocaleString('es-ES', options);
       return {
           id: row.id,
           pregunta: row.pregunta,
           respuesta: row.respuesta,
-          fecha: formattedFecha,
+          fecha_pregunta: formattedFechaPregunta,
+          fecha_respuesta: formattedFechaRespuesta,
           nombre: row.nombre,
           apellidos: row.apellidos,
       };

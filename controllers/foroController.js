@@ -42,7 +42,7 @@ async function hacerPreguntaPost(req, res) {
   }
 
 async function solicitudesPreguntasGet(req, res) {  
-    const preguntas = await db.execute('SELECT id, pregunta FROM preguntas WHERE estado = "pendiente" ORDER BY fecha DESC');
+    const preguntas = await db.execute('SELECT id, pregunta FROM preguntas WHERE estado = "pendiente" ORDER BY fecha_pregunta DESC');
     console.log(preguntas)
     console.log(preguntas[0]);
     res.render('solicitudes_preguntas.html', { preguntas: preguntas[0], query: req.query });

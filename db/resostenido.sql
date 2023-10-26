@@ -69,7 +69,8 @@ CREATE TABLE preguntas (
   estado ENUM('pendiente', 'respondida') DEFAULT 'pendiente',
   id_usuario_pregunta int(11) NOT NULL,
   id_usuario_respuesta int(11),
-  fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  fecha_pregunta TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  fecha_respuesta TIMESTAMP,
   PRIMARY KEY(id)
 );
 
@@ -189,3 +190,4 @@ VALUES (450.00, 'Otros', 'Docerola', 'Calibración', 'landingpage-1.webp');
 INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
 VALUES (450.00, 'Otros', 'Bajo sexto', 'Calibración', 'landingpage-1.webp');
 */
+
