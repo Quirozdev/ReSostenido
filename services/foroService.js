@@ -32,9 +32,44 @@ async function eliminarPregunta(id_pregunta){
     return result;
 }
 
+async function obtenerPreguntasPublicadas() {
+  const [result, campos] = await db.execute(
+      "SELECT  A.id AS id, A.pregunta AS pregunta, A.respuesta AS respuesta, A.fecha AS fecha, B.nombre AS nombre, B.apellidos AS apellidos FROM preguntas A, usuarios B WHERE A.id_usuario_pregunta = B.id  AND A.estado = 'respondida'  ORDER BY fecha DESC;"
+  );
+
+  // Formatear la fecha en cada resultado del conjunto de resultados
+  const formattedResult = result.map(row => {
+      const fecha = new Date(row.fecha);
+      const options = {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+          hour12: true,
+      };
+      const formattedFecha = fecha.toLocaleString('es-ES', options);
+
+      return {
+          id: row.id,
+          pregunta: row.pregunta,
+          respuesta: row.respuesta,
+          fecha: formattedFecha,
+          nombre: row.nombre,
+          apellidos: row.apellidos,
+      };
+  });
+
+  console.log(formattedResult);
+  console.log(campos);
+  return formattedResult;
+}
+
+
 module.exports = {
     hacerSolicitudDePregunta,
     contestarPregunta,
     rechazarPregunta,
-    eliminarPregunta
+    eliminarPregunta,
+    obtenerPreguntasPublicadas
 }

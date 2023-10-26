@@ -1,18 +1,18 @@
 const db = require('../db/db');
 const mapErrorValidationResultToObject = require('../utils/validationErrorsMapper');
 const { validationResult } = require('express-validator');
-const { hacerSolicitudDePregunta, contestarPregunta, rechazarPregunta, eliminarPregunta } = require('../services/foroService');
+const { hacerSolicitudDePregunta, contestarPregunta, rechazarPregunta, eliminarPregunta, obtenerPreguntasPublicadas } = require('../services/foroService');
 const querystring = require('querystring');
 
 async function foroGet(req, res) {
-  const preguntas = await db.execute('SELECT id, pregunta, respuesta FROM preguntas WHERE estado = "respondida" ORDER BY fecha DESC');
-  console.log(preguntas)
-  console.log(preguntas[0]);
+  const preguntas = await obtenerPreguntasPublicadas();
+  
+  
   if (req.session && req.session.usuario && req.session.usuario.es_admin){
-    return res.render('foro.html', { preguntas: preguntas[0], es_admin: true, query: req.query });
+    return res.render('foro.html', { preguntas: preguntas, es_admin: true, query: req.query });
 
   }else{
-    return res.render('foro.html', { preguntas: preguntas[0], query: req.query });
+    return res.render('foro.html', { preguntas: preguntas, query: req.query });
   }
 
 }
