@@ -29,7 +29,7 @@
                 </div>
                 {% endif %}
             </form>
-            
+
         </div>
         <div>
             <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -49,10 +49,11 @@
     </div>
     <div class="container-xl mt-5">
         <div class="container">
+
+            {% if not es_admin %}
             <p class="fs-2 ms-4 mt-5 mb-5 fw-bold text-center letra-principal">
                 Preguntas de otros usuarios
             </p>
-            {% if not es_admin %}
             {% for pregunta in preguntas %}
             <div class="container-fluid mt-3">
                 <div class="row">
