@@ -5,6 +5,9 @@ const mapErrorValidationResultToObject = require('../utils/validationErrorsMappe
 const { validationResult } = require('express-validator');
 const querystring = require('querystring');
 const e = require('express');
+const sharp = require('sharp');
+const fs = require('fs');
+const servicesService = require('../services/serviciosService');
 
 
 const agruparServicios = (servicios) => {
@@ -62,13 +65,14 @@ async function serviciosGet(req, res) {
 
 async function agregarServicioPost(req, res) {
   const result = validationResult(req);
+  const nombreImagen = req.body.nombre_instrumento.replace(/\s/g, "_") + ".webp";
 
   const nuevoServicio = {
     grupo: req.body.grupo,
     nombre_instrumento: req.body.nombre_instrumento,
     precio: req.body.precio,
     descripcion: req.body.descripcion,
-    url_imagen: req.body.url_imagen
+    url_imagen: nombreImagen
   }
 
   if (!result.isEmpty()) {
@@ -86,14 +90,26 @@ async function agregarServicioPost(req, res) {
     
     return res.redirect('/administrar_servicios?' + query_errors + "&" + query_datos);
   }
-  const consulta = await db.execute('INSERT INTO servicios (grupo, nombre_instrumento, precio, descripcion, url_imagen) VALUES (?, ?, ?, ?, ?)', [nuevoServicio.grupo, nuevoServicio.nombre_instrumento, nuevoServicio.precio, nuevoServicio.descripcion, nuevoServicio.url_imagen]);
+ 
+  
+  
+  if (servicesService.guardarImagenEnDisco(req.file.buffer, nombreImagen)){
+    const consulta = await db.execute('INSERT INTO servicios (grupo, nombre_instrumento, precio, descripcion, url_imagen) VALUES (?, ?, ?, ?, ?)', [nuevoServicio.grupo, nuevoServicio.nombre_instrumento, nuevoServicio.precio, nuevoServicio.descripcion, nuevoServicio.url_imagen]);
 
 
-  res.redirect('/administrar_servicios');
+    res.redirect('/administrar_servicios');
+  }else{
+    return res.redirect('/administrar_servicios?error_url_imagen=Error al cargar la imagen. Intente con otra imagen.'  );
+  }
+
+  
+  
 }
 
 async function editarServicioPost(req, res) {
   const result = validationResult(req);
+  const nombreImagen = req.body.nombre_instrumento.replace(/\s/g, "_") + ".webp";
+
 
   const servicioActualizado = {
     id: req.body.id,
@@ -101,7 +117,7 @@ async function editarServicioPost(req, res) {
     nombre_instrumento: req.body.nombre_instrumento,
     precio: req.body.precio,
     descripcion: req.body.descripcion,
-    url_imagen: req.body.url_imagen
+    url_imagen: nombreImagen
   }
 
   if (!result.isEmpty()) {
@@ -120,17 +136,27 @@ async function editarServicioPost(req, res) {
     
     return res.redirect('/administrar_servicios?' + query_errors + "&" + query_datos);
   }
-  console.log("Contenido de la imagen: "+servicioActualizado.url_imagen);
-  if(servicioActualizado.url_imagen === "undefined" || servicioActualizado.url_imagen === undefined || servicioActualizado.url_imagen === null || servicioActualizado.url_imagen === "") {
-    const consulta = await db.execute('UPDATE servicios SET grupo = ?, nombre_instrumento = ?, precio = ?, descripcion = ? WHERE id = ?', [servicioActualizado.grupo, servicioActualizado.nombre_instrumento, servicioActualizado.precio, servicioActualizado.descripcion, req.body.id]);
-
+  
+  
+  
+  if(!req.file) {
+    const actualizar = await db.execute('UPDATE servicios SET grupo = ?, nombre_instrumento = ?, precio = ?, descripcion = ? WHERE id = ?', [servicioActualizado.grupo, servicioActualizado.nombre_instrumento, servicioActualizado.precio, servicioActualizado.descripcion, req.body.id]);
   }else{
-    const consulta = await db.execute('UPDATE servicios SET grupo = ?, nombre_instrumento = ?, precio = ?, descripcion = ?, url_imagen = ? WHERE id = ?', [servicioActualizado.grupo, servicioActualizado.nombre_instrumento, servicioActualizado.precio, servicioActualizado.descripcion, servicioActualizado.url_imagen, req.body.id]);
- 
+    if (servicesService.guardarImagenEnDisco(req.file.buffer, nombreImagen)){
+      const actualizar = await db.execute('UPDATE servicios SET grupo = ?, nombre_instrumento = ?, precio = ?, descripcion = ?, url_imagen = ? WHERE id = ?', [servicioActualizado.grupo, servicioActualizado.nombre_instrumento, servicioActualizado.precio, servicioActualizado.descripcion, servicioActualizado.url_imagen, req.body.id]);
+      return res.redirect('/administrar_servicios');
+    }else{
+      return res.redirect('/administrar_servicios?error_url_imagen=Error al cargar la imagen. Intente con otra imagen.'  );
+
+    }
+
+  
+
   }
+  return res.redirect('/administrar_servicios');
 
 
-  res.redirect('/administrar_servicios');
+  
 }
 
 async function deshabilitarServicioPost(req, res) {
@@ -154,7 +180,7 @@ const storage = multer.diskStorage({
   }, // Directorio donde se guardarán las imágenes
   filename: function (req, file, cb) {
     // Genera un nombre de archivo único basado en el ID del servicio
-
+    //console.log(file.buffer)
     const nombreImagen = file.originalname;
     req.body.url_imagen = nombreImagen;
     cb(null, nombreImagen);
@@ -170,7 +196,7 @@ function fileFilter(req, file, cb) {
   }
 }
 
-const imageUpload = multer({ storage: storage, fileFilter: fileFilter });
+const imageUpload = multer({ storage: multer.memoryStorage(), fileFilter: fileFilter });
 
 
 module.exports = { 

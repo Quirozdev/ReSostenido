@@ -41,10 +41,12 @@ function addServiceValidation() {
       .withMessage('La descripción no puede estar vacía')
       .isLength({ max: 255 })
       .withMessage('La descripción debe tener 255 caracteres o menos'),
-    body('url_imagen', 'Imagen inválida')
-      .notEmpty()
-      .withMessage('La imagen no puede estar vacía'),
-  ];
+    body('url_imagen').custom((value, { req }) => {
+        if (!req.file) {
+          throw new Error('Debe de introducir alguna imagen');
+        }
+        return true;
+      }),];
 }
 
 function updateServiceValidation() {
@@ -74,7 +76,6 @@ function updateServiceValidation() {
         const [servicios, campos] = await db.execute('SELECT `nombre_instrumento`, `id` FROM `servicios` WHERE `nombre_instrumento` = ?', [nombre_instrumento]);
         const servicio = servicios[0];
         const id = req.body.id;
-        console.log("EL ID QUE SE QUIERE EDITAR ES: "+id+" Y EL ID QUE SE ENCONTRO ES: "+servicio.id);
         if(servicio && servicio.id != id ){
           throw new Error('Ya existe un servicio con ese nombre');
         }
