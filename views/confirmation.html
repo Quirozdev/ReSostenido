@@ -6,16 +6,16 @@
         <div class="row p-3 bg-white shadow box-area mt-5">
             <div 
             class="col-md-6 rounded-4 d-none d-md-block d-flex justify-content-center align-items-center flex-column left-box">
-                <img src="/public/images/confirmacioncorreoimg.webp" width="100%" height="100%" class="left-box d-flex flex-column">
+                <img src="/public/images/confirmacioncorreoimg.webp" width="100%" height="100%" class="left-box d-flex flex-column" id="image-confirmacion">
             </div>
             <div class="col-md-6 right-box">
                 <div class="row align-items-center justify-content-between">
                     <div id="confirmacionCorreo" class="header-text mb-4 text-center">
-                        <h2>Confirmacion de correo</h2>
+                        <h2 id="title-confirmacion">Confirmacion de correo</h2>
                     </div>
                     <form  method="post" action="/confirmation">
                         <div class="input-group mb-3">
-                            <p class="lead text-secondary"><small>
+                            <p class="lead text-secondary" id="leyenda-confirmacion"><small>
                                 Hemos mandado una confirmación a tu correo electrónico, porfavor, haz clic en la confirmación para cambiar tu contraseña.    
                             </small></p>    
                         </div>

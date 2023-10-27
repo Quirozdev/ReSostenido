@@ -6,7 +6,7 @@
         Administración de servicios
     </p>
     <div class="table-responsive">
-        <table class="table table-borderless table-hover">
+        <table class="table table-borderless table-hover" id="tabla_servicios">
             <thead>
                 <tr>
                     <th id="servicios-activos" scope="col" class="fs-4 vertical-align-middle">Servicios activos</th>
@@ -32,13 +32,13 @@
                                     itemid="url_imagen" name="url_imagen">
                             </div>
                             {% if query.error_url_imagen %}
-                            <div class="alert alert-warning mt-2 fw-normal" role="alert">
+                            <div class="alert alert-warning mt-2 fw-normal" id="image-error-label" role="alert">
                                 {{ query.error_url_imagen }}
                             </div>
                             {% else %}
                             {% if query.error_nombre_instrumento or query.error_descripcion or query.error_precio or
                             query.error_grupo %}
-                            <div class="alert alert-warning mt-2 fw-normal" role="alert">
+                            <div class="alert alert-warning mt-2 fw-normal" id="image-error-edit-label" role="alert">
                                 Favor de ingresar la imagen de nuevo.
                             </div>
                             {% endif %}
@@ -48,7 +48,7 @@
                             <input type="text" class="form-control" placeholder="Nombre del instrumento"
                                 id="nombre_instrumento" name="nombre_instrumento" value="{{query.nombre_instrumento}}">
                             {% if query.error_nombre_instrumento %}
-                            <div class="alert alert-warning mt-2" role="alert">
+                            <div class="alert alert-warning mt-2" id="nombre-instrumento-error-label" role="alert">
                                 {{ query.error_nombre_instrumento }}
                             </div>
                             {% endif %}
@@ -57,7 +57,7 @@
                             <input type="text" class="form-control" placeholder="Grupo" id="grupo" name="grupo"
                                 value="{{query.grupo}}">
                             {% if query.error_grupo %}
-                            <div class="alert alert-warning mt-2" role="alert">
+                            <div class="alert alert-warning mt-2" id="grupo-error-label" role="alert">
                                 {{ query.error_grupo }}
                             </div>
                             {% endif %}
@@ -66,7 +66,7 @@
                             <input type="text" class="form-control" placeholder="Descripción" id="descripcion"
                                 name="descripcion" value="{{query.descripcion}}">
                             {% if query.error_descripcion %}
-                            <div class="alert alert-warning mt-2" role="alert">
+                            <div class="alert alert-warning mt-2" id="desciption-error-label" role="alert">
                                 {{ query.error_descripcion }}
                             </div>
                             {% endif %}
@@ -75,7 +75,7 @@
                             <input type="number" class="form-control" placeholder="Costo" id="precio" name="precio"
                                 min="0" step="0.01" value="{{query.precio}}">
                             {% if query.error_precio %}
-                            <div class="alert alert-warning mt-2" role="alert">
+                            <div class="alert alert-warning mt-2" id="cost-error-label" role="alert">
                                 {{ query.error_precio }}
                             </div>
                             {% endif %}
@@ -102,13 +102,13 @@
                                     itemid="upd_url_imagen" name="url_imagen">
                             </div>
                             {% if query.upd_error_url_imagen %}
-                            <div class="alert alert-warning mt-2 fw-normal" role="alert">
+                            <div class="alert alert-warning mt-2 fw-normal" id="upd-image-error-label" role="alert">
                                 {{ query.upd_error_url_imagen }}
                             </div>
                             {% else %}
                             {% if query.upd_error_nombre_instrumento or query.upd_error_descripcion or query.upd_error_precio or
                             query.upd_error_grupo %}
-                            <div class="alert alert-warning mt-2 fw-normal" role="alert">
+                            <div class="alert alert-warning mt-2 fw-normal" id="upd-image-error-edit-label" role="alert">
                                 Favor de ingresar la imagen de nuevo si es que desea cambiarla.
                             </div>
                             {% endif %}
@@ -118,7 +118,7 @@
                             <input type="text" class="form-control" placeholder="Nombre del instrumento"
                                 id="upd_nombre_instrumento" name="nombre_instrumento" value="{{query.nombre_instrumento}}">
                             {% if query.upd_error_nombre_instrumento %}
-                            <div class="alert alert-warning mt-2" role="alert">
+                            <div class="alert alert-warning mt-2" id="upd-nombre-instrumento-error-label" role="alert">
                                 {{ query.upd_error_nombre_instrumento }}
                             </div>
                             {% endif %}
@@ -127,7 +127,7 @@
                             <input type="text" class="form-control" placeholder="Grupo" id="upd_grupo" name="grupo"
                                 value="{{query.grupo}}">
                             {% if query.upd_error_grupo %}
-                            <div class="alert alert-warning mt-2" role="alert">
+                            <div class="alert alert-warning mt-2" id="upd-grupo-error-label" role="alert">
                                 {{ query.upd_error_grupo }}
                             </div>
                             {% endif %}
@@ -136,7 +136,7 @@
                             <input type="text" class="form-control" placeholder="Descripción" id="upd_descripcion"
                                 name="descripcion" value="{{query.descripcion}}">
                             {% if query.upd_error_descripcion %}
-                            <div class="alert alert-warning mt-2" role="alert">
+                            <div class="alert alert-warning mt-2" id="upd-description-error-label" role="alert">
                                 {{ query.upd_error_descripcion }}
                             </div>
                             {% endif %}
@@ -145,7 +145,7 @@
                             <input type="number" class="form-control" placeholder="Costo" id="upd_precio" name="precio"
                                 min="0" step="0.01" value="{{query.precio}}">
                             {% if query.upd_error_precio %}
-                            <div class="alert alert-warning mt-2" role="alert">
+                            <div class="alert alert-warning mt-2" id="upd-cost-error-label" role="alert">
                                 {{ query.upd_error_precio }}
                             </div>
                             {% endif %}

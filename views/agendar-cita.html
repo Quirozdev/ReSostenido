@@ -5,29 +5,31 @@
   <section>
     <div class="container">
       <div class="accordion" id="accordionExample">
-        <div class="steps">
+        <div class="steps" id="pasos-agendar">
           <progress id="progress" value=0 max=100></progress>
-          <div class="step-item">
-            <button class="step-button text-center" type="button" data-target="#content-1">
+          <div class="step-item" id="step-1">
+            <button class="step-button text-center" type="button" data-target="#content-1" id="btn-step-1">
               1
             </button>
-            <div class="step-title">
+            <div class="step-title" id="title-step-1">
               Agendar
             </div>
           </div>
-          <div class="step-item">
-            <button class="step-button text-center collapsed" type="button" data-target="#content-2" disabled>
+          <div class="step-item" id="step-2">
+            <button class="step-button text-center collapsed" type="button" data-target="#content-2" id="btn-step-2"
+              disabled>
               2
             </button>
-            <div class="step-title">
+            <div class="step-title" id="title-step-2">
               Pagar
             </div>
           </div>
-          <div class="step-item">
-            <button class="step-button text-center collapsed" type="button" data-target="#content-3" disabled>
+          <div class="step-item" id="step-3">
+            <button class="step-button text-center collapsed" type="button" data-target="#content-3" id="btn-step-3"
+              disabled>
               3
             </button>
-            <div class="step-title">
+            <div class="step-title" id="title-step-3">
               Confirmar
             </div>
           </div>
@@ -39,7 +41,7 @@
                 <form id="agendar_cita_formulario">
                   <div class="row align-items-center justify-content-between">
                     <div id="agendar_cita" class="header-text mb-4 text-center">
-                      <h2>Agendar Cita</h2>
+                      <h2 id="title-agendar-cita">Agendar Cita</h2>
                     </div>
 
                     <div class="input-group mb-3">
@@ -49,19 +51,19 @@
                       </select>
                     </div>
                     <div class="input-group mb-3">
-                      <div class="form-floating">
+                      <div class="form-floating" id="input-fecha">
                         <input type="date" class="form-control form-control-lg fs-6 " placeholder="Fecha" name="fecha"
                           id="fecha">
                         <label for="floatingSelectGrid">Fecha</label>
                       </div>
-                      <div class="form-floating ms-3">
+                      <div class="form-floating ms-3" id="input-hora">
                         <input type="time" class="form-control form-control-lg fs-6" placeholder="Hora" name="hora"
                           id="hora">
                         <label for="floatingSelectGrid">Hora</label>
                       </div>
                     </div>
                     <div class="input-group mb-3">
-                      <div class="form-check">
+                      <div class="form-check" id="checkbox-cuerdas">
                         <label class="form-check-label" for="flexCheckIndeterminate">
                           Incluir cuerdas
                         </label>
@@ -69,7 +71,7 @@
                           name="incluye_cuerdas">
                       </div>
                     </div>
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3" id="textarea-problema">
                       <div class="form-floating">
                         <textarea class="form-control form-control-lg" placeholder="Leave a comment here"
                           id="descripcion" name="descripcion"></textarea>
@@ -77,20 +79,20 @@
                       </div>
                     </div>
                     <div class="input-group mb-1">
-                      <p class="text-xl-start fw-bold">Nombre del instrumento: {{servicio.nombre_instrumento}}</p>
-                      <p class="text-xl-start text-decoration-underline ms-3"></p>
+                      <p class="text-xl-start fw-bold" id="NombreInstrumento">Nombre del instrumento:
+                        {{servicio.nombre_instrumento}}</p>
                     </div>
                     <div class="input-group mb-1">
-                      <p class="text-xl-start fw-bold">Grupo del instrumento: {{servicio.grupo}}</p>
-                      <p class="text-xl-start text-decoration-underline ms-3"></p>
+                      <p class="text-xl-start fw-bold" id="GrupoInstrumento">Grupo del instrumento: {{servicio.grupo}}
+                      </p>
                     </div>
                     <div class="input-group mb-1">
-                      <p class="text-xl-start fw-bold">Descripción del servicio: {{servicio.descripcion}}</p>
-                      <p class="text-xl-start text-decoration-underline ms-3"></p>
+                      <p class="text-xl-start fw-bold" id="DescripcionServicio">Descripción del servicio:
+                        {{servicio.descripcion}}</p>
                     </div>
                     <div class="input-group mb-1">
-                      <p class="text-xl-start fw-bold">Anticipo: ${{servicio.precio_anticipo_cita}}</p>
-                      <p class="text-xl-start text-decoration-underline ms-3"></p>
+                      <p class="text-xl-start fw-bold" id="AnticipoServicio">Anticipo:
+                        ${{servicio.precio_anticipo_cita}}</p>
                     </div>
                     <div class="input-group mb-1">
                       <button id="agendar-cita-btn" class="btn btn-lg w-100 fs-6 fw-bold botones">Agendar</button>
@@ -101,45 +103,14 @@
               <div
                 class="col-md-6 rounded-4 d-none d-md-block d-flex justify-content-center align-items-center flex-column right-box">
                 <img src="/images/resend_verification_token_img.webp" width="100%" height="100%"
-                  class="right-box d-flex flex-column">
-              </div>
-            </div>
-          </div>
-          <div id="content-2" class="step-content" data-parent="#accordionExample">
-            
-          </div>
-          <div id="content-3" class="step-content" data-parent="#accordionExample">
-            <div class="container justify-content-center align-items-center">
-              <div class="row align-items-center justify-content-between mb-3 ms-3 mt-3 me-3">
-                <div id="reservacion_exitosa" class="header-text mb-4 text-center">
-                  <h2>¡Reservación de cita exitosa!</h2>
-                </div>
-                <p class="fs-5 fw-bold">Detalles de la cita</p>
-                <p class="fs-6">Servicio</p>
-                <p class="fs-6">Fecha de la cita</p>
-                <p class="fs-6">Hora de la cita</p>
-                <p class="fs-5 fw-bold mt-4">Método de pago utilizado</p>
-                <p class="fs-6">Tarjeta de : [Ultimos tres digitos de la tarjeta]</p>
-                <p class="fs-6 fw-bold mt-4">Gracias por reservaar tu cita. Hemos enviado un correo de confirmación</p>
-                <p class="fs-6">El correo es : [Correo]</p>
-                <p class="fs-6 mt-4">Por favor revisa tu bandeja de entrada</p>
-
-                <div class="d-flex flex-row mt-4">
-                  <div class="flex-fill text-center">
-                    <button id="pagar-btn-1" class="btn btn-lg fw-bold botones">Ir a servicios</button>
-                  </div>
-                  <div class="flex-fill text-center">
-                    <button id="pagar-btn-2" class="btn btn-lg fw-bold botones">Ver mis citas</button>
-                  </div>
-                </div>
+                  class="right-box d-flex flex-column" id="ImageAgendarCita">
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-</div>
-</section>
+  </section>
 </div>
 
 <script>

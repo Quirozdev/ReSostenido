@@ -8,7 +8,7 @@
                 <p class="fs-1 ms-4 mt-5 mb-5 fw-bold text-white">
                     ¿En qué podemos ayudarte?
                 </p>
-                <div class="input-group">
+                <div class="input-group" id="form_question">
                     <div class="form-floating d-flex flex-row">
                         <textarea class="form-control form-control-lg" placeholder="Escriba su pregunta aquí"
                             name="pregunta" id="hacer_pregunta"></textarea>
@@ -31,7 +31,7 @@
             </form>
 
         </div>
-        <div>
+        <div id="svg_waves">
             <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                 viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
                 <defs>
@@ -51,22 +51,24 @@
         <div class="container">
 
             {% if not es_admin %}
-            <p class="fs-2 ms-4 mt-5 mb-5 fw-bold text-center letra-principal">
+            {% if preguntas.lenght > 0 %}
+            <p class="fs-2 ms-4 mt-5 mb-5 fw-bold text-center letra-principal" id="titulo_preguntas">
                 Preguntas de otros usuarios
             </p>
+            {% endif %}
             {% for pregunta in preguntas %}
-            <div class="container-fluid mt-5">
+            <div class="container-fluid mt-5" id="vista-cliente">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card mb-4">
-                            <div class="card-header">
+                            <div class="card-header" id="datos_cliente">
                                 <div class="media flex-wrap w-100 align-items-center">
                                     <div class="media-body ml-3 fs-5">
                                         {{pregunta.nombre}}  {{pregunta.apellidos}} - {{pregunta.fecha_pregunta}}
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body" id="pregunta_cliente">
                                 <p class="fs-5">
                                     {{pregunta.pregunta}}
                                 </p>
@@ -74,12 +76,12 @@
                             {% if pregunta.respuesta %}
                             <div
                                 class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
-                                <div class="px-4 pt-3">
+                                <div class="px-4 pt-3" id="numero_respuestas">
                                     1 Respuesta
                                 </div>
                             </div>
                             <div class="card-header">
-                                <div class="d-flex align-items-center mb-3 mt-3">
+                                <div class="d-flex align-items-center mb-3 mt-3" id="datos_respuesta">
                                     <div class="media-body ml-3 fs-5 me-3">
                                         Re Sostenido
                                     </div>
@@ -87,7 +89,7 @@
                                      - {{pregunta.fecha_respuesta}}
                                 </div>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body" id="respuesta_deAdmin">
                                 <p class="fs-5">
                                     {{pregunta.respuesta}}
                                 </p>

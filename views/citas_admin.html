@@ -20,14 +20,12 @@
                 <form action="/agregar_servicio" method="get" enctype="multipart/form-data">
                     <tr id="formulario" style="display: none;">
                         <th scope="row" style="max-width: 150px;">
-                            
-                           
                         </th>
                         <td>
                             <input type="text" class="form-control" placeholder="Nombre del instrumento"
                                 id="nombre_instrumento" name="nombre_instrumento" value="{{query.nombre_instrumento}}">
                             {% if query.error_nombre_instrumento %}
-                            <div class="alert alert-warning mt-2" role="alert">
+                            <div class="alert alert-warning mt-2" id="ErrorNombreInstrumento" role="alert">
                                 {{ query.error_nombre_instrumento }}
                             </div>
                             {% endif %}
@@ -36,7 +34,7 @@
                             <input type="text" class="form-control" placeholder="Grupo" id="grupo" name="grupo"
                                 value="{{query.grupo}}">
                             {% if query.error_grupo %}
-                            <div class="alert alert-warning mt-2" role="alert">
+                            <div class="alert alert-warning mt-2" id="ErrorGrupo" role="alert">
                                 {{ query.error_grupo }}
                             </div>
                             {% endif %}
@@ -45,7 +43,7 @@
                             <input type="text" class="form-control" placeholder="Descripción" id="descripcion"
                                 name="descripcion" value="{{query.descripcion}}">
                             {% if query.error_descripcion %}
-                            <div class="alert alert-warning mt-2" role="alert">
+                            <div class="alert alert-warning mt-2" id="ErrorDescripcion" role="alert">
                                 {{ query.error_descripcion }}
                             </div>
                             {% endif %}
@@ -54,7 +52,7 @@
                             <input type="number" class="form-control" placeholder="Costo" id="precio" name="precio"
                                 min="0" step="0.01" value="{{query.precio}}">
                             {% if query.error_precio %}
-                            <div class="alert alert-warning mt-2" role="alert">
+                            <div class="alert alert-warning mt-2" id="ErrorPrecio" role="alert">
                                 {{ query.error_precio }}
                             </div>
                             {% endif %}
@@ -73,10 +71,10 @@
                 {% for servicio in serviciosActivos %}
                 <form id="serviciosActivos-form" action="/editar_servicio" method="post">
                     <tr>
-                        <th scope="row" style="max-width: 150px; text-align: center;">
+                        <th scope="row" style="max-width: 150px; text-align: center;" id="ImagenesServicio">
                             <img src="/images/servicios/{{ servicio.url_imagen }}" alt="Imagen de servicio"
                                 class="img-fluid rounded-pill mx-auto d-block"
-                                style="max-width: 100%; max-height: 150px; object-fit: contain;">
+                                style="max-width: 100%; max-height: 150px; object-fit: contain;" id="Imagen-{{ servicio.url_imagen }}">
                         </th>
                         <td id="sanombre_instrumento2" class="vertical-align-middle">{{ servicio.nombre_instrumento }}</td>
                         <td id="saGrupo2" class="vertical-align-middle">{{ servicio.grupo }}</td>
