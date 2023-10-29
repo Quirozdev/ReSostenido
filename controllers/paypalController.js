@@ -5,10 +5,7 @@ const querystring = require('node:querystring');
 class PaypalController {
   constructor() {
     this.paypal = {
-      url:
-        process.env.NODE_ENV === 'production'
-          ? 'https://api-m.paypal.com'
-          : 'https://api-m.sandbox.paypal.com',
+      url: 'https://api-m.sandbox.paypal.com',
       clientId: process.env.PAYPAL_CLIENT_ID,
       clientSecret: process.env.PAYPAL_SECRET,
     };
