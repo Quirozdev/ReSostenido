@@ -15,8 +15,13 @@ class PaypalController {
     const url = `${this.paypal.url}/v2/checkout/orders`;
     const token = await this.generateAccessToken();
 
-    const hostname = process.env.RAILWAY_PUBLIC_DOMAIN || process.env.HOST_NAME;
+    let hostname = process.env.RAILWAY_PUBLIC_DOMAIN || process.env.HOST_NAME;
 
+    if (process.env.RAILWAY_PUBLIC_DOMAIN && !hostname.startsWith('https://') {
+      hostname = 'https://' + hostname;
+    }
+
+    
     const response = await fetch(url, {
       method: 'POST',
       headers: {
