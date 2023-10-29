@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="margin-top-110 ms-5 me-5 mb-5">
+    <p id="adminservicios" class="fs-3 ms-4 mt-5 fw-bold text-center">
+        Tus citas pendientes
+    </p>
+    <div class="table-responsive">
+        <table class="table table-borderless table-hover" id="tabla_servicios">
+            <thead>
+                <tr>
+                    <th id="saId" scope="col" class="fs-4 vertical-align-middle">Id</th>
+                    <th id="saNombre" scope="col" class="fs-5 fw-lighter vertical-align-middle">Nombre del Instrumento
+                    </th>
+                    <th id="saDescripción" scope="col" class="fs-5 fw-lighter vertical-align-middle">Descripción</th>
+                    <th id="saFechaHora" scope="col" class="fs-5 fw-lighter vertical-align-middle">Fecha y hora</th>
+                    <th id="saAnticipo" scope="col" class="fs-5 fw-lighter vertical-align-middle">Anticipo</th>
+                    <th id="saNotas" scope="col" class="fs-5 fw-lighter vertical-align-middle">Notas</th>
+                    <th id="saCuerdas" scope="col" class="fs-5 fw-lighter vertical-align-middle">Incluye cuerdas</th>
+                    <th id="saEstado" scope="col" class="fs-5 fw-lighter vertical-align-middle">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cita in citasPendientes %}
+                <tr>
+                    <th id="CPid" style="vertical-align: middle;">{{ cita.id }}</th>
+                    <td id="CPnombre" style="vertical-align: middle;">{{ cita.nombre_instrumento }}</td>
+                    <td id="CPdescripcion_servicio" style="vertical-align: middle;">{{ cita.descripcion_servicio }}</td>
+                    <td id="CPfecha_hora" style="vertical-align: middle;">{{ cita.fecha }}, {{ cita.hora }}</td>
+                    <td id="CPanticipo" style="vertical-align: middle;">${{ cita.precio_anticipo_total }}</td>
+                    <td id="CPnotas" style="vertical-align: middle;">{{ cita.descripcion }}</td>
+                    <td id="CPcuerdas" style="vertical-align: middle;">
+                        {% if cita.incluye_cuerdas == 1 %}
+                        Sí
+                        {% elif cita.incluye_cuerdas == 0 %}
+                        No
+                        {% endif %}
+                    </td>
+                    <td id="CPestado" style="vertical-align: middle; color: green;">{{ cita.estado }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="margin-top-110 ms-5 me-5 mb-5">
+    <p id="adminservicios" class="fs-3 ms-4 mt-5 fw-bold text-center">
+        Tus citas pasadas
+    </p>
+    <div class="table-responsive">
+        <table class="table table-borderless table-hover" id="tabla_servicios">
+            <thead>
+                <tr>
+                    <th id="saId" scope="col" class="fs-4 vertical-align-middle">Id</th>
+                    <th id="saNombre" scope="col" class="fs-5 fw-lighter vertical-align-middle">Nombre del Instrumento
+                    </th>
+                    <th id="saDescripción" scope="col" class="fs-5 fw-lighter vertical-align-middle">Descripción</th>
+                    <th id="saFechaHora" scope="col" class="fs-5 fw-lighter vertical-align-middle">Fecha y hora</th>
+                    <th id="saAnticipo" scope="col" class="fs-5 fw-lighter vertical-align-middle">Anticipo</th>
+                    <th id="saNotas" scope="col" class="fs-5 fw-lighter vertical-align-middle">Notas</th>
+                    <th id="saCuerdas" scope="col" class="fs-5 fw-lighter vertical-align-middle">Incluye cuerdas</th>
+                    <th id="saEstado" scope="col" class="fs-5 fw-lighter vertical-align-middle">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cita in citasTerminadas %}
+                <tr>
+                    <th id="CPid" style="vertical-align: middle;">{{ cita.id }}</th>
+                    <td id="CPnombre" style="vertical-align: middle;">{{ cita.nombre_instrumento }}</td>
+                    <td id="CPdescripcion_servicio" style="vertical-align: middle;">{{ cita.descripcion_servicio }}</td>
+                    <td id="CPfecha_hora" style="vertical-align: middle;">{{ cita.fecha }}, {{ cita.hora }}</td>
+                    <td id="CPanticipo" style="vertical-align: middle;">${{ cita.precio_anticipo_total }}</td>
+                    <td id="CPnotas" style="vertical-align: middle;">{{ cita.descripcion }}</td>
+                    <td id="CPcuerdas" style="vertical-align: middle;">
+                        {% if cita.incluye_cuerdas == 1 %}
+                        Sí
+                        {% elif cita.incluye_cuerdas == 0 %}
+                        No
+                        {% endif %}
+                    </td>
+                    <td id="CPestado" style="vertical-align: middle; color: blue;">{{ cita.estado }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

@@ -5,10 +5,7 @@ const querystring = require('node:querystring');
 class PaypalController {
   constructor() {
     this.paypal = {
-      url:
-        process.env.NODE_ENV === 'production'
-          ? 'https://api-m.paypal.com'
-          : 'https://api-m.sandbox.paypal.com',
+      url: 'https://api-m.sandbox.paypal.com',
       clientId: process.env.PAYPAL_CLIENT_ID,
       clientSecret: process.env.PAYPAL_SECRET,
     };
@@ -63,11 +60,15 @@ class PaypalController {
 
     const data = await response.json();
 
+    console.log('paypal data', data);
+
     if (data && data.links) {
       const approvalLink = data.links.find((link) => {
         return link.rel == 'payer-action';
       });
       return { link: approvalLink.href };
+    } else {
+      throw new Error('Error while trying to generate Paypal link');
     }
   }
 
