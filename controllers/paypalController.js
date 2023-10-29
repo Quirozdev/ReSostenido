@@ -60,11 +60,15 @@ class PaypalController {
 
     const data = await response.json();
 
+    console.log('paypal data', data);
+
     if (data && data.links) {
       const approvalLink = data.links.find((link) => {
         return link.rel == 'payer-action';
       });
       return { link: approvalLink.href };
+    } else {
+      throw new Error('Error while trying to generate Paypal link');
     }
   }
 
