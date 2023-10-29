@@ -222,7 +222,7 @@ async function procesarPago(req, res, next) {
       <p><strong>Fecha:</strong> ${moment(cita.fecha).format('DD-MM-YYYY')}</p>
       <p><strong>Hora:</strong> ${moment(cita.hora, 'h:mm').format('LT')}</p>
       <p><strong>Consulta todas tus citas en:</strong> </p>
-      <a href=${hostname}/citas}>Citas</a>
+      <a href="${hostname}/citas">Citas</a>
       `
     );
 
