@@ -17,7 +17,7 @@ class PaypalController {
 
     let hostname = process.env.RAILWAY_PUBLIC_DOMAIN || process.env.HOST_NAME;
 
-    if (process.env.RAILWAY_PUBLIC_DOMAIN && !hostname.startsWith('https://') {
+    if (process.env.RAILWAY_PUBLIC_DOMAIN && !hostname.startsWith('https://')) {
       hostname = 'https://' + hostname;
     }
 
