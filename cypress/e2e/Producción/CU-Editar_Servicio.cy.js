@@ -4,9 +4,9 @@ describe('Agendar Servicio', () => {
       cy.visit('https://resostenidoclone-production.up.railway.app/login')
   
       // Cargar datos desde el archivo de fixture 'registro.json' para el inicio de sesión
-      cy.fixture('registro.json').then((registro) => {
-        cy.get('#email').type(registro.email_admin, { force: true });
-        cy.get('#contrasenia').type(registro.contrasena, { force: true });
+      cy.fixture('datos_admin.json').then((datos) => {
+        cy.get('#email').type(datos.email, { force: true });
+        cy.get('#contrasenia').type(datos.contrasena, { force: true });
       });
   
       cy.get('#login').click()

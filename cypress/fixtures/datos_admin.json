@@ -1,12 +1,11 @@
 {
     "nombre": "Adrian",
     "apellido": "Vargas",
-    "email": "adrianvargasuson@gmail.com",
+    "email": "adrianpatata23@gmail.com",
     "celular": "6623511195",
-    "contrasena": "TacosDeGansito",
-    "conf_contra": "TacosDeGansito",
+    "contrasena": "Patatas23.",
     "imagen": "foto.jpg",
-    "nombre_instrumento": "Guitarra clásica",
+    "nombre_instrumento": "Guitarra acústica",
     "grupo": "Guitarras",
     "descripcion": "Calibración",
     "precio":"300"
