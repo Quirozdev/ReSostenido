@@ -1,6 +1,6 @@
 describe('Pagina de inicio de sesión', () => {
     before(() => {
-        cy.visit('https://resostenidoclone-production.up.railway.app/')
+        cy.visit('localhost:3000')
     })
 
     it('Encontrar el botón de menú', () => {
@@ -21,12 +21,20 @@ describe('Pagina de inicio de sesión', () => {
         cy.get('#foro').click()
         // Verificar que estemos en el sitio de Foro
         cy.get('#titulo').should('contain.text', '¿En qué podemos ayudarte?')
-        
-        // 16. CONTESTAR Y PUBLICAR PREGUNTA DEL CLIENTE EN EL FORO
         // abrir menu
         cy.get('.navbar-toggler-icon').click()
         // ir a la seccion de solicitud de preguntas
         cy.get('#solicitudesPreguntas').click()
+        // 16. CONTESTAR Y PUBLICAR PREGUNTA DEL CLIENTE EN EL FORO
+        // verificar que estemos en el apartado de solicitud de preguntas
+        cy.get('.fs-2').should('contain.text', 'Solicitudes de preguntas')
+
+// TODO: Responder pregunta...
+        cy.get('#respuesta_1').click().type("Respuesta...")
+        // darle click en boton responder
+        cy.get('.d-flex > .btn').click()
+        // aceptar
+        cy.get('.modal-footer > .botones').click()
 
 
         // TODO: 14. ELIMINAR PREGUNTA PUBLICADA EN EL FORO
