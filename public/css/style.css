@@ -352,6 +352,23 @@ button:hover i.fa-trash {
     from { transform: rotate(360deg);}
   }
 
+  .container_card_carousel{
+    display: flex;
+  }
+  .card_carousel{
+    position: relative;
+    left: 0px;
+  }
+  .card_carousel:not(:first-child){
+    margin-left: -50px;
+  }
+  .card_carousel:hover{
+    transform: translateY(-20px);
+  }
+  .card_carousel:hover ~ .card_carousel{	
+    left: 50px;
+  }
+
 
 /*Shrinking for mobile*/
 @media (max-width: 768px) {
