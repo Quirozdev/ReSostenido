@@ -6,7 +6,7 @@ USE resostenido;
 
 CREATE TABLE usuarios (
   id int(11) AUTO_INCREMENT,
-  email VARCHAR(255) UNIQUE NOT NULL,
+  email VARCHAR(250) UNIQUE NOT NULL,
   nombre VARCHAR(55) NOT NULL,
   apellidos VARCHAR(110) NOT NULL,
   numero_telefono VARCHAR(15) NOT NULL,
@@ -80,7 +80,7 @@ CREATE TABLE preguntas (
 DELIMITER $$
 DROP FUNCTION IF EXISTS validar_disponibilidad_fecha_cita;
 CREATE FUNCTION validar_disponibilidad_fecha_cita(fecha_a_checar DATE, hora_a_checar TIME, fecha_y_hora_actual DATETIME)
-  RETURNS JSON 
+  RETURNS JSON DETERMINISTIC
   BEGIN
 
     DECLARE indice_dia_en_la_semana INT;

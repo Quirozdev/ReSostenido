@@ -15,8 +15,13 @@ class PaypalController {
     const url = `${this.paypal.url}/v2/checkout/orders`;
     const token = await this.generateAccessToken();
 
-    const hostname = process.env.RAILWAY_PUBLIC_DOMAIN || process.env.HOST_NAME;
+    let hostname = process.env.RAILWAY_PUBLIC_DOMAIN || process.env.HOST_NAME;
 
+    if (process.env.RAILWAY_PUBLIC_DOMAIN && !hostname.startsWith('https://')) {
+      hostname = 'https://' + hostname;
+    }
+
+    
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -60,11 +65,15 @@ class PaypalController {
 
     const data = await response.json();
 
+    console.log('paypal data', data);
+
     if (data && data.links) {
       const approvalLink = data.links.find((link) => {
         return link.rel == 'payer-action';
       });
       return { link: approvalLink.href };
+    } else {
+      throw new Error('Error while trying to generate Paypal link');
     }
   }
 
