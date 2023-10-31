@@ -9,11 +9,6 @@ async function hacerSolicitudDePregunta(pregunta, id_usuario_pregunta){
 }
 
 async function contestarPregunta(id_pregunta, respuesta, id_usuario_respuesta){
-  
-
-// Define la zona horaria de Hermosillo
-
-
     const [result, campos] = await db.execute(
         'UPDATE preguntas SET respuesta = ?, estado = "respondida", id_usuario_respuesta = ?, fecha_respuesta = CURRENT_TIMESTAMP WHERE id = ?',
         [respuesta, id_usuario_respuesta,  id_pregunta]
@@ -67,8 +62,7 @@ async function obtenerPreguntasPublicadas() {
       };
   });
 
-  console.log(formattedResult);
-  console.log(campos);
+  
   return formattedResult;
 }
 
