@@ -19,7 +19,84 @@
 </head>
 
 <div>
-  <div class="shadow-lg p-3 mb-5 bg-body rounded"></div>
+  <nav class="navbar navbar-expand-custom navbar-mainbg fixed-top">
+    <a class="navbar-brand navbar-logo" id="imgLogo" href="/"><img src="/images/logo.webp" alt="Logo" width="70"
+        height="70" class="d-inline-block align-text-top" /></a>
+    <button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <i class="fas fa-bars text-white"></i>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto ">
+        <div class="hori-selector">
+          <div class="left"></div>
+          <div class="right"></div>
+        </div>
+        <li class="nav-item" id="indexNavItem">
+          <a class="nav-link" href="/"><i class="far fa-address-book"></i>Inicio</a>
+        </li>
+        
+        <li class="nav-item" id="foroNavItem">
+          <a class="nav-link" href="/foro"><i class="far fa-comment"></i>Foro</a>
+        </li>
+
+        {% if usuario.es_admin %}
+        <li class="nav-item" id="AdministrarServiciosNavItem">
+          <a class="nav-link" href="/administrar_servicios"><i class="fa-solid fa-pencil"></i>Servicios</a>
+        </li>
+
+        <li class="nav-item" id="SolicitudesPreguntasNavItem">
+          <a class="nav-link" href="/solicitudes_preguntas"><i class="far fa-envelope"></i>Solicitudes de preguntas</a>
+        </li>
+
+        {% else %}
+        <li class="nav-item" id="serviciosNavItem">
+          <a class="nav-link" href="/servicios"><i class="fa-solid fa-guitar"></i>Servicios</a>
+        </li>
+        {% endif %}
+
+        <li class="nav-item" id="faqNavItem">
+          <a class="nav-link" href="/FAQ"><i class="far fa-circle-question"></i>FAQ</a>
+        </li>
+
+        {% if usuario %} {% if usuario.es_admin %}
+        <li class="nav-item" id="citasNavItem">
+          <a class="nav-link" href="/citas"><i class="fa-solid fa-guitar"></i>Citas</a>
+        </li>
+        <li class="nav-item" id="adminNavItem">
+          <a class="nav-link" href="/perfil"><i class="far fa-user"></i>Admin</a>
+        </li>
+
+        {% else %}
+        <li class="nav-item" id="citasNavItem">
+          <a class="nav-link" href="/citas"><i class="fa-solid fa-book"></i>Citas</a>
+        </li>
+        <li class="nav-item" id="adminNavItem">
+          <a class="nav-link" href="/perfil"><i class="far fa-user"></i>Perfil</a>
+        </li>
+
+        {% endif %} {% else %}
+        <li class="nav-item" id="loginNavItem">
+          <a class="nav-link" href="/login"><i class="far fa-copy"></i>Iniciar Sesión</a>
+        </li>
+
+        {% endif %}
+        
+          {% if usuario %}
+          <li class="nav-item" id="logoutNavItem">
+            <a class="nav-link" href="/logout" style="color: red;"><i class="fa-solid fa-right-from-bracket" style="color: red;"></i>Cerrar Sesión</a>
+          </li>
+          {% else %}
+          <li class="nav-item" id="registerNavItem">
+            <a class="nav-link" href="/register"><i class="far fa-user"></i>Registrarse</a>
+          </li>
+          {% endif %}
+      </ul>
+    </div>
+  </nav>
+
+
+  <!--
   <nav class="navbar bg-body-tertiary fixed-top shadow p-3 mb-5 bg-body rounded">
     <div class="container-fluid">
       <a id="imgLogo" href="/"><img src="/images/logo.webp" alt="Logo" width="100" height="100"
@@ -145,6 +222,7 @@
       </div>
     </div>
   </nav>
+  -->
 </div>
 
 <body>
@@ -180,6 +258,134 @@
       Copyright &copy; Re Sostenido 2023
     </p>
   </footer>
+  <script>
+    function test() {
+      var tabsNewAnim = document.getElementById('navbarSupportedContent');
+      var selectorNewAnim = tabsNewAnim.querySelectorAll('li').length;
+      var horiSelector = document.querySelector(".hori-selector");
+
+      function updateSelectorPosition() {
+        var activeItemNewAnim = tabsNewAnim.querySelector('.active');
+        var activeWidthNewAnimHeight = activeItemNewAnim.clientHeight;
+        var activeWidthNewAnimWidth = activeItemNewAnim.clientWidth;
+        var itemPosNewAnimTop = activeItemNewAnim.offsetTop;
+        var itemPosNewAnimLeft = activeItemNewAnim.offsetLeft;
+
+        horiSelector.style.top = itemPosNewAnimTop + "px";
+        horiSelector.style.left = itemPosNewAnimLeft + "px";
+        horiSelector.style.height = activeWidthNewAnimHeight + "px";
+        horiSelector.style.width = activeWidthNewAnimWidth + "px";
+      }
+
+      updateSelectorPosition();
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      setTimeout(function () {
+        test();
+      });
+    });
+
+    window.addEventListener('resize', function () {
+      setTimeout(function () {
+        test();
+      }, 500);
+    });
+
+    var navbarToggler = document.querySelector(".navbar-toggler");
+    navbarToggler.addEventListener("click", function () {
+      var navbarCollapse = document.querySelector(".navbar-collapse");
+      navbarCollapse.style.display = (navbarCollapse.style.display === 'block') ? 'none' : 'block';
+      setTimeout(function () {
+        test();
+      });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+      // Obtiene la URL actual
+      var currentURL = window.location.pathname;
+
+      // Verifica si la URL coincide con "/servicios"
+      if (currentURL === "/servicios") {
+        // Agrega la clase "active" al elemento <li>
+        var serviciosNavItem = document.getElementById("serviciosNavItem");
+        if (serviciosNavItem) {
+          serviciosNavItem.classList.add("active");
+        }
+      }
+      else if (currentURL === "/foro") {
+        // Agrega la clase "active" al elemento <li>
+        var foroNavItem = document.getElementById("foroNavItem");
+        if (foroNavItem) {
+          foroNavItem.classList.add("active");
+        }
+      }
+      else if (currentURL === "/citas") {
+        // Agrega la clase "active" al elemento <li>
+        var citasNavItem = document.getElementById("citasNavItem");
+        if (citasNavItem) {
+          citasNavItem.classList.add("active");
+        }
+      }
+      else if (currentURL === "/administrar_servicios") {
+        // Agrega la clase "active" al elemento <li>
+        var AdministrarServiciosNavItem = document.getElementById("AdministrarServiciosNavItem");
+        if (AdministrarServiciosNavItem) {
+          AdministrarServiciosNavItem.classList.add("active");
+        }
+      }
+      else if (currentURL === "/solicitudes_preguntas") {
+        // Agrega la clase "active" al elemento <li>
+        var SolicitudesPreguntasNavItem = document.getElementById("SolicitudesPreguntasNavItem");
+        if (SolicitudesPreguntasNavItem) {
+          SolicitudesPreguntasNavItem.classList.add("active");
+        }
+      }
+      else if (currentURL === "/FAQ") {
+        // Agrega la clase "active" al elemento <li>
+        var faqNavItem = document.getElementById("faqNavItem");
+        if (faqNavItem) {
+          faqNavItem.classList.add("active");
+        }
+      }
+      else if (currentURL === "/login") {
+        // Agrega la clase "active" al elemento <li>
+        var loginNavItem = document.getElementById("loginNavItem");
+        if (loginNavItem) {
+          loginNavItem.classList.add("active");
+        }
+      }
+      else if (currentURL === "/register") {
+        // Agrega la clase "active" al elemento <li>
+        var registerNavItem = document.getElementById("registerNavItem");
+        if (registerNavItem) {
+          registerNavItem.classList.add("active");
+        }
+      }
+      else if (currentURL === "/perfil") {
+        // Agrega la clase "active" al elemento <li>
+        var adminNavItem = document.getElementById("adminNavItem");
+        if (adminNavItem) {
+          adminNavItem.classList.add("active");
+        }
+      }
+      else if (currentURL === "/logout") {
+        // Agrega la clase "active" al elemento <li>
+        var logoutNavItem = document.getElementById("logoutNavItem");
+        if (logoutNavItem) {
+          logoutNavItem.classList.add("active");
+        }
+      }
+      else if (currentURL === "/") {
+        var indexNavItem = document.getElementById("indexNavItem");
+        if (indexNavItem) {
+          indexNavItem.classList.add("active");
+        }
+      }
+
+    });
+
+  </script>
 </body>
 
 </html>

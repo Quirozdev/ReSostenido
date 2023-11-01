@@ -43,6 +43,10 @@ body {
     margin-top: 110px;
 }
 
+.margin-top-90 {
+    margin-top: 90px;
+}
+
 .card-style {
     width: 18rem;
     border: none;
@@ -319,7 +323,8 @@ input[type="file"]::file-selector-button {
 
 /* Aplicar estilo al icono cuando se pasa el mouse sobre el botón */
 button:hover i.fa-trash {
-    color: #d21717 !important; /* Cambia el color al color que desees en hover */
+    color: #d21717 !important;
+    /* Cambia el color al color que desees en hover */
 }
 
 .wrapper {
@@ -332,9 +337,9 @@ button:hover i.fa-trash {
     border-radius: 5px;
     background-image: linear-gradient(to top, #accbee 0%, #e7f0fd 100%);
     overflow: hidden;
-  }
-  
-  .wave {
+}
+
+.wave {
     width: 1000px;
     height: 1025px;
     position: absolute;
@@ -345,29 +350,178 @@ button:hover i.fa-trash {
     border-radius: 35%;
     background: rgba(255, 255, 255, .75);
     animation: wave 15s infinite linear;
-  }
-  
-  @keyframes wave {
-    from { transform: rotate(0deg);}
-    from { transform: rotate(360deg);}
-  }
+}
 
-  .container_card_carousel{
-    display: flex;
-  }
-  .card_carousel{
+@keyframes wave {
+    from {
+        transform: rotate(0deg);
+    }
+
+    from {
+        transform: rotate(360deg);
+    }
+}
+/*----------bootstrap-navbar-css------------*/
+.navbar-logo {
+    padding: 15px;
+}
+
+.navbar-mainbg {
+    background-color: #034165;
+    padding: 0px;
+}
+
+#navbarSupportedContent {
+    overflow: hidden;
     position: relative;
-    left: 0px;
-  }
-  .card_carousel:not(:first-child){
-    margin-left: -50px;
-  }
-  .card_carousel:hover{
-    transform: translateY(-20px);
-  }
-  .card_carousel:hover ~ .card_carousel{	
-    left: 50px;
-  }
+}
+
+#navbarSupportedContent ul {
+    padding: 0px;
+    margin: 0px;
+}
+
+#navbarSupportedContent ul li a i {
+    margin-right: 10px;
+}
+
+
+#navbarSupportedContent ul li a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 15px;
+    display: block;
+    padding: 40px 30px;
+    position: relative;
+}
+
+#navbarSupportedContent>ul>li.active>a {
+    color: #034165;
+    background-color: transparent;
+}
+
+#navbarSupportedContent a:not(:only-child):after {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 14px;
+    display: inline-block;
+    padding-right: 3px;
+    vertical-align: middle;
+}
+
+
+.hori-selector {
+    display: inline-block;
+    position: absolute;
+    height: 100%;
+    background-color: #fff;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    margin-top: 10px;
+}
+
+.hori-selector .right,
+.hori-selector .left {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background-color: #fff;
+    bottom: 10px;
+}
+
+.hori-selector .right {
+    right: -25px;
+}
+
+.hori-selector .left {
+    left: -25px;
+}
+
+.hori-selector .right:before,
+.hori-selector .left:before {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #034165;
+}
+
+.hori-selector .right:before {
+    bottom: 0;
+    right: -25px;
+}
+
+.hori-selector .left:before {
+    bottom: 0;
+    left: -25px;
+}
+
+
+@media(min-width: 992px) {
+    .navbar-expand-custom {
+        -ms-flex-flow: row nowrap;
+        flex-flow: row nowrap;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+    }
+
+    .navbar-expand-custom .navbar-nav {
+        -ms-flex-direction: row;
+        flex-direction: row;
+    }
+
+    .navbar-expand-custom .navbar-toggler {
+        display: none;
+    }
+
+    .navbar-expand-custom .navbar-collapse {
+        display: -ms-flexbox !important;
+        display: flex !important;
+        -ms-flex-preferred-size: auto;
+        flex-basis: auto;
+    }
+}
+
+
+@media (max-width: 991px) {
+    #navbarSupportedContent ul li a {
+        padding: 12px 30px;
+    }
+
+    .hori-selector {
+        margin-top: 0px;
+        margin-left: 10px;
+        border-radius: 0;
+        border-top-left-radius: 25px;
+        border-bottom-left-radius: 25px;
+    }
+
+    .hori-selector .left,
+    .hori-selector .right {
+        right: 10px;
+    }
+
+    .hori-selector .left {
+        top: -25px;
+        left: auto;
+    }
+
+    .hori-selector .right {
+        bottom: -25px;
+    }
+
+    .hori-selector .left:before {
+        left: -25px;
+        top: -25px;
+    }
+
+    .hori-selector .right:before {
+        bottom: -25px;
+        left: -25px;
+    }
+}
 
 
 /*Shrinking for mobile*/
