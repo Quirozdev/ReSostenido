@@ -21,9 +21,9 @@ describe('Pagina de inicio de sesión', () => {
         cy.get('#foro').click()
         // Verificar que estemos en el sitio de Foro
         cy.get('#titulo').should('contain.text', '¿En qué podemos ayudarte?')
-        // Hacer pregunta
-        cy.get('#hacer_pregunta').type("Pregunta 1...")
-        cy.get('#question-button').click()
+        // 23. Hacer pregunta
+        cy.get('textarea:first').type("Pregunta 1...", {force:true})
+        cy.get('#question-button').click({force:true})
         // Mensaje de verificación
         cy.get('#mensaje-confirmacion').should('contain.text', 'La pregunta ha sido enviada y sera respondida en breve')
     })
