@@ -27,7 +27,7 @@
       <i class="fas fa-bars text-white"></i>
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto ">
+      <ul class="navbar-nav">
         <div class="hori-selector">
           <div class="left"></div>
           <div class="right"></div>
@@ -35,7 +35,7 @@
         <li class="nav-item" id="indexNavItem">
           <a class="nav-link" href="/"><i class="far fa-address-book"></i>Inicio</a>
         </li>
-        
+
         <li class="nav-item" id="foroNavItem">
           <a class="nav-link" href="/foro"><i class="far fa-comment"></i>Foro</a>
         </li>
@@ -81,16 +81,17 @@
         </li>
 
         {% endif %}
-        
-          {% if usuario %}
-          <li class="nav-item" id="logoutNavItem">
-            <a class="nav-link" href="/logout" style="color: red;"><i class="fa-solid fa-right-from-bracket" style="color: red;"></i>Cerrar Sesión</a>
-          </li>
-          {% else %}
-          <li class="nav-item" id="registerNavItem">
-            <a class="nav-link" href="/register"><i class="far fa-user"></i>Registrarse</a>
-          </li>
-          {% endif %}
+
+        {% if usuario %}
+        <li class="nav-item" id="logoutNavItem">
+          <a class="nav-link" href="/logout" style="color: red;"><i class="fa-solid fa-right-from-bracket"
+              style="color: red;"></i>Cerrar Sesión</a>
+        </li>
+        {% else %}
+        <li class="nav-item" id="registerNavItem">
+          <a class="nav-link" href="/register"><i class="far fa-user"></i>Registrarse</a>
+        </li>
+        {% endif %}
       </ul>
     </div>
   </nav>
@@ -281,15 +282,16 @@
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-      setTimeout(function () {
-        test();
-      });
+      // Your existing code to add the active class...
+
+      // Then call test() after a delay to ensure the active class has been applied
+      setTimeout(test, 100);
     });
 
     window.addEventListener('resize', function () {
       setTimeout(function () {
         test();
-      }, 500);
+      });
     });
 
     var navbarToggler = document.querySelector(".navbar-toggler");
