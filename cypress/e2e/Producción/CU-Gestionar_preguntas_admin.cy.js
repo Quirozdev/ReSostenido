@@ -4,6 +4,10 @@ describe('Pagina de inicio de sesión', () => {
     })
 
     it('Encontrar el botón de menú', () => {
+        // Click en el menu de navegación (movil)
+        //cy.get('.navbar-toggler-icon').should('be.visible').click()
+        // Click en iniciar sesión (movil)
+        //cy.get('.nav-link > #iniciarSesion').should('be.visible').click()
         // Click en iniciar sesión
         cy.get('#loginNavItem > .nav-link').should('be.visible').click()
         // Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'
@@ -13,12 +17,20 @@ describe('Pagina de inicio de sesión', () => {
     });
         //Iniciar sesión
         cy.get('#login').should('be.visible').click()
-        // Click en Foro
-        cy.get('#foroNavItem > .nav-link').should('be.visible').click()
+        //Click en menu de navegación (movil)
+        //cy.get('.navbar-toggler-icon').should('be.visible').click()
+        // Click en Foro (movil)
+        //cy.get('#foro').click()
+        // Click en foro
+        cy.get('#foroNavItem > .nav-link').click()
         // 22. Verificar que estemos en el sitio de Foro
         cy.get('#titulo').should('contain.text', '¿En qué podemos ayudarte?')
+        // abrir menu (movil)
+        //cy.get('.navbar-toggler-icon').click()
+        // ir a la seccion de solicitud de preguntas (movil)
+        //cy.get('#solicitudesPreguntas').click()
         // ir a la seccion de solicitud de preguntas
-        cy.get('#SolicitudesPreguntasNavItem > .nav-link').should('be.visible').click()
+        cy.get('#SolicitudesPreguntasNavItem > .nav-link').click()
         // 26. CONTESTAR Y PUBLICAR PREGUNTA DEL CLIENTE EN EL FORO
         // verificar que estemos en el apartado de solicitud de preguntas
         cy.get('.fs-2').should('contain.text', 'Solicitudes de preguntas')
@@ -34,12 +46,14 @@ describe('Pagina de inicio de sesión', () => {
         // click en el icono de basura para rechazar pregunta
         cy.get('.row > [action="/rechazar_solicitud_pregunta"] > [data-bs-toggle="modal"]:first').click({force:true})
         // aceptar rechazar pregunta
-        cy.get(':nth-child(3) > :nth-child(1) > .col-md-12 > .card > .card-footer > .row > [action="/rechazar_solicitud_pregunta"] > #staticBackdrop2 > .modal-dialog > .modal-content > .modal-footer > .btn-delete').click({force:true})
+        cy.get('.btn-delete:first').click({force:true})
         // TODO: 24. ELIMINAR PREGUNTA PUBLICADA EN EL FORO
-        //Click en menu de navegación
-        cy.get('.navbar-toggler-icon').should('be.visible').click()
+        //Click en menu de navegación (movil)
+        //cy.get('.navbar-toggler-icon').should('be.visible').click()
+        // Click en Foro (movil)
+        //cy.get('#foro').click()
         // Click en Foro
-        cy.get('#foro').click()
+        cy.get('#foroNavItem > .nav-link').click()
         // click en el boton de eliminar pregunta
         cy.get('#btn-eliminar-pregunta:first').click({force:true})
         // aceptar eliminar la pregunta publicada

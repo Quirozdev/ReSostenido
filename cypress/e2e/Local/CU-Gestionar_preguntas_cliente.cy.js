@@ -3,11 +3,11 @@ describe('Pagina de inicio de sesión', () => {
         cy.visit('localhost:3000')
     })
 
-    it('Encontrar el botón de menú', () => {
-        // Click en el menu de navegación
-        cy.get('.navbar-toggler-icon').should('be.visible').click()
+    it('Encontrar el botón de Iniciar sesión', () => {
+        // Click en el menu de navegación (movil)
+        //cy.get('.navbar-toggler-icon').should('be.visible').click()
         // Click en iniciar sesión
-        cy.get('.nav-link > #iniciarSesion').should('be.visible').click()
+        cy.get('#loginNavItem > .nav-link').should('be.visible').click()
         // Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'
         cy.fixture('example.json').then((datos) => {
         cy.get('#email').should('be.visible').type(datos.email, { force: true });
@@ -15,10 +15,12 @@ describe('Pagina de inicio de sesión', () => {
     });
         //Iniciar sesión
         cy.get('#login').should('be.visible').click()
-        //Click en menu de navegación
-        cy.get('.navbar-toggler-icon').should('be.visible').click()
+        //Click en menu de navegación (movil)
+        //cy.get('.navbar-toggler-icon').should('be.visible').click()
+        // Click en Foro (movil)
+        //cy.get('#foro').click()
         // Click en Foro
-        cy.get('#foro').click()
+        cy.get('#foroNavItem > .nav-link').should('be.visible').click()
         // Verificar que estemos en el sitio de Foro
         cy.get('#titulo').should('contain.text', '¿En qué podemos ayudarte?')
         // 23. Hacer pregunta

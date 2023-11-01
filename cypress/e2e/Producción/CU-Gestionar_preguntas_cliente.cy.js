@@ -3,16 +3,22 @@ describe('Pagina de inicio de sesión', () => {
         cy.visit('https://resostenidoclone-production.up.railway.app/')
     })
 
-    it('Encontrar el botón de menú', () => {
+    it('Encontrar el botón de Iniciar sesión', () => {
+        // Click en el menu de navegación (movil)
+        //cy.get('.navbar-toggler-icon').should('be.visible').click()
         // Click en iniciar sesión
         cy.get('#loginNavItem > .nav-link').should('be.visible').click()
         // Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'
-        cy.fixture('datos_admin.json').then((datos) => {
+        cy.fixture('datos_cliente.json').then((datos) => {
         cy.get('#email').should('be.visible').type(datos.email, { force: true });
         cy.get('#contrasenia').should('be.visible').type(datos.contrasena, { force: true });
-        cy.get('#login').should('be.visible').click()
     });
-
+        //Iniciar sesión
+        cy.get('#login').should('be.visible').click()
+        //Click en menu de navegación (movil)
+        //cy.get('.navbar-toggler-icon').should('be.visible').click()
+        // Click en Foro (movil)
+        //cy.get('#foro').click()
         // Click en Foro
         cy.get('#foroNavItem > .nav-link').should('be.visible').click()
         // Verificar que estemos en el sitio de Foro
