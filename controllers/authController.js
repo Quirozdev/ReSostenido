@@ -15,6 +15,7 @@ const {
 } = require('../services/recoverPasswordService');
 const emailService = require('../services/emailService');
 const mapErrorValidationResultToObject = require('../utils/validationErrorsMapper');
+const { getBaseUrl } = require('../consts');
 
 function registerGet(req, res) {
   res.render('register.html');
@@ -44,14 +45,14 @@ async function registerPost(req, res, next) {
   try {
     const token = await registerUserWithVerificationToken(usuario);
 
-    // Railway provee la variable de entorno RAILWAY_PUBLIC_DOMAIN en teoria
-    // https://docs.railway.app/develop/variables
-    const hostname = process.env.RAILWAY_PUBLIC_DOMAIN || process.env.HOST_NAME;
+    const baseUrl = getBaseUrl();
 
     await emailService.sendEmail(
       usuario.email,
       `Confirma tu cuenta ${usuario.nombre} ${usuario.apellidos}`,
-      `<a href=${hostname}/verify/${token}>Confirmar cuenta</a>`
+      `<a href="${baseUrl}/verify/${token}">Confirmar cuenta</a>
+      <p>Si no funciona el enlace anterior, por favor dirigete a ${baseUrl}/verify/${token}</p>
+      `
     );
 
     // para que a la ruta de login le llegue este query param indicandole que proviene de un registro exitoso
@@ -101,12 +102,14 @@ async function resendVerificationTokenPost(req, res) {
   const { error, mensaje, status, usuario, token } =
     await createVerificationTokenForUser(email);
 
-  const hostname = process.env.RAILWAY_PUBLIC_DOMAIN || process.env.HOST_NAME;
+  const baseUrl = getBaseUrl();
 
   await emailService.sendEmail(
     email,
     `Reenvío de token - Confirma tu cuenta ${usuario.nombre} ${usuario.apellidos}`,
-    `<a href=${hostname}/verify/${token}>Confirmar cuenta</a>`
+    `<a href="${baseUrl}/verify/${token}">Confirmar cuenta</a>
+    <p>Si no funciona el enlace anterior, por favor dirigete a ${baseUrl}/verify/${token}</p>
+    `
   );
 
   res.status(status).json({ error, mensaje });
@@ -216,7 +219,7 @@ async function forgotPasswordPost(req, res) {
     });
   }
 
-  const hostname = process.env.RAILWAY_PUBLIC_DOMAIN || process.env.HOST_NAME;
+  const baseUrl = getBaseUrl();
 
   // para que a la ruta de cambiar contrasenia le llegue este query param indicandole el token de recuperacion
   const query = querystring.stringify({
@@ -229,7 +232,8 @@ async function forgotPasswordPost(req, res) {
     `Solicitud de cambio de contraseña`,
     `
     <p>Hola ${usuario.nombre} ${usuario.apellidos}, dale clic al siguiente enlace para cambiar tu contraseña</p>
-    <a href=${hostname}/change-password?${query}>Cambiar contraseña</a>
+    <a href="${baseUrl}/change-password?${query}">Cambiar contraseña</a>
+    <p>Si no funciona el enlace anterior, por favor dirigete a ${baseUrl}/change-password?${query}</p>
     `
   );
   //

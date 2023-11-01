@@ -7,6 +7,7 @@ const CitasService = require('../services/citasService');
 const { getActiveServiceById } = require('../services/serviciosService');
 
 const PaypalController = require('../controllers/paypalController');
+const { getBaseUrl } = require('../consts');
 
 const CitasServiceInstance = new CitasService(db);
 const PaypalInstance = new PaypalController();
@@ -208,7 +209,7 @@ async function procesarPago(req, res, next) {
 
     const usuario = await getUserById(req.session.usuario.id_usuario);
 
-    const hostname = process.env.RAILWAY_PUBLIC_DOMAIN || process.env.HOST_NAME;
+    const baseUrl = getBaseUrl();
 
     await emailService.sendEmail(
       usuario.email,
@@ -222,7 +223,7 @@ async function procesarPago(req, res, next) {
       <p><strong>Fecha:</strong> ${moment(cita.fecha).format('DD-MM-YYYY')}</p>
       <p><strong>Hora:</strong> ${moment(cita.hora, 'h:mm').format('LT')}</p>
       <p><strong>Consulta todas tus citas en:</strong> </p>
-      <a href="${hostname}/citas">Citas</a>
+      <a href="${baseUrl}/citas">Citas</a>
       `
     );
 

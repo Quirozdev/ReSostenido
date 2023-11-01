@@ -1,4 +1,5 @@
 const querystring = require('node:querystring');
+const { getBaseUrl } = require('../consts');
 
 // https://courseit.io/articulo/como-integrar-paypal-a-tu-web-x7f1yxv10
 // https://www.youtube.com/watch?v=Zm8_c8tnOkQ&ab_channel=LeiferMendez
@@ -15,13 +16,8 @@ class PaypalController {
     const url = `${this.paypal.url}/v2/checkout/orders`;
     const token = await this.generateAccessToken();
 
-    let hostname = process.env.RAILWAY_PUBLIC_DOMAIN || process.env.HOST_NAME;
+    const baseUrl = getBaseUrl();
 
-    if (process.env.RAILWAY_PUBLIC_DOMAIN && !hostname.startsWith('https://')) {
-      hostname = 'https://' + hostname;
-    }
-
-    
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -55,8 +51,8 @@ class PaypalController {
               user_action: 'PAY_NOW',
               landing_page: 'NO_PREFERENCE',
               shipping_preference: 'NO_SHIPPING',
-              return_url: `${hostname}/citas/agendar-cita/estado-pago?id_cita=${idCita}`,
-              cancel_url: `${hostname}/citas/agendar-cita/estado-pago?pago_cancelado=true`,
+              return_url: `${baseUrl}/citas/agendar-cita/estado-pago?id_cita=${idCita}`,
+              cancel_url: `${baseUrl}/citas/agendar-cita/estado-pago?pago_cancelado=true`,
             },
           },
         },
