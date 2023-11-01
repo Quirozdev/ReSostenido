@@ -1,13 +1,11 @@
 describe('Pagina de servicios', () => {
     before(() => {
-        cy.visit('https://resostenido-production.up.railway.app/')
+        cy.visit('https://resostenidoclone-production.up.railway.app/')
     })
     
     it('Encontrar el boton de menu', () =>{
-        //Click en menu de navegación
-        cy.get('.navbar-toggler-icon').click() 
         //Click en servicios
-        cy.get(':nth-child(1) > :nth-child(2) > .nav-link > .d-flex').click()
+        cy.get('#serviciosNavItem > .nav-link').should('be.visible').click()
         //Titulo sección de Servicios
         cy.get('.text-container > #servicios').should('be.visible')
         //Encontrar descripción del servicio de calibración

@@ -1,10 +1,10 @@
 describe('Agregar Servicio', () => {
     before(() => {
       // Realizar la visita al sitio solo una vez al comienzo de la prueba
-      cy.visit('https://resostenido-production.up.railway.app/login')
+      cy.visit('https://resostenidoclone-production.up.railway.app/login')
   
       // Cargar datos desde el archivo de fixture 'registro.json' para el inicio de sesión
-      cy.fixture('registro.json').then((registro) => {
+      cy.fixture('datos_admin.json').then((registro) => {
         cy.get('#email').type(registro.email, { force: true });
         cy.get('#contrasenia').type(registro.contrasena, { force: true });
       });
@@ -38,11 +38,11 @@ describe('Agregar Servicio', () => {
       });
   
       // Cargar otros datos de formulario desde el archivo de fixture 'registro.json'
-      cy.fixture('registro.json').then((registro) => {
-        cy.get('#nombre_instrumento').should('be.visible').type(registro.nombre_instrumento, { force: true });
-        cy.get('#grupo').should('be.visible').type(registro.grupo, { force: true });
-        cy.get('#descripcion').should('be.visible').type(registro.descripcion, { force: true });
-        cy.get('#precio').should('be.visible').type(registro.precio, { force: true });
+      cy.fixture('datos_admin.json').then((data) => {
+        cy.get('#nombre_instrumento').should('be.visible').type(data.nombre_instrumento, { force: true });
+        cy.get('#grupo').should('be.visible').type(data.grupo, { force: true });
+        cy.get('#descripcion').should('be.visible').type(data.descripcion, { force: true });
+        cy.get('#precio').should('be.visible').type(data.precio, { force: true });
         //cy.get('#guardar').should('be.visible').click({ force: true });
       });
     })

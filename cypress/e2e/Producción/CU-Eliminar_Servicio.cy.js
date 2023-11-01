@@ -1,10 +1,10 @@
 describe('Eliminar Servicio', () => {
   before(() => {
     // Realizar la visita al sitio solo una vez al comienzo de la prueba
-    cy.visit('https://resostenido-production.up.railway.app/login')
+    cy.visit('https://resostenidoclone-production.up.railway.app/login')
 
     // Cargar datos desde el archivo de fixture 'registro.json' para el inicio de sesión
-    cy.fixture('registro.json').then((registro) => {
+    cy.fixture('datos_admin.json').then((registro) => {
       cy.get('#email').type(registro.email, { force: true });
       cy.get('#contrasenia').type(registro.contrasena, { force: true });
     });
@@ -13,13 +13,8 @@ describe('Eliminar Servicio', () => {
   })
 
   it('Menú de navegación y click en servicios', () => {
-    // Menu de navegación
-    cy.get('.navbar-toggler-icon').click()
-    
-    cy.wait(5000);
-
     // Sección de servicios
-    cy.get(':nth-child(1) > :nth-child(2) > .nav-link > .d-flex').should('be.visible').click();
+    cy.get('#AdministrarServiciosNavItem > .nav-link').should('be.visible').click();
 
     // Encontrar y hacer clic en el botón deseado
     cy.contains('Floyd Rose').parent().find('button[type="submit"]').should('be.visible').click({force:true});

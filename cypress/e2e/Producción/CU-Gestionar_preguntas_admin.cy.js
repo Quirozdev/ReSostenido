@@ -4,10 +4,8 @@ describe('Pagina de inicio de sesión', () => {
     })
 
     it('Encontrar el botón de menú', () => {
-        // Click en el menu de navegación
-        cy.get('.navbar-toggler-icon').should('be.visible').click()
         // Click en iniciar sesión
-        cy.get('.nav-link > #iniciarSesion').should('be.visible').click()
+        cy.get('#loginNavItem > .nav-link').should('be.visible').click()
         // Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'
         cy.fixture('datos_admin.json').then((datos) => {
         cy.get('#email').should('be.visible').type(datos.email, { force: true });
@@ -15,16 +13,12 @@ describe('Pagina de inicio de sesión', () => {
     });
         //Iniciar sesión
         cy.get('#login').should('be.visible').click()
-        //Click en menu de navegación
-        cy.get('.navbar-toggler-icon').should('be.visible').click()
         // Click en Foro
-        cy.get('#foro').click()
+        cy.get('#foroNavItem > .nav-link').should('be.visible').click()
         // 22. Verificar que estemos en el sitio de Foro
         cy.get('#titulo').should('contain.text', '¿En qué podemos ayudarte?')
-        // abrir menu
-        cy.get('.navbar-toggler-icon').click()
         // ir a la seccion de solicitud de preguntas
-        cy.get('#solicitudesPreguntas').click()
+        cy.get('#SolicitudesPreguntasNavItem > .nav-link').should('be.visible').click()
         // 26. CONTESTAR Y PUBLICAR PREGUNTA DEL CLIENTE EN EL FORO
         // verificar que estemos en el apartado de solicitud de preguntas
         cy.get('.fs-2').should('contain.text', 'Solicitudes de preguntas')

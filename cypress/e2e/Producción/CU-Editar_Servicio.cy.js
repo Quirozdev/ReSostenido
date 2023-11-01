@@ -16,7 +16,7 @@ describe('Agendar Servicio', () => {
       cy.wait(2000)
   
       // Botón de administración de servicios
-      cy.get(':nth-child(3) > .card > .btn').should('be.visible').click({ force: true })
+      cy.get('#AdministrarServiciosNavItem > .nav-link').should('be.visible').click({ force: true })
       // Click en boton Agregar
       //cy.get(':nth-child(3) > .card > .btn').should('be.visible').click({ force: true })
   

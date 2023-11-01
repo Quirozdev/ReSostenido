@@ -1,6 +1,6 @@
 describe('Pagina principal', () => {
   before(() => {
-    cy.visit('https://resostenido-production.up.railway.app/')
+    cy.visit('https://resostenidoclone-production.up.railway.app/')
   })
 
   it('Pagina Principal', () => {
