@@ -50,7 +50,7 @@ CREATE TABLE citas (
   hora TIME NOT NULL,
   descripcion VARCHAR(255),
   incluye_cuerdas BOOLEAN DEFAULT 0,
-  precio_anticipo_total DECIMAL(10, 2) NOT NULL,
+  costo_total DECIMAL(10, 2) NOT NULL,
   pagada BOOLEAN DEFAULT 0,
   id_servicio int(11) NOT NULL,
   id_usuario int(11) NOT NULL,
@@ -139,7 +139,7 @@ CREATE PROCEDURE obtenerCitasConCorrespondienteEstado(IN id_usuario INT)
 BEGIN
     -- regresa todas las citas si no se especifica id usuario
     IF id_usuario IS NULL THEN
-      SELECT citas.id, fecha, hora, citas.descripcion, incluye_cuerdas, precio_anticipo_total, servicios.descripcion AS descripcion_servicio, servicios.nombre_instrumento, usuarios.nombre, usuarios.apellidos, IF( ADDTIME(ADDTIME(CONVERT(citas.fecha, DATETIME), citas.hora), '00:20:00') <= CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '-07:00'), "Terminada", "En proceso") AS estado 
+      SELECT citas.id, fecha, hora, citas.descripcion, incluye_cuerdas, costo_total, servicios.descripcion AS descripcion_servicio, servicios.nombre_instrumento, usuarios.nombre, usuarios.apellidos, IF( ADDTIME(ADDTIME(CONVERT(citas.fecha, DATETIME), citas.hora), '00:20:00') <= CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '-07:00'), "Terminada", "En proceso") AS estado 
       FROM citas 
       INNER JOIN servicios 
       ON citas.id_servicio = servicios.id
@@ -148,7 +148,7 @@ BEGIN
       AND pagada = true
       ORDER BY fecha DESC, hora DESC;
     ELSE 
-      SELECT citas.id, fecha, hora, citas.descripcion, incluye_cuerdas, precio_anticipo_total, servicios.descripcion AS descripcion_servicio, servicios.nombre_instrumento, IF( ADDTIME(ADDTIME(CONVERT(citas.fecha, DATETIME), citas.hora), '00:20:00') <= CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '-07:00'), "Terminada", "En proceso") AS estado 
+      SELECT citas.id, fecha, hora, citas.descripcion, incluye_cuerdas, costo_total, servicios.descripcion AS descripcion_servicio, servicios.nombre_instrumento, IF( ADDTIME(ADDTIME(CONVERT(citas.fecha, DATETIME), citas.hora), '00:20:00') <= CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '-07:00'), "Terminada", "En proceso") AS estado 
       FROM citas 
       INNER JOIN servicios 
       ON citas.id_servicio = servicios.id AND pagada = true AND citas.id_usuario = id_usuario
@@ -158,11 +158,11 @@ BEGIN
 DELIMITER ;
 
 /*-- Inserta información para Guitarras
-INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
-VALUES (350.00, 'Guitarras', 'Guitarra acústica', 'Calibración', 'landingpage-1.webp');
+INSERT INTO servicios (precio, precio_cuerdas, grupo, nombre_instrumento, descripcion, url_imagen)
+VALUES (350.00, 215.50, 'Guitarras', 'Guitarra acústica', 'Calibración', 'landingpage-1.webp');
 
-INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
-VALUES (350.00, 'Guitarras', 'Guitarra eléctrica 6 cuerdas', 'Calibración', 'landingpage-1.webp');
+INSERT INTO servicios (precio, precio_cuerdas, grupo, nombre_instrumento, descripcion, url_imagen)
+VALUES (350.00, 154.32, 'Guitarras', 'Guitarra eléctrica 6 cuerdas', 'Calibración', 'landingpage-1.webp');
 
 INSERT INTO servicios (precio, grupo, nombre_instrumento, descripcion, url_imagen)
 VALUES (400.00, 'Guitarras', 'Guitarra eléctrica 7 cuerdas', 'Calibración', 'landingpage-1.webp');

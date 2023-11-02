@@ -15,6 +15,7 @@
                     <th id="saDescripción" scope="col" class="fs-5 fw-lighter vertical-align-middle">Descripción</th>
                     <th id="saFechaHora" scope="col" class="fs-5 fw-lighter vertical-align-middle">Fecha y hora</th>
                     <th id="saNotas" scope="col" class="fs-5 fw-lighter vertical-align-middle">Notas</th>
+                    <th id="saCostoTotal" scope="col" class="fs-5 fw-lighter vertical-align-middle">Costo total</th>
                     <th id="saCuerdas" scope="col" class="fs-5 fw-lighter vertical-align-middle">Incluye cuerdas</th>
                     <th id="saEstado" scope="col" class="fs-5 fw-lighter vertical-align-middle">Estado</th>
                 </tr>
@@ -27,6 +28,7 @@
                     <td id="CPdescripcion_servicio" style="vertical-align: middle;">{{ cita.descripcion_servicio }}</td>
                     <td id="CPfecha_hora" style="vertical-align: middle;">{{ cita.fecha }}, {{ cita.hora }}</td>
                     <td id="CPnotas" style="vertical-align: middle;">{{ cita.descripcion }}</td>
+                    <td id="CPcosto_total" style="vertical-align: middle;">${{ cita.costo_total }}</td>
                     <td id="CPcuerdas" style="vertical-align: middle;">
                         {% if cita.incluye_cuerdas == 1 %}
                         Sí
@@ -56,6 +58,7 @@
                     <th id="saDescripción" scope="col" class="fs-5 fw-lighter vertical-align-middle">Descripción</th>
                     <th id="saFechaHora" scope="col" class="fs-5 fw-lighter vertical-align-middle">Fecha y hora</th>
                     <th id="saNotas" scope="col" class="fs-5 fw-lighter vertical-align-middle">Notas</th>
+                    <th id="saCostoTotal" scope="col" class="fs-5 fw-lighter vertical-align-middle">Costo total</th>
                     <th id="saCuerdas" scope="col" class="fs-5 fw-lighter vertical-align-middle">Incluye cuerdas</th>
                     <th id="saEstado" scope="col" class="fs-5 fw-lighter vertical-align-middle">Estado</th>
                 </tr>
@@ -68,6 +71,7 @@
                     <td id="CPdescripcion_servicio" style="vertical-align: middle;">{{ cita.descripcion_servicio }}</td>
                     <td id="CPfecha_hora" style="vertical-align: middle;">{{ cita.fecha }}, {{ cita.hora }}</td>
                     <td id="CPnotas" style="vertical-align: middle;">{{ cita.descripcion }}</td>
+                    <td id="CPcosto_total" style="vertical-align: middle;">${{ cita.costo_total }}</td>
                     <td id="CPcuerdas" style="vertical-align: middle;">
                         {% if cita.incluye_cuerdas == 1 %}
                         Sí

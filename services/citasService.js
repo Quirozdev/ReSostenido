@@ -7,7 +7,7 @@ class CitasService {
 
   async getCitaNoPagadaAndCorrespondingServiceById(id) {
     const [citas, campos] = await this.database.execute(
-      'SELECT citas.id, citas.precio_anticipo_total, citas.incluye_cuerdas, citas.pagada, citas.fecha, citas.hora, servicios.descripcion AS descripcion_servicio, servicios.nombre_instrumento FROM citas INNER JOIN servicios ON citas.id_servicio = servicios.id AND citas.id = ? AND pagada = false AND servicios.activo = true',
+      'SELECT citas.id, citas.costo_total, citas.incluye_cuerdas, citas.pagada, citas.fecha, citas.hora, servicios.descripcion AS descripcion_servicio, servicios.nombre_instrumento, servicios.precio_anticipo_cita, servicios.precio_cuerdas FROM citas INNER JOIN servicios ON citas.id_servicio = servicios.id AND citas.id = ? AND pagada = false AND servicios.activo = true',
       [id]
     );
 
@@ -59,18 +59,18 @@ class CitasService {
     hora,
     descripcion,
     incluye_cuerdas,
-    precio_anticipo_total,
+    costo_total,
     id_servicio,
     id_usuario,
   }) {
     const [resultadoInsert] = await this.database.execute(
-      'INSERT INTO citas (fecha, hora, descripcion, incluye_cuerdas, precio_anticipo_total, id_servicio, id_usuario) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      'INSERT INTO citas (fecha, hora, descripcion, incluye_cuerdas, costo_total, id_servicio, id_usuario) VALUES (?, ?, ?, ?, ?, ?, ?)',
       [
         fecha,
         hora,
         descripcion,
         incluye_cuerdas,
-        precio_anticipo_total,
+        costo_total,
         id_servicio,
         id_usuario,
       ]

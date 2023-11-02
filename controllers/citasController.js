@@ -96,7 +96,7 @@ async function crearOrdenPago(req, res, next) {
 
     const items = [
       {
-        name: `Servicio ${servicio.grupo} - ${servicio.nombre_instrumento}`,
+        name: `Anticipo para el servicio ${servicio.grupo} - ${servicio.nombre_instrumento}`,
         description: servicio.descripcion,
         quantity: 1,
         unit_amount: {
@@ -105,6 +105,8 @@ async function crearOrdenPago(req, res, next) {
         },
       },
     ];
+
+    let costo_total = Number(servicio.precio);
 
     if (Boolean(incluye_cuerdas) && servicio.precio_cuerdas) {
       items.push({
@@ -116,6 +118,8 @@ async function crearOrdenPago(req, res, next) {
           currency_code: 'MXN',
         },
       });
+
+      costo_total = costo_total + Number(servicio.precio_cuerdas);
     }
 
     const total = items.reduce((acc, curr) => {
@@ -126,8 +130,9 @@ async function crearOrdenPago(req, res, next) {
       fecha,
       hora,
       descripcion: descripcion,
-      incluye_cuerdas: incluye_cuerdas ? true : false,
-      precio_anticipo_total: total,
+      incluye_cuerdas:
+        Boolean(incluye_cuerdas) && servicio.precio_cuerdas ? true : false,
+      costo_total: costo_total,
       id_servicio: id_servicio,
       id_usuario: req.session.usuario.id_usuario,
     });
@@ -208,6 +213,13 @@ async function procesarPago(req, res, next) {
 
     const baseUrl = getBaseUrl();
 
+    let dineroPorPagar =
+      Number(cita.costo_total) - Number(cita.precio_anticipo_cita);
+
+    if (cita.incluye_cuerdas) {
+      dineroPorPagar = dineroPorPagar - Number(cita.precio_cuerdas);
+    }
+
     await emailService.sendEmail(
       usuario.email,
       `Tu cita fue agendada exitosamente ${usuario.nombre} ${usuario.apellidos}`,
@@ -216,7 +228,15 @@ async function procesarPago(req, res, next) {
       <p><strong>El servicio que seleccionaste:</strong> ${
         cita.descripcion_servicio
       } - ${cita.nombre_instrumento}</p>
-      <p><strong>El costo total:</strong> $${cita.precio_anticipo_total} MXN</p>
+      <p><strong>El costo total:</strong> $${cita.costo_total} MXN</p>
+      <p>Realizaste un pago por: <p>
+      <p>Anticipo: <strong>$${cita.precio_anticipo_cita} MXN</strong></p>
+      ${
+        cita.incluye_cuerdas
+          ? `<p>Cuerdas: $${cita.precio_cuerdas} MXN</p>`
+          : ''
+      }
+      <p>Por lo que te hace falta por pagar <strong style="border: 1px solid green; font-size: 22px">$${dineroPorPagar} MXN</strong></p>
       <p><strong>Fecha:</strong> ${moment(cita.fecha).format('DD-MM-YYYY')}</p>
       <p><strong>Hora:</strong> ${moment(cita.hora, 'h:mm').format('LT')}</p>
       <p><strong>Consulta todas tus citas en:</strong> </p>
