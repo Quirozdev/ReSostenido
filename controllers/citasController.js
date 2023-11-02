@@ -64,8 +64,6 @@ async function checarDisponibilidadParaNuevaCita(req, res, next) {
 async function crearOrdenPago(req, res, next) {
   const result = validationResult(req);
 
-  console.log(req.body);
-
   if (!result.isEmpty()) {
     const errores = result.array();
 
@@ -144,7 +142,6 @@ async function crearOrdenPago(req, res, next) {
 
 async function procesarPago(req, res, next) {
   const tokenOrden = req.query.token;
-  console.log('amog ussad asdasfsafvaxcv ascv as');
 
   if (!tokenOrden) {
     return res.status(404).render('error.html');

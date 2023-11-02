@@ -139,13 +139,16 @@ CREATE PROCEDURE obtenerCitasConCorrespondienteEstado(IN id_usuario INT)
 BEGIN
     -- regresa todas las citas si no se especifica id usuario
     IF id_usuario IS NULL THEN
-      SELECT citas.id, fecha, hora, citas.descripcion, incluye_cuerdas, precio_anticipo_total, servicios.descripcion AS descripcion_servicio, servicios.nombre_instrumento, IF( ADDTIME(CONVERT(citas.fecha, DATETIME), citas.hora) <= CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '-07:00'), "Terminada", "En proceso") AS estado 
+      SELECT citas.id, fecha, hora, citas.descripcion, incluye_cuerdas, precio_anticipo_total, servicios.descripcion AS descripcion_servicio, servicios.nombre_instrumento, usuarios.nombre, usuarios.apellidos, IF( ADDTIME(ADDTIME(CONVERT(citas.fecha, DATETIME), citas.hora), '00:20:00') <= CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '-07:00'), "Terminada", "En proceso") AS estado 
       FROM citas 
       INNER JOIN servicios 
-      ON citas.id_servicio = servicios.id AND pagada = true
+      ON citas.id_servicio = servicios.id
+      INNER JOIN usuarios
+      ON citas.id_usuario = usuarios.id
+      AND pagada = true
       ORDER BY fecha DESC, hora DESC;
     ELSE 
-      SELECT citas.id, fecha, hora, citas.descripcion, incluye_cuerdas, precio_anticipo_total, servicios.descripcion AS descripcion_servicio, servicios.nombre_instrumento, IF( ADDTIME(CONVERT(citas.fecha, DATETIME), citas.hora) <= CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '-07:00'), "Terminada", "En proceso") AS estado 
+      SELECT citas.id, fecha, hora, citas.descripcion, incluye_cuerdas, precio_anticipo_total, servicios.descripcion AS descripcion_servicio, servicios.nombre_instrumento, IF( ADDTIME(ADDTIME(CONVERT(citas.fecha, DATETIME), citas.hora), '00:20:00') <= CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '-07:00'), "Terminada", "En proceso") AS estado 
       FROM citas 
       INNER JOIN servicios 
       ON citas.id_servicio = servicios.id AND pagada = true AND citas.id_usuario = id_usuario
