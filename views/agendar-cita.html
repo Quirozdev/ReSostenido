@@ -134,26 +134,6 @@
 
 <script>
 
-  function calcularTotal() {
-    // Obtén los valores de servicio.precio_cuerdas y servicio.precio y conviértelos a números
-    var precioCuerdas = {% if servicio.precio_cuerdas is not null %} { { servicio.precio_cuerdas } } {% else %} 0 {% endif %};
-  var precio = {{ servicio.precio }};
-
-  // Calcula la suma
-  var total = precioCuerdas + precio;
-
-  // Formatea el resultado como un valor monetario
-  var formattedTotal = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(total);
-
-  // Muestra el resultado en el elemento con id "totalAmount"
-  document.getElementById('totalAmount').textContent = formattedTotal;
-    }
-
-  // Llama a la función calcularTotal inicialmente para calcular y mostrar el total
-  calcularTotal();
-
-  // Escucha cambios en los valores de servicio.precio_cuerdas y servicio.precio
-  window.addEventListener("DOMContentLoaded", calcularTotal);
 
 
   var dateToday = new Date();
