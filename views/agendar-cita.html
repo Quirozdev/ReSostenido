@@ -38,7 +38,7 @@
           <div id="content-1" class="step-content active" data-parent="#accordionExample">
             <div class="container d-flex justify-content-center align-items-center">
               <div class="col-md-6 right-box">
-                <form id="agendar_cita_formulario">
+                <form id="agendar_cita_formulario" class="needs-validation" novalidate>
                   <div class="row align-items-center justify-content-between">
                     <div id="agendar_cita" class="header-text mb-4 text-center">
                       <h2 id="title-agendar-cita">Agendar Cita</h2>
@@ -52,16 +52,24 @@
                     </div>
                     <div class="input-group mb-3">
                       <div class="form-floating" id="input-fecha">
-                        <input type="date" class="form-control form-control-lg fs-6 " placeholder="Fecha" name="fecha"
-                          id="fecha">
+                        <input type="text" class="form-control form-control-lg fs-6" placeholder="Fecha" id="fecha"
+                          name="fecha" required autocomplete="off">
                         <label for="floatingSelectGrid">Fecha</label>
+                        <div class="invalid-feedback">
+                          Por favor ingresa una fecha.
+                        </div>
                       </div>
+
                       <div class="form-floating ms-3" id="input-hora">
                         <input type="time" class="form-control form-control-lg fs-6" placeholder="Hora" name="hora"
-                          id="hora">
+                          id="hora" value="" required>
                         <label for="floatingSelectGrid">Hora</label>
+                        <div class="invalid-feedback">
+                          Por favor ingresa una hora.
+                        </div>
                       </div>
                     </div>
+                    {% if servicio.precio_cuerdas is not null %}
                     <div class="input-group mb-3">
                       <div class="form-check" id="checkbox-cuerdas">
                         <label class="form-check-label" for="flexCheckIndeterminate">
@@ -71,31 +79,42 @@
                           name="incluye_cuerdas">
                       </div>
                     </div>
-                    <div class="input-group mb-3" id="textarea-problema">
+                    {% endif %}
+                    <div class="mb-3">
                       <div class="form-floating">
-                        <textarea class="form-control form-control-lg" placeholder="Leave a comment here"
-                          id="descripcion" name="descripcion"></textarea>
+                        <textarea class="form-control" id="validationCustom02" placeholder="Leave a comment here"
+                          id="descripcion" name="descripcion" required></textarea>
                         <label for="floatingTextarea">Escribe su problema...</label>
+                        <div class="invalid-feedback">
+                          Por favor ingresa un mensaje en el área de texto.
+                        </div>
                       </div>
                     </div>
+
                     <div class="input-group mb-1">
-                      <p class="text-xl-start fw-bold" id="NombreInstrumento">Nombre del instrumento:
+                      <p class="text-xl-start" id="NombreInstrumento">Nombre del instrumento:
                         {{servicio.nombre_instrumento}}</p>
                     </div>
                     <div class="input-group mb-1">
-                      <p class="text-xl-start fw-bold" id="GrupoInstrumento">Grupo del instrumento: {{servicio.grupo}}
+                      <p class="text-xl-start" id="GrupoInstrumento">Grupo del instrumento: {{servicio.grupo}}
                       </p>
                     </div>
                     <div class="input-group mb-1">
-                      <p class="text-xl-start fw-bold" id="DescripcionServicio">Descripción del servicio:
+                      <p class="text-xl-start" id="DescripcionServicio">Descripción del servicio:
                         {{servicio.descripcion}}</p>
                     </div>
                     <div class="input-group mb-1">
-                      <p class="text-xl-start fw-bold" id="AnticipoServicio">Anticipo:
+                      <p class="text-xl-start" id="AnticipoServicio">Anticipo:
                         ${{servicio.precio_anticipo_cita}}</p>
                     </div>
                     <div class="input-group mb-1">
-                      <button id="agendar-cita-btn" class="btn btn-lg w-100 fs-6 fw-bold botones">Agendar</button>
+                      <p class="text-xl-start" id="PagoCompleto">
+                        Pago total: <span id="totalAmount"></span>
+                      </p>
+                    </div>
+                    <div class="input-group mb-1">
+                      <button id="agendar-cita-btn" class="btn btn-lg w-100 fs-6 fw-bold botones"
+                        type="submit">Agendar</button>
                     </div>
                   </div>
                 </form>
@@ -114,6 +133,55 @@
 </div>
 
 <script>
+
+  function calcularTotal() {
+    // Obtén los valores de servicio.precio_cuerdas y servicio.precio y conviértelos a números
+    var precioCuerdas = {% if servicio.precio_cuerdas is not null %} { { servicio.precio_cuerdas } } {% else %} 0 {% endif %};
+  var precio = {{ servicio.precio }};
+
+  // Calcula la suma
+  var total = precioCuerdas + precio;
+
+  // Formatea el resultado como un valor monetario
+  var formattedTotal = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(total);
+
+  // Muestra el resultado en el elemento con id "totalAmount"
+  document.getElementById('totalAmount').textContent = formattedTotal;
+    }
+
+  // Llama a la función calcularTotal inicialmente para calcular y mostrar el total
+  calcularTotal();
+
+  // Escucha cambios en los valores de servicio.precio_cuerdas y servicio.precio
+  window.addEventListener("DOMContentLoaded", calcularTotal);
+
+
+  var dateToday = new Date();
+  $("#fecha").datepicker({
+    beforeShowDay: $.datepicker.noWeekends,
+    changeMonth: true,
+    minDate: dateToday,
+    defaultDate: '',
+    altFormat: "yy-mm-dd",
+    altField: "#fecha"
+  });
+
+  (function () {
+    'use strict';
+    var forms = document.querySelectorAll('.needs-validation');
+
+    Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+
+          form.classList.add('was-validated');
+        }, false);
+      });
+  })();
   const formularioDisponibilidad = document.getElementById(
     'formulario-checar-disponibilidad'
   );
@@ -125,8 +193,6 @@
   const agendarCitaBtn = document.getElementById('agendar-cita-btn');
   const diaActual = new Date();
 
-  inputDia.value = `${diaActual.getFullYear()}-${diaActual.getMonth() + 1
-    }-${diaActual.getDate()}`;
   inputDia.min = `${diaActual.getFullYear()}-${diaActual.getMonth() + 1
     }-${diaActual.getDate()}`;
 
@@ -199,7 +265,9 @@
     const formData = new FormData(this);
 
     const checkboxCuerdas = document.getElementById('incluye_cuerdas');
-    formData.append('incluye_cuerdas', checkboxCuerdas.checked ? true : false)
+    if (checkboxCuerdas) {
+      formData.append('incluye_cuerdas', checkboxCuerdas.checked ? true : false);
+    }
 
     const servicioSelect = document.getElementById('id_servicio');
     formData.append('id_servicio', servicioSelect.value)
@@ -234,6 +302,8 @@
   document.getElementById('metodo_pago').addEventListener('submit', function (e) {
     e.preventDefault();
     const formData = new FormData(this);
+
+    var errorMessageElement = document.getElementById('error-message');
     fetch('/citas/agendar-cita', {
       method: 'POST',
       body: formData,
@@ -244,10 +314,8 @@
       })
       .catch(error => {
         console.error('Error:', error);
+
       });
   });
-
-
-
 </script>
 {% endblock %}
