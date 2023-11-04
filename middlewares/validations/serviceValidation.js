@@ -32,8 +32,13 @@ function addServiceValidation() {
       .escape()
       .notEmpty()
       .withMessage('El precio no puede estar vacío')
-      .isLength({ max: 55 })
-      .withMessage('El precio debe tener 55 caracteres o menos'),
+      .isLength({ max: 8 })
+      .withMessage('El precio debe tener 8 caracteres o menos'),
+      body('precio_cuerdas', 'Precio cuerdas inválido')
+      .trim()
+      .escape()
+      .isLength({ max: 8 })
+      .withMessage('El precio de las cuerdas debe tener 8 caracteres o menos'),
     body('descripcion', 'Descripción inválida')
       .trim()
       .escape()
@@ -86,8 +91,13 @@ function updateServiceValidation() {
       .escape()
       .notEmpty()
       .withMessage('El precio no puede estar vacío')
-      .isLength({ max: 55 })
-      .withMessage('El precio debe tener 55 caracteres o menos'),
+      .isLength({ max: 8 })
+      .withMessage('El precio debe tener 8 caracteres o menos'),
+      body('precio_cuerdas', 'Precio cuerdas inválido')
+      .trim()
+      .escape()
+      .isLength({ max: 8 })
+      .withMessage('El precio de las cuerdas debe tener 8 caracteres o menos'),
     body('descripcion', 'Descripción inválida')
       .trim()
       .escape()

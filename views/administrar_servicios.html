@@ -13,6 +13,7 @@
                     <th id="saNombre" scope="col" class="fs-5 fw-lighter vertical-align-middle">Nombre</th>
                     <th id="saGrupo" scope="col" class="fs-5 fw-lighter vertical-align-middle">Grupo</th>
                     <th id="saDescripción" scope="col" class="fs-5 fw-lighter vertical-align-middle">Descripción</th>
+                    <th id="saPrecioCuerdas" scope="col" class="fs-5 fw-lighter vertical-align-middle">Precio Cuerdas</th>
                     <th id="saCosto" scope="col" class="fs-5 fw-lighter vertical-align-middle">Costo</th>
                     <th id="sa1" scope="col" class="fs-5 fw-lighter vertical-align-middle"></th>
                     <th id="sa2" scope="col" class="fs-5 fw-lighter vertical-align-middle">
@@ -72,8 +73,25 @@
                             {% endif %}
                         </td>
                         <td>
+                            
+                            <div id="contenedorAgregarPrecioCuerdas" style="display:none;">
+                                <input type="number" class="form-control" placeholder="Precio" id="precio_cuerdas" name="precio_cuerdas"
+                                    min="0" step="1" value="{{query.precio_cuerdas}}">
+                                
+                                
+                                <br>
+                            </div>
+                            <button class="btn btn-lg w-100 fs-6 botones rounded-pill" type="button"
+                                onclick="toggleInputPrecioCuerdas('btn_toggle_incluir_cuerdas','contenedorAgregarPrecioCuerdas','precio_cuerdas')" id="btn_toggle_incluir_cuerdas">Incluir cuerdas</button>
+                            {% if query.error_precio_cuerdas %}
+                                <div class="alert alert-warning mt-2" id="cost-error-label" role="alert">
+                                    {{ query.error_precio_cuerdas }}
+                                </div>
+                            {% endif %}
+                        </td>
+                        <td>
                             <input type="number" class="form-control" placeholder="Costo" id="precio" name="precio"
-                                min="0" step="0.01" value="{{query.precio}}">
+                                min="0" step="1" value="{{query.precio}}">
                             {% if query.error_precio %}
                             <div class="alert alert-warning mt-2" id="cost-error-label" role="alert">
                                 {{ query.error_precio }}
@@ -142,8 +160,27 @@
                             {% endif %}
                         </td>
                         <td>
+                            
+                            <div id="contenedorActualizarPrecioCuerdas" {% if servicio.precio_cuerdas %} style="display:block;" {% else %} style="display:none;" {% endif %}}>
+                                <input type="number" class="form-control" placeholder="Precio" id="upd_precio_cuerdas" name="precio_cuerdas"
+                                    min="0" step="1" value="{{query.precio_cuerdas}}">
+                                
+                                
+                                <br>
+                            </div>
+                            
+                            <button class="btn btn-lg w-100 fs-6 botones rounded-pill" type="button"
+                                onclick="toggleInputPrecioCuerdas('btn_toggle_incluir_cuerdas','contenedorActualizarPrecioCuerdas','upd_precio_cuerdas')" id="btn_toggle_incluir_cuerdas">Incluir cuerdas</button>
+                            
+                            {% if query.upd_error_precio_cuerdas %}
+                                    <div class="alert alert-warning mt-2" id="cost-error-label" role="alert">
+                                        {{ query.upd_error_precio_cuerdas }}
+                                    </div>
+                                {% endif %}
+                        </td>
+                        <td>
                             <input type="number" class="form-control" placeholder="Costo" id="upd_precio" name="precio"
-                                min="0" step="0.01" value="{{query.precio}}">
+                                min="0" step="1" value="{{query.precio}}">
                             {% if query.upd_error_precio %}
                             <div class="alert alert-warning mt-2" id="upd-cost-error-label" role="alert">
                                 {{ query.upd_error_precio }}
@@ -168,6 +205,11 @@
                                 <td id="sanombre_instrumento2_{{servicio.id}}" class="vertical-align-middle">{{ servicio.nombre_instrumento }}</td>
                                 <td id="saGrupo2_{{servicio.id}}" class="vertical-align-middle">{{ servicio.grupo }}</td>
                                 <td id="saDescripción2_{{servicio.id}}" class="vertical-align-middle">{{ servicio.descripcion }}</td>
+                                {% if servicio.precio_cuerdas %}
+                                <td id="saPrecioCuerdas_{{servicio.id}}" class="vertical-align-middle">${{ servicio.precio_cuerdas }}</td>
+                                {% else %}
+                                <td id="saPrecioCuerdas_{{servicio.id}}" class="vertical-align-middle">No incluye</td>
+                                {% endif %}
                                 <td id="saPrecio2_{{servicio.id}}" class="vertical-align-middle">${{ servicio.precio }}</td>
                                 <td  class="vertical-align-middle">
                                     <input type="text" name="id" id="" value="{{servicio.id}}" style="display:none;">
@@ -190,7 +232,7 @@
         </table>
         <script>
             document.addEventListener("DOMContentLoaded", function () {
-                if ('{{query.error_nombre_instrumento}}' != '' || '{{query.error_descripcion}}' != '' || '{{query.error_precio}}' != '' || '{{query.error_grupo}}' != '' || '{{query.error_url_imagen}}' != '') {
+                if ('{{query.error_agregar_servicio}}' != '' ){
                     toggleFormulario();
                 }
             });
@@ -258,6 +300,7 @@
 
                 const grupo = document.getElementById('saGrupo2_'+id).innerHTML;
                 const descripcion = document.getElementById('saDescripción2_'+id).innerHTML;
+                let precio_cuerdas = document.getElementById('saPrecioCuerdas_'+id).innerHTML.replace("$","");
                 const precio = document.getElementById('saPrecio2_'+id).innerHTML.replace("$","");
                 const url_imagen = document.getElementById('url_imagen_'+id).src;
                 console.log("Nombre instrumento: "+nombreInstrumento);
@@ -265,6 +308,19 @@
                 console.log("Descripcion: "+descripcion);
                 console.log("Precio: "+precio);
                 console.log("URL imagen: "+url_imagen);
+
+                let celdaPrecioCuerdas = ""
+                let displayPrecioCuerdas = ""
+                let textoBotonPrecioCuerdas = ""
+                if (isNaN(precio_cuerdas)){
+                displayPrecioCuerdas = "none";
+                    precio_cuerdas = "";
+                    textoBotonPrecioCuerdas = "Incluir cuerdas";
+                }else{
+                displayPrecioCuerdas = "block";
+                    textoBotonPrecioCuerdas = "No incluir cuerdas";
+                }
+                 
 
                  
                 let servicioEditable = ` 
@@ -294,6 +350,16 @@
                                 name="upd_descripcion" value="${descripcion}">
                             
                         </td>
+                        <td >
+                    <div id="contenedor_upd_precio_cuerdas" style="display:${displayPrecioCuerdas};">
+                        <input type="number" class="form-control" placeholder="Costo" id="upd_precio_cuerdas" name="upd_precio_cuerdas"
+                                min="0" step="1" value="${precio_cuerdas}">
+                        </br>
+                    </div>
+                    <button class="btn btn-lg w-100 fs-6 botones rounded-pill" type="button"
+                                onclick="toggleInputPrecioCuerdas('btn_upd_toggle_incluir_cuerdas','contenedor_upd_precio_cuerdas','upd_precio_cuerdas')" id="btn_upd_toggle_incluir_cuerdas"> ${textoBotonPrecioCuerdas}</button>
+                        
+                </td>
                         <td>
                             <input type="number" class="form-control" placeholder="Costo" id="upd_precio" name="upd_precio"
                                 min="0" step="1" value="${precio}">
@@ -326,6 +392,8 @@
                 const grupo = document.getElementById('upd_grupo').value;
                 const descripcion = document.getElementById('upd_descripcion').value;
                 const precio = document.getElementById('upd_precio').value;
+                let precio_cuerdas = document.getElementById('upd_precio_cuerdas').value;
+                
 
                 const inputImage = document.getElementById('upd_inputImage');
                 let file = ""
@@ -342,6 +410,7 @@
                 formData.append('descripcion', descripcion);
                 formData.append('precio', precio);
                 formData.append('url_imagen', file);
+                formData.append('precio_cuerdas', precio_cuerdas);
 
                 fetch('/editar_servicio', {
                     method: 'POST',
@@ -361,6 +430,23 @@
                 });
             }
 
+            function toggleInputPrecioCuerdas(idBoton, idContenedorInput, idInput){
+            console.log("idBoton: "+idBoton);
+            console.log("idContenedorInput: "+idContenedorInput);
+                const contenedorAgregarPrecioCuerdas = document.getElementById(idContenedorInput);
+                const btnAgregarPrecioCuerdas = document.getElementById(idBoton);
+                const inputPrecioCuerdas = document.getElementById(idInput);
+                
+                if (contenedorAgregarPrecioCuerdas.style.display === 'none' || contenedorAgregarPrecioCuerdas.style.display === '') {
+                    contenedorAgregarPrecioCuerdas.style.display = 'block';
+                    btnAgregarPrecioCuerdas.innerHTML = "No incluir cuerdas";
+                } else {
+                    contenedorAgregarPrecioCuerdas.style.display = 'none';
+                    btnAgregarPrecioCuerdas.innerHTML = "Incluir cuerdas";
+                    inputPrecioCuerdas.value = "";
+                }
+            
+            }
         </script>
     </div>
 </div>
@@ -377,6 +463,7 @@
                     <th id="sinactivos2" scope="col" class="fs-5 fw-lighter">Nombre</th>
                     <th id="sinactivos3" scope="col" class="fs-5 fw-lighter">Grupo</th>
                     <th id="sinactivos4" scope="col" class="fs-5 fw-lighter">Descripción</th>
+                    <th id="sinactivos7" scope="col" class="fs-5 fw-lighter">Precio cuerdas</th>
                     <th id="sinactivos5" scope="col" class="fs-5 fw-lighter">Costo</th>
                     <th id="sinactivos6" scope="col" class="fs-5 fw-lighter"></th>
 
@@ -393,7 +480,12 @@
                     <td id="servicioInstrumento" style="vertical-align: middle;">{{ servicio.nombre_instrumento }}</td>
                     <td id="servicioGrupo"  style="vertical-align: middle;">{{ servicio.grupo }}</td>
                     <td id="servicioDescripcion"  style="vertical-align: middle;">{{ servicio.descripcion }}</td>
-                    <td id="servicioPrecio"  style="vertical-align: middle;">${{ servicio.precio }}</td>
+                    {% if servicio.precio_cuerdas %}
+                        <td id="servicioPrecioCuerdas"  style="vertical-align: middle;">{{ servicio.precio_cuerdas}}</td>
+                    {% else %}
+                        <td id="servicioPrecioCuerdas"  style="vertical-align: middle;">No incluye</td>
+                    {% endif %}
+                        <td id="servicioPrecio"  style="vertical-align: middle;">${{ servicio.precio }}</td>
 
                     <td style="vertical-align: middle;">
                         <form action="/habilitar_servicio" method="post">

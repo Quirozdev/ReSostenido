@@ -24,7 +24,7 @@ const agruparServicios = (servicios) => {
 
 
 async function administrarServiciosGet(req, res) {
-  const services = await db.execute('SELECT id, grupo, nombre_instrumento, precio, descripcion, url_imagen, activo FROM servicios ');
+  const services = await db.execute('SELECT id, grupo, nombre_instrumento, precio, precio_cuerdas, descripcion, url_imagen, activo FROM servicios ');
   
   const {activeServices, inactiveServices} = services[0].reduce((groups, instrument) => {
     if (instrument.activo === 1) {
@@ -66,11 +66,16 @@ async function serviciosGet(req, res) {
 async function agregarServicioPost(req, res) {
   const result = validationResult(req);
   const nombreImagen = req.body.nombre_instrumento.replace(/\s/g, "_") + ".webp";
+  if (req.body.precio_cuerdas === "") {
+    req.body.precio_cuerdas = null;
+  }
+
 
   const nuevoServicio = {
     grupo: req.body.grupo,
     nombre_instrumento: req.body.nombre_instrumento,
     precio: req.body.precio,
+    precio_cuerdas: req.body.precio_cuerdas,
     descripcion: req.body.descripcion,
     url_imagen: nombreImagen
   }
@@ -87,14 +92,15 @@ async function agregarServicioPost(req, res) {
     const query_errors = querystring.stringify(errores_con_prefijo);
 
     const query_datos = querystring.stringify(nuevoServicio);
+    const query = query_errors + "&" + query_datos + "&error_agregar_servicio=true" ;
     
-    return res.redirect('/administrar_servicios?' + query_errors + "&" + query_datos);
+    return res.redirect('/administrar_servicios?' + query);
   }
  
   
   
   if (servicesService.guardarImagenEnDisco(req.file.buffer, nombreImagen)){
-    const consulta = await db.execute('INSERT INTO servicios (grupo, nombre_instrumento, precio, descripcion, url_imagen) VALUES (?, ?, ?, ?, ?)', [nuevoServicio.grupo, nuevoServicio.nombre_instrumento, nuevoServicio.precio, nuevoServicio.descripcion, nuevoServicio.url_imagen]);
+    const consulta = await db.execute('INSERT INTO servicios (grupo, nombre_instrumento, precio, descripcion, precio_cuerdas, url_imagen) VALUES (?, ?, ?, ?, ?, ?)', [nuevoServicio.grupo, nuevoServicio.nombre_instrumento, nuevoServicio.precio, nuevoServicio.descripcion, nuevoServicio.precio_cuerdas, nuevoServicio.url_imagen]);
 
 
     res.redirect('/administrar_servicios');
@@ -109,13 +115,16 @@ async function agregarServicioPost(req, res) {
 async function editarServicioPost(req, res) {
   const result = validationResult(req);
   const nombreImagen = req.body.nombre_instrumento.replace(/\s/g, "_") + ".webp";
-
+  if (req.body.precio_cuerdas === "") {
+    req.body.precio_cuerdas = null;
+  }
 
   const servicioActualizado = {
     id: req.body.id,
     grupo: req.body.grupo,
     nombre_instrumento: req.body.nombre_instrumento,
     precio: req.body.precio,
+    precio_cuerdas: req.body.precio_cuerdas,
     descripcion: req.body.descripcion,
     url_imagen: nombreImagen
   }
@@ -140,10 +149,10 @@ async function editarServicioPost(req, res) {
   
   
   if(!req.file) {
-    const actualizar = await db.execute('UPDATE servicios SET grupo = ?, nombre_instrumento = ?, precio = ?, descripcion = ? WHERE id = ?', [servicioActualizado.grupo, servicioActualizado.nombre_instrumento, servicioActualizado.precio, servicioActualizado.descripcion, req.body.id]);
+    const actualizar = await db.execute('UPDATE servicios SET grupo = ?, nombre_instrumento = ?, precio = ?, descripcion = ?, precio_cuerdas= ? WHERE id = ?', [servicioActualizado.grupo, servicioActualizado.nombre_instrumento, servicioActualizado.precio, servicioActualizado.descripcion,  servicioActualizado.precio_cuerdas, req.body.id]);
   }else{
     if (servicesService.guardarImagenEnDisco(req.file.buffer, nombreImagen)){
-      const actualizar = await db.execute('UPDATE servicios SET grupo = ?, nombre_instrumento = ?, precio = ?, descripcion = ?, url_imagen = ? WHERE id = ?', [servicioActualizado.grupo, servicioActualizado.nombre_instrumento, servicioActualizado.precio, servicioActualizado.descripcion, servicioActualizado.url_imagen, req.body.id]);
+      const actualizar = await db.execute('UPDATE servicios SET grupo = ?, nombre_instrumento = ?, precio = ?, descripcion = ?, url_imagen = ?, precio_cuerdas= ? WHERE id = ?', [servicioActualizado.grupo, servicioActualizado.nombre_instrumento, servicioActualizado.precio, servicioActualizado.descripcion, servicioActualizado.url_imagen, servicioActualizado.precio_cuerdas ,req.body.id]);
       return res.redirect('/administrar_servicios');
     }else{
       return res.redirect('/administrar_servicios?error_url_imagen=Error al cargar la imagen. Intente con otra imagen.'  );
