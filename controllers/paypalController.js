@@ -1,3 +1,5 @@
+const { default: fetch, Headers } = require('node-fetch');
+
 const querystring = require('node:querystring');
 const { getBaseUrl } = require('../consts');
 
