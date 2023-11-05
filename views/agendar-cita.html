@@ -69,13 +69,14 @@
                         </div>
                       </div>
                     </div>
-                    {% if servicio.precio_cuerdas is not null %}
+                    {% if servicio.precio_cuerdas  %}
+                    
                     <div class="input-group mb-3">
                       <div class="form-check" id="checkbox-cuerdas">
                         <label class="form-check-label" for="flexCheckIndeterminate">
                           Incluir cuerdas
                         </label>
-                        <input class="form-check-input" type="checkbox" value="true" id="incluye_cuerdas"
+                        <input class="form-check-input" type="checkbox" onChange="togglePrecioCuerdas()"  value="true" id="incluye_cuerdas"
                           name="incluye_cuerdas">
                       </div>
                     </div>
@@ -105,11 +106,15 @@
                     </div>
                     <div class="input-group mb-1">
                       <p class="text-xl-start" id="AnticipoServicio">Anticipo:
-                        ${{servicio.precio_anticipo_cita}}</p>
+                       <div id="ValorAnticipoServicio"> ${{servicio.precio_anticipo_cita}}</div></p>
+                    </div>
+                    <div  class="input-group mb-1">
+                      <p class="text-xl-start d-none" id="PrecioCuerdas">Precio de cuerdas:
+                        <span id="ValorPrecioCuerdas">${{servicio.precio_cuerdas}}</span></p>
                     </div>
                     <div class="input-group mb-1">
                       <p class="text-xl-start" id="PagoCompleto">
-                        Pago total: <span id="totalAmount"></span>
+                        Pago total: <span id="totalAmount">${{servicio.precio_anticipo_cita}}</span>
                       </p>
                     </div>
                     <div class="input-group mb-1">
@@ -134,7 +139,26 @@
 
 <script>
 
+  function togglePrecioCuerdas() {
+    const checkboxCuerdas = document.getElementById('incluye_cuerdas');
+    const precioCuerdas = document.getElementById('PrecioCuerdas');
+    const precioCuerdasValue = parseFloat(document.getElementById('ValorPrecioCuerdas').innerText.replace('$', '').replace(',', ''));
+    const anticipoServicioValue = parseFloat(document.getElementById('ValorAnticipoServicio').innerText.replace('$', '').replace(',', ''));
+    const totalAmount = document.getElementById('totalAmount');
+    console.log("precioCuerdasValue: "+precioCuerdasValue);
+    console.log("anticipoServicioValue: "+anticipoServicioValue);
+    let totalAmountValue = precioCuerdasValue + anticipoServicioValue;
+    console.log("totalAmountValue: "+totalAmountValue);
 
+    if (checkboxCuerdas.checked) {
+      precioCuerdas.classList.remove('d-none');
+      totalAmount.innerText = `$${totalAmountValue.toFixed(2)}`;
+    } else {
+      precioCuerdas.classList.add('d-none');
+      totalAmount.innerText = `$${anticipoServicioValue.toFixed(2)}`;
+    }
+
+  }
 
   var dateToday = new Date();
   $("#fecha").datepicker({
