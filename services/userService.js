@@ -67,7 +67,7 @@ async function verifyAccount(token) {
     // si no se encontro ese token en la bd
     if (!tokenBd) {
       throw new Error(
-        'El token de verificación no se encontró, posiblemente ya expiró, solicita uno nuevo'
+        'El token de verificación no se encontró, posiblemente ya expiró, solicita uno nuevo. También es posible que la cuenta ya haya sido verificada, por favor trata de iniciar sesión si ese es el caso.'
       );
     }
 
