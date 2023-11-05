@@ -66,19 +66,17 @@ async function verifyAccount(token) {
 
     // si no se encontro ese token en la bd
     if (!tokenBd) {
-      return {
-        err: 'invalid_token',
-        msg: 'El token de verificación no se encontró, posiblemente ya expiró, solicita uno nuevo',
-      };
+      throw new Error(
+        'El token de verificación no se encontró, posiblemente ya expiró, solicita uno nuevo'
+      );
     }
 
     const estaExpirado = new Date(tokenBd.fecha_expiracion) <= new Date();
 
     if (estaExpirado) {
-      return {
-        err: 'token_expired',
-        msg: 'El token de verificación de registro ya expiró, por favor solicita nuevamente el link de verificación',
-      };
+      throw new Error(
+        'El token de verificación de registro ya expiró, por favor solicita nuevamente el link de verificación'
+      );
     }
 
     // actualizar estado verificado del usuario en la bd
@@ -100,11 +98,11 @@ async function verifyAccount(token) {
       err: null,
       msg: 'Tu correo se ha confirmado con éxito. Ya puedes iniciar sesión',
     };
-  } catch (err) {
+  } catch (e) {
     await connection.rollback();
     return {
-      err: err,
-      msg: 'Algo salió mal :(, vuelvelo a intentar más tarde',
+      err: e.name,
+      msg: e.message,
     };
   }
 }
