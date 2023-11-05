@@ -53,27 +53,32 @@
                     <div class="input-group mb-3">
                       <div class="form-floating" id="input-fecha">
                         <input type="text" class="form-control form-control-lg fs-6" placeholder="Fecha" id="fecha"
-                          name="fecha" required autocomplete="off">
-                        <label for="floatingSelectGrid">Fecha</label>
-                        <div class="invalid-feedback">
+                          name="fecha" required autocomplete="off" onChange="validarFechaHora()" >
+                        <label for="fecha">Fecha</label>
+                        <div id="invalid-feedback-fecha" class="invalid-feedback">
                           Por favor ingresa una fecha.
                         </div>
                       </div>
 
                       <div class="form-floating ms-3" id="input-hora">
                         <input type="time" class="form-control form-control-lg fs-6" placeholder="Hora" name="hora"
-                          id="hora" value="" required>
-                        <label for="floatingSelectGrid">Hora</label>
-                        <div class="invalid-feedback">
+                          id="hora" value="" onChange="validarFechaHora()" required>
+                        <label for="hora">Hora</label>
+                        <div id="invalid-feedback-hora" class="invalid-feedback">
                           Por favor ingresa una hora.
                         </div>
                       </div>
+                    </div>
+                    <div class="mb-3" >
+                      <div id="invalid-feedback-fecha-hora" class="invalid-feedback">
+                          
+                        </div>
                     </div>
                     {% if servicio.precio_cuerdas  %}
                     
                     <div class="input-group mb-3">
                       <div class="form-check" id="checkbox-cuerdas">
-                        <label class="form-check-label" for="flexCheckIndeterminate">
+                        <label class="form-check-label" for="checkbox-cuerdas">
                           Incluir cuerdas
                         </label>
                         <input class="form-check-input" type="checkbox" onChange="togglePrecioCuerdas()"  value="true" id="incluye_cuerdas"
@@ -85,8 +90,8 @@
                       <div class="form-floating">
                         <textarea class="form-control" id="validationCustom02" placeholder="Leave a comment here"
                           id="descripcion" name="descripcion" required></textarea>
-                        <label for="floatingTextarea">Escribe su problema...</label>
-                        <div class="invalid-feedback">
+                        <label for="validationCustom02">Escribe su problema...</label>
+                        <div  class="invalid-feedback">
                           Por favor ingresa un mensaje en el área de texto.
                         </div>
                       </div>
@@ -138,6 +143,129 @@
 </div>
 
 <script>
+
+  function horaValida(){
+    var inputHora = document.getElementById('hora');
+    var hora = inputHora.value; // obtiene el valor del input
+
+    // Convertimos la hora y los minutos a números para poder comparar
+    var partesHora = hora.split(':');
+    var horas = parseInt(partesHora[0], 10);
+    var minutos = parseInt(partesHora[1], 10);
+
+    // Definimos las horas y minutos de los límites
+    var horaInicio = 9; // 9:00 AM
+    var minutoInicio = 0;
+    var horaFin = 17; // 5:40 PM
+    var minutoFin = 40;
+
+    // Comparamos las horas y minutos con los límites
+    var esValido = (horas > horaInicio || (horas === horaInicio && minutos >= minutoInicio)) && 
+                  (horas < horaFin || (horas === horaFin && minutos <= minutoFin));
+
+    if (esValido) {
+      inputHora.classList.remove('is-invalid');
+      inputHora.classList.add('is-valid');
+      document.getElementById('invalid-feedback-hora').classList.remove('d-block');
+      return true;
+    }else{
+      inputHora.classList.remove('is-valid');
+      inputHora.classList.remove('was-validated');
+      inputHora.classList.add('is-invalid');
+      document.getElementById('invalid-feedback-hora').classList.add('d-block');
+      document.getElementById('invalid-feedback-hora').innerText = "Por favor ingresa una hora entre las 9:00 AM y las 5:40 PM";
+      return false;
+    }
+  
+    
+  }
+
+  function fechaValida(){
+    const inputDia = document.getElementById('fecha');
+    const fecha = inputDia.value;
+
+     if (fecha === ""){
+      console.log("fecha invalida");
+      inputDia.classList.remove('is-valid');
+      inputDia.classList.add('is-invalid');
+      document.getElementById('invalid-feedback-fecha').classList.add('d-block');
+      document.getElementById('invalid-feedback-fecha').innerText = "Por favor ingresa una fecha";
+      return false;
+     }else{
+      inputDia.classList.remove('is-invalid');
+      inputDia.classList.add('is-valid');
+      document.getElementById('invalid-feedback-fecha').classList.remove('d-block');
+
+      return true;
+     }
+  
+  
+  }
+
+  function validarFechaHora(){
+
+    let horaEsValida = horaValida();  
+    let fechaEsValida = fechaValida();
+
+    if (horaEsValida && fechaEsValida){
+      const fecha = document.getElementById('fecha').value;
+      const hora = document.getElementById('hora').value;
+      const formData = new FormData();
+      formData.append('fecha', fecha);
+      formData.append('hora', hora);
+
+      fetch('/citas/checar-disponibilidad-fecha', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(Object.fromEntries(formData.entries())),
+      })
+        .then(response => {
+          if(response.ok){
+           return response.json();
+          }else{
+  
+           throw new Error("Error en la llamada Ajax");
+          }
+        
+        
+        })
+        
+        .then(data => {
+          if(!data.disponible){
+            
+            document.getElementById('invalid-feedback-fecha-hora').innerText = data.mensaje;
+            document.getElementById('invalid-feedback-fecha-hora').classList.add('d-block');
+          }else{
+           
+
+          
+
+            document.getElementById('invalid-feedback-fecha-hora').classList.remove('d-block');
+          }
+
+          console.log('Respuesta del servidor:', data);
+
+          console.log(data.disponible);
+          console.log(data.error);
+          console.log(data.mensaje);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+
+
+
+      
+    }else{
+      console.log("fecha o hora invalida");
+      return false;
+    }
+  
+  
+  }
 
   function togglePrecioCuerdas() {
     const checkboxCuerdas = document.getElementById('incluye_cuerdas');
@@ -264,8 +392,10 @@
   });
   //Mandar informacion de form de agendar_cita
   document.getElementById('agendar_cita_formulario').addEventListener('submit', function (e) {
+   
+    console.log("fecha y hora son validas y se procede a agendar cita");
     e.preventDefault();
-
+    
     const formData = new FormData(this);
 
     const checkboxCuerdas = document.getElementById('incluye_cuerdas');

@@ -48,6 +48,8 @@ class CitasService {
         [fecha, hora, fechaYHoraActual]
       );
       const { disponibilidad, mensaje } = Object.values(result[0][0])[0];
+      console.log('disponibilidad', disponibilidad);
+      console.log('mensaje', mensaje);
       return { disponibilidad, mensaje };
     } catch (err) {
       console.error(err);
