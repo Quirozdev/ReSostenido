@@ -56,12 +56,9 @@ async function changePassword(token, nuevaContrasenia) {
     const tokenBd = tokens[0];
 
     if (!tokenBd) {
-      return {
-        error: {
-          general:
-            'El token proporcionado no fue encontrado, por favor, vuelve a enviar otro a tu correo',
-        },
-      };
+      throw new Error(
+        'El token proporcionado no fue encontrado, por favor, vuelve a enviar otro a tu correo'
+      );
     }
 
     const contraseniaEncriptada = await hash(nuevaContrasenia);
@@ -83,11 +80,11 @@ async function changePassword(token, nuevaContrasenia) {
     return {
       error: null,
     };
-  } catch (err) {
+  } catch (e) {
     await connection.rollback();
     return {
       error: {
-        general: 'Algo salió mal :(, vuelvelo a intentar más tarde',
+        general: e.message,
       },
     };
   }

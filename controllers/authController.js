@@ -285,7 +285,7 @@ async function changePasswordPost(req, res) {
   );
 
   if (error) {
-    res.render('change-password.html', {
+    return res.render('change-password.html', {
       errores: error,
       datos_ingresados: {
         contrasenia: req.body.contrasenia,
