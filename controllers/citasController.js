@@ -1,3 +1,4 @@
+const { default: fetch } = require('node-fetch');
 const db = require('../db/db');
 const { validationResult } = require('express-validator');
 const emailService = require('../services/emailService');
