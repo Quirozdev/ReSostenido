@@ -2,19 +2,25 @@ require('dotenv').config();
 const Database = require('../db/database');
 const CitasService = require('../services/citasService');
 
+const { crearEstadosCita, crearCita } = require('./citasHelperTest');
+
+let testDatabase = new Database({
+  host: process.env.MYSQLHOST,
+  port: process.env.MYSQLPORT,
+  user: process.env.MYSQLUSER,
+  password: process.env.MYSQLPASSWORD,
+  databaseName: process.env.TEST_MYSQLDATABASE,
+});
+
+let servicioCitas = new CitasService(testDatabase.getConnection());
+
+let usuarioId;
+let servicioId;
+
 describe('En la funcionalidad de citas', () => {
-  let testDatabase = new Database({
-    host: process.env.MYSQLHOST,
-    port: process.env.MYSQLPORT,
-    user: process.env.MYSQLUSER,
-    password: process.env.MYSQLPASSWORD,
-    databaseName: process.env.TEST_MYSQLDATABASE,
+  beforeAll(async () => {
+    await crearEstadosCita(testDatabase);
   });
-
-  let servicioCitas = new CitasService(testDatabase.getConnection());
-
-  let usuarioId;
-  let servicioId;
 
   describe('Al checar si una fecha y hora estan disponibles para una cita y el dia actual es 20/10/2023 y son las 13:00 horas', () => {
     beforeAll(async () => {
@@ -105,54 +111,54 @@ describe('En la funcionalidad de citas', () => {
   describe('cuando hay 8 citas registradas y pagadas para el dia 21-10-2023', () => {
     beforeAll(async () => {
       await Promise.all([
-        testDatabase
-          .getConnection()
-          .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '09:00', 'test', 125.00, true, ?, ?)",
-            [servicioId, usuarioId]
-          ),
-        testDatabase
-          .getConnection()
-          .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '10:00', 'test', 125.00, true, ?, ?)",
-            [servicioId, usuarioId]
-          ),
-        testDatabase
-          .getConnection()
-          .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '11:00', 'test', 125.00, true, ?, ?)",
-            [servicioId, usuarioId]
-          ),
-        testDatabase
-          .getConnection()
-          .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '12:00', 'test', 125.00, true, ?, ?)",
-            [servicioId, usuarioId]
-          ),
-        testDatabase
-          .getConnection()
-          .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '13:00', 'test', 125.00, true, ?, ?)",
-            [servicioId, usuarioId]
-          ),
-        testDatabase
-          .getConnection()
-          .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '14:00', 'test', 125.00, true, ?, ?)",
-            [servicioId, usuarioId]
-          ),
-        testDatabase
-          .getConnection()
-          .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '15:00', 'test', 125.00, true, ?, ?)",
-            [servicioId, usuarioId]
-          ),
-        testDatabase
-          .getConnection()
-          .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '16:00', 'test', 125.00, true, ?, ?)",
-            [servicioId, usuarioId]
-          ),
+        crearCita(testDatabase, {
+          fecha: '2023-10-21',
+          hora: '09:00',
+          servicioId,
+          usuarioId,
+        }),
+        crearCita(testDatabase, {
+          fecha: '2023-10-21',
+          hora: '10:00',
+          servicioId,
+          usuarioId,
+        }),
+        crearCita(testDatabase, {
+          fecha: '2023-10-21',
+          hora: '11:00',
+          servicioId,
+          usuarioId,
+        }),
+        crearCita(testDatabase, {
+          fecha: '2023-10-21',
+          hora: '12:00',
+          servicioId,
+          usuarioId,
+        }),
+        crearCita(testDatabase, {
+          fecha: '2023-10-21',
+          hora: '13:00',
+          servicioId,
+          usuarioId,
+        }),
+        crearCita(testDatabase, {
+          fecha: '2023-10-21',
+          hora: '14:00',
+          servicioId,
+          usuarioId,
+        }),
+        crearCita(testDatabase, {
+          fecha: '2023-10-21',
+          hora: '15:00',
+          servicioId,
+          usuarioId,
+        }),
+        crearCita(testDatabase, {
+          fecha: '2023-10-21',
+          hora: '16:00',
+          servicioId,
+          usuarioId,
+        }),
       ]);
     });
 
@@ -175,42 +181,42 @@ describe('En la funcionalidad de citas', () => {
   describe('cuando hay algunas citas registradas y pagadas para el dia 21-10-2023', () => {
     beforeEach(async () => {
       await Promise.all([
-        testDatabase
-          .getConnection()
-          .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '09:00', 'test', 125.00, true, ?, ?)",
-            [servicioId, usuarioId]
-          ),
-        testDatabase
-          .getConnection()
-          .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '10:00', 'test', 125.00, true, ?, ?)",
-            [servicioId, usuarioId]
-          ),
-        testDatabase
-          .getConnection()
-          .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '10:40', 'test', 125.00, true, ?, ?)",
-            [servicioId, usuarioId]
-          ),
-        testDatabase
-          .getConnection()
-          .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '16:03', 'test', 125.00, true, ?, ?)",
-            [servicioId, usuarioId]
-          ),
-        testDatabase
-          .getConnection()
-          .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '16:24', 'test', 125.00, true, ?, ?)",
-            [servicioId, usuarioId]
-          ),
-        testDatabase
-          .getConnection()
-          .execute(
-            "INSERT INTO citas (fecha, hora, descripcion, precio_anticipo_total, pagada, id_servicio, id_usuario) VALUES ('2023-10-21', '17:20', 'test', 125.00, true, ?, ?)",
-            [servicioId, usuarioId]
-          ),
+        crearCita(testDatabase, {
+          fecha: '2023-10-21',
+          hora: '09:00',
+          servicioId,
+          usuarioId,
+        }),
+        crearCita(testDatabase, {
+          fecha: '2023-10-21',
+          hora: '10:00',
+          servicioId,
+          usuarioId,
+        }),
+        crearCita(testDatabase, {
+          fecha: '2023-10-21',
+          hora: '10:40',
+          servicioId,
+          usuarioId,
+        }),
+        crearCita(testDatabase, {
+          fecha: '2023-10-21',
+          hora: '16:03',
+          servicioId,
+          usuarioId,
+        }),
+        crearCita(testDatabase, {
+          fecha: '2023-10-21',
+          hora: '16:24',
+          servicioId,
+          usuarioId,
+        }),
+        crearCita(testDatabase, {
+          fecha: '2023-10-21',
+          hora: '15:20',
+          servicioId,
+          usuarioId,
+        }),
       ]);
     });
 
@@ -230,7 +236,7 @@ describe('En la funcionalidad de citas', () => {
 
       const resultados = await servicioCitas.verificarDisponibilidadCita(
         '2023-10-21',
-        '10:21', // hay 2 citas, una a las 10:00 y otra a las 10:41, solapa a la de las 10:41
+        '10:22', // hay 2 citas, una a las 10:00 y otra a las 10:41, solapa a la de las 10:41
         '2023-10-20 13:00' // el dia actual es 20/10/2023 y son las 13:00 horas
       );
       expect(resultados.disponibilidad).toBe(false);
@@ -278,6 +284,7 @@ describe('En la funcionalidad de citas', () => {
 
   afterAll(async () => {
     await testDatabase.getConnection().execute('DELETE FROM citas');
+    await testDatabase.getConnection().execute('DELETE FROM estados_citas');
     await testDatabase.getConnection().execute('DELETE FROM usuarios');
     await testDatabase.getConnection().execute('DELETE FROM servicios');
     await testDatabase.closeConnection();

@@ -10,6 +10,8 @@ const {
 // historial de todas las citas
 router.get('/', isAuth, citasController.citasGet);
 
+router.get('/:id_cita', isAuth, citasController.getDetallesCita);
+
 router.get('/agendar-cita/estado-pago', isAuth, citasController.procesarPago);
 
 router.get(
@@ -31,7 +33,10 @@ router.post(
   citasController.crearOrdenPago
 );
 
-// cita en especifico - falta implementar
-// router.get('/:id', isAuth, citasController.citasGet);
+router.patch(
+  '/citas/:id_cita/cancelar_cita',
+  isAuth,
+  citasController.cancelarCita
+);
 
 module.exports = router;

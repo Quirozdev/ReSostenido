@@ -44,6 +44,33 @@ CREATE TABLE servicios (
   PRIMARY KEY(id)
 );
 
+CREATE TABLE estados_citas (
+  id TINYINT,
+  estado VARCHAR(64),
+  PRIMARY KEY(id)
+);
+
+INSERT INTO estados_citas (id, estado)
+VALUES (1, 'Proxima');
+
+INSERT INTO estados_citas (id, estado)
+VALUES (2, 'En progreso');
+
+INSERT INTO estados_citas (id, estado)
+VALUES (3, 'Terminada');
+
+INSERT INTO estados_citas (id, estado)
+VALUES (4, 'Cancelada');
+
+CREATE TABLE pagos_anticipos (
+  id int(11) AUTO_INCREMENT,
+  -- la id/token que paypal regresa al realizar un pago
+  id_orden VARCHAR(64) NOT NULL,
+  total DECIMAL(10, 2) NOT NULL,
+  fecha DATETIME NOT NULL,
+  PRIMARY KEY(id)
+);
+
 CREATE TABLE citas (
   id int(11) AUTO_INCREMENT,
   fecha DATE NOT NULL,
@@ -51,9 +78,15 @@ CREATE TABLE citas (
   descripcion VARCHAR(255),
   incluye_cuerdas BOOLEAN DEFAULT 0,
   costo_total DECIMAL(10, 2) NOT NULL,
-  pagada BOOLEAN DEFAULT 0,
+  id_pago_anticipo int(11) DEFAULT NULL,
+  anticipo_pagado BOOLEAN GENERATED ALWAYS AS (NOT(ISNULL(id_pago_anticipo))) VIRTUAL NOT NULL,
+  id_estado TINYINT NOT NULL,
   id_servicio int(11) NOT NULL,
   id_usuario int(11) NOT NULL,
+  CONSTRAINT fk_pago_anticipo
+  FOREIGN KEY (id_pago_anticipo) REFERENCES pagos_anticipos(id),
+  CONSTRAINT fk_estado_cita
+  FOREIGN KEY (id_estado) REFERENCES estados_citas(id),
   CONSTRAINT fk_servicio_cita
   FOREIGN KEY (id_servicio) REFERENCES servicios(id),
   CONSTRAINT fk_servicio_usuario
@@ -61,6 +94,23 @@ CREATE TABLE citas (
   PRIMARY KEY(id)
 );
 
+CREATE TABLE anotaciones_citas (
+  id int(11) AUTO_INCREMENT,
+  anotacion VARCHAR(255) NOT NULL,
+  id_cita int(11),
+  CONSTRAINT fk_anotacion_cita
+  FOREIGN KEY (id_cita) REFERENCES citas(id),
+  PRIMARY KEY(id)
+);
+
+-- CREATE TABLE detalles_instrumento_cita (
+--   id int(11) AUTO_INCREMENT,
+--   marca VARCHAR(255) NOT NULL,
+--   id_cita int(11),
+--   CONSTRAINT fk_anotacion_cita
+--   FOREIGN KEY (id_cita) REFERENCES citas(id),
+--   PRIMARY KEY(id)
+-- );
 
 CREATE TABLE preguntas (
   id int(11) AUTO_INCREMENT,
@@ -70,12 +120,9 @@ CREATE TABLE preguntas (
   id_usuario_pregunta int(11) NOT NULL,
   id_usuario_respuesta int(11),
   fecha_pregunta TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  fecha_respuesta TIMESTAMP,
+  fecha_respuesta TIMESTAMP NULL,
   PRIMARY KEY(id)
 );
-
-
-
 
 DELIMITER $$
 DROP FUNCTION IF EXISTS validar_disponibilidad_fecha_cita;
@@ -109,7 +156,7 @@ CREATE FUNCTION validar_disponibilidad_fecha_cita(fecha_a_checar DATE, hora_a_ch
     SET hora_20_minutos_antes = SUBTIME(hora_a_checar, '00:20:00');
     SET hora_20_minutos_despues = ADDTIME(hora_a_checar, '00:20:00');
 
-    SELECT hora INTO hora_ya_registrada FROM citas WHERE(citas.pagada = true AND citas.fecha = fecha_a_checar AND ((citas.hora >= hora_a_checar AND citas.hora < hora_20_minutos_despues) OR (citas.hora > hora_20_minutos_antes AND citas.hora < hora_a_checar))) LIMIT 1;
+    SELECT hora INTO hora_ya_registrada FROM citas WHERE(citas.anticipo_pagado = true AND citas.fecha = fecha_a_checar AND ((citas.hora >= hora_a_checar AND citas.hora < hora_20_minutos_despues) OR (citas.hora > hora_20_minutos_antes AND citas.hora < hora_a_checar))) LIMIT 1;
 
     SET existe_una_cita_entre_el_intervalo = (
       SELECT hora_ya_registrada IS NOT NULL
@@ -122,7 +169,7 @@ CREATE FUNCTION validar_disponibilidad_fecha_cita(fecha_a_checar DATE, hora_a_ch
     SET cantidad_citas = (
       SELECT COUNT(*)
       FROM citas
-      WHERE citas.fecha = fecha_a_checar AND citas.pagada = true
+      WHERE citas.fecha = fecha_a_checar AND citas.anticipo_pagado = true
     );
 
     IF cantidad_citas >= 8 THEN
@@ -134,24 +181,28 @@ CREATE FUNCTION validar_disponibilidad_fecha_cita(fecha_a_checar DATE, hora_a_ch
 DELIMITER ;
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS obtenerCitasConCorrespondienteEstado;
-CREATE PROCEDURE obtenerCitasConCorrespondienteEstado(IN id_usuario INT) 
+DROP PROCEDURE IF EXISTS obtenerCitas;
+CREATE PROCEDURE obtenerCitas(IN id_usuario INT) 
 BEGIN
     -- regresa todas las citas si no se especifica id usuario
     IF id_usuario IS NULL THEN
-      SELECT citas.id, fecha, hora, citas.descripcion, incluye_cuerdas, costo_total, servicios.descripcion AS descripcion_servicio, servicios.nombre_instrumento, usuarios.nombre, usuarios.apellidos, IF( ADDTIME(ADDTIME(CONVERT(citas.fecha, DATETIME), citas.hora), '00:20:00') <= CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '-07:00'), "Terminada", "En proceso") AS estado 
+      SELECT citas.id, fecha, hora, citas.descripcion, incluye_cuerdas, costo_total, id_estado, estados_citas.estado, servicios.descripcion AS descripcion_servicio, servicios.nombre_instrumento, usuarios.nombre, usuarios.apellidos 
       FROM citas 
+      INNER JOIN estados_citas
+      ON citas.id_estado = estados_citas.id
       INNER JOIN servicios 
       ON citas.id_servicio = servicios.id
       INNER JOIN usuarios
       ON citas.id_usuario = usuarios.id
-      AND pagada = true
+      AND anticipo_pagado = true
       ORDER BY fecha DESC, hora DESC;
     ELSE 
-      SELECT citas.id, fecha, hora, citas.descripcion, incluye_cuerdas, costo_total, servicios.descripcion AS descripcion_servicio, servicios.nombre_instrumento, IF( ADDTIME(ADDTIME(CONVERT(citas.fecha, DATETIME), citas.hora), '00:20:00') <= CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '-07:00'), "Terminada", "En proceso") AS estado 
+      SELECT citas.id, fecha, hora, citas.descripcion, incluye_cuerdas, costo_total, id_estado, estados_citas.estado, servicios.descripcion AS descripcion_servicio, servicios.nombre_instrumento 
       FROM citas 
+      INNER JOIN estados_citas
+      ON citas.id_estado = estados_citas.id
       INNER JOIN servicios 
-      ON citas.id_servicio = servicios.id AND pagada = true AND citas.id_usuario = id_usuario
+      ON citas.id_servicio = servicios.id AND anticipo_pagado = true AND citas.id_usuario = id_usuario
       ORDER BY fecha DESC, hora DESC;
     END IF;
   END;$$

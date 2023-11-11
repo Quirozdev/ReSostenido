@@ -33,6 +33,30 @@ async function citasGet(req, res, next) {
   }
 }
 
+async function getDetallesCita(req, res, next) {
+  const idCita = req.params.id_cita;
+  const detallesCita = await CitasServiceInstance.getCitaPagadaDetailsById(
+    idCita
+  );
+
+  // solo el admin o el usuario puede ver sus citas
+  if (
+    !req.session.usuario.es_admin &&
+    req.session.usuario.id_usuario !== detallesCita.id_usuario
+  ) {
+    return res.status(403).json({
+      error: 'No tienes permisos para acceder a las citas de otros usuarios',
+    });
+  }
+
+  res.json({
+    ...detallesCita,
+    fecha: moment(detallesCita.fecha).format('DD-MM-YYYY'),
+    hora: moment(detallesCita.hora, 'h:mm').format('LT'),
+  });
+  // checar que el usuario sea el mismo que el de la cita
+}
+
 async function agendarCitaGet(req, res, next) {
   const id_servicio = req.params.id_servicio;
 
@@ -206,20 +230,25 @@ async function procesarPago(req, res, next) {
       },
     });
 
-    await CitasServiceInstance.actualizarCitaAEstadoPagada(idCita);
+    const data = await response.json();
 
-    // const idCita = data.purchase_units[0].payments.captures[0].custom_id;
+    console.log(data);
+
+    const totalAnticipo = Number(
+      data.purchase_units[0].payments.captures[0].amount.value
+    );
+
+    await CitasServiceInstance.pagarAnticipoCita(
+      idCita,
+      tokenOrden,
+      totalAnticipo
+    );
 
     const usuario = await getUserById(req.session.usuario.id_usuario);
 
     const baseUrl = getBaseUrl();
 
-    let dineroPorPagar =
-      Number(cita.costo_total) - Number(cita.precio_anticipo_cita);
-
-    if (cita.incluye_cuerdas) {
-      dineroPorPagar = dineroPorPagar - Number(cita.precio_cuerdas);
-    }
+    let dineroPorPagar = Number(cita.costo_total) - totalAnticipo;
 
     await emailService.sendEmail(
       usuario.email,
@@ -245,10 +274,6 @@ async function procesarPago(req, res, next) {
       `
     );
 
-    const data = await response.json();
-
-    console.log(data);
-
     return res.render('estado-pago-cita.html', {
       estado: 'EXITOSO',
       mensaje: `Reservación de cita exitosa!`,
@@ -263,10 +288,14 @@ async function procesarPago(req, res, next) {
   }
 }
 
+async function cancelarCita(req, res, next) {}
+
 module.exports = {
   citasGet,
+  getDetallesCita,
   agendarCitaGet,
   checarDisponibilidadParaNuevaCita,
   crearOrdenPago,
   procesarPago,
+  cancelarCita,
 };
