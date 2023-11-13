@@ -7,11 +7,11 @@ const { getUserById } = require('../services/userService');
 const CitasService = require('../services/citasService');
 const { getActiveServiceById } = require('../services/serviciosService');
 
-const PaypalController = require('../controllers/paypalController');
+const PaypalService = require('../services/paypalService');
 const { getBaseUrl } = require('../consts');
 
-const CitasServiceInstance = new CitasService(db);
-const PaypalInstance = new PaypalController();
+const PaypalInstance = new PaypalService();
+const CitasServiceInstance = new CitasService(db, PaypalInstance, emailService);
 
 async function citasGet(req, res, next) {
   const usuario_loggeado = req.session.usuario;
@@ -35,26 +35,36 @@ async function citasGet(req, res, next) {
 
 async function getDetallesCita(req, res, next) {
   const idCita = req.params.id_cita;
-  const detallesCita = await CitasServiceInstance.getCitaPagadaDetailsById(
-    idCita
-  );
+  try {
+    const { status, error } =
+      await CitasServiceInstance.validarExistenciaYAutoridadCita(
+        idCita,
+        req.session.usuario.id_usuario,
+        req.session.usuario.es_admin
+      );
 
-  // solo el admin o el usuario puede ver sus citas
-  if (
-    !req.session.usuario.es_admin &&
-    req.session.usuario.id_usuario !== detallesCita.id_usuario
-  ) {
-    return res.status(403).json({
-      error: 'No tienes permisos para acceder a las citas de otros usuarios',
+    if (error) {
+      return res.status(status).json({ error });
+    }
+
+    const detallesCita = await CitasServiceInstance.getCitaPagadaDetailsById(
+      idCita
+    );
+
+    const htmlARenderizar = req.session.usuario.es_admin
+      ? 'detalles-cita-admin.html'
+      : 'detalles-cita-usuario.html';
+
+    res.render(htmlARenderizar, {
+      detalles_cita: {
+        ...detallesCita,
+        fecha: moment(detallesCita.fecha).format('DD-MM-YYYY'),
+        hora: moment(detallesCita.hora, 'h:mm').format('LT'),
+      },
     });
+  } catch (error) {
+    next(error);
   }
-
-  res.json({
-    ...detallesCita,
-    fecha: moment(detallesCita.fecha).format('DD-MM-YYYY'),
-    hora: moment(detallesCita.hora, 'h:mm').format('LT'),
-  });
-  // checar que el usuario sea el mismo que el de la cita
 }
 
 async function agendarCitaGet(req, res, next) {
@@ -234,13 +244,15 @@ async function procesarPago(req, res, next) {
 
     console.log(data);
 
+    const idOrden = data.purchase_units[0].payments.captures[0].id;
+
     const totalAnticipo = Number(
       data.purchase_units[0].payments.captures[0].amount.value
     );
 
     await CitasServiceInstance.pagarAnticipoCita(
       idCita,
-      tokenOrden,
+      idOrden,
       totalAnticipo
     );
 
@@ -288,7 +300,81 @@ async function procesarPago(req, res, next) {
   }
 }
 
-async function cancelarCita(req, res, next) {}
+async function cambiarEstado(req, res, next) {
+  console.log('estado:', req.body.nuevo_estado_cita);
+  const result = validationResult(req);
+
+  // si el estado de cita fue invalido
+  if (!result.isEmpty()) {
+    const errores = result.array();
+
+    const primerError = errores[0];
+
+    return res.status(400).json({
+      error: primerError.msg,
+    });
+  }
+
+  const idCita = req.params.id_cita;
+  // puede ser 1, 2 o 3, todos menos el de cancelacion
+  const nuevoEstadoCitaId = req.body.nuevo_estado_cita;
+
+  try {
+    const { status: statusValidacion, error: errorValidacion } =
+      await CitasServiceInstance.validarExistenciaYAutoridadCita(
+        idCita,
+        req.session.usuario.id_usuario,
+        req.session.usuario.es_admin
+      );
+
+    if (errorValidacion) {
+      return res.status(statusValidacion).json({ error: errorValidacion });
+    }
+
+    const { status, error, mensaje } =
+      await CitasServiceInstance.cambiarEstadoCita(idCita, nuevoEstadoCitaId);
+
+    if (error) {
+      return res.status(status).json({ error });
+    }
+
+    return res.status(status).json({ mensaje });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({ error: 'Algo salio mal' });
+  }
+}
+
+async function cancelarCita(req, res, next) {
+  const idCita = req.params.id_cita;
+  try {
+    const { status: statusValidacion, error: errorValidacion } =
+      await CitasServiceInstance.validarExistenciaYAutoridadCita(
+        idCita,
+        req.session.usuario.id_usuario,
+        req.session.usuario.es_admin
+      );
+
+    if (errorValidacion) {
+      return res.status(statusValidacion).json({ error: errorValidacion });
+    }
+
+    const {
+      status: statusCancelacion,
+      error: errorCancelacion,
+      mensaje,
+    } = await CitasServiceInstance.cancelarCita(idCita);
+
+    if (errorCancelacion) {
+      return res.status(statusCancelacion).json({ error: errorCancelacion });
+    }
+
+    return res.status(statusCancelacion).json({ mensaje });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({ error: 'Algo salio mal' });
+  }
+}
 
 module.exports = {
   citasGet,
@@ -297,5 +383,6 @@ module.exports = {
   checarDisponibilidadParaNuevaCita,
   crearOrdenPago,
   procesarPago,
+  cambiarEstado,
   cancelarCita,
 };

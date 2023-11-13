@@ -34,7 +34,9 @@ async function crearCita(db, cita) {
   await db
     .getConnection()
     .execute(
-      "INSERT INTO citas (fecha, hora, descripcion, incluye_cuerdas, costo_total, id_pago_anticipo, id_estado, id_servicio, id_usuario) VALUES (?, ?, 'test', false, 125.00, ?, 1, ?, ?)",
+      `INSERT INTO citas (fecha, hora, descripcion, incluye_cuerdas, costo_total, id_pago_anticipo, id_estado, id_servicio, id_usuario) VALUES (?, ?, 'test', false, 125.00, ?, ${
+        cita.cancelada ? 4 : 1
+      }, ?, ?)`,
       [cita.fecha, cita.hora, idPagoAnticipo, cita.servicioId, cita.usuarioId]
     );
 }

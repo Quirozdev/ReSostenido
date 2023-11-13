@@ -5,7 +5,7 @@ const { getBaseUrl } = require('../consts');
 
 // https://courseit.io/articulo/como-integrar-paypal-a-tu-web-x7f1yxv10
 // https://www.youtube.com/watch?v=Zm8_c8tnOkQ&ab_channel=LeiferMendez
-class PaypalController {
+class PaypalService {
   constructor() {
     this.paypal = {
       url: 'https://api-m.sandbox.paypal.com',
@@ -75,6 +75,43 @@ class PaypalController {
     }
   }
 
+  async cancelarPago(idOrden) {
+    const url = `${this.paypal.url}/v2/payments/captures/${idOrden}/refund`;
+
+    try {
+      const token = await this.generateAccessToken();
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const refundData = await response.json();
+
+      console.log(refundData);
+
+      if (!response.ok) {
+        return {
+          status: response.status,
+          error: refundData.details[0].description,
+        };
+      }
+
+      return {
+        status: response.status,
+        error: null,
+      };
+    } catch (error) {
+      return {
+        status: 500,
+        error: error.message,
+      };
+    }
+  }
+
   async generateAccessToken() {
     const headers = new Headers();
     headers.set('Content-Type', 'application/x-www-form-urlencoded');
@@ -101,4 +138,4 @@ class PaypalController {
   }
 }
 
-module.exports = PaypalController;
+module.exports = PaypalService;

@@ -10,7 +10,6 @@ const {
   logUserSessionData,
 } = require('./middlewares/session');
 
-const testindexRouter = require('./routes/testIndex');
 const authRouter = require('./routes/authRoutes');
 const indexRouter = require('./routes/index');
 const faqRouter = require('./routes/faq');
@@ -40,7 +39,6 @@ app.use(sendUserSessionDataToTemplates);
 
 app.use(logUserSessionData);
 
-app.use(testindexRouter);
 app.use(authRouter);
 app.use(indexRouter);
 app.use(faqRouter);

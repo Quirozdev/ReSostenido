@@ -178,6 +178,77 @@ describe('En la funcionalidad de citas', () => {
     });
   });
 
+  describe('cuando hay 7 citas registradas y pagadas, y 1 registrada y cancelada para el dia 21-10-2023', () => {
+    beforeAll(async () => {
+      await Promise.all([
+        crearCita(testDatabase, {
+          fecha: '2023-10-21',
+          hora: '09:00',
+          servicioId,
+          usuarioId,
+        }),
+        crearCita(testDatabase, {
+          fecha: '2023-10-21',
+          hora: '10:00',
+          servicioId,
+          usuarioId,
+        }),
+        crearCita(testDatabase, {
+          fecha: '2023-10-21',
+          hora: '11:00',
+          servicioId,
+          usuarioId,
+        }),
+        crearCita(testDatabase, {
+          fecha: '2023-10-21',
+          hora: '12:00',
+          servicioId,
+          usuarioId,
+        }),
+        crearCita(testDatabase, {
+          fecha: '2023-10-21',
+          hora: '13:00',
+          servicioId,
+          usuarioId,
+        }),
+        crearCita(testDatabase, {
+          fecha: '2023-10-21',
+          hora: '14:00',
+          servicioId,
+          usuarioId,
+        }),
+        crearCita(testDatabase, {
+          fecha: '2023-10-21',
+          hora: '15:00',
+          servicioId,
+          usuarioId,
+        }),
+        crearCita(testDatabase, {
+          fecha: '2023-10-21',
+          hora: '16:00',
+          servicioId,
+          usuarioId,
+          cancelada: true,
+        }),
+      ]);
+    });
+
+    test('hay disponibilidad para una nueva cita y solapa a la de las 16:00', async () => {
+      const { disponibilidad, mensaje } =
+        await servicioCitas.verificarDisponibilidadCita(
+          '2023-10-21',
+          '16:00',
+          '2023-10-20 13:00' // el dia actual es 20/10/2023 y son las 13:00 horas
+        );
+      expect(disponibilidad).toBe(true);
+      expect(mensaje).toBeNull();
+    });
+
+    afterAll(async () => {
+      await testDatabase.getConnection().execute('DELETE FROM citas');
+    });
+  });
+
   describe('cuando hay algunas citas registradas y pagadas para el dia 21-10-2023', () => {
     beforeEach(async () => {
       await Promise.all([

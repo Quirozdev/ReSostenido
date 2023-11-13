@@ -51,7 +51,7 @@ CREATE TABLE estados_citas (
 );
 
 INSERT INTO estados_citas (id, estado)
-VALUES (1, 'Proxima');
+VALUES (1, 'Próxima');
 
 INSERT INTO estados_citas (id, estado)
 VALUES (2, 'En progreso');
@@ -156,7 +156,7 @@ CREATE FUNCTION validar_disponibilidad_fecha_cita(fecha_a_checar DATE, hora_a_ch
     SET hora_20_minutos_antes = SUBTIME(hora_a_checar, '00:20:00');
     SET hora_20_minutos_despues = ADDTIME(hora_a_checar, '00:20:00');
 
-    SELECT hora INTO hora_ya_registrada FROM citas WHERE(citas.anticipo_pagado = true AND citas.fecha = fecha_a_checar AND ((citas.hora >= hora_a_checar AND citas.hora < hora_20_minutos_despues) OR (citas.hora > hora_20_minutos_antes AND citas.hora < hora_a_checar))) LIMIT 1;
+    SELECT hora INTO hora_ya_registrada FROM citas WHERE(citas.id_estado != 4 AND citas.anticipo_pagado = true AND citas.fecha = fecha_a_checar AND ((citas.hora >= hora_a_checar AND citas.hora < hora_20_minutos_despues) OR (citas.hora > hora_20_minutos_antes AND citas.hora < hora_a_checar))) LIMIT 1;
 
     SET existe_una_cita_entre_el_intervalo = (
       SELECT hora_ya_registrada IS NOT NULL
@@ -169,7 +169,7 @@ CREATE FUNCTION validar_disponibilidad_fecha_cita(fecha_a_checar DATE, hora_a_ch
     SET cantidad_citas = (
       SELECT COUNT(*)
       FROM citas
-      WHERE citas.fecha = fecha_a_checar AND citas.anticipo_pagado = true
+      WHERE citas.fecha = fecha_a_checar AND citas.anticipo_pagado = true AND citas.id_estado != 4
     );
 
     IF cantidad_citas >= 8 THEN

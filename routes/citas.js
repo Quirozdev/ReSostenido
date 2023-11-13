@@ -6,6 +6,9 @@ const { isAuth } = require('../middlewares/session');
 const {
   validateAgendarCita,
 } = require('../middlewares/validations/agendarCitaValidation');
+const {
+  validateEstadoCita,
+} = require('../middlewares/validations/cambiarEstadoCitaValidation');
 
 // historial de todas las citas
 router.get('/', isAuth, citasController.citasGet);
@@ -33,10 +36,13 @@ router.post(
   citasController.crearOrdenPago
 );
 
+router.patch('/:id_cita/cancelar', isAuth, citasController.cancelarCita);
+
 router.patch(
-  '/citas/:id_cita/cancelar_cita',
+  '/:id_cita/cambiar_estado',
   isAuth,
-  citasController.cancelarCita
+  validateEstadoCita,
+  citasController.cambiarEstado
 );
 
 module.exports = router;
