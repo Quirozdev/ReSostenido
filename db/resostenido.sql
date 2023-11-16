@@ -208,6 +208,53 @@ BEGIN
   END;$$
 DELIMITER ;
 
+DELIMITER $$
+DROP FUNCTION IF EXISTS validar_plazo_cancelacion;
+CREATE FUNCTION validar_plazo_cancelacion(fecha_a_checar DATE, hora_a_checar TIME)
+  RETURNS BOOLEAN DETERMINISTIC
+  BEGIN
+
+    DECLARE fecha_y_hora_a_checar DATETIME;
+    DECLARE fecha_actual DATETIME;
+
+    SET fecha_y_hora_a_checar = ADDTIME(CONVERT(fecha_a_checar, DATETIME), hora_a_checar);
+
+
+    SET fecha_actual = CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '-07:00');
+
+    -- Ya paso la fecha de la cita
+    IF fecha_y_hora_a_checar <= fecha_actual THEN
+      RETURN false;
+    END IF;
+
+    -- Ya paso el plazo de cancelación
+    IF fecha_y_hora_a_checar <= DATE_SUB(fecha_actual, INTERVAL -24 HOUR) THEN
+      RETURN false;
+    END IF;
+
+    RETURN true;
+  END;$$
+DELIMITER ;
+
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS obtenerDetallesCita;
+CREATE PROCEDURE obtenerDetallesCita(IN id_cita INT) 
+BEGIN
+  SELECT citas.id AS id_cita, citas.fecha, citas.hora, citas.descripcion AS nota_cliente, incluye_cuerdas, costo_total, id_usuario, servicios.nombre_instrumento, servicios.grupo, servicios.descripcion AS descripcion_servicio, servicios.url_imagen, estados_citas.id AS id_estado, estados_citas.estado, pagos_anticipos.total AS anticipo_total, usuarios.nombre, usuarios.apellidos, usuarios.email, usuarios.numero_telefono, validar_plazo_cancelacion(citas.fecha, citas.hora) AS esta_dentro_del_plazo_cancelable
+  FROM citas 
+  INNER JOIN pagos_anticipos 
+  ON citas.id_pago_anticipo = pagos_anticipos.id 
+  INNER JOIN servicios 
+  ON citas.id_servicio = servicios.id 
+  INNER JOIN estados_citas 
+  ON citas.id_estado = estados_citas.id 
+  INNER JOIN usuarios 
+  ON citas.id_usuario = usuarios.id 
+  WHERE citas.id = id_cita AND citas.anticipo_pagado = true;
+  END;$$
+DELIMITER ;
+
 /*-- Inserta información para Guitarras
 INSERT INTO servicios (precio, precio_cuerdas, grupo, nombre_instrumento, descripcion, url_imagen)
 VALUES (350.00, 215.50, 'Guitarras', 'Guitarra acústica', 'Calibración', 'landingpage-1.webp');

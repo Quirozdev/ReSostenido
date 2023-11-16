@@ -1,11 +1,9 @@
 {% extends "layout.html" %} {% block body %}
 <div class="margin-top-110">
-  {# Cuando la cita no ya ha sido terminada o cancelada, mostrar #}
-  <!---->
-  {% if detalles_cita.id_estado != 3 and detalles_cita.id_estado != 4 %}
+  {% if comportamiento_cita.es_posible_cambiar_estado %}
   <form
     id="cambiar-estado-form"
-    action="/citas/{{ detalles_cita.id_cita }}/cambiar_estado"
+    action="/citas/{{ informacion_cita.id_cita }}/cambiar_estado"
   >
     <select id="seleccionador-estado">
       <option value="1">Próxima</option>
@@ -14,46 +12,30 @@
     </select>
     <button type="submit">Cambiar estado</button>
   </form>
+  {% endif %} {% if comportamiento_cita.es_cancelable %}
   <form
     id="cancelar-cita-form"
-    action="/citas/{{ detalles_cita.id_cita }}/cancelar"
-  >
-    <button type="submit">Cancelar cita</button>
-  </form>
-  {% else %}
-  <form
-    id="cambiar-estado-form"
-    action="/citas/{{ detalles_cita.id_cita }}/cambiar_estado"
-    style="display: none"
-  >
-    <select id="seleccionador-estado">
-      <option value="1">Próxima</option>
-      <option value="2">En progreso</option>
-      <option value="3">Terminada</option>
-    </select>
-    <button type="submit">Cambiar estado</button>
-  </form>
-  <form
-    id="cancelar-cita-form"
-    action="/citas/{{ detalles_cita.id_cita }}/cancelar"
-    style="display: none"
+    action="/citas/{{ informacion_cita.id_cita }}/cancelar"
   >
     <button type="submit">Cancelar cita</button>
   </form>
   {% endif %}
-  <p>Fecha: {{ detalles_cita.fecha }}</p>
-  <p>Hora: {{ detalles_cita.hora }}</p>
+  <p>Fecha: {{ informacion_cita.fecha }}</p>
+  <p>Hora: {{ informacion_cita.hora }}</p>
   <p>
-    Estado de la cita: <span id="estado-cita">{{ detalles_cita.estado }}</span>
+    Estado de la cita:
+    <span id="estado-cita">{{ informacion_cita.estado }}</span>
   </p>
-  <p>Incluye cuerdas: {{ "Si" if detalles_cita.incluye_cuerdas else "No" }}</p>
-  <p>Costo total: ${{ detalles_cita.costo_total }}</p>
-  <p>Anticipo pagado: ${{ detalles_cita.anticipo_total }}</p>
-  <p>Nota del cliente: {{ detalles_cita.nota_cliente }}</p>
-  <p>Nombre del instrumento: {{ detalles_cita.nombre_instrumento }}</p>
-  <p>Grupo del instrumento: {{ detalles_cita.grupo }}</p>
-  <p>Descripcion del servicio: {{ detalles_cita.descripcion_servicio }}</p>
-  <img src="/images/servicios/{{ detalles_cita.url_imagen }}" />
+  <p>
+    Incluye cuerdas: {{ "Si" if informacion_cita.incluye_cuerdas else "No" }}
+  </p>
+  <p>Costo total: ${{ informacion_cita.costo_total }}</p>
+  <p>Anticipo pagado: ${{ informacion_cita.anticipo_total }}</p>
+  <p>Nota del cliente: {{ informacion_cita.nota_cliente }}</p>
+  <p>Nombre del instrumento: {{ informacion_cita.nombre_instrumento }}</p>
+  <p>Grupo del instrumento: {{ informacion_cita.grupo }}</p>
+  <p>Descripcion del servicio: {{ informacion_cita.descripcion_servicio }}</p>
+  <img src="/images/servicios/{{ informacion_cita.url_imagen }}" />
 </div>
 <script src="/js/detallesCita/cita.js"></script>
 {% endblock %}

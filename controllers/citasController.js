@@ -51,16 +51,16 @@ async function getDetallesCita(req, res, next) {
       idCita
     );
 
+    console.log('detalles cita: ', detallesCita);
+
     const htmlARenderizar = req.session.usuario.es_admin
       ? 'detalles-cita-admin.html'
       : 'detalles-cita-usuario.html';
 
     res.render(htmlARenderizar, {
-      detalles_cita: {
-        ...detallesCita,
-        fecha: moment(detallesCita.fecha).format('DD-MM-YYYY'),
-        hora: moment(detallesCita.hora, 'h:mm').format('LT'),
-      },
+      informacion_cita: detallesCita.informacion_cita,
+      informacion_cliente: detallesCita.informacion_cliente,
+      comportamiento_cita: detallesCita.comportamiento_cita,
     });
   } catch (error) {
     next(error);
