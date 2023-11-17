@@ -16,6 +16,7 @@ const faqRouter = require('./routes/faq');
 const servicesRouter = require('./routes/services');
 const citasRouter = require('./routes/citas');
 const foroRouter = require('./routes/foro');
+const estadisticasRouter = require('./routes/estadisticas');
 
 const app = express();
 app.use(morgan('dev'));
@@ -45,6 +46,7 @@ app.use(faqRouter);
 app.use(servicesRouter);
 app.use('/citas', citasRouter);
 app.use(foroRouter);
+app.use(estadisticasRouter);
 
 // si no se encontro ningun recurso en alguna ruta
 app.use((req, res) => {
