@@ -7,8 +7,8 @@ const {
   validateAgendarCita,
 } = require('../middlewares/validations/agendarCitaValidation');
 const {
-  validateEstadoCita,
-} = require('../middlewares/validations/cambiarEstadoCitaValidation');
+  validateEditarCitaData,
+} = require('../middlewares/validations/editarCitaValidation');
 
 // historial de todas las citas
 router.get('/', isAuth, citasController.citasGet);
@@ -38,11 +38,11 @@ router.post(
 
 router.patch('/:id_cita/cancelar', isAuth, citasController.cancelarCita);
 
-router.patch(
-  '/:id_cita/cambiar_estado',
+router.put(
+  '/:id_cita',
   isAuth,
-  validateEstadoCita,
-  citasController.cambiarEstado
+  validateEditarCitaData,
+  citasController.editarDetallesCita
 );
 
 module.exports = router;

@@ -75,7 +75,8 @@ CREATE TABLE citas (
   id int(11) AUTO_INCREMENT,
   fecha DATE NOT NULL,
   hora TIME NOT NULL,
-  descripcion VARCHAR(255),
+  descripcion VARCHAR(255) NOT NULL,
+  notas_admin VARCHAR(255),
   incluye_cuerdas BOOLEAN DEFAULT 0,
   costo_total DECIMAL(10, 2) NOT NULL,
   id_pago_anticipo int(11) DEFAULT NULL,
@@ -94,23 +95,16 @@ CREATE TABLE citas (
   PRIMARY KEY(id)
 );
 
-CREATE TABLE anotaciones_citas (
+CREATE TABLE detalles_instrumento_cita (
   id int(11) AUTO_INCREMENT,
-  anotacion VARCHAR(255) NOT NULL,
+  marca VARCHAR(110),
+  modelo VARCHAR(110),
+  numero_serie VARCHAR(110),
   id_cita int(11),
-  CONSTRAINT fk_anotacion_cita
+  CONSTRAINT fk_detalles_instrumento_cita
   FOREIGN KEY (id_cita) REFERENCES citas(id),
   PRIMARY KEY(id)
 );
-
--- CREATE TABLE detalles_instrumento_cita (
---   id int(11) AUTO_INCREMENT,
---   marca VARCHAR(255) NOT NULL,
---   id_cita int(11),
---   CONSTRAINT fk_anotacion_cita
---   FOREIGN KEY (id_cita) REFERENCES citas(id),
---   PRIMARY KEY(id)
--- );
 
 CREATE TABLE preguntas (
   id int(11) AUTO_INCREMENT,
@@ -241,7 +235,7 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS obtenerDetallesCita;
 CREATE PROCEDURE obtenerDetallesCita(IN id_cita INT) 
 BEGIN
-  SELECT citas.id AS id_cita, citas.fecha, citas.hora, citas.descripcion AS nota_cliente, incluye_cuerdas, costo_total, id_usuario, servicios.nombre_instrumento, servicios.grupo, servicios.descripcion AS descripcion_servicio, servicios.url_imagen, estados_citas.id AS id_estado, estados_citas.estado, pagos_anticipos.total AS anticipo_total, usuarios.nombre, usuarios.apellidos, usuarios.email, usuarios.numero_telefono, validar_plazo_cancelacion(citas.fecha, citas.hora) AS esta_dentro_del_plazo_cancelable
+  SELECT citas.id AS id_cita, citas.fecha, citas.hora, citas.descripcion AS nota_cliente, notas_admin, incluye_cuerdas, costo_total, id_usuario, servicios.nombre_instrumento, servicios.grupo, servicios.descripcion AS descripcion_servicio, servicios.url_imagen, estados_citas.id AS id_estado, estados_citas.estado, pagos_anticipos.total AS anticipo_total, usuarios.nombre, usuarios.apellidos, usuarios.email, usuarios.numero_telefono, validar_plazo_cancelacion(citas.fecha, citas.hora) AS esta_dentro_del_plazo_cancelable
   FROM citas 
   INNER JOIN pagos_anticipos 
   ON citas.id_pago_anticipo = pagos_anticipos.id 
@@ -252,6 +246,18 @@ BEGIN
   INNER JOIN usuarios 
   ON citas.id_usuario = usuarios.id 
   WHERE citas.id = id_cita AND citas.anticipo_pagado = true;
+  END;$$
+DELIMITER ;
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS agregarOActualizarDetallesInstrumentoCita;
+CREATE PROCEDURE agregarOActualizarDetallesInstrumentoCita(IN id_cita INT, IN marca VARCHAR(110), IN modelo VARCHAR(110), IN numero_serie VARCHAR(110))
+BEGIN
+  IF EXISTS (SELECT id from detalles_instrumento_cita WHERE `id_cita` = id_cita) THEN
+    UPDATE detalles_instrumento_cita SET `marca` = marca, `modelo` = modelo, `numero_serie` = numero_serie WHERE `id_cita` = id_cita;
+  ELSE 
+    INSERT INTO detalles_instrumento_cita (`marca`, `modelo`, `numero_serie`, `id_cita`) values (marca, modelo, numero_serie, id_cita);
+  END IF;
   END;$$
 DELIMITER ;
 

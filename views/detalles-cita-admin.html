@@ -1,25 +1,66 @@
 {% extends "layout.html" %} {% block body %}
 <div class="margin-top-110">
-  {% if comportamiento_cita.es_posible_cambiar_estado %}
+  <label for="marca">Marca</label>
+  <input
+    type="text"
+    name="marca"
+    id="marca"
+    value="{{ informacion_instrumento.marca }}"
+  />
+  <label for="modelo">Modelo</label>
+  <input
+    type="text"
+    name="modelo"
+    id="modelo"
+    value="{{ informacion_instrumento.modelo }}"
+  />
+  <label for="numero_serie">Numero de serie</label>
+  <input
+    type="text"
+    name="numero_serie"
+    id="numero_serie"
+    value="{{ informacion_instrumento.numero_serie }}"
+  />
   <form
-    id="cambiar-estado-form"
-    action="/citas/{{ informacion_cita.id_cita }}/cambiar_estado"
+    id="actualizar-detalles-cita-form"
+    action="/citas/{{ informacion_cita.id_cita }}"
   >
-    <select id="seleccionador-estado">
-      <option value="1">Próxima</option>
-      <option value="2">En progreso</option>
-      <option value="3">Terminada</option>
+    <select
+      id="seleccionador-estado"
+      name="nuevo_estado_cita"
+      {% if not comportamiento_cita.es_posible_cambiar_estado %} disabled {% endif %}
+    >
+      <option
+        value="1"
+        {% if informacion_cita.id_estado == 1 %} selected {% endif %}
+      >
+        Próxima
+      </option>
+      <option
+        value="2"
+        {% if informacion_cita.id_estado == 2 %} selected {% endif %}
+      >
+        En progreso
+      </option>
+      <option
+        value="3"
+        {% if informacion_cita.id_estado == 3 %} selected {% endif %}
+      >
+        Terminada
+      </option>
     </select>
-    <button type="submit">Cambiar estado</button>
+    <label for="notas_admin">Notas admin:</label>
+    <textarea name="notas_admin" id="notas_admin">{{ informacion_cita.notas_admin }}</textarea>
+    <button type="submit">Actualizar detalles cita</button>
   </form>
-  {% endif %} {% if comportamiento_cita.es_cancelable %}
+  
   <form
     id="cancelar-cita-form"
     action="/citas/{{ informacion_cita.id_cita }}/cancelar"
+    {% if not comportamiento_cita.es_cancelable %} style="display: none;" {% endif %}
   >
     <button type="submit">Cancelar cita</button>
   </form>
-  {% endif %}
   <p>Fecha: {{ informacion_cita.fecha }}</p>
   <p>Hora: {{ informacion_cita.hora }}</p>
   <p>
@@ -37,5 +78,102 @@
   <p>Descripcion del servicio: {{ informacion_cita.descripcion_servicio }}</p>
   <img src="/images/servicios/{{ informacion_cita.url_imagen }}" />
 </div>
-<script src="/js/detallesCita/cita.js"></script>
+<script>
+  const cancelarCitaForm = document.getElementById('cancelar-cita-form');
+
+  const formularioActualizarDetallesCita = document.getElementById(
+    'actualizar-detalles-cita-form'
+  );
+
+  const marcaInput = document.getElementById('marca');
+  const modeloInput = document.getElementById('modelo');
+  const numeroSerieInput = document.getElementById('numero_serie');
+
+  formularioActualizarDetallesCita.addEventListener(
+    'submit',
+    async function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(formularioActualizarDetallesCita);
+
+      const datosActualizadosDetallesCita = {
+        ...Object.fromEntries(formData.entries()),
+        marca: marcaInput.value,
+        modelo: modeloInput.value,
+        numero_serie: numeroSerieInput.value,
+      };
+
+      console.log(datosActualizadosDetallesCita);
+
+      const url = formularioActualizarDetallesCita.getAttribute('action');
+
+      const { error, mensaje } = await actualizarDetallesCita(
+        url,
+        datosActualizadosDetallesCita
+      );
+      if (error) {
+        alert(error);
+      } else {
+        // alert(mensaje);
+        // recargar la pagina para ver los cambios como si fuera un formulario normal, aunque tambien se pueden actualizar los campos que cambiaron
+        location.reload();
+      }
+    }
+  );
+
+  async function actualizarDetallesCita(url, datosActualizadosDetallesCita) {
+    try {
+      const response = await fetch(url, {
+        method: 'PUT',
+        mode: 'cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(datosActualizadosDetallesCita),
+      });
+
+      const data = await response.json();
+
+      return data;
+    } catch (error) {
+      console.error('error:', error);
+      return {
+        error: `Error al actualizar detalles de la cita, ${error.message}`,
+        mensaje: null,
+      };
+    }
+  }
+
+  cancelarCitaForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const confirmacion = confirm('¿Cancelar cita?');
+    if (!confirmacion) return;
+    const url = cancelarCitaForm.getAttribute('action');
+    const { error, mensaje } = await cancelarCita(url);
+
+    if (error) {
+      alert(error);
+    } else {
+      // alert(mensaje);
+      location.reload();
+    }
+  });
+
+  async function cancelarCita(url) {
+    try {
+      const response = await fetch(url, {
+        method: 'PATCH',
+        mode: 'cors',
+      });
+
+      const data = await response.json();
+
+      return data;
+    } catch (error) {
+      console.error('error:', error);
+      return {
+        error: `Error al cancelar cita, ${error.message}`,
+        mensaje: null,
+      };
+    }
+  }
+</script>
 {% endblock %}

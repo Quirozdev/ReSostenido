@@ -42,15 +42,32 @@ class CitasService {
     return { status: 200, error: null };
   }
 
-  async getCitaPagadaDetailsById(id) {
+  async getCitaPagadaDetailsById(id, esAdmin = false) {
     const resultado = await this.database.execute(
       'CALL obtenerDetallesCita(?)',
+      [id]
+    );
+
+    const [detallesInstrumentos, ,] = await this.database.execute(
+      'SELECT marca, modelo, numero_serie FROM detalles_instrumento_cita WHERE id_cita = ?',
       [id]
     );
 
     const detallesCitas = resultado[0][0];
 
     const detallesCita = detallesCitas[0];
+
+    let detallesInstrumento = detallesInstrumentos[0];
+
+    // si la cita aun no tiene detalles sobre el instrumento (no se han agregado)
+    // se le asigna un objeto vacio
+    if (!detallesInstrumento) {
+      detallesInstrumento = {
+        marca: '',
+        modelo: '',
+        numero_serie: '',
+      };
+    }
 
     detallesCita.fecha = moment(detallesCita.fecha).format('DD-MM-YYYY');
     detallesCita.hora = moment(detallesCita.hora, 'h:mm').format('LT');
@@ -59,8 +76,10 @@ class CitasService {
       detallesCita.id_estado !== ESTADOS_CITA.TERMINADA &&
       detallesCita.id_estado !== ESTADOS_CITA.CANCELADA;
 
+    // si es admin, siempre es cancelable, excepto si ya esta cancelada o terminada
     const es_cancelable = Boolean(
-      detallesCita.esta_dentro_del_plazo_cancelable && es_posible_cambiar_estado
+      (esAdmin || detallesCita.esta_dentro_del_plazo_cancelable) &&
+        es_posible_cambiar_estado
     );
 
     return {
@@ -68,8 +87,10 @@ class CitasService {
         id_cita: detallesCita.id_cita,
         fecha: detallesCita.fecha,
         hora: detallesCita.hora,
+        id_estado: detallesCita.id_estado,
         estado: detallesCita.estado,
         nota_cliente: detallesCita.nota_cliente,
+        notas_admin: detallesCita.notas_admin,
         incluye_cuerdas: detallesCita.incluye_cuerdas,
         anticipo_total: detallesCita.anticipo_total,
         costo_total: detallesCita.costo_total,
@@ -84,6 +105,12 @@ class CitasService {
         apellidos: detallesCita.apellidos,
         email: detallesCita.email,
         numero_telefono: detallesCita.numero_telefono,
+      },
+      informacion_instrumento: {
+        nombre_instrumento: detallesCita.nombre_instrumento,
+        marca: detallesInstrumento.marca,
+        modelo: detallesInstrumento.modelo,
+        numero_serie: detallesInstrumento.numero_serie,
       },
       comportamiento_cita: {
         es_posible_cambiar_estado,
@@ -196,9 +223,8 @@ class CitasService {
     }
   }
 
-  async cambiarEstadoCita(idCita, nuevoEstadoId) {
+  async actualizarDetallesCita(idCita, detallesCita) {
     const connection = await this.database.getConnection();
-
     try {
       await connection.beginTransaction();
 
@@ -223,14 +249,24 @@ class CitasService {
         );
       }
 
-      await connection.execute('UPDATE citas SET id_estado = ? WHERE id = ?', [
-        nuevoEstadoId,
-        idCita,
-      ]);
+      await connection.execute(
+        'UPDATE citas SET id_estado = ?, notas_admin = ? WHERE id = ?',
+        [detallesCita.nuevoEstadoCitaId, detallesCita.notasAdmin, idCita]
+      );
+
+      await connection.execute(
+        'CALL agregarOActualizarDetallesInstrumentoCita(?, ?, ?, ?)',
+        [
+          idCita,
+          detallesCita.marca,
+          detallesCita.modelo,
+          detallesCita.numeroSerie,
+        ]
+      );
 
       // mandar correo en caso de que se haya cambiado al estado de terminada
 
-      if (nuevoEstadoId === ESTADOS_CITA.TERMINADA) {
+      if (detallesCita.nuevoEstadoCitaId === ESTADOS_CITA.TERMINADA) {
         const [usuarios, campos] = await connection.execute(
           'SELECT email FROM usuarios WHERE id = ?',
           [cita.id_usuario]
@@ -256,7 +292,7 @@ class CitasService {
       return {
         status: 201,
         error: null,
-        mensaje: 'Cambio de estado de cita exitoso',
+        mensaje: 'Detalles de la cita actualizados exitosamente',
       };
     } catch (error) {
       await connection.rollback();
@@ -267,7 +303,7 @@ class CitasService {
     }
   }
 
-  async cancelarCita(idCita) {
+  async cancelarCita(idCita, esAdmin = false) {
     const connection = await this.database.getConnection();
 
     try {
@@ -291,20 +327,21 @@ class CitasService {
         throw new CustomError('La cita ya se encuentra cancelada', 400);
       }
 
-      const [result, ,] = await connection.execute(
-        'SELECT validar_plazo_cancelacion(?, ?)',
-        [cita.fecha, cita.hora]
-      );
-
-      const esta_dentro_del_plazo_cancelable = Object.values(result[0])[0];
-
-      console.log('si: ', esta_dentro_del_plazo_cancelable);
-
-      if (!esta_dentro_del_plazo_cancelable) {
-        throw new CustomError(
-          'No es posible cancelar una cita fuera del plazo cancelable de 24 horas',
-          400
+      // si no es admin, verificar que la cita se encuentre dentro del plazo cancelable para un usuario
+      if (!esAdmin) {
+        const [result, ,] = await connection.execute(
+          'SELECT validar_plazo_cancelacion(?, ?)',
+          [cita.fecha, cita.hora]
         );
+
+        const esta_dentro_del_plazo_cancelable = Object.values(result[0])[0];
+
+        if (!esta_dentro_del_plazo_cancelable) {
+          throw new CustomError(
+            'No es posible cancelar una cita fuera del plazo cancelable de 24 horas',
+            400
+          );
+        }
       }
 
       const [pagos_anticipos, camposAnticipos] = await this.database.execute(

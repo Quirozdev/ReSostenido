@@ -48,20 +48,33 @@ async function getDetallesCita(req, res, next) {
     }
 
     const detallesCita = await CitasServiceInstance.getCitaPagadaDetailsById(
-      idCita
+      idCita,
+      req.session.usuario.es_admin
     );
 
-    console.log('detalles cita: ', detallesCita);
+    // para el usuario normal
+    if (!req.session.usuario.es_admin) {
+      const datosParaUsuario = {
+        informacion_cita: detallesCita.informacion_cita,
+        comportamiento_cita: {
+          es_cancelable: detallesCita.comportamiento_cita.es_cancelable,
+        },
+      };
 
-    const htmlARenderizar = req.session.usuario.es_admin
-      ? 'detalles-cita-admin.html'
-      : 'detalles-cita-usuario.html';
+      console.log(datosParaUsuario);
+      return res.render('detalles-cita-usuario.html', datosParaUsuario);
+    }
 
-    res.render(htmlARenderizar, {
+    // para el admin
+    const datosParaAdmin = {
       informacion_cita: detallesCita.informacion_cita,
       informacion_cliente: detallesCita.informacion_cliente,
+      informacion_instrumento: detallesCita.informacion_instrumento,
       comportamiento_cita: detallesCita.comportamiento_cita,
-    });
+    };
+
+    console.log(datosParaAdmin);
+    return res.render('detalles-cita-admin.html', datosParaAdmin);
   } catch (error) {
     next(error);
   }
@@ -300,11 +313,10 @@ async function procesarPago(req, res, next) {
   }
 }
 
-async function cambiarEstado(req, res, next) {
-  console.log('estado:', req.body.nuevo_estado_cita);
+async function editarDetallesCita(req, res, next) {
   const result = validationResult(req);
 
-  // si el estado de cita fue invalido
+  // errores de validacion
   if (!result.isEmpty()) {
     const errores = result.array();
 
@@ -316,8 +328,6 @@ async function cambiarEstado(req, res, next) {
   }
 
   const idCita = req.params.id_cita;
-  // puede ser 1, 2 o 3, todos menos el de cancelacion
-  const nuevoEstadoCitaId = req.body.nuevo_estado_cita;
 
   try {
     const { status: statusValidacion, error: errorValidacion } =
@@ -332,7 +342,13 @@ async function cambiarEstado(req, res, next) {
     }
 
     const { status, error, mensaje } =
-      await CitasServiceInstance.cambiarEstadoCita(idCita, nuevoEstadoCitaId);
+      await CitasServiceInstance.actualizarDetallesCita(idCita, {
+        nuevoEstadoCitaId: req.body.nuevo_estado_cita, // puede ser 1, 2 o 3, todos menos el de cancelacion
+        notasAdmin: req.body.notas_admin,
+        marca: req.body.marca,
+        modelo: req.body.modelo,
+        numeroSerie: req.body.numero_serie,
+      });
 
     if (error) {
       return res.status(status).json({ error });
@@ -363,7 +379,10 @@ async function cancelarCita(req, res, next) {
       status: statusCancelacion,
       error: errorCancelacion,
       mensaje,
-    } = await CitasServiceInstance.cancelarCita(idCita);
+    } = await CitasServiceInstance.cancelarCita(
+      idCita,
+      req.session.usuario.es_admin
+    );
 
     if (errorCancelacion) {
       return res.status(statusCancelacion).json({ error: errorCancelacion });
@@ -383,6 +402,6 @@ module.exports = {
   checarDisponibilidadParaNuevaCita,
   crearOrdenPago,
   procesarPago,
-  cambiarEstado,
+  editarDetallesCita,
   cancelarCita,
 };

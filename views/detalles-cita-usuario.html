@@ -1,13 +1,12 @@
 {% extends "layout.html" %} {% block body %}
 <div class="margin-top-110">
-  {% if comportamiento_cita.es_cancelable %}
   <form
     id="cancelar-cita-form"
     action="/citas/{{ informacion_cita.id_cita }}/cancelar"
+    {% if not comportamiento_cita.es_cancelable %} style="display: none;" {% endif %}
   >
     <button type="submit">Cancelar cita</button>
   </form>
-  {% endif %}
   <p>Fecha: {{ informacion_cita.fecha }}</p>
   <p>Hora: {{ informacion_cita.hora }}</p>
   <p>
@@ -20,10 +19,50 @@
   <p>Costo total: ${{ informacion_cita.costo_total }}</p>
   <p>Anticipo pagado: ${{ informacion_cita.anticipo_total }}</p>
   <p>Nota del cliente: {{ informacion_cita.nota_cliente }}</p>
+  {% if informacion_cita.nota_admin %}
+  <p>Nota del admin: {{ informacion_cita.nota_admin }}</p>
+  {% endif %}
   <p>Nombre del instrumento: {{ informacion_cita.nombre_instrumento }}</p>
   <p>Grupo del instrumento: {{ informacion_cita.grupo }}</p>
   <p>Descripcion del servicio: {{ informacion_cita.descripcion_servicio }}</p>
   <img src="/images/servicios/{{ informacion_cita.url_imagen }}" />
 </div>
-<script src="/js/detallesCita/cita.js"></script>
+<script>
+  const cancelarCitaForm = document.getElementById('cancelar-cita-form');
+
+  cancelarCitaForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const confirmacion = confirm('¿Cancelar cita?');
+    if (!confirmacion) return;
+    const url = cancelarCitaForm.getAttribute('action');
+    const { error, mensaje } = await cancelarCita(url);
+
+    if (error) {
+      alert(error);
+    } else {
+      // alert(mensaje);
+      // recarga pagina
+      location.reload();
+    }
+  });
+
+  async function cancelarCita(url) {
+    try {
+      const response = await fetch(url, {
+        method: 'PATCH',
+        mode: 'cors',
+      });
+
+      const data = await response.json();
+
+      return data;
+    } catch (error) {
+      console.log('error:', error);
+      return {
+        error: `Error al cancelar cita, ${error.message}`,
+        mensaje: null,
+      };
+    }
+  }
+</script>
 {% endblock %}

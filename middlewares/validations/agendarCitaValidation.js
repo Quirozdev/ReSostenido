@@ -29,7 +29,7 @@ const validateAgendarCita = [
     .trim()
     .escape()
     .notEmpty()
-    .withMessage('La descripción no puede estar vacío')
+    .withMessage('La descripción no puede estar vacía')
     .isLength({ max: 255 })
     .withMessage('La descripción debe tener 255 caracteres o menos'),
   body('incluye_cuerdas').customSanitizer((value) => {
