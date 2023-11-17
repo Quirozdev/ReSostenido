@@ -18,7 +18,7 @@ class CitasService {
 
   async validarExistenciaYAutoridadCita(idCita, idUsuario, esAdmin = false) {
     const [citas, campos] = await this.database.execute(
-      'SELECT id_usuario FROM citas WHERE citas.id = ?',
+      'SELECT id_usuario FROM citas WHERE citas.id = ? AND anticipo_pagado = true',
       [idCita]
     );
 
