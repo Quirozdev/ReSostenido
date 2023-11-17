@@ -2,6 +2,9 @@ const { body } = require('express-validator');
 
 const validateEditarCitaData = [
   body('nuevo_estado_cita', 'Id de estado de cita invalido')
+    .optional({
+      values: 'falsy',
+    })
     .isNumeric()
     .withMessage(
       'La id del estado de cita debe ser numerica y no puede estar vacia'

@@ -235,18 +235,33 @@ class CitasService {
 
       const cita = citas[0];
 
-      if (cita.id_estado === ESTADOS_CITA.TERMINADA) {
+      if (
+        detallesCita.nuevoEstadoCitaId &&
+        cita.id_estado === ESTADOS_CITA.TERMINADA
+      ) {
         throw new CustomError(
           'No es posible cambiar el estado de una cita ya terminada',
           400
         );
       }
 
-      if (cita.id_estado === ESTADOS_CITA.CANCELADA) {
+      if (
+        detallesCita.nuevoEstadoCitaId &&
+        cita.id_estado === ESTADOS_CITA.CANCELADA
+      ) {
         throw new CustomError(
           'No es posible cambiar el estado de una cita cancelada',
           400
         );
+      }
+
+      // si no se proporciono un nuevo id de estado (por ejemplo cuando el select esta deshabilitado)
+      // se le asigna el id de estado actual
+      if (
+        detallesCita.nuevoEstadoCitaId === '' ||
+        !detallesCita.nuevoEstadoCitaId
+      ) {
+        detallesCita.nuevoEstadoCitaId = cita.id_estado;
       }
 
       await connection.execute(

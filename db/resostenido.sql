@@ -251,12 +251,12 @@ DELIMITER ;
 
 DELIMITER $$
 DROP PROCEDURE IF EXISTS agregarOActualizarDetallesInstrumentoCita;
-CREATE PROCEDURE agregarOActualizarDetallesInstrumentoCita(IN id_cita INT, IN marca VARCHAR(110), IN modelo VARCHAR(110), IN numero_serie VARCHAR(110))
+CREATE PROCEDURE agregarOActualizarDetallesInstrumentoCita(IN valor_id_cita INT, IN valor_marca VARCHAR(110), IN valor_modelo VARCHAR(110), IN valor_numero_serie VARCHAR(110))
 BEGIN
-  IF EXISTS (SELECT id from detalles_instrumento_cita WHERE `id_cita` = id_cita) THEN
-    UPDATE detalles_instrumento_cita SET `marca` = marca, `modelo` = modelo, `numero_serie` = numero_serie WHERE `id_cita` = id_cita;
+  IF EXISTS (SELECT id from detalles_instrumento_cita WHERE id_cita = valor_id_cita) THEN
+    UPDATE detalles_instrumento_cita SET marca = valor_marca, modelo = valor_modelo, numero_serie = valor_numero_serie WHERE id_cita = valor_id_cita;
   ELSE 
-    INSERT INTO detalles_instrumento_cita (`marca`, `modelo`, `numero_serie`, `id_cita`) values (marca, modelo, numero_serie, id_cita);
+    INSERT INTO detalles_instrumento_cita (marca, modelo, numero_serie, id_cita) values (valor_marca, valor_modelo, valor_numero_serie, valor_id_cita);
   END IF;
   END;$$
 DELIMITER ;
