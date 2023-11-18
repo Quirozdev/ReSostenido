@@ -40,10 +40,8 @@
                             <div class="row align-items-center justify-content-between mb-3 ms-3 mt-3 me-3">
                                 {% if estado === 'EXITOSO' %}
                                 <div id="estado_reservación" class="header-text mb-4 text-center mt-5">
-                                    <h2 class="mb-4" id="mensaje">{{ mensaje }}</h2>
-                                    <a href="https://www.flaticon.es/iconos-gratis/garrapata"
-                                        title="garrapata iconos"><img src="/images/correcto.webp" alt="Exitoso"
-                                            width="200px" height="200px" class="mt-4 mb-5" id="image-correct"></a>
+                                    <h2 class="mb-4" id="mensaje">{{ mensaje }}</h2><img src="/images/correcto.webp"
+                                        alt="Exitoso" width="200px" height="200px" class="mt-4 mb-5" id="image-correct">
                                 </div>
                                 <div class="text-center" id="details">
                                     <p class="fs-5 fw-bold" id="title-details">Detalles de la cita</p>
@@ -63,10 +61,8 @@
 
                                 {% if estado === 'FALLIDO' %}
                                 <div id="estado_reservación" class="header-text mb-4 text-center mt-5">
-                                    <h2 class="mb-4" id="mensaje">¡Algo falló!</h2>
-                                    <a href="https://www.flaticon.es/iconos-gratis/garrapata"
-                                        title="garrapata iconos"><img src="/images/fallo.webp" alt="Exitoso"
-                                            width="200px" height="200px" class="mt-4 mb-5" id="image-fallido"></a>
+                                    <h2 class="mb-4" id="mensaje">¡Algo falló!</h2><img src="/images/fallo.webp"
+                                        alt="Exitoso" width="200px" height="200px" class="mt-4 mb-5" id="image-fallido">
                                     <p class="fs-6 mt-4 text-center" id="leyenda-mensaje">{{ mensaje }}</p>
                                 </div>
                                 {% endif %}
@@ -74,9 +70,8 @@
                                 {% if estado === 'CANCELADO' %}
                                 <div id="estado_reservación" class="header-text mb-4 text-center mt-5">
                                     <h2 class="mb-4" id="mensaje">El proceso ha sido cancelado</h2>
-                                    <a href="https://www.flaticon.es/iconos-gratis/garrapata"
-                                        title="garrapata iconos"><img src="/images/cancelado.webp" alt="Exitoso"
-                                            width="200px" height="200px" class="mt-4 mb-5" id="image-cancelado"></a>
+                                    <img src="/images/cancelado.webp" alt="Exitoso" width="200px" height="200px"
+                                        class="mt-4 mb-5" id="image-cancelado">
                                     <p class="fs-6 mt-4 text-center" id="leyenda-mensaje">{{ mensaje }}</p>
                                 </div>
                                 {% endif %}
