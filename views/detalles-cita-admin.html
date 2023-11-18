@@ -1,54 +1,196 @@
-{% extends "layout.html" %} 
+{% extends "layout.html" %}
 {% block body %}
 
 <div class="margin-top-110">
-  <label for="marca">Marca</label>
-  <input type="text" name="marca" id="marca" value="{{ informacion_instrumento.marca }}" />
-  <label for="modelo">Modelo</label>
-  <input type="text" name="modelo" id="modelo" value="{{ informacion_instrumento.modelo }}" />
-  <label for="numero_serie">Numero de serie</label>
-  <input type="text" name="numero_serie" id="numero_serie" value="{{ informacion_instrumento.numero_serie }}" />
-  <form id="actualizar-detalles-cita-form" action="/citas/{{ informacion_cita.id_cita }}">
-    <select id="seleccionador-estado" name="nuevo_estado_cita" {% if not comportamiento_cita.es_posible_cambiar_estado
-      %} disabled {% endif %}>
-      <option value="1" {% if informacion_cita.id_estado==1 %} selected {% endif %}>
-        Próxima
-      </option>
-      <option value="2" {% if informacion_cita.id_estado==2 %} selected {% endif %}>
-        En progreso
-      </option>
-      <option value="3" {% if informacion_cita.id_estado==3 %} selected {% endif %}>
-        Terminada
-      </option>
-    </select>
-    <label for="notas_admin">Notas admin:</label>
-    <textarea name="notas_admin" id="notas_admin">{{ informacion_cita.notas_admin }}</textarea>
-    <button type="submit">Actualizar detalles cita</button>
-  </form>
-
-  <form id="cancelar-cita-form" action="/citas/{{ informacion_cita.id_cita }}/cancelar" {% if not
-    comportamiento_cita.es_cancelable %} style="display: none;" {% endif %}>
-    <button type="submit">Cancelar cita</button>
-  </form>
-  <p>Fecha: {{ informacion_cita.fecha }}</p>
-  <p>Hora: {{ informacion_cita.hora }}</p>
-  <p>
-    Estado de la cita:
-    <span id="estado-cita">{{ informacion_cita.estado }}</span>
-  </p>
-  <p>
-    Incluye cuerdas: {{ "Si" if informacion_cita.incluye_cuerdas else "No" }}
-  </p>
-  <p>Costo total: ${{ informacion_cita.costo_total }}</p>
-  <p>Anticipo pagado: ${{ informacion_cita.anticipo_total }}</p>
-  <p>Nota del cliente: {{ informacion_cita.nota_cliente }}</p>
-  <p>Nombre del instrumento: {{ informacion_cita.nombre_instrumento }}</p>
-  <p>Grupo del instrumento: {{ informacion_cita.grupo }}</p>
-  <p>Descripcion del servicio: {{ informacion_cita.descripcion_servicio }}</p>
-  <img src="/images/servicios/{{ informacion_cita.url_imagen }}" />
+  <div class="container">
+    <form id="actualizar-detalles-cita-form" action="/citas/{{ informacion_cita.id_cita }}">
+      <div class="col-lg-8 mx-auto">
+        <p class="fs-3 mt-4 mb-1 fw-bold text-center">
+          Detalles de la cita
+        </p>
+        <div class="container-fluid d-flex flex-column flex-sm-row align-items-center justify-content-center">
+          <div class="col-md-8 right-box">
+            <div id="metodo_de_pago" class="mb-3 fs-6 fw-bold">
+              Información del cliente
+            </div>
+            <div class="border rounded">
+              <div class="row align-items-center justify-content-between mb-3 ms-3 mt-3 me-3">
+                <table class="table table-borderless">
+                  <tbody>
+                    <tr>
+                      <td class="bg-transparent">Nombre del cliente</td>
+                      <td class="line-placeholder border-bottom bg-transparent vertical-align-bottom">{{
+                        informacion_cliente.nombre}} {{
+                        informacion_cliente.apellidos}}</td>
+                    </tr>
+                    <tr>
+                      <td class="bg-transparent">Correo</td>
+                      <td class="line-placeholder border-bottom bg-transparent vertical-align-bottom">{{
+                        informacion_cliente.email }}</td>
+                    </tr>
+                    <tr>
+                      <td class="bg-transparent">Número celular</td>
+                      <td class="line-placeholder border-bottom bg-transparent vertical-align-bottom">{{
+                        informacion_cliente.numero_telefono }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div id="metodo_de_pago" class="mb-3 fs-6 fw-bold mt-5">
+              Información del instrumento
+            </div>
+            <div class="border rounded">
+              <div class="row align-items-center justify-content-between mb-3 ms-3 mt-3 me-3">
+                <table class="table table-borderless">
+                  <tbody>
+                    <tr>
+                      <td class="bg-transparent">Nombre del instrumento</td>
+                      <td class="line-placeholder border-bottom bg-transparent">{{
+                        informacion_instrumento.nombre_instrumento}}</td>
+                    </tr>
+                    <tr>
+                      <td class="bg-transparent vertical-align-middle">Marca</td>
+                      <td class="line-placeholder bg-transparent">
+                        <div class="form-floating mb-3">
+                          <input type="text" name="marca" id="marca" class="form-control" placeholder="Ingresa marca..."
+                            value="{{ informacion_instrumento.marca}}">
+                          <label for="marca">Ingresa marca...</label>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bg-transparent vertical-align-middle">Modelo</td>
+                      <td class="line-placeholder bg-transparent">
+                        <div class="form-floating mb-3">
+                          <input type="text" name="modelo" id="modelo" class="form-control"
+                            placeholder="Ingresa modelo..." value="{{ informacion_instrumento.modelo }}">
+                          <label for="modelo">Ingresa modelo...</label>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bg-transparent vertical-align-middle">Número de serie</td>
+                      <td class="line-placeholder bg-transparent">
+                        <div class="form-floating mb-3">
+                          <input type="text" name="numero_serie" id="numero_serie" class="form-control"
+                            placeholder="Ingresa número de serie..." value="{{ informacion_instrumento.numero_serie }}">
+                          <label for="numero_serie">Ingresa serie...</label>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-10 right-box">
+            <div id="metodo_de_pago" class="mb-3 fs-6 fw-bold">
+              Información de la cita
+            </div>
+            <div class="border rounded">
+              <div class="row align-items-center justify-content-between mb-3 ms-3 mt-3 me-3">
+                <table class="table table-borderless">
+                  <tbody>
+                    <tr>
+                      <td class="bg-transparent">Número de cita</td>
+                      <td class="line-placeholder border-bottom bg-transparent">{{ informacion_cita.id_cita
+                        }}</td>
+                    </tr>
+                    <tr>
+                      <td class="bg-transparent">Descripción del servicio</td>
+                      <td class="line-placeholder border-bottom bg-transparent">{{
+                        informacion_cita.descripcion_servicio
+                        }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bg-transparent">Fecha y hora</td>
+                      <td class="line-placeholder border-bottom bg-transparent">{{ informacion_cita.fecha }}, {{
+                        informacion_cita.hora }}</td>
+                    </tr>
+                    <tr>
+                      <td class="bg-transparent">Estado de la cita</td>
+                      <td class="line-placeholder bg-transparent">
+                        <select class="form-select" id="seleccionador-estado" name="nuevo_estado_cita" {% if not
+                          comportamiento_cita.es_posible_cambiar_estado %} disabled {% endif %}>
+                          <option value="1" {% if informacion_cita.id_estado==1 %} selected {% endif %}>
+                            Próxima
+                          </option>
+                          <option value="2" {% if informacion_cita.id_estado==2 %} selected {% endif %}>
+                            En progreso
+                          </option>
+                          <option value="3" {% if informacion_cita.id_estado==3 %} selected {% endif %}>
+                            Terminada
+                          </option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bg-transparent">Notas del cliente</td>
+                      <td class="line-placeholder bg-transparent">
+                        <div class="form-floating">
+                          <textarea class="form-control" style="height: 125px"
+                            disabled>{{ informacion_cita.nota_cliente }}</textarea>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bg-transparent">Incluye cuerdas</td>
+                      <td class="line-placeholder bg-transparent">
+                        <div class="form-check">
+                          {% if informacion_cita.incluye_cuerdas %}
+                          <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedDisabled" checked
+                            disabled>
+                          Sí
+                          {% else %}
+                          <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedDisabled"
+                            disabled>
+                          No
+                          {% endif %}
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bg-transparent">Costo total</td>
+                      <td class="line-placeholder border-bottom bg-transparent">${{ informacion_cita.costo_total }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bg-transparent">Notas para el cliente</td>
+                      <td class="line-placeholder bg-transparent">
+                        <div class="form-floating">
+                          <textarea class="form-control" style="height: 125px" name="notas_admin" id="notas_admin"
+                            placeholder="Escribe una nota..."
+                            id="descripcion">{{ informacion_cita.notas_admin }}</textarea>
+                          <label for="notas_admin">Ingresa nota...</label>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex" style="justify-content: center;">
+          <div class="me-2">
+            <button class="btn btn-lg w-100 fs-6 botones mb-3" type="submit">Actualizar detalles</button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <form id="cancelar-cita-form" action="/citas/{{ informacion_cita.id_cita }}/cancelar" {% if not
+      comportamiento_cita.es_cancelable %} style="display: none;" {% endif %}>
+      <div class="d-flex" style="justify-content: center;">
+        <div class="me-2">
+          <button class="btn btn-lg w-100 fs-6 btn-delete mb-3" type="submit">Cancelar cita</button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
-
-
 
 <script>
   const cancelarCitaForm = document.getElementById('cancelar-cita-form');
