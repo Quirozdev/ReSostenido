@@ -1,51 +1,23 @@
-{% extends "layout.html" %} {% block body %}
+{% extends "layout.html" %} 
+{% block body %}
+
 <div class="margin-top-110">
   <label for="marca">Marca</label>
-  <input
-    type="text"
-    name="marca"
-    id="marca"
-    value="{{ informacion_instrumento.marca }}"
-  />
+  <input type="text" name="marca" id="marca" value="{{ informacion_instrumento.marca }}" />
   <label for="modelo">Modelo</label>
-  <input
-    type="text"
-    name="modelo"
-    id="modelo"
-    value="{{ informacion_instrumento.modelo }}"
-  />
+  <input type="text" name="modelo" id="modelo" value="{{ informacion_instrumento.modelo }}" />
   <label for="numero_serie">Numero de serie</label>
-  <input
-    type="text"
-    name="numero_serie"
-    id="numero_serie"
-    value="{{ informacion_instrumento.numero_serie }}"
-  />
-  <form
-    id="actualizar-detalles-cita-form"
-    action="/citas/{{ informacion_cita.id_cita }}"
-  >
-    <select
-      id="seleccionador-estado"
-      name="nuevo_estado_cita"
-      {% if not comportamiento_cita.es_posible_cambiar_estado %} disabled {% endif %}
-    >
-      <option
-        value="1"
-        {% if informacion_cita.id_estado == 1 %} selected {% endif %}
-      >
+  <input type="text" name="numero_serie" id="numero_serie" value="{{ informacion_instrumento.numero_serie }}" />
+  <form id="actualizar-detalles-cita-form" action="/citas/{{ informacion_cita.id_cita }}">
+    <select id="seleccionador-estado" name="nuevo_estado_cita" {% if not comportamiento_cita.es_posible_cambiar_estado
+      %} disabled {% endif %}>
+      <option value="1" {% if informacion_cita.id_estado==1 %} selected {% endif %}>
         Próxima
       </option>
-      <option
-        value="2"
-        {% if informacion_cita.id_estado == 2 %} selected {% endif %}
-      >
+      <option value="2" {% if informacion_cita.id_estado==2 %} selected {% endif %}>
         En progreso
       </option>
-      <option
-        value="3"
-        {% if informacion_cita.id_estado == 3 %} selected {% endif %}
-      >
+      <option value="3" {% if informacion_cita.id_estado==3 %} selected {% endif %}>
         Terminada
       </option>
     </select>
@@ -53,12 +25,9 @@
     <textarea name="notas_admin" id="notas_admin">{{ informacion_cita.notas_admin }}</textarea>
     <button type="submit">Actualizar detalles cita</button>
   </form>
-  
-  <form
-    id="cancelar-cita-form"
-    action="/citas/{{ informacion_cita.id_cita }}/cancelar"
-    {% if not comportamiento_cita.es_cancelable %} style="display: none;" {% endif %}
-  >
+
+  <form id="cancelar-cita-form" action="/citas/{{ informacion_cita.id_cita }}/cancelar" {% if not
+    comportamiento_cita.es_cancelable %} style="display: none;" {% endif %}>
     <button type="submit">Cancelar cita</button>
   </form>
   <p>Fecha: {{ informacion_cita.fecha }}</p>
@@ -78,6 +47,9 @@
   <p>Descripcion del servicio: {{ informacion_cita.descripcion_servicio }}</p>
   <img src="/images/servicios/{{ informacion_cita.url_imagen }}" />
 </div>
+
+
+
 <script>
   const cancelarCitaForm = document.getElementById('cancelar-cita-form');
 
