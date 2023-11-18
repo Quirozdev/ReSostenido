@@ -5,12 +5,33 @@
 <br>
 <br>
 <br>
-<select name="opciones" id="opciones-dropdown">
-  <option value="opcion1">Ganancias totales</option>
-  <option value="opcion2">Ganancias por instrumento</option>
-  <option value="opcion3">Cantidad de servicios</option>
-  <!-- Agrega más opciones según sea necesario -->
+<select name="graficasPrincipales" id="graficasPrincipales" onchange="cambiarRaizRuta()" >
+  <option value="/estadisticas/ganancias" {% if raizRuta == "ganancias" %} selected {% endif %} >Ganancias totales</option>
+  <option value="/estadisticas/ganancias_de_servicio" {% if raizRuta == "ganancias_de_servicio" %} selected {% endif %} >Ganancias por instrumento</option>
+  <option value="/estadisticas/cantidad_de_servicio" {% if raizRuta == "cantidad_de_servicio" %} selected {% endif %} >Cantidad de servicios</option>
 </select>
+
+<select name="filtroTiempo" id="filtroTiempo" onchange="cambiarFiltroTiempo()">
+  <option value="por_anio" {% if filtroTiempo == "por_anio" %} selected {% endif %}>Años</option>
+  <option value="por_mes" {% if filtroTiempo == "por_mes" %} selected {% endif %}>Meses</option>
+</select>
+
+{% if aniosDisponibles %}
+  <select name="aniosDisponibles" id="aniosDisponibles" onchange="cambiarAnio()" >
+    {% for anio in aniosDisponibles %}
+      <option value="{{anio.anio}}" {% if anio.anio == anioSeleccionado %} selected {% endif %} >{{anio.anio}}</option>
+    {% endfor %}
+  </select>
+{% endif %}
+
+{% if instrumentos %}
+  <select name="instrumentos" id="instrumentos" onchange="cambiarInstrumento()" >
+    {% for instrumento in instrumentos %}
+      <option value="{{instrumento.id}}" {% if instrumento.nombre_instrumento == instrumentoSeleccionado %} selected {% endif %} >{{instrumento.nombre_instrumento}}</option>
+    {% endfor %}
+  </select>
+{% endif %}
+
 <h1>ESTADISTICAS</h1>
 <!--NOMBRE DE LAS ESTADISTICAS QUE SE ESTA MOSTRANDO-->
 
@@ -19,8 +40,34 @@
 <br>
 <!--TABLA CON RESUMEN DE TODOS LOS DATOS-->
 <!-- MES GANANCIA-->
-{{data}}
-{{gananciasPorAnio}}
+{% if datosGrafica | isEmpty %}
+  <h5>No hay datos</h5>
+{% else %}
+  <table>
+    <tr>
+      {% if filtroTiempo == "por_anio" %}
+        <th>Año</th>
+
+      {% else %}
+        <th>Mes</th>
+      {% endif %}
+      {% if raizRuta == "ganancias" or raizRuta =="ganancias_de_servicio" %}  
+        <th>Ganancia</th>
+      {% else %}
+        <th>Cantidad</th>
+      {% endif %}
+    </tr>
+    {% for etiqueta, valor in datosGrafica %}
+      <tr>
+        <td>{{etiqueta}}</td>
+        <td>{{valor}}</td>
+      </tr>
+    {% endfor %}
+    
+    
+  </table>
+
+{% endif %}
 <br>
 <br>
 
@@ -39,7 +86,7 @@ let data = {
   datasets: [
     {
       label: '{{datasetName}}', //datos mostrados en la grafica
-      data: {{ gananciasPorAnio | dump | safe }}, // datos del eje y
+      data: {{ datosGrafica | dump | safe }}, // datos del eje y
       borderColor: "#024164",
       backgroundColor: "#024164",
       pointStyle: 'circle',
@@ -64,9 +111,62 @@ let config = {
 
   let grafica = new Chart(ctx, config);
 
-    document.getElementById('randomizeData').addEventListener('click', () => {
-        grafica.destroy();
-    });
+    function cambiarFiltroTiempo() {
+      //mostrar links
+      let filtroTiempo = document.getElementById("filtroTiempo").value;
+      let ruta = window.location.pathname;
+      let elementosRuta = ruta.split('/');
+      elementosRuta[3] = filtroTiempo;
+      console.log("RUTA ANTES DE QUITAR EXCEDENTE: " + elementosRuta.join('/'));
+      while(elementosRuta.length > 4){
+        elementosRuta.pop();
+      }
+      console.log("RUTA DESPUES DE QUITAR EXCEDENTE: " + elementosRuta.join('/'));
+
+      let nuevaRuta = elementosRuta.join('/');
+      console.log(nuevaRuta);
+      window.location.href = nuevaRuta;
+      
+
+
+      
+    }
     
+
+    function cambiarAnio() {
+      var elementosRuta = window.location.pathname.split('/');
+      elementosRuta[4] = document.getElementById("aniosDisponibles").value;
+      var url =  elementosRuta.join('/'); // Obtener el valor de la opción seleccionada
+      console.log(url);
+      if(url) { // Verificar si el valor no está vacío
+        window.location.href = url; // Redireccionar a la URL
+      }
+    }
+
+    function cambiarInstrumento() {
+      let elementosRuta = window.location.pathname.split('/');
+      elementosRuta[4] = document.getElementById("instrumentos").value;
+      if(elementosRuta.length > 5){
+        elementosRuta.pop();
+        }
+      var url = elementosRuta.join('/'); // Obtener el valor de la opción seleccionada
+    
+
+      console.log(url);
+      if(url) { // Verificar si el valor no está vacío
+        window.location.href = url; // Redireccionar a la URL
+      }
+    }
+
+   
+
+    function cambiarRaizRuta(){
+      const filtroTiempo = document.getElementById('filtroTiempo').value;
+      const rutaBase = document.getElementById('graficasPrincipales').value;
+      let nuevaRuta = rutaBase + '/' + filtroTiempo;
+      
+      window.location.href = nuevaRuta; // Redireccionar a la URL
+      
+    }
 </script>
 {% endblock %}

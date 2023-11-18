@@ -26,6 +26,10 @@ const env = nunjucks.configure('views', {
   express: app,
 });
 
+env.addFilter('isEmpty', function(obj) {
+  return Object.keys(obj).length === 0;
+});
+
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static('public'));
 app.set('view engine', 'html');
@@ -46,7 +50,7 @@ app.use(faqRouter);
 app.use(servicesRouter);
 app.use('/citas', citasRouter);
 app.use(foroRouter);
-app.use(estadisticasRouter);
+app.use('/estadisticas',estadisticasRouter);
 
 // si no se encontro ningun recurso en alguna ruta
 app.use((req, res) => {
