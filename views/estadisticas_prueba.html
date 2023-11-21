@@ -110,7 +110,7 @@ let data = {
   datasets: [
     {
       label: '{{datasetName}}', //datos mostrados en la grafica
-      data: '{ datosGrafica | dump | safe }}', // datos del eje y
+      data: {{ datosGrafica | dump | safe }}, // datos del eje y
       borderColor: "#024164",
       backgroundColor: "#024164",
       pointStyle: 'circle',
