@@ -1,75 +1,99 @@
 {% extends "layout.html" %}
 {% block body %}
+<div class="margin-top-110">
+  <div class="container">
+    <br>
 
-<br>
-<br>
-<br>
-<br>
-<select name="graficasPrincipales" id="graficasPrincipales" onchange="cambiarRaizRuta()" >
-  <option value="/estadisticas/ganancias" {% if raizRuta == "ganancias" %} selected {% endif %} >Ganancias totales</option>
-  <option value="/estadisticas/ganancias_de_servicio" {% if raizRuta == "ganancias_de_servicio" %} selected {% endif %} >Ganancias por instrumento</option>
-  <option value="/estadisticas/cantidad_de_servicio" {% if raizRuta == "cantidad_de_servicio" %} selected {% endif %} >Cantidad de servicios</option>
-</select>
+    <div class="flex justify-content-between">
+      <h1>ESTADISTICAS</h1>
 
-<select name="filtroTiempo" id="filtroTiempo" onchange="cambiarFiltroTiempo()">
-  <option value="por_anio" {% if filtroTiempo == "por_anio" %} selected {% endif %}>Años</option>
-  <option value="por_mes" {% if filtroTiempo == "por_mes" %} selected {% endif %}>Meses</option>
-</select>
+      <!--NOMBRE DE LAS ESTADISTICAS QUE SE ESTA MOSTRANDO-->
+      <div>
+        <select name="graficasPrincipales" id="graficasPrincipales" onchange="cambiarRaizRuta()" >
+          <option value="/estadisticas/ganancias" {% if raizRuta == "ganancias" %} selected {% endif %} >Ganancias totales</option>
+          <option value="/estadisticas/ganancias_de_servicio" {% if raizRuta == "ganancias_de_servicio" %} selected {% endif %} >Ganancias por instrumento</option>
+          <option value="/estadisticas/cantidad_de_servicio" {% if raizRuta == "cantidad_de_servicio" %} selected {% endif %} >Cantidad de servicios</option>
+        </select>
+        
+        <select name="filtroTiempo" id="filtroTiempo" onchange="cambiarFiltroTiempo()">
+          <option value="por_anio" {% if filtroTiempo == "por_anio" %} selected {% endif %}>Años</option>
+          <option value="por_mes" {% if filtroTiempo == "por_mes" %} selected {% endif %}>Meses</option>
+        </select>
+        
+        {% if aniosDisponibles %}
+          <select name="aniosDisponibles" id="aniosDisponibles" onchange="cambiarAnio()" >
+            {% for anio in aniosDisponibles %}
+              <option value="{{anio.anio}}" {% if anio.anio == anioSeleccionado %} selected {% endif %} >{{anio.anio}}</option>
+            {% endfor %}
+          </select>
+        {% endif %}
+        
+        {% if instrumentos %}
+          <select name="instrumentos" id="instrumentos" onchange="cambiarInstrumento()" >
+            {% for instrumento in instrumentos %}
+              <option value="{{instrumento.id}}" {% if instrumento.nombre_instrumento == instrumentoSeleccionado %} selected {% endif %} >{{instrumento.nombre_instrumento}}</option>
+            {% endfor %}
+          </select>
+        {% endif %}
+      </div>
+      
+    </div>
 
-{% if aniosDisponibles %}
-  <select name="aniosDisponibles" id="aniosDisponibles" onchange="cambiarAnio()" >
-    {% for anio in aniosDisponibles %}
-      <option value="{{anio.anio}}" {% if anio.anio == anioSeleccionado %} selected {% endif %} >{{anio.anio}}</option>
-    {% endfor %}
-  </select>
-{% endif %}
+    <div class="flex justify-content-between" >
 
-{% if instrumentos %}
-  <select name="instrumentos" id="instrumentos" onchange="cambiarInstrumento()" >
-    {% for instrumento in instrumentos %}
-      <option value="{{instrumento.id}}" {% if instrumento.nombre_instrumento == instrumentoSeleccionado %} selected {% endif %} >{{instrumento.nombre_instrumento}}</option>
-    {% endfor %}
-  </select>
-{% endif %}
-
-<h1>ESTADISTICAS</h1>
-<!--NOMBRE DE LAS ESTADISTICAS QUE SE ESTA MOSTRANDO-->
-
-<canvas id="myChart"></canvas>
-<br>
-<br>
-<!--TABLA CON RESUMEN DE TODOS LOS DATOS-->
-<!-- MES GANANCIA-->
-{% if datosGrafica | isEmpty %}
-  <h5>No hay datos</h5>
-{% else %}
-  <table>
-    <tr>
-      {% if filtroTiempo == "por_anio" %}
-        <th>Año</th>
-
+      <div class="box-area " >
+      <canvas id="myChart"></canvas>
+      <br>
+      <br>
+      <!--TABLA CON RESUMEN DE TODOS LOS DATOS-->
+      <!-- MES GANANCIA-->
+      {% if datosGrafica | isEmpty %}
+        <h5>No hay datos</h5>
       {% else %}
-        <th>Mes</th>
+        <table>
+          <tr>
+            {% if filtroTiempo == "por_anio" %}
+              <th>Año</th>
+      
+            {% else %}
+              <th>Mes</th>
+            {% endif %}
+            {% if raizRuta == "ganancias" or raizRuta =="ganancias_de_servicio" %}  
+              <th>Ganancia</th>
+            {% else %}
+              <th>Cantidad</th>
+            {% endif %}
+          </tr>
+          {% for etiqueta, valor in datosGrafica %}
+            <tr>
+              <td>{{etiqueta}}</td>
+              <td>{{valor}}</td>
+            </tr>
+          {% endfor %}
+          
+          
+        </table>
+      
       {% endif %}
-      {% if raizRuta == "ganancias" or raizRuta =="ganancias_de_servicio" %}  
-        <th>Ganancia</th>
-      {% else %}
-        <th>Cantidad</th>
-      {% endif %}
-    </tr>
-    {% for etiqueta, valor in datosGrafica %}
-      <tr>
-        <td>{{etiqueta}}</td>
-        <td>{{valor}}</td>
-      </tr>
-    {% endfor %}
-    
-    
-  </table>
+      <br>
+      <br>
+    </div>
 
-{% endif %}
-<br>
-<br>
+    <div class="right-box">
+
+        <table class="table table-borderless table-hover" >
+          <thead>
+              <tr>ganancias totales</tr>
+          </thead>
+        </table>
+      
+    </div>
+
+
+    </div>
+
+  </div>
+</div>
 
 
 
@@ -86,7 +110,7 @@ let data = {
   datasets: [
     {
       label: '{{datasetName}}', //datos mostrados en la grafica
-      data: {{ datosGrafica | dump | safe }}, // datos del eje y
+      data: '{ datosGrafica | dump | safe }}', // datos del eje y
       borderColor: "#024164",
       backgroundColor: "#024164",
       pointStyle: 'circle',
@@ -127,9 +151,9 @@ let config = {
       console.log(nuevaRuta);
       window.location.href = nuevaRuta;
       
-
-
+     
       
+        
     }
     
 

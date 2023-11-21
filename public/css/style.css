@@ -12,7 +12,9 @@ body {
 .right-box {
     padding: 40px 30px 40px 40px;
 }
-
+.box-area-right {
+    width: 930px;
+}
 ::placeholder {
     font-size: 16px;
 }
