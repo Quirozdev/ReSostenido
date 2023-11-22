@@ -8,7 +8,7 @@
       <h1 class="fs-4">Ganancias totales</h1>
 
       <!--NOMBRE DE LAS ESTADISTICAS QUE SE ESTA MOSTRANDO-->
-      <divid="ganancias-totales" >
+      <div >
         <select name="graficasPrincipales" id="graficasPrincipales" class="card-style" onchange="cambiarRaizRuta()" >
           <option value="/estadisticas/ganancias" {% if raizRuta == "ganancias" %} selected {% endif %} >Ganancias totales</option>
           <option value="/estadisticas/ganancias_de_servicio" {% if raizRuta == "ganancias_de_servicio" %} selected {% endif %} >Ganancias por instrumento</option>
@@ -35,7 +35,7 @@
             {% endfor %}
           </select>
         {% endif %}
-      </divid=>
+      </div>
       
     </div>
 
