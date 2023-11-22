@@ -197,12 +197,6 @@ input[type="file"]::file-selector-button {
     z-index: 10;
     text-align: center;
 }
-.graficas:hover:active{
-    background-color: #DAE2E7;
-}
-#filtroTiempo:hover::before{
-    background-color: #DAE2E7;
-}
 
 #progress {
     -webkit-appearance: none;
@@ -507,6 +501,17 @@ nav ul li a .cart::after {
 #sidebar ul li a .link-desc {
     font-size: 0.8rem;
     color: #ddd;
+}
+
+#myChart {
+    width: 100%; /* Ancho del canvas */
+    height: auto;
+}
+
+/* Estilo personalizado para la tabla */
+#tabla-container {
+    max-height: 400px;
+    overflow-y: auto; /* Agrega desplazamiento vertical si es necesario */
 }
 
 /*Shrinking for mobile*/

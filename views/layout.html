@@ -56,15 +56,15 @@
               preguntas</a>
           </li>
 
+          <li class="nav-item me-3 half-hover" id="EstadisticasNavItem">
+            <a class="nav-link" style="display: flex; align-items: flex-start; line-height: 1;" href="/estadisticas"><i class="fa-solid fa-chart-line pe-2"></i>Estadísticas</a>
+          </li>
+
           {% else %}
           <li class="nav-item me-3 half-hover" id="serviciosNavItem">
             <a class="nav-link" style="display: flex; align-items: flex-start; line-height: 1;" href="/servicios"><i class="fa-solid fa-guitar pe-2"></i>Servicios</a>
           </li>
           {% endif %}
-
-          <li class="nav-item me-3 half-hover" id="faqNavItem">
-            <a class="nav-link" style="display: flex; align-items: flex-start; line-height: 1;" href="/FAQ"><i class="far fa-circle-question pe-2"></i>FAQ</a>
-          </li>
 
           {% if usuario %} {% if usuario.es_admin %}
           <li class="nav-item me-3 half-hover" id="citasNavItem">

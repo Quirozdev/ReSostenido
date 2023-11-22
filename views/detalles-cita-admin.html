@@ -4,12 +4,12 @@
 <div class="margin-top-110">
   <div class="container">
     <form id="actualizar-detalles-cita-form" action="/citas/{{ informacion_cita.id_cita }}">
-      <div class="col-lg-8 mx-auto">
+      <div class="col-sm-8 mx-auto">
         <p class="fs-3 mt-4 mb-1 fw-bold text-center">
           Detalles de la cita
         </p>
         <div class="container-fluid d-flex flex-column flex-sm-row align-items-center justify-content-center">
-          <div class="col-md-8 right-box">
+          <div class="col-md-10 right-box">
             <div id="metodo_de_pago" class="mb-3 fs-6 fw-bold">
               Información del cliente
             </div>
@@ -112,6 +112,10 @@
                     </tr>
                     <tr>
                       <td class="bg-transparent">Estado de la cita</td>
+                      {% if informacion_cita.estado === 'Cancelada' %}
+                      <td class="line-placeholder border-bottom bg-transparent" style="color: red;">{{
+                        informacion_cita.estado }}</td>
+                      {% else %}
                       <td class="line-placeholder bg-transparent">
                         <select class="form-select" id="seleccionador-estado" name="nuevo_estado_cita" {% if not
                           comportamiento_cita.es_posible_cambiar_estado %} disabled {% endif %}>
@@ -126,6 +130,7 @@
                           </option>
                         </select>
                       </td>
+                      {% endif %}
                     </tr>
                     <tr>
                       <td class="bg-transparent">Notas del cliente</td>

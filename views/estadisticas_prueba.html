@@ -1,103 +1,105 @@
 {% extends "layout.html" %}
 {% block body %}
 <div class="margin-top-110">
-  <div class="container">
-    <br>
+  <div class="container-xl">
 
-    <div  class="flex justify-content-between">
-      <h1 class="fs-4">Ganancias totales</h1>
+    <div class="row">
+      <div class="col-md-12">
+        <h1 id="titulo-estadisticas" class="text-decoration-underline fs-3"></h1>
+      </div>
+    </div>
+    <div class="d-flex flex-column flex-lg-row justify-content-end text-center mt-3">
+      <div class="d-flex justify-content-center">
+        <select name="graficasPrincipales" id="graficasPrincipales" style="width: 200px;" class="form-select mb-2"
+          onchange="cambiarRaizRuta()">
+          <option value="/estadisticas/ganancias" {% if raizRuta=="ganancias" %} selected {% endif %}>Ganancias
+            totales
+          </option>
+          <option value="/estadisticas/ganancias_de_servicio" {% if raizRuta=="ganancias_de_servicio" %} selected {%
+            endif %}>Ganancias por instrumento</option>
+          <option value="/estadisticas/cantidad_de_servicio" {% if raizRuta=="cantidad_de_servicio" %} selected {% endif
+            %}>
+            Cantidad de servicios
+          </option>
+        </select>
+      </div>
 
-      <!--NOMBRE DE LAS ESTADISTICAS QUE SE ESTA MOSTRANDO-->
-      <div >
-        <select name="graficasPrincipales" id="graficasPrincipales" class="card-style" onchange="cambiarRaizRuta()" >
-          <option value="/estadisticas/ganancias" {% if raizRuta == "ganancias" %} selected {% endif %} >Ganancias totales</option>
-          <option value="/estadisticas/ganancias_de_servicio" {% if raizRuta == "ganancias_de_servicio" %} selected {% endif %} >Ganancias por instrumento</option>
-          <option value="/estadisticas/cantidad_de_servicio" {% if raizRuta == "cantidad_de_servicio" %} selected {% endif %} >Cantidad de servicios</option>
+      <!-- Select de Meses/Años y Años -->
+      <div class="d-flex flex-md-row justify-content-center">
+        <select name="filtroTiempo" id="filtroTiempo" class="form-select mb-2" style="width: 100px;"
+          onchange="cambiarFiltroTiempo()">
+          <option value="por_anio" {% if filtroTiempo=="por_anio" %} selected {% endif %}>Años</option>
+          <option class="btn-group dropright" value="por_mes" {% if filtroTiempo=="por_mes" %} selected {% endif %}>
+            Meses
+          </option>
         </select>
-        
-        <select name="filtroTiempo" id="filtroTiempo" onchange="cambiarFiltroTiempo()">
-          <option value="por_anio" {% if filtroTiempo == "por_anio" %} selected {% endif %}>Años</option>
-          <option class="btn-group dropright" value="por_mes" {% if filtroTiempo == "por_mes" %} selected {% endif %}>Meses</option>
-        </select>
-        
+
+        <!-- Select de Años -->
         {% if aniosDisponibles %}
-          <select name="aniosDisponibles" id="aniosDisponibles" onchange="cambiarAnio()" >
-            {% for anio in aniosDisponibles %}
-              <option value="{{anio.anio}}" {% if anio.anio == anioSeleccionado %} selected {% endif %} >{{anio.anio}}</option>
-            {% endfor %}
-          </select>
-        {% endif %}
-        
-        {% if instrumentos %}
-          <select name="instrumentos" id="instrumentos" onchange="cambiarInstrumento()" >
-            {% for instrumento in instrumentos %}
-              <option value="{{instrumento.id}}" {% if instrumento.nombre_instrumento == instrumentoSeleccionado %} selected {% endif %} >{{instrumento.nombre_instrumento}}</option>
-            {% endfor %}
-          </select>
+        <select name="aniosDisponibles" id="aniosDisponibles" class="form-select mb-2" style="width: 100px;"
+          onchange="cambiarAnio()">
+          {% for anio in aniosDisponibles %}
+          <option value="{{anio.anio}}" {% if anio.anio==anioSeleccionado %} selected {% endif %}>{{anio.anio}}
+          </option>
+          {% endfor %}
+        </select>
         {% endif %}
       </div>
-      
+
+      <!-- Select de Instrumentos -->
+      <div class="d-flex justify-content-center">
+      {% if instrumentos %}
+      <select name="instrumentos" id="instrumentos" style="width: 200px;" class="form-select mb-2"
+        onchange="cambiarInstrumento()">
+        {% for instrumento in instrumentos %}
+        <option value="{{instrumento.id}}" {% if instrumento.nombre_instrumento==instrumentoSeleccionado %} selected {%
+          endif %}>{{instrumento.nombre_instrumento}}</option>
+        {% endfor %}
+      </select>
+      {% endif %}
+    </div>
     </div>
 
-    <div class="flex justify-content-between" >
+    <div class="row">
+      <div class="col-md-8 right-box">
+        <!-- Agrega el canvas aquí -->
+        <canvas id="myChart"></canvas>
+      </div>
 
-      <div class="box-area " >
-      <canvas id="myChart"></canvas>
-      <br>
-      <br>
-      <!--TABLA CON RESUMEN DE TODOS LOS DATOS-->
-      <!-- MES GANANCIA-->
-     
-      <br>
-      <br>
-    </div>
-
-    <div class="right-box">
-
-        
-          
-          {% if datosGrafica | isEmpty %}
-          <h5>No hay datos</h5>
-          {% else %}
-          <table class="table table-borderless table-hover">
-            <thead>
-              <tr>ganancias totales</tr>
-          </thead>
+      <div class="col-md-4 right-box" id="tabla-container">
+        {% if datosGrafica | isEmpty %}
+        <h5>No hay datos</h5>
+        {% else %}
+        <table class="table table-hover text-center" style="width: 100%;">
+          <thead class="table-light">
             <tr>
-              {% if filtroTiempo == "por_anio" %}
-                <th>Año</th>
-        
-              {% else %}
-                <th>Mes</th>
-              {% endif %}
-              {% if raizRuta == "ganancias" or raizRuta =="ganancias_de_servicio" %}  
-                <th>Ganancia</th>
-              {% else %}
-                <th>Cantidad</th>
-              {% endif %}
+              <th id="titulo-estadisticas-th" class="text-center" colspan="2">ganancias totales</th>
             </tr>
-            {% for etiqueta, valor in datosGrafica %}
-              <tr>
-                <td>{{etiqueta}}</td>
-                <td>{{valor}}</td>
-              </tr>
-            {% endfor %}
-            
-            
-          </table>
-        
+          </thead>
+          <tr>
+            {% if filtroTiempo == "por_anio" %}
+            <th>Año</th>
+            {% else %}
+            <th>Mes</th>
+            {% endif %}
+            {% if raizRuta == "ganancias" or raizRuta =="ganancias_de_servicio" %}
+            <th>Ganancia</th>
+            {% else %}
+            <th>Cantidad</th>
+            {% endif %}
+          </tr>
+          {% for etiqueta, valor in datosGrafica %}
+          <tr>
+            <td>{{etiqueta}}</td>
+            <td>{{valor}}</td>
+          </tr>
+          {% endfor %}
+        </table>
         {% endif %}
-        
-      
+      </div>
     </div>
-
-
-    </div>
-
   </div>
 </div>
-
-
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="
@@ -107,92 +109,144 @@ https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js
   const ctx = document.getElementById('myChart');
 
 
-let data = {
-  //labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6'], //datos del eje x
-  datasets: [
-    {
-      label: '{{datasetName}}', //datos mostrados en la grafica
-      data: {{ datosGrafica | dump | safe }}, // datos del eje y
-      borderColor: "#024164",
-      backgroundColor: "#024164",
+  let data = {
+    //labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6'], //datos del eje x
+    datasets: [
+      {
+        label: '{{datasetName}}', //datos mostrados en la grafica
+        data: {{ datosGrafica | dump | safe }}, // datos del eje y
+  borderColor: "#024164",
+    backgroundColor: "#024164",
       pointStyle: 'circle',
-      pointRadius: 10,
-      pointHoverRadius: 15
+        pointRadius: 10,
+          pointHoverRadius: 15
     }
   ]
 };
-let config = {
-  type: 'line',
-  data: data,
-  options: {
-    responsive: true,
-    plugins: {
-      title: {
-        display: true,
-        text: '{{tituloGrafica}}', //titulo de la grafica
+  let config = {
+    type: 'line',
+    data: data,
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: '{{tituloGrafica}}', //titulo de la grafica
+        }
       }
     }
-  }
-};
+  };
 
   let grafica = new Chart(ctx, config);
 
-    function cambiarFiltroTiempo() {
-      //mostrar links
-      let filtroTiempo = document.getElementById("filtroTiempo").value;
-      let ruta = window.location.pathname;
-      let elementosRuta = ruta.split('/');
-      elementosRuta[3] = filtroTiempo;
-      console.log("RUTA ANTES DE QUITAR EXCEDENTE: " + elementosRuta.join('/'));
-      while(elementosRuta.length > 4){
-        elementosRuta.pop();
-      }
-      console.log("RUTA DESPUES DE QUITAR EXCEDENTE: " + elementosRuta.join('/'));
-
-      let nuevaRuta = elementosRuta.join('/');
-      console.log(nuevaRuta);
-      window.location.href = nuevaRuta;
-      
-     
-      
-        
+  function cambiarFiltroTiempo() {
+    //mostrar links
+    let filtroTiempo = document.getElementById("filtroTiempo").value;
+    let ruta = window.location.pathname;
+    let elementosRuta = ruta.split('/');
+    elementosRuta[3] = filtroTiempo;
+    console.log("RUTA ANTES DE QUITAR EXCEDENTE: " + elementosRuta.join('/'));
+    while (elementosRuta.length > 4) {
+      elementosRuta.pop();
     }
-    
+    console.log("RUTA DESPUES DE QUITAR EXCEDENTE: " + elementosRuta.join('/'));
 
-    function cambiarAnio() {
-      var elementosRuta = window.location.pathname.split('/');
-      elementosRuta[4] = document.getElementById("aniosDisponibles").value;
-      var url =  elementosRuta.join('/'); // Obtener el valor de la opción seleccionada
-      console.log(url);
-      if(url) { // Verificar si el valor no está vacío
-        window.location.href = url; // Redireccionar a la URL
-      }
+    let nuevaRuta = elementosRuta.join('/');
+    console.log(nuevaRuta);
+    window.location.href = nuevaRuta;
+  }
+
+
+  function cambiarAnio() {
+    var elementosRuta = window.location.pathname.split('/');
+    elementosRuta[4] = document.getElementById("aniosDisponibles").value;
+    var url = elementosRuta.join('/'); // Obtener el valor de la opción seleccionada
+    console.log(url);
+    if (url) { // Verificar si el valor no está vacío
+      window.location.href = url; // Redireccionar a la URL
     }
+  }
 
-    function cambiarInstrumento() {
-      let elementosRuta = window.location.pathname.split('/');
-      elementosRuta[4] = document.getElementById("instrumentos").value;
-      if(elementosRuta.length > 5){
-        elementosRuta.pop();
-        }
-      var url = elementosRuta.join('/'); // Obtener el valor de la opción seleccionada
-    
-
-      console.log(url);
-      if(url) { // Verificar si el valor no está vacío
-        window.location.href = url; // Redireccionar a la URL
-      }
+  function cambiarInstrumento() {
+    let elementosRuta = window.location.pathname.split('/');
+    elementosRuta[4] = document.getElementById("instrumentos").value;
+    if (elementosRuta.length > 5) {
+      elementosRuta.pop();
     }
+    var url = elementosRuta.join('/'); // Obtener el valor de la opción seleccionada
 
-   
 
-    function cambiarRaizRuta(){
-      const filtroTiempo = document.getElementById('filtroTiempo').value;
-      const rutaBase = document.getElementById('graficasPrincipales').value;
-      let nuevaRuta = rutaBase + '/' + filtroTiempo;
-      
-      window.location.href = nuevaRuta; // Redireccionar a la URL
-      
+    console.log(url);
+    if (url) { // Verificar si el valor no está vacío
+      window.location.href = url; // Redireccionar a la URL
     }
+  }
+
+
+
+  function cambiarRaizRuta() {
+    const filtroTiempo = document.getElementById('filtroTiempo').value;
+    const rutaBase = document.getElementById('graficasPrincipales').value;
+    let nuevaRuta = rutaBase + '/' + filtroTiempo;
+
+    window.location.href = nuevaRuta; // Redireccionar a la URL
+
+  }
+
+  var h1 = document.getElementById('titulo-estadisticas');
+  var graficasPrincipales = document.getElementById('graficasPrincipales');
+  var filtroTiempo = document.getElementById('filtroTiempo');
+
+  // Mapping of select option values to title text
+  var titleTextMapping = {
+    'ganancias': {
+      'por_anio': 'Ganancias totales anuales',
+      'por_mes': 'Ganancias totales mensuales'
+    },
+    'ganancias_de_servicio': {
+      'por_anio': 'Ganancias por instrumento anuales',
+      'por_mes': 'Ganancias por instrumento mensuales'
+    },
+    'cantidad_de_servicio': {
+      'por_anio': 'Cantidad de servicios anuales',
+      'por_mes': 'Cantidad de servicios mensuales'
+    }
+  };
+
+  // Function to update the h1 text
+  function updateH1Text() {
+    var graficasPrincipalesValue = graficasPrincipales.value.split('/')[2];
+    var filtroTiempoValue = filtroTiempo.value;
+    h1.textContent = titleTextMapping[graficasPrincipalesValue][filtroTiempoValue];
+  }
+
+  // Add event listeners to the select elements
+  graficasPrincipales.addEventListener('change', updateH1Text);
+  filtroTiempo.addEventListener('change', updateH1Text);
+
+  // Update the h1 text initially
+  updateH1Text();
+  // Get references to the elements
+  var th = document.getElementById('titulo-estadisticas-th');
+  var graficasPrincipales = document.getElementById('graficasPrincipales');
+
+  // Mapping of select option values to title text
+  var titleTextMapping = {
+    '/estadisticas/ganancias': 'Ganancias totales',
+    '/estadisticas/ganancias_de_servicio': 'Ganancias por instrumento',
+    '/estadisticas/cantidad_de_servicio': 'Cantidad de servicios'
+  };
+
+  // Function to update the th text
+  function updateThText() {
+    var graficasPrincipalesValue = graficasPrincipales.value;
+    th.textContent = titleTextMapping[graficasPrincipalesValue];
+  }
+
+  // Add event listeners to the select elements
+  graficasPrincipales.addEventListener('change', updateThText);
+
+  // Update the th text initially
+  updateThText();
 </script>
 {% endblock %}
