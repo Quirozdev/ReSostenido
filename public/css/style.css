@@ -197,6 +197,12 @@ input[type="file"]::file-selector-button {
     z-index: 10;
     text-align: center;
 }
+.graficas:hover:active{
+    background-color: #DAE2E7;
+}
+#filtroTiempo:hover::before{
+    background-color: #DAE2E7;
+}
 
 #progress {
     -webkit-appearance: none;
