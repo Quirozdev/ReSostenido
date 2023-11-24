@@ -221,7 +221,7 @@ CREATE FUNCTION validar_plazo_cancelacion(fecha_a_checar DATE, hora_a_checar TIM
       RETURN false;
     END IF;
 
-    -- Ya paso el plazo de cancelación
+    -- Ya paso el plazo de cancelacion
     IF fecha_y_hora_a_checar <= DATE_SUB(fecha_actual, INTERVAL -24 HOUR) THEN
       RETURN false;
     END IF;
