@@ -1,138 +1,299 @@
 {% extends "layout.html" %}
 {% block body %}
+<div class="margin-top-90">
+  <header class="header-area">
+    <div class="header-hero" data-scroll-index="0">
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-5"></div>
+      <div class="shape shape-6"></div>
+      <div class="container">
+        <div class="row align-items-center justify-content-center justify-content-lg-between">
+          <div class="col-lg-6 col-md-8">
+            <div class="header-hero-content">
+              {% if usuario %}
+              <h1 class="header-title wow fadeInLeftBig fw-bold mb-3" style="color: #0d6ba2;" data-wow-duration="3s"
+                data-wow-delay="0.2s">¡Hola,
+                {{usuario.nombre}}!</h1>
+              <p class="wow fadeInLeftBig" data-wow-duration="3s" data-wow-delay="0.4s">Gracias por iniciar sesión
+                en nuestro sitio web. Esperamos que disfrutes de tu experiencia.
+                <br>
+                En Re Sostenido, nos enorgullece ofrecer una amplia gama de servicios que garantizan el rendimiento y la
+                longevidad de tu guitarra. Ofrecemos servicios de reparación, ajuste, personalización y restauración
+                para asegurarnos de que tu instrumento suene y se vea exactamente como deseas.
+              <ul class="d-flex">
+                <li><a href="#" class="main-btn wow fadeInLeftBig" data-wow-duration="3s" data-wow-delay="0.8s"
+                    onclick="scrollToFeatures()">Navegar</a></li>
+              </ul>
+              </p>
+              {% else %}
+              <h1 class="header-title wow fadeInLeftBig" data-wow-duration="3s" data-wow-delay="0.2s"><span
+                  style="color: #0d6ba2;" class="fw-bold">Re
+                  Sostenido:</span><br> Mantenimiento y Reparación</h1>
+              <p class="text wow fadeInLeftBig" data-wow-duration="3s" data-wow-delay="0.4s">En Re sostenido, somos
+                apasionados por la música y la excelencia en la artesanía de las guitarras. Nuestra misión es
+                proporcionar a los músicos y amantes de las guitarras una experiencia excepcional al brindar una gama de
+                servicios de calidad para sus instrumentos.</p>
 
-<header class="header pt-7 margin-top-110">
-    {% if usuario %}
-    <div class="container-xl">
-        <div class="container">
-            <div class="row">
-                {% if usuario.es_admin %}
-                <p class="fs-1 ms-4 mt-5 fw-bold">
-                    ¡Hola, {{usuario.nombre}}!
-                </p>
-                <div class="col d-flex justify-content-center align-middle">
-                    <div class="card mb-5 mt-5 bg-transparent card-style">
-                        <div class="card-index rounded-pill">
-                            <img src="/images/citas-admin.webp" class="card-img-top" alt="citas-admin">
-                        </div>
-                        <a href="/citas" class="btn botones mt-2 rounded-pill">Citas</a>
-                    </div>
-                </div>
-                <div class="col d-flex justify-content-center align-middle">
-                    <div class="card mb-5 mt-5 bg-transparent card-style">
-                        <div class="card-index rounded-pill">
-                            <img src="/images/servicios-admin.webp" class="card-img-top" alt="servicios-admin">
-                        </div>
-                        <a href="/administrar_servicios" class="btn botones mt-2 rounded-pill">Administración de
-                            servicios</a>
-                    </div>
-                </div>
-                {% else %}
-                <div class="ms-4">
-                    <p class="fs-1 ms-4 mt-5 fw-bold">
-                        ¡Hola, {{ usuario.nombre }}!
-                    </p>
-                </div>
-                <div class="col d-flex justify-content-center align-middle">
-                    <div class="card mb-5 mt-5 bg-transparent card-style">
-                        <div class="card-index rounded-pill">
-                            <img src="/images/citas-user.webp" class="card-img-top" alt="citas-user">
-                        </div>
-                        <a id="misCitas" href="/citas" class="btn botones mt-2 rounded-pill">Mis Citas</a>
-                    </div>
-                </div>
-                <div class="col d-flex justify-content-center align-middle">
-                    <div class="card mb-5 mt-5 bg-transparent card-style">
-                        <div class="card-index rounded-pill">
-                            <img src="/images/servicios-user.webp" class="card-img-top" alt="servicios-user">
-                        </div>
-                        <a id="serviciosDisponibles" href="/servicios" class="btn botones mt-2 rounded-pill">Servicios
-                            Disponibles</a>
-                    </div>
-                </div>
-                {% endif %}
+              {% endif %}
             </div>
-            <div class="row">
-                {% if usuario.es_admin %}
-                <div class="col d-flex justify-content-center align-middle">
-                    <div class="card mb-5 mt-5 bg-transparent card-style">
-                        <div class="card-index rounded-pill">
-                            <img src="/images/estadisticas-admin.webp" class="card-img-top" alt="estadisticas-admin">
-                        </div>
-                        <a id="estadisticas" href="/estadisticas" class="btn botones mt-2 rounded-pill">Estadísticas</a>
-                    </div>
-                </div>
-                {% else %}
-                <div class="col d-flex justify-content-center align-middle">
-                    <div class="card mb-5 mt-5 bg-transparent card-style">
-                        <div class="card-index rounded-pill">
-                            <img src="/images/FAQ-user.webp" class="card-img-top" alt="FAQ-user">
-                        </div>
-                        <a id="faq" href="/faq" class="btn botones mt-2 rounded-pill">FAQ</a>
-                    </div>
-                </div>
-                {% endif %}
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="header-image">
+              <img src="/images/guitar-landing.webp" alt="" class="image-1  wow fadeInRightBig" data-wow-duration="3s"
+                data-wow-delay="0.5s">
             </div>
+          </div>
         </div>
+      </div>
+      <div class="container">
+        <div class="header-shape-1 d-none d-md-block"></div>
+        <div class="header-shape-2 d-none d-md-block">
+          <img src="/images/header-shape-2.svg" alt="">
+        </div>
+      </div>
     </div>
-    <hr>
-    {% endif %}
+  </header>
+  <section class="feature-section pt-80" data-scroll-index="1">
+    <div class="container">
+      {% if usuario %}
+      <div class="row justify-content-center">
+        <div class="col-xl-6 col-lg-7">
+          <div class="section-title text-center mb-30">
+            <h1 class="mb-25  wow fadeInUp fw-bold mt-4" data-wow-delay=".2s"> <span style="color: #0d6ba2;">Navega
+              </span><span>por nuestra página</span></h1>
+            <p class="wow fadeInUp" data-wow-delay=".4s">Selecciona cualquier opción</p>
+          </div>
+        </div>
+      </div>
+      {% if usuario.es_admin %}
+      <div class="row justify-content-center">
+        <div class="col-lg-4">
+          <div class="single-feature wow fadeInUp shadow-lg p-3 mb-5 bg-body rounded" data-wow-duration="3s"
+            data-wow-delay="0.2s">
+            <div class="icon color-1">
+              <i class="fa-solid fa-pencil"></i>
+            </div>
+            <div class="content">
+              <h3>Administración de servicios</h3>
+              <a href="/administrar_servicios" class="btn botones mt-2 rounded">Clic aquí</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="single-feature wow fadeInUp shadow-lg p-3 mb-5 bg-body rounded" data-wow-duration="3s"
+            data-wow-delay="0.4s">
+            <div class="icon color-2">
+              <i class="fa-solid fa-guitar"></i>
+            </div>
+            <div class="content">
+              <h3>Administración de citas</h3>
+              <a href="/citas" class="btn botones mt-2 rounded">Clic aquí</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="single-feature wow fadeInUp shadow-lg p-3 mb-5 bg-body rounded" data-wow-duration="3s"
+            data-wow-delay="0.6s">
+            <div class="icon color-3">
+              <i class="fa-solid fa-chart-line"></i>
+            </div>
+            <div class="content">
+              <h3>Estadísticas</h3>
+              <a id="estadisticas" href="/estadisticas" class="btn botones mt-2 rounded">Estadísticas</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- CONDICIONES DE ADMIN -->
+      {% else %}
+      <!-- CONDICIONES DE USUARIO -->
+      <div class="row justify-content-center">
+        <div class="col-lg-4">
+          <div class="single-feature wow fadeInUp shadow-lg p-3 mb-5 bg-body rounded" data-wow-duration="3s"
+            data-wow-delay="0.2s">
+            <div class="icon color-1">
+              <i class="fa-solid fa-book"></i>
+            </div>
+            <div class="content">
+              <h3>Mis citas</h3>
+              <p>Ve tu historial de citas.
+              </p>
+              <a id="misCitas" href="/citas" class="btn botones mt-2 mb-5 rounded">Mis Citas</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="single-feature wow fadeInUp shadow-lg p-3 mb-5 bg-body rounded" data-wow-duration="3s"
+            data-wow-delay="0.4s">
+            <div class="icon color-2">
+              <i class="fa-solid fa-guitar"></i>
+            </div>
+            <div class="content">
+              <h3>Servicios Disponibles</h3>
+              <p>Ve los servicios que contamos.
+              </p>
+              <a id="serviciosDisponibles" href="/servicios" class="btn botones mt-2 rounded mb-5">Servicios
+                Disponibles</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="single-feature wow fadeInUp shadow-lg p-3 mb-5 bg-body rounded" data-wow-duration="3s"
+            data-wow-delay="0.6s">
+            <div class="icon color-3">
+              <i class="far fa-comment"></i>
+            </div>
+            <div class="content">
+              <h3>Foro</h3>
+              <p>¿Dudas? Pregunta en nuestro foro.
+              </p>
+              <a id="foro" href="/foro" class="btn botones mt-2 mb-5 rounded">Foro</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% endif %}
 
-    <div class="container-xl">
+    </div>
+  </section>
+  <section class="about-area pt-70 pb-120" data-scroll-index="2">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <div class="about-image wow fadeInLeftBig" data-wow-duration="3s" data-wow-delay="0.5s">
+            <div class="about-shape"></div>
+            <img src="/images/guitar-landing-2.webp" alt="" width="300px" class="app">
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="about-content mt-50 wow fadeInRightBig" data-wow-duration="3s" data-wow-delay="0.5s">
+            <div class="section-title">
+              <h1 class="title fw-bold">Servicios de <span style="color: #0d6ba2;">Calidad</span></h1>
+              <p class="text">En Re Sostenido, nos enorgullece ofrecer una amplia gama de servicios que garantizan el
+                rendimiento y la longevidad de tu guitarra. Ofrecemos servicios de reparación, ajuste, personalización y
+                restauración para asegurarnos de que tu instrumento suene y se vea exactamente como deseas.</p>
+            </div>
+            <a href="/servicios" class="main-btn mb-5">Agendar una cita</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section pt-120" data-scroll-index="5">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-xl-6 col-lg-7">
+          <div class="section-title text-center mb-60">
+            <h1 class="mb-25 wow fadeInUp fw-bold" data-wow-delay=".2s">Preguntas <span
+                style="color: #0d6ba2;">Frecuentes</span></h1>
+            <p class="mb-25 wow fadeInUp" data-wow-delay=".4s">Lo que algunos clientes suelen preguntar</p>
+          </div>
+        </div>
         <div class="row">
-            <div class="col-md-6">
-                <div class="text-container p-4 d-flex flex-column justify-content-center h-100 mb-5">
-                    <h1 class="display-6">Nosotros</h1>
-                    <p class="lead text-secondary"><small>
-                            En Re sostenido, somos apasionados por la música y la excelencia en la artesanía de las
-                            guitarras.
-                            Nuestra misión es proporcionar a los músicos y amantes de las guitarras una experiencia
-                            excepcional al brindar una gama de servicios de calidad para sus instrumentos.
-                        </small></p>
-                    <h1 class="display-6 mt-2">Nuestra pasión por la música</h1>
-                    <p class="lead text-secondary"><small>
-                            La música tiene el poder de inspirar, conmover y unir a las personas. Como amantes de la
-                            música,
-                            entendemos la importancia de tener un instrumento que se sienta como una extensión de ti
-                            mismo.
-                            Ya sea que seas un profesional de la guitarra o un principiante entusiasta, estamos aquí
-                            para
-                            ayudarte a cuidar, mantener y optimizar tu instrumento para que puedas expresarte plenamente
-                            a
-                            través de la música.
-                        </small></p>
+          <div class="col-lg-6">
+            <div class="accordion wow fadeInLeftBig" id="accordionExample" data-wow-duration="3s" data-wow-delay="0.5s">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    ¿Cómo agendar un servicio?
+                  </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                  data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    Puedes agendar tu calibración en la sección de servicios al hacer click en el botón de "Agendar". Si
+                    el servicio no aparece disponible, siempre puedes contactarte con nosotros por WhatsApp al número en
+                    nuestra sección de contacto.
+                  </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="image-container mb-5 px-4">
-                    <img src="/images/landingpage-1.webp" alt="" width="100%" height="100%" class="mt-5 rounded">
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    ¿Cuánto tiempo toma la calibración?
+                  </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                  data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    El tiempo varía según el estado del instrumento, pero si no tiene ningun problema severo,
+                    generalmente
+                    toma 3 horas a partir de que se comienza a trabajar en él, el tiempo aumenta si hay que conseguir
+                    cuerdas o piezas de recambio.
+                  </div>
                 </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    ¿Qué garantías tiene el servicio?
+                  </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                  data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    El servicio tiene garantía de 14 días a partir de que se te entrega el instrumento, en caso que
+                    requieras un ajuste en la altura de las cuerdas, correción en la afinación o detalles que se hayan
+                    tratado sobre tu instrumento.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFour">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    ¿Qué sucede cuando llevo mi instrumento a calibrar?
+                  </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                  data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    El instrumento se revisa al recibirlo y se te dará aviso si se ven señales de algun problema severo
+                    (torcedura en el brazo, trastes desnivelados, etc) para advertir la posibilidad de que existan
+                    trasteos aun despues de la calibración. Una vez se recibe tu instrumento se realiza el proceso
+                    descrito en la sección de servicio para tu instrumento.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFive">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                    ¿Hacen reparaciones de guitarras acusticas?
+                  </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
+                  data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    Sí hacemos reparaciones pero depende el caso, comunicate por mensaje para poder darte una
+                    evaluación.
+                    Hacemos reparaciones de puente, cabezal, bridge doctor y otras reparaciones menores. No hacemos
+                    retoques de pintura, reparaciones mayores o en la caja de instrumentos acusticos.
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="faq-image wow fadeInRightBig" data-wow-duration="3s" data-wow-delay="0.5s">
+              <img src="/images/faq-img.svg" alt="">
+            </div>
+          </div>
         </div>
-    </div>
-    <hr>
-    <div class="container-xl">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="image-container mb-5 px-4 d-flex justify-content-center align-items-center">
-                    <img src="/images/landingpage-2.webp" alt="landingpage-2" width="70%" height="70%" class="rounded">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="text-container p-4 d-flex flex-column justify-content-center h-100 mb-5">
-                    <h1 class="display-6">Servicios de Calidad</h1>
-                    <p class="lead text-secondary"><small>
-                            En Re Sostenido, nos enorgullece ofrecer una amplia gama de servicios que garantizan el
-                            rendimiento y la longevidad de tu guitarra.
-
-                            Ofrecemos servicios de reparación, ajuste, personalización y restauración para asegurarnos
-                            de que tu instrumento suene y se vea exactamente como deseas.
-                        </small></p>
-                    <a href="/servicios"><button id="btnagendarcita"
-                            class="btn btn-lg w-100 fs-6 botones rounded-pill">Ver Servicios</button></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
+      </div>
+  </section>
+</div>
+<script>
+  function scrollToFeatures() {
+    $('html, body').animate({
+      scrollTop: $('[data-scroll-index="1"]').offset().top
+    }, 1000); // Ajusta la duración del desplazamiento según tus preferencias
+  }
+</script>
 {% endblock %}

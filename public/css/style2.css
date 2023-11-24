@@ -1,15 +1,7 @@
-/* -------------- font google --------- */
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
-
-
-/* ----------- global ---------------- */
 
 img {
     max-width: 100%;
 }
-
-
-/* ------------ all button css ---------- */
 
 .main-btn {
     display: inline-block;
@@ -32,204 +24,6 @@ img {
 
 /* ------------ all animation ---------- */
 
-@keyframes video {
-    0% {
-        transform: scale(1);
-        opacity: 1;
-    }
-
-    100% {
-        transform: scale(1.4);
-        opacity: 0;
-    }
-}
-
-@keyframes bounceTop-1 {
-
-    0%,
-    100% {
-        transform: translateY(-30px);
-    }
-
-    50% {
-        transform: translateY(0px);
-    }
-}
-
-@keyframes animation-1 {
-    0% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.2);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-}
-
-@keyframes spinner-linspin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes spinner-easespin {
-    12.5% {
-        transform: rotate(135deg);
-    }
-
-    25% {
-        transform: rotate(270deg);
-    }
-
-    37.5% {
-        transform: rotate(405deg);
-    }
-
-    50% {
-        transform: rotate(540deg);
-    }
-
-    62.5% {
-        transform: rotate(675deg);
-    }
-
-    75% {
-        transform: rotate(810deg);
-    }
-
-    78.5% {
-        transform: rotate(945deg);
-    }
-
-    to {
-        transform: rotate(1080);
-    }
-}
-
-@keyframes spinner-left-spin {
-    0% {
-        transform: rotate(130deg);
-    }
-
-    50% {
-        transform: rotate(-5deg);
-    }
-
-    to {
-        transform: rotate(130deg);
-    }
-}
-
-@keyframes spinner-right-spin {
-    0% {
-        transform: rotate(-130deg);
-    }
-
-    50% {
-        transform: rotate(5deg);
-    }
-
-    to {
-        transform: rotate(-130deg);
-    }
-}
-
-/* -------------- preloader css ---------- */
-
-.preloader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: table;
-    height: 100%;
-    width: 100%;
-    background-color: #fff;
-    z-index: 99999;
-}
-
-.preloader .loader {
-    display: table-cell;
-    vertical-align: middle;
-}
-
-.preloader .loader .spinner {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 64px;
-    margin-left: -32px;
-    z-index: 18;
-    pointer-events: none;
-}
-
-.preloader .loader .spinner .spinner-container {
-    pointer-events: none;
-    position: absolute;
-    width: 100%;
-    padding-bottom: 100%;
-    top: 50%;
-    left: 50%;
-    margin-top: -50%;
-    margin-left: -50%;
-    animation: spinner-linspin 1568ms linear infinite;
-}
-
-.preloader .loader .spinner .spinner-container .spinner-rotator {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    animation: spinner-easespin 5332ms cubic-bezier(.4, 0, .2, 1) infinite both;
-}
-
-.preloader .loader .spinner .spinner-container .spinner-rotator .spinner-right {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    overflow: hidden;
-    left: 50%;
-}
-
-.preloader .loader .spinner .spinner-container .spinner-rotator .spinner-left {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    overflow: hidden;
-    right: 50%;
-}
-
-.preloader .loader .spinner-right .spinner-circle {
-    left: -100%;
-    right: 0;
-    border-left-color: #eceff8;
-    animation: spinner-right-spin 1333ms cubic-bezier(.4, 0, .2, 1) infinite both;
-
-}
-
-.preloader .loader .spinner-left .spinner-circle {
-    left: 0;
-    right: -100%;
-    border-right-color: #eceff8;
-    animation: spinner-left-spin 1333ms cubic-bezier(.4, 0, .2, 1) infinite both;
-}
-
-.preloader .loader .spinner-circle {
-    box-sizing: border-box;
-    position: absolute;
-    width: 200%;
-    height: 100%;
-    border-style: solid;
-    border-color: #0898e7 #0898e7 #eceff8;
-    border-radius: 50%;
-    border-width: 6px;
-}
-
-/* ----------- home css ---------- */
 
 .header-hero {
     position: relative;
@@ -465,8 +259,8 @@ img {
     position: relative;
     text-align: center;
     margin-left: 50px;
-    padding-top: 100px;
-    padding-bottom: 100px;
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
 .about-image .about-shape {
@@ -500,11 +294,10 @@ img {
 }
 
 .about-image .app {
-    max-width: 280px;
+    max-width: 400px;
     position: absolute;
     top: 100px;
-    left: 95px;
-    transform: rotate(-25deg) translateY(-15%);
+    left: 70px;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px),

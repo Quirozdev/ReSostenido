@@ -12,9 +12,11 @@ body {
 .right-box {
     padding: 40px 30px 40px 40px;
 }
+
 .box-area-right {
     width: 930px;
 }
+
 ::placeholder {
     font-size: 16px;
 }
@@ -63,7 +65,7 @@ body {
 
 .botones {
     color: #ffffff;
-    background-color: #034165;
+    background-color: #09679d;
 }
 
 .botones:hover {
@@ -107,6 +109,7 @@ table.table thead th {
 .vertical-align-middle {
     vertical-align: middle;
 }
+
 .vertical-align-bottom {
     vertical-align: bottom;
 }
@@ -369,25 +372,28 @@ button:hover i.fa-trash {
 
 /* Estilo inicial del navbar */
 #navbar {
-    background-color: #034165; /* Color de fondo transparente */
+    background-color: #034165;
+    /* Color de fondo transparente */
     transition: background-color 0.3s;
-  }
-  
-  /* Estilo del navbar cuando haces scroll hacia abajo */
-  #navbar.scrolled {
-    background-color: #034165; /* Cambia el color de fondo a rojo */
-  }
+}
 
-  #navbar.admin-menu .nav-item {
-    width: 20%; /* Divide el espacio en 5 columnas (5 elementos) */
+/* Estilo del navbar cuando haces scroll hacia abajo */
+#navbar.scrolled {
+    background-color: #034165;
+    /* Cambia el color de fondo a rojo */
+}
+
+#navbar.admin-menu .nav-item {
+    width: 20%;
+    /* Divide el espacio en 5 columnas (5 elementos) */
     text-align: center;
-  }
-  
-  /* Estilo adicional para el menú de administrador cuando el usuario es admin */
-  #navbar.admin-menu .nav-link {
+}
+
+/* Estilo adicional para el menú de administrador cuando el usuario es admin */
+#navbar.admin-menu .nav-link {
     padding: 10px 0;
-  }
-  
+}
+
 
 nav {
     min-height: 70px;
@@ -421,7 +427,7 @@ nav .navbar-brand .fs-6 {
 
 .navbar-light .navbar-nav .nav-link.active {
     color: rgb(202, 145, 47);
-    
+
 }
 
 .navbar-dark {
@@ -504,15 +510,36 @@ nav ul li a .cart::after {
 }
 
 #myChart {
-    width: 100%; /* Ancho del canvas */
+    width: 100%;
+    /* Ancho del canvas */
     height: auto;
 }
 
 /* Estilo personalizado para la tabla */
 #tabla-container {
     max-height: 400px;
-    overflow-y: auto; /* Agrega desplazamiento vertical si es necesario */
+    overflow-y: auto;
+    /* Agrega desplazamiento vertical si es necesario */
 }
+.loader {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 1s linear infinite;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -40px;
+    margin-left: -40px;
+    display: none;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 
 /*Shrinking for mobile*/
 @media (max-width: 768px) {

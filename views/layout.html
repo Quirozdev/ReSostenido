@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/style2.css" />
   <title>Re Sostenido</title>
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -19,6 +20,7 @@
   <link href="https://code.jquery.com/ui/1.9.2/themes/smoothness/jquery-ui.css" rel="stylesheet" />
   <script src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
   <script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+
 </head>
 <nav class="navbar navbar-expand-lg fixed-top navbar-light " id="navbar">
   <div class="container">
@@ -37,60 +39,75 @@
     <div class="collapse navbar-collapse justify-content-end" id="mynav">
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-          
+
           <li class="nav-item me-3 half-hover" id="indexNavItem">
-            <a class="nav-link"  style="display: flex; align-items: flex-start; line-height: 1;" href="/"><i class="far fa-address-book pe-2"></i>Inicio</a>
+            <a class="nav-link" style="display: flex; align-items: flex-start; line-height: 1;" href="/"><i
+                class="far fa-address-book pe-2"></i>Inicio</a>
           </li>
 
           <li class="nav-item me-3 half-hover" id="foroNavItem">
-            <a class="nav-link" style="display: flex; align-items: flex-start; line-height: 1;" href="/foro"><i class="far fa-comment pe-2"></i>Foro</a>
+            <a class="nav-link" style="display: flex; align-items: flex-start; line-height: 1;" href="/foro"><i
+                class="far fa-comment pe-2"></i>Foro</a>
           </li>
 
           {% if usuario.es_admin %}
           <li class="nav-item me-3 half-hover" id="AdministrarServiciosNavItem">
-            <a class="nav-link" style="display: flex; align-items: flex-start; line-height: 1;" href="/administrar_servicios"><i class="fa-solid fa-pencil pe-2"></i>Servicios</a>
+            <a class="nav-link" style="display: flex; align-items: flex-start; line-height: 1;"
+              href="/administrar_servicios"><i class="fa-solid fa-pencil pe-2"></i>Servicios</a>
           </li>
 
           <li class="nav-item me-3 half-hover" id="SolicitudesPreguntasNavItem">
-            <a class="nav-link" style="display: flex; align-items: flex-start; line-height: 1;" href="/solicitudes_preguntas"><i class="far fa-envelope pe-2"></i>Solicitudes de
+            <a class="nav-link" style="display: flex; align-items: flex-start; line-height: 1;"
+              href="/solicitudes_preguntas"><i class="far fa-envelope pe-2"></i>Solicitudes de
               preguntas</a>
           </li>
 
           <li class="nav-item me-3 half-hover" id="EstadisticasNavItem">
-            <a class="nav-link" style="display: flex; align-items: flex-start; line-height: 1;" href="/estadisticas"><i class="fa-solid fa-chart-line pe-2"></i>Estadísticas</a>
+            <a class="nav-link" style="display: flex; align-items: flex-start; line-height: 1;" href="/estadisticas"><i
+                class="fa-solid fa-chart-line pe-2"></i>Estadísticas</a>
           </li>
 
           {% else %}
           <li class="nav-item me-3 half-hover" id="serviciosNavItem">
-            <a class="nav-link" style="display: flex; align-items: flex-start; line-height: 1;" href="/servicios"><i class="fa-solid fa-guitar pe-2"></i>Servicios</a>
+            <a class="nav-link" style="display: flex; align-items: flex-start; line-height: 1;" href="/servicios"><i
+                class="fa-solid fa-guitar pe-2"></i>Servicios</a>
           </li>
           {% endif %}
 
           {% if usuario %} {% if usuario.es_admin %}
           <li class="nav-item me-3 half-hover" id="citasNavItem">
-            <a class="nav-link" style="display: flex; align-items: flex-start; line-height: 1;" href="/citas"><i class="fa-solid fa-guitar pe-2"></i>Citas</a>
+            <a class="nav-link" style="display: flex; align-items: flex-start; line-height: 1;" href="/citas"><i
+                class="fa-solid fa-guitar pe-2"></i>Citas</a>
           </li>
 
           {% else %}
           <li class="nav-item me-3 half-hover" id="citasNavItem">
-            <a class="nav-link" style="display: flex; align-items: flex-start; line-height: 1;" href="/citas"><i class="fa-solid fa-book pe-2"></i>Mis Citas</a>
+            <a class="nav-link" style="display: flex; align-items: flex-start; line-height: 1;" href="/citas"><i
+                class="fa-solid fa-book pe-2"></i>Mis Citas</a>
           </li>
 
           {% endif %} {% else %}
           <li class="nav-item me-3 half-hover" id="loginNavItem">
-            <a class="nav-link" style="display: flex; align-items: flex-start; line-height: 1;" href="/login"><i class="far fa-copy pe-2"></i>Iniciar Sesión</a>
+            <a class="nav-link" style="display: flex; align-items: flex-start; line-height: 1;" href="/login"><i
+                class="far fa-copy pe-2"></i>Iniciar Sesión</a>
           </li>
 
           {% endif %}
 
           {% if usuario %}
-          <li class="nav-item me-3 half-hover" id="logoutNavItem">
-            <a class="nav-link" style="display: flex; align-items: flex-start; line-height: 1;" href="/logout" style="color: red;"><i class="fa-solid fa-right-from-bracket pe-2"
-                style="color: red;"></i>Cerrar Sesión</a>
+          <li class="nav-item me-3 half-hover rounded"
+            style="background-color: white; transition: background-color 0.3s;" id="logoutNavItem">
+            <a class="nav-link btn" col href="/logout"
+              style="display: flex; align-items: flex-start; line-height: 1; color: #0c5e8d;">
+              <i class="fa-solid fa-right-from-bracket pe-2"></i>
+              Cerrar Sesión
+            </a>
           </li>
+
           {% else %}
           <li class="nav-item me-3 half-hover" id="registerNavItem">
-            <a class="nav-link" style="display: flex; align-items: flex-start; line-height: 1;" href="/register"><i class="far fa-user pe-2"></i>Registrarse</a>
+            <a class="nav-link" style="display: flex; align-items: flex-start; line-height: 1;" href="/register"><i
+                class="far fa-user pe-2"></i>Registrarse</a>
           </li>
           {% endif %}
         </ul>
@@ -98,209 +115,6 @@
     </div>
   </div>
 </nav>
-
-<!--
-<nav class="navbar navbar-expand-custom navbar-mainbg fixed-top" id="navbar">
-  <a class="navbar-brand navbar-logo" id="imgLogo" href="/"><img src="/images/logo.webp" alt="Logo" width="70"
-      height="70" class="d-inline-block align-text-top" /></a>
-  <button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false"
-    aria-label="Toggle navigation">
-    <i class="fas fa-bars text-white"></i>
-  </button>
-  <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-    <ul class="navbar-nav">
-      <li class="nav-item" id="indexNavItem">
-        <a class="nav-link" href="/"><i class="far fa-address-book"></i>Inicio</a>
-      </li>
-
-      <li class="nav-item" id="foroNavItem">
-        <a class="nav-link" href="/foro"><i class="far fa-comment"></i>Foro</a>
-      </li>
-
-      {% if usuario.es_admin %}
-      <li class="nav-item" id="AdministrarServiciosNavItem">
-        <a class="nav-link" href="/administrar_servicios"><i class="fa-solid fa-pencil"></i>Servicios</a>
-      </li>
-
-      <li class="nav-item" id="SolicitudesPreguntasNavItem">
-        <a class="nav-link" href="/solicitudes_preguntas"><i class="far fa-envelope"></i>Solicitudes de preguntas</a>
-      </li>
-
-      {% else %}
-      <li class="nav-item" id="serviciosNavItem">
-        <a class="nav-link" href="/servicios"><i class="fa-solid fa-guitar"></i>Servicios</a>
-      </li>
-      {% endif %}
-
-      <li class="nav-item" id="faqNavItem">
-        <a class="nav-link" href="/FAQ"><i class="far fa-circle-question"></i>FAQ</a>
-      </li>
-
-      {% if usuario %} {% if usuario.es_admin %}
-      <li class="nav-item" id="citasNavItem">
-        <a class="nav-link" href="/citas"><i class="fa-solid fa-guitar"></i>Citas</a>
-      </li>
-      <li class="nav-item" id="adminNavItem">
-        <a class="nav-link" href="/perfil"><i class="far fa-user"></i>Admin</a>
-      </li>
-
-      {% else %}
-      <li class="nav-item" id="citasNavItem">
-        <a class="nav-link" href="/citas"><i class="fa-solid fa-book"></i>Citas</a>
-      </li>
-      <li class="nav-item" id="adminNavItem">
-        <a class="nav-link" href="/perfil"><i class="far fa-user"></i>Perfil</a>
-      </li>
-
-      {% endif %} {% else %}
-      <li class="nav-item" id="loginNavItem">
-        <a class="nav-link" href="/login"><i class="far fa-copy"></i>Iniciar Sesión</a>
-      </li>
-
-      {% endif %}
-
-      {% if usuario %}
-      <li class="nav-item" id="logoutNavItem">
-        <a class="nav-link" href="/logout" style="color: red;"><i class="fa-solid fa-right-from-bracket"
-            style="color: red;"></i>Cerrar Sesión</a>
-      </li>
-      {% else %}
-      <li class="nav-item" id="registerNavItem">
-        <a class="nav-link" href="/register"><i class="far fa-user"></i>Registrarse</a>
-      </li>
-      {% endif %}
-    </ul>
-  </div>
-</nav>
--->
-
-<!--
-  <nav class="navbar bg-body-tertiary fixed-top shadow p-3 mb-5 bg-body rounded">
-    <div class="container-fluid">
-      <a id="imgLogo" href="/"><img src="/images/logo.webp" alt="Logo" width="100" height="100"
-          class="d-inline-block align-text-top" /></a>
-      <button id="navbar-toggler" class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
-        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-        <div class="offcanvas-header">
-          <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="offcanvas"
-            aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-            <div class="mb-2 fs-4 mt-2">
-              <li class="nav-item mb-4 half-hover">
-                <a class="nav-link" href="/citas">
-                  <div id="citas" class="d-flex align-items-center">
-                    <img id="imgCitas" src="/images/citas.webp" alt="Citas" id="imgCitas"
-                      class="nav-icon ms-2 icons-navbar" />
-                    Citas
-                  </div>
-                </a>
-              </li>
-              <li class="nav-item mb-4 half-hover">
-                <a class="nav-link" href="/foro">
-                  <div id="foro" class="d-flex align-items-center">
-                    <img id="imgForo" src="/images/forum.webp" alt="Foro" 
-                      class="nav-icon ms-2 icons-navbar" />
-                    Foro
-                  </div>
-                </a>
-              </li>
-
-              {% if usuario.es_admin %}
-              <li class="nav-item mb-4">
-                <a class="nav-link" href="/administrar_servicios">
-                  <div id="adminServicios" class="d-flex align-items-center">
-                    <img id="imgAdminServicios" src="/images/servicios.webp" alt="Servicios"
-                      class="nav-icon ms-2 icons-navbar" />
-                    Servicios
-                  </div>
-                </a>
-              </li>
-              <li class="nav-item mb-4">
-                <a class="nav-link" href="/solicitudes_preguntas">
-                  <div id="solicitudesPreguntas" class="d-flex align-items-center">
-                    <img id="imgsolicitudesPreguntas" src="/images/solicitudes-preguntas.webp" alt="Solicitudes de preguntas"
-                      class="nav-icon ms-2 icons-navbar" />
-                    Solicitudes de preguntas
-                  </div>
-                </a>
-              </li>
-              {% else %}
-              <li class="nav-item mb-4">
-                <a class="nav-link" href="/servicios">
-                  <div id="servicios" class="d-flex align-items-center">
-                    <img id="imgServicios" src="/images/servicios.webp" alt="Servicios"
-                      class="nav-icon ms-2 icons-navbar" />
-                    Servicios
-                  </div>
-                </a>
-              </li>
-              {% endif %}
-
-              <li class="nav-item mb-4">
-                <a class="nav-link" href="/FAQ">
-                  <div id="faq" class="d-flex align-items-center mb-5">
-                    <img id="imgFaq" src="/images/FAQ.webp" alt="FAQ" class="nav-icon ms-2 icons-navbar" />
-                    FAQ
-                  </div>
-                </a>
-              </li>
-              <li class="nav-item mb-4 mt-5">
-                {% if usuario %} {% if usuario.es_admin %}
-                <a class="nav-link" href="/perfil">
-                  <div id="admin" class="d-flex align-items-center mt-4">
-                    <img id="imgAdmin" src="/images/iniciar-sesion.webp" alt="Login"
-                      class="nav-icon ms-2 icons-navbar" />
-                    Admin
-                  </div>
-                </a>
-                {% else %}
-                <a class="nav-link" href="/perfil">
-                  <div id="perfil" class="d-flex align-items-center mt-4">
-                    <img id="imgPerfil" src="/images/iniciar-sesion.webp" alt="Login"
-                      class="nav-icon ms-2 icons-navbar" />
-                    Perfil
-                  </div>
-                </a>
-                {% endif %} {% else %}
-                <a class="nav-link" href="/login">
-                  <div id="iniciarSesion" class="d-flex align-items-center">
-                    <img id="imgIniciarSesion" src="/images/iniciar-sesion.webp" alt="Login"
-                      class="nav-icon ms-2 icons-navbar" />
-                    Iniciar Sesión
-                  </div>
-                </a>
-                {% endif %}
-              </li>
-              <li class="nav-item mt-4">
-                {% if usuario %}
-                <a class="nav-link" href="/logout">
-                  <div class="d-flex align-items-center">
-                    <img src="/images/logout.webp" alt="Cerrar Sesión" class="nav-icon ms-2 icons-navbar" />
-                    Cerrar Sesión
-                  </div>
-                </a>
-                {% else %}
-                <a class="nav-link" href="/register">
-                  <div id="registrarse" class="d-flex align-items-center">
-                    <img id="imgregistrarse" src="/images/registrarse.webp" alt="Registrarse"
-                      class="nav-icon ms-2 icons-navbar" />
-                    Registrarse
-                  </div>
-                </a>
-                {% endif %}
-              </li>
-            </div>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </nav>
-  -->
 </div>
 
 <body>
@@ -336,125 +150,8 @@
       Copyright &copy; Re Sostenido 2023
     </p>
   </footer>
-  <script>
-    // Función para cambiar el estilo del navbar al hacer scroll
-    function handleScroll() {
-      var navbar = document.getElementById("navbar");
-      var navLinks = document.querySelectorAll("#navbar .nav-link");
-
-      if (window.scrollY > 80) {
-        navbar.classList.add("scrolled");
-        navbar.classList.remove("navbar-light");
-        //navbar.classList.add("navbar-dark");
-
-        // Cambia el color del texto a blanco
-        for (var i = 0; i < navLinks.length; i++) {
-          navLinks[i].classList.add("text-white");
-          navLinks[i].classList.remove("text-black");
-        }
-      } else {
-        navbar.classList.remove("scrolled");
-        navbar.classList.remove("navbar-dark");
-        navbar.classList.add("navbar-light");
-
-        // Cambia el color del texto a negro
-        for (var i = 0; i < navLinks.length; i++) {
-          navLinks[i].classList.remove("text-white");
-          //navLinks[i].classList.add("text-black");
-        }
-      }
-    }
-
-    // Agregar un event listener para el evento "scroll"
-    window.addEventListener("scroll", handleScroll);
-
-
-
-    document.addEventListener("DOMContentLoaded", function () {
-      // Obtiene la URL actual
-      var currentURL = window.location.pathname;
-
-      // Verifica si la URL coincide con "/servicios"
-      if (currentURL === "/servicios") {
-        // Agrega la clase "active" al elemento <li>
-        var serviciosNavItem = document.getElementById("serviciosNavItem");
-        if (serviciosNavItem) {
-          serviciosNavItem.classList.add("active");
-        }
-      }
-      else if (currentURL === "/foro") {
-        // Agrega la clase "active" al elemento <li>
-        var foroNavItem = document.getElementById("foroNavItem");
-        if (foroNavItem) {
-          foroNavItem.classList.add("active");
-        }
-      }
-      else if (currentURL === "/citas") {
-        // Agrega la clase "active" al elemento <li>
-        var citasNavItem = document.getElementById("citasNavItem");
-        if (citasNavItem) {
-          citasNavItem.classList.add("active");
-        }
-      }
-      else if (currentURL === "/administrar_servicios") {
-        // Agrega la clase "active" al elemento <li>
-        var AdministrarServiciosNavItem = document.getElementById("AdministrarServiciosNavItem");
-        if (AdministrarServiciosNavItem) {
-          AdministrarServiciosNavItem.classList.add("active");
-        }
-      }
-      else if (currentURL === "/solicitudes_preguntas") {
-        // Agrega la clase "active" al elemento <li>
-        var SolicitudesPreguntasNavItem = document.getElementById("SolicitudesPreguntasNavItem");
-        if (SolicitudesPreguntasNavItem) {
-          SolicitudesPreguntasNavItem.classList.add("active");
-        }
-      }
-      else if (currentURL === "/FAQ") {
-        // Agrega la clase "active" al elemento <li>
-        var faqNavItem = document.getElementById("faqNavItem");
-        if (faqNavItem) {
-          faqNavItem.classList.add("active");
-        }
-      }
-      else if (currentURL === "/login") {
-        // Agrega la clase "active" al elemento <li>
-        var loginNavItem = document.getElementById("loginNavItem");
-        if (loginNavItem) {
-          loginNavItem.classList.add("active");
-        }
-      }
-      else if (currentURL === "/register") {
-        // Agrega la clase "active" al elemento <li>
-        var registerNavItem = document.getElementById("registerNavItem");
-        if (registerNavItem) {
-          registerNavItem.classList.add("active");
-        }
-      }
-      else if (currentURL === "/perfil") {
-        // Agrega la clase "active" al elemento <li>
-        var adminNavItem = document.getElementById("adminNavItem");
-        if (adminNavItem) {
-          adminNavItem.classList.add("active");
-        }
-      }
-      else if (currentURL === "/logout") {
-        // Agrega la clase "active" al elemento <li>
-        var logoutNavItem = document.getElementById("logoutNavItem");
-        if (logoutNavItem) {
-          logoutNavItem.classList.add("active");
-        }
-      }
-      else if (currentURL === "/") {
-        var indexNavItem = document.getElementById("indexNavItem");
-        if (indexNavItem) {
-          indexNavItem.classList.add("active");
-        }
-      }
-
-    });
-
-  </script>
+  <script src="/js/jquery-1.12.4.min.js"></script>
+  <script src="/js/main.js"></script>
 </body>
 
 </html>
