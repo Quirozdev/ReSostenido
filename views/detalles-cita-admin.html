@@ -190,7 +190,32 @@
       comportamiento_cita.es_cancelable %} style="display: none;" {% endif %}>
       <div class="d-flex" style="justify-content: center;">
         <div class="me-2">
-          <button class="btn btn-lg w-100 fs-6 btn-delete mb-3" type="submit">Cancelar cita</button>
+          <button type="button" class="btn btn-lg w-100 fs-6 botones mb-3" data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop" id="btn-eliminar-pregunta">
+          Cancelar cita
+        </button>
+        </div>
+      </div>
+      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" id="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">¿Estás seguro
+                de cancelar la cita?
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                id="btn-close"></button>
+            </div>
+            <div class="modal-body" id="recordatorio">
+              Recuerda que no podrás recuperar el anticipo que diste para esta cita.
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                id="btn-cancelar">Cancelar</button>
+              <button type="submit" class="btn btn-delete" id="btn-aceptar-cancelar-cita">Aceptar</button>
+            </div>
+          </div>
         </div>
       </div>
     </form>
@@ -263,8 +288,6 @@
 
   cancelarCitaForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const confirmacion = confirm('¿Cancelar cita?');
-    if (!confirmacion) return;
     const url = cancelarCitaForm.getAttribute('action');
     const { error, mensaje } = await cancelarCita(url);
 
