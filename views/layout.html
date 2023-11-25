@@ -119,7 +119,7 @@
 
 <body>
   {% block body %}{% endblock %}
-  <footer class="p-3 text-center color-principal mt-5 footer">
+  <footer id="seccionfooter" class="p-3 text-center color-principal mt-5 footer">
     <p class="text-center small text-muted mb-3 mt-2">
       <a id="agendarCitas" class="text-light" href="/agendar_cita">Agendar citas</a> |
       <a id="servicios" class="text-light" href="/servicios">Servicios</a> |
@@ -127,24 +127,24 @@
       <a id="iniciarSesion" class="text-light" href="/login">Iniciar Sesión</a> |
       <a id="registrarse" class="text-light" href="/register">Registrarse</a>
     </p>
-    <section class="mb-2 pb-0">
-      <a class="btn text-white btn-floating m-3" style="background-color: #3b5998;"
+    <section id="seccionredessociales" class="mb-2 pb-0">
+      <a id="facebook" class="btn text-white btn-floating m-3" style="background-color: #3b5998;"
         href="https://www.facebook.com/ReSostenidoMods" role="button"><i class="fab fa-facebook-f"></i></a>
-      <a class="btn text-white btn-floating m-3" style="background-color: #25D366;"
+      <a id="whatsapp" class="btn text-white btn-floating m-3" style="background-color: #25D366;"
         href="https://wa.me/526623272793?text=Me%20gustar%C3%ADa%20saber%20m%C3%A1s%20informaci%C3%B3n%20de%20Re%20Sostenido."
         role="button"><i class="fab fa-whatsapp"></i></a>
-      <a class="btn text-white btn-floating m-3" style="background-color: #ac2bac;"
+      <a id="instragram" class="btn text-white btn-floating m-3" style="background-color: #ac2bac;"
         href="https://www.instagram.com/resostenidomods/" role="button"><i class="fab fa-instagram"></i></a>
     </section>
-    <p id="copyright" class="text-center small">
-    <div class="icon-circle">
+    <p class="text-center small">
+    <div id="icondireccion" class="icon-circle">
       <i class="fa-solid fa-location-dot"></i>
     </div>
-    <span class="text-light me-3">San Raymundo #64, Villa Verde, 83118 Hermosillo, Son. </span>
-    <div class="icon-circle">
+    <span id="direccion" class="text-light me-3">San Raymundo #64, Villa Verde, 83118 Hermosillo, Son. </span>
+    <div id="icontelefono" class="icon-circle">
       <i class="fa-solid fa-phone-volume"></i>
     </div>
-    <span class="text-light">+ 52 1 662 351 1195</span>
+    <span id="telefono" class="text-light">+ 52 1 662 351 1195</span>
     </p>
     <p id="copyright" class="text-center small text-light">
       Copyright &copy; Re Sostenido 2023

@@ -521,6 +521,7 @@ nav ul li a .cart::after {
     overflow-y: auto;
     /* Agrega desplazamiento vertical si es necesario */
 }
+
 .loader {
     border: 16px solid #f3f3f3;
     border-top: 16px solid #3498db;
@@ -534,12 +535,68 @@ nav ul li a .cart::after {
     margin-top: -40px;
     margin-left: -40px;
     display: none;
-  }
+}
 
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+.background-services {
+    background: rgb(120, 150, 175);
+    background: linear-gradient(0deg, rgba(120, 150, 175, 1) 0%, rgba(41, 102, 142, 1) 38%, rgba(3, 65, 101, 1) 84%);
+}
+
+
+.curved-div {
+    position: relative;
+    background: #12527D;
+    color: #fbfbfb;
+    text-align: center;
+    overflow: hidden;
+}
+
+.curved-div svg {
+    display: block;
+}
+
+.curved-div.upper {
+    background: #fbfbfb;
+}
+
+.shape {
+    position: relative;
+    top: 30px;
+    background-size: 500px 400px;
+    border-radius: 80% 20% 32% 68% / 58% 22% 78% 42%;
+    height: 400px;
+    width: 500px;
+    background-image: url(/images/img-servicio-user-1.webp)
+}
+
+.shape-container {
+    position: absolute;
+}
+
+
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@media (min-width: 990px) and (max-width: 1200px) {
+    .shape {
+        position: relative;
+        top: 30px;
+        right: 40px;
+        background-size: 500px 400px;
+        border-radius: 80% 20% 32% 68% / 58% 22% 78% 42%;
+        height: 400px;
+        width: 500px;
+        background-image: url(/images/img-servicio-user-1.webp)
+    }
+}
 
 /*Shrinking for mobile*/
 @media (max-width: 768px) {

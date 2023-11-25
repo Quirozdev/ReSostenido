@@ -1,97 +1,42 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<header class="header pt-7 margin-top-110">
-    <div class="container-xl">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="text-container p-4 d-flex flex-column justify-content-center h-100 mb-5">
-                    <h1 id="servicios" class="fs-3">Servicios</h1>
-                    <p class="lead text-secondary"><small>
-                            Nuestro servicio de calibración de instrumentos musicales está diseñado para elevar tu
-                            experiencia musical al máximo. Con una atención meticulosa al detalle, nuestro equipo de
-                            expertos se encarga de optimizar el rendimiento de tu instrumento para que puedas disfrutar
-                            al máximo de tu música.
-                        </small></p>
-                    <h1 id="serviciosIncluye" class="fs-4">Incluye:</h1>
-                    <p class="lead text-secondary"><small>
-                        - Limpieza del instrumento. 
-                        - Ajuste del brazo, puente y nut (cejuela). 
-                        - Entonación (octavación) del instrumento. - Pulido de trastes y diapasón. 
-                        - Hidratación del diapasón y puente en instrumentos acústicos. 
-                        - Ajuste de la altura de las cuerdas. 
-                        - Revisión de la electrónica en instrumentos eléctricos.
-                        </small></p>
-                    <h1 id="serviciosNoIncluye" class="fs-4">No incluye:</h1>
-                    <p class="lead text-secondary"><small>
-                            - Cuerdas (se recomienda traer un paquete nuevo).
-                        </small></p>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="image-container mb-5 px-4">
-                    <img src="/images/img-servicio-user-1.webp" alt="" width="100%" height="100%" class="mt-5 rounded">
-                </div>
+<div class="margin-top-90">
+    <header class="py-5 background-services">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 id="titulo" class="display-4 fw-bolder">Nuestros servicios</h1>
+                <p id="subtitulo" class="lead fw-normal text-white-50 mb-0">Agenda tu cita y disfruta de nuestros servicios.</p>
             </div>
         </div>
-    </div>
+    </header>
     <div class="container-xl">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="image-container mb-5 px-4 d-flex justify-content-center align-items-center">
-                    <img src="images/img-servicio-user-2.webp" alt="landingpage-2" width="70%" height="70%"
-                        class="rounded">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="text-container p-4 d-flex flex-column justify-content-center h-100 mb-5">
-                    <p class="lead text-secondary"><small>
-                            1. Valoración inicial: Realizamos una inspección visual para evaluar el estado general del
-                            instrumento y detectar posibles problemas graves.
-                            <br>
-                            2. Inspección con cuerdas: Realizamos una revisión conectada para identificar cualquier
-                            problema adicional y efectuamos un preajuste con las cuerdas existentes.
-                            <br>
-                            3. Limpieza y
-                            cuidado: Retiramos las cuerdas y llevamos a cabo una limpieza completa del instrumento.
-                            También realizamos un pulido de trastes y diapason, seguido de la hidratación, especialmente
-                            en instrumentos acústicos.
-                            <br>
-                            4. Instalación de cuerdas: Instalamos nuevas cuerdas (no incluidas en el servicio) y
-                            ajustamos el alma, puente, tuerca y entonación para garantizar la máxima comodidad y
-                            afinación.
-                            <br>
-                            5. Servicio eléctrico: Para instrumentos eléctricos, realizamos un ajuste y limpieza
-                            minuciosos de la electrónica.
-                            <br>
-                            6. Afinación personalizada: Calibramos el instrumento según tus preferencias de afinación,
-                            asegúrate de comunicarnos estos detalles.
-                        </small>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <hr>
-    <div class="container-xl">
-        <h2 id="serviciosDisponibles8" class="mt-5 mb-5 fs-1">Servicios disponibles</h2>
         <div class="container">
             {% for grupo in grupos %}
-            <h2 class="mt-5 mb-5">{{ grupo }}</h2>
-            <div class="row row-cols-1 row-cols-md-3 d-flex justify-content-center align-middle">
+            <h2 id="nombre_grupo" style="color: #0d6ba2;" class="mt-5 text-center fw-bold text-uppercase">{{ grupo }}</h2>
+            <div class="row row-cols-1 row-cols-md-4 d-flex justify-content-center align-middle">
                 {% for servicio in servicios[grupo] %}
-                <div class="col d-flex justify-content-center align-middle">
-                    <div class="card mb-2 mt-2 bg-transparent card-style">
-                        <div class="card-index rounded-pill mt-3" style="display: flex; justify-content: center; align-items: center;">
-                            <img src="/images/servicios/{{ servicio.url_imagen }}" class="card-img-top" alt="servicio-{{ servicio.nombre_instrumento }}">
+                <div class="col d-flex justify-content-center align-middle mt-3">
+                    <div class="card h-100 mb-2 mt-2 bg-transparent card-style">
+                        <div class="card-index mt-3"
+                            style="display: flex; justify-content: center; align-items: center;">
+                            <img src="/images/servicios/{{ servicio.url_imagen }}" class="card-img-top"
+                                alt="servicio-{{ servicio.nombre_instrumento }}" id="ServiciosImagen">
                         </div>
-                        
-                        <div class="card-body">
-                            <h5 id="serviciosNombreInstrumento" class="card-title">{{ servicio.nombre_instrumento }}</h5>
-                            <p id="serviciosDescripcion" class="card-text">{{ servicio.descripcion }}</p>
-                            <p id="servicioPrecio" class="card-text">Precio: ${{ servicio.precio }}</p>
-                            <a id="agendar" href="/citas/agendar-cita/{{ servicio.id }}"
-                                class="btn mt-2 rounded-pill d-flex justify-content-center align-middle botones">Agendar</a>
+
+                        <div class="card-body text-center p-4">
+                            <h5 class="fw-bolder" id="serviciosNombreInstrumento">{{ servicio.nombre_instrumento }}
+                            </h5>
+                            <div id="serviciosDescripcion">{{ servicio.descripcion }}</div>
+                            <br>
+                            <div id="servicioPrecio">
+                                Precio: ${{ servicio.precio }}
+                            </div>
+                        </div>
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a id="agendar" class="btn botones mt-auto"
+                                    href="/citas/agendar-cita/{{ servicio.id }}">Agendar</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -100,7 +45,83 @@
             {% endfor %}
         </div>
     </div>
-    <hr>
-</header>
+    <div id="figurasvg" class="curved-div upper mt-5">
+        <svg viewBox="0 0 1440 319">
+            <path fill="#12527D" fill-opacity="1"
+                d="M0,32L48,80C96,128,192,224,288,224C384,224,480,128,576,90.7C672,53,768,75,864,96C960,117,1056,139,1152,149.3C1248,160,1344,160,1392,160L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+            </path>
+        </svg>
+    </div>
+    <div class="curved-div">
+        <div class="container">
+            <div class="container">
+                <div class="row">
+                    <div class="content-column col-lg-6 col-md-12 col-sm-12 order-2">
+                        <div class="inner-column">
+                            <div class="sec-title mb-4">
+                                <span id="titulo_de_sección" class="title">Procedimiento</span>
+                            </div>
+                            <div id="informacion" class="fs-5">
+                                <span class="fw-bold" style="color: rgb(202, 145, 47);">Valoración inicial
+                                </span>Realizamos una inspección visual para evaluar el
+                                estado general del
+                                instrumento y detectar posibles problemas graves.
+                                <br>
+                                <span class="fw-bold" style="color: rgb(202, 145, 47);">Inspección de cuerdas
+                                </span>Realizamos una revisión conectada para identificar
+                                cualquier
+                                problema adicional y efectuamos un preajuste con las cuerdas existentes.
+                                <br>
+                                <span class="fw-bold" style="color: rgb(202, 145, 47);">Limpieza y cuidado
+                                </span>Retiramos las cuerdas y llevamos a cabo una limpieza
+                                completa del
+                                instrumento. También realizamos un pulido de trastes y diapason, seguido de la
+                                hidratación,
+                                especialmente en instrumentos acústicos.
+                                <br>
+                                <span class="fw-bold" style="color: rgb(202, 145, 47);">Instalación de cuerdas </span>
+                                Instalamos nuevas cuerdas (no incluidas en el
+                                servicio) y ajustamos
+                                el alma, puente, tuerca y entonación para garantizar la máxima comodidad y
+                                afinación.
+                                <br>
+                                <span class="fw-bold" style="color: rgb(202, 145, 47);">Servicio eléctric </span> Para
+                                instrumentos eléctricos, realizamos un ajuste y
+                                limpieza
+                                minuciosos de la electrónica.
+                                <br>
+                                <span class="fw-bold" style="color: rgb(202, 145, 47);">Afinación personalizada</span>
+                                Calibramos el instrumento según tus preferencias de
+                                afinación,
+                                asegúrate de comunicarnos estos detalles.
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Image Column -->
+                    <div class="col-lg-6 col-md-12 col-sm-12 text-center">
+                        <div class="inner-column wow fadeInLeft">
+                            <div id="acerca-de-servicios" class="author-desc">
+                                <h2 class="mt-5 fw-bold">Acerca de<span class="fw-bold"
+                                        style="color: rgb(202, 145, 47);"> nuestros servicios</span> </h2>
+                                <span>En Re Sostenido</span>
+                            </div>
+
+                            <figure class="image-1 mb-5">
+                                <div id="shape" class="shape"></div>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <svg viewBox="0 0 1440 319">
+            <path fill="#fbfbfb" fill-opacity="1"
+                d="M0,32L48,80C96,128,192,224,288,224C384,224,480,128,576,90.7C672,53,768,75,864,96C960,117,1056,139,1152,149.3C1248,160,1344,160,1392,160L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+            </path>
+        </svg>
+    </div>
+</div>
+
 
 {% endblock %}
