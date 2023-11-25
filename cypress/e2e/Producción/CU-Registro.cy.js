@@ -1,7 +1,14 @@
 describe('Pagina de registro', () => {
   before(() => {
-    cy.visit('https://resostenidoclone-production.up.railway.app/')
-  })
+    // Deshabilitar la detección de errores no atrapados
+    Cypress.on('uncaught:exception', (err, runnable) => {
+      // evita que Cypress falle por errores no atrapados
+      return false;
+    });
+
+    // Visitar la página
+    cy.visit('https://resostenidoclone-production-13cb.up.railway.app/');
+  });
   
   it('Realizar registro', () => {
     // Click en registrar

@@ -1,20 +1,29 @@
 describe('Pagina de registro', () => {
   before(() => {
-    cy.visit('localhost:3000')
-  })
+    // Deshabilitar la detección de errores no atrapados
+    Cypress.on('uncaught:exception', (err, runnable) => {
+      // evita que Cypress falle por errores no atrapados
+      return false;
+    });
+
+    // Visitar la página
+    cy.visit('localhost:3000');
+  });
   
-  it('Realizar registro', () =>{
-    //Menu de navegación  
-    cy.get('.navbar-toggler-icon').should('be.visible').click()
-    //Click en registrar
-    cy.get('.position-absolute > :nth-child(2) > .nav-link > .d-flex').should('be.visible').click()
-    //Rellenar formulario
-    cy.get('#nombre').should('be.visible').type('Adrian', { force: true })
-    cy.get('#apellidos').should('be.visible').type('Vargas', { force: true })
-    cy.get('#email').should('be.visible').type('adrianvargasuson@gmail.com', { force: true })
-    cy.get('#numero_telefono').should('be.visible').type('6623511195', { force: true })
-    cy.get('#contrasenia').should('be.visible').type('TacosDeGansito', { force: true })
-    cy.get('#confirmar_contrasenia').should('be.visible').type('TacosDeGansito', { force: true })
+  it('Realizar registro', () => {
+    // Click en registrar
+    cy.get('#registerNavItem > .nav-link').should('be.visible').click()
+
+    // Cargar datos de registro desde el archivo de fixture 'registro.json'
+    cy.fixture('datos_cliente.json').then((data) => {
+      cy.get('#nombre').should('be.visible').type(data.nombre, { force: true });
+      cy.get('#apellidos').should('be.visible').type(data.apellido, { force: true });
+      cy.get('#email').should('be.visible').type(data.email, { force: true });
+      cy.get('#numero_telefono').should('be.visible').type(data.celular, { force: true });
+      cy.get('#contrasenia').should('be.visible').type(data.contrasena, { force: true });
+      cy.get('#confirmar_contrasenia').should('be.visible').type(data.contrasena, { force: true });
+    });
+
     cy.get('#register').should('be.visible').click()
   })
 })

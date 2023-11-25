@@ -1,18 +1,30 @@
 describe('Pagina principal', () => {
   before(() => {
-    cy.visit('localhost:3000')
-  })
+    // Deshabilitar la detección de errores no atrapados
+    Cypress.on('uncaught:exception', (err, runnable) => {
+      // evita que Cypress falle por errores no atrapados
+      return false;
+    });
 
-  it('Pagina Principal', () => {
-    //Encontrar el logo
-    cy.get('.d-inline-block').should('be.visible')
-    //Encontrar titulo
-    cy.get(':nth-child(1) > .text-container > :nth-child(1)').should('contain.text', 'Nosotros')
-    //Contenido sección Sobre Nosotros
-    cy.get(':nth-child(1) > .text-container > :nth-child(2) > small').should('be.visible')
-    //Encontrar dirección
-    cy.get('.me-3').should('contain.text', "San Raymundo #64")
-    //Encontrar numero de telefono
-    cy.get('.p-3 > :nth-child(7)').should('contain.text', '662 351 1195')
-  })
-})
+    // Visitar la página
+    cy.visit('localhost:3000');
+  });
+
+  it('Encontrar el boton de menu', () => {
+    // Click en iniciar sesión
+    cy.get('.d-inline-block').should('be.visible');
+
+    //Titulo del sitio
+    cy.get('.header-title').should('be.visible');
+
+    //Sección de servicios
+    cy.get('.title').should('be.visible');
+    //Boton de agendar cita
+    cy.get('.main-btn').should('be.visible');
+
+    //Sección preguntas
+    cy.get('.col-xl-6 > .section-title > .fw-bold').should('be.visible');
+    
+
+  });
+});

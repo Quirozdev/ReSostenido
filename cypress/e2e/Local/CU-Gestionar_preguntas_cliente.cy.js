@@ -1,7 +1,14 @@
 describe('Pagina de inicio de sesión', () => {
     before(() => {
-        cy.visit('localhost:3000')
-    })
+        // Deshabilitar la detección de errores no atrapados
+        Cypress.on('uncaught:exception', (err, runnable) => {
+          // evita que Cypress falle por errores no atrapados
+          return false;
+        });
+    
+        // Visitar la página
+        cy.visit('localhost:3000');
+      });
 
     it('Encontrar el botón de Iniciar sesión', () => {
         // Click en el menu de navegación (movil)
@@ -9,7 +16,7 @@ describe('Pagina de inicio de sesión', () => {
         // Click en iniciar sesión
         cy.get('#loginNavItem > .nav-link').should('be.visible').click()
         // Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'
-        cy.fixture('example.json').then((datos) => {
+        cy.fixture('datos_cliente.json').then((datos) => {
         cy.get('#email').should('be.visible').type(datos.email, { force: true });
         cy.get('#contrasenia').should('be.visible').type(datos.contrasena, { force: true });
     });

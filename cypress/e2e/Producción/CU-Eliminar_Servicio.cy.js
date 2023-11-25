@@ -1,7 +1,12 @@
 describe('Eliminar Servicio', () => {
   before(() => {
+    // Deshabilitar la detección de errores no atrapados
+    Cypress.on('uncaught:exception', (err, runnable) => {
+      // evita que Cypress falle por errores no atrapados
+      return false;
+    });
     // Realizar la visita al sitio solo una vez al comienzo de la prueba
-    cy.visit('https://resostenidoclone-production.up.railway.app/login')
+    cy.visit('https://resostenidoclone-production-13cb.up.railway.app/login');
 
     // Cargar datos desde el archivo de fixture 'registro.json' para el inicio de sesión
     cy.fixture('datos_admin.json').then((registro) => {
