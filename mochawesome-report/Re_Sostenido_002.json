@@ -1,0 +1,118 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2023-11-27T01:22:31.971Z",
+    "end": "2023-11-27T01:22:43.768Z",
+    "duration": 11797,
+    "testsRegistered": 1,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "d4b11447-6cb9-415e-8978-42eed76159e7",
+      "title": "",
+      "fullFile": "cypress\\e2e\\Producción\\CU-Consultar_citas_cliente.cy.js",
+      "file": "cypress\\e2e\\Producción\\CU-Consultar_citas_cliente.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "fe167bef-4dda-45b4-8203-56d2ef938600",
+          "title": "Pagina de inicio de sesion",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Encontrar el boton de menu",
+              "fullTitle": "Pagina de inicio de sesion Encontrar el boton de menu",
+              "timedOut": null,
+              "duration": 8533,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "{\n  \"title\": \"cypress-mochawesome-reporter-screenshots\",\n  \"value\": [\n    [\n      \"\\\\CU-Consultar_citas_cliente.cy.js\\\\Pagina de inicio de sesion -- Encontrar el boton de menu (failed).png\"\n    ]\n  ]\n}",
+              "code": "// Click en iniciar sesión\ncy.get('#loginNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'\ncy.fixture('datos_cliente.json').then(datos => {\n  cy.get('#email').should('be.visible').type(datos.email, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(datos.contrasena, {\n    force: true\n  });\n});\n//Iniciar sesión\ncy.get('#login').should('be.visible').click();\n//Click en citas\ncy.get('#citasNavItem > .nav-link').should('be.visible').click();\n//Buscar cita para guitarra acustica:\ncy.fixture('datos_cliente.json').then(datos => {\n  cy.get('#CPnombre').should('contain.text', datos.nombre_instrumento);\n  cy.get('#CPdescripcion_servicio').should('contain.text', datos.descripcion);\n  cy.get('#CPanticipo').should('contain.text', datos.anticipo);\n});",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: expected '<td#CPnombre>' to contain text 'Guitarra acústica', but the text was 'Guitarra eléctrica 6 cuerdas'",
+                "estack": "AssertionError: Timed out retrying after 4000ms: expected '<td#CPnombre>' to contain text 'Guitarra acústica', but the text was 'Guitarra eléctrica 6 cuerdas'\n    at Context.eval (webpack://resostenido/./cypress/e2e/Producción/CU-Consultar_citas_cliente.cy.js:31:26)",
+                "diff": "- 'Guitarra eléctrica 6 cuerdas'\n+ 'Guitarra acústica'\n"
+              },
+              "uuid": "f1975179-1322-4dff-90a7-0591d82eb6d1",
+              "parentUUID": "fe167bef-4dda-45b4-8203-56d2ef938600",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "f1975179-1322-4dff-90a7-0591d82eb6d1"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 8533,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "Re_Sostenido",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "charts": true,
+        "html": true,
+        "reportsDir": "cypress/reports/mochawesome",
+        "reportFilename": "Re_Sostenido",
+        "overwrite": false,
+        "reporterEnabled": "mochawesome",
+        "mochawesomeReporterOptions": {
+          "reportDir": "cypress/reports/mocha",
+          "quiet": true,
+          "overwrite": false,
+          "html": true,
+          "json": true
+        }
+      },
+      "version": "6.2.0"
+    }
+  }
+}

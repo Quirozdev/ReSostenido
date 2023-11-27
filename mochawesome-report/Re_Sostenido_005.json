@@ -1,0 +1,118 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2023-11-27T01:23:18.782Z",
+    "end": "2023-11-27T01:23:34.971Z",
+    "duration": 16189,
+    "testsRegistered": 1,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "c4e6845f-ef7d-4463-8ca9-da1ac24185d3",
+      "title": "",
+      "fullFile": "cypress\\e2e\\Producción\\CU-Gestionar_preguntas_admin.cy.js",
+      "file": "cypress\\e2e\\Producción\\CU-Gestionar_preguntas_admin.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "20f523a8-a641-465a-8873-ff0a38ba5559",
+          "title": "Pagina de inicio de sesión",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Encontrar el botón de menú",
+              "fullTitle": "Pagina de inicio de sesión Encontrar el botón de menú",
+              "timedOut": null,
+              "duration": 13729,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "{\n  \"title\": \"cypress-mochawesome-reporter-screenshots\",\n  \"value\": [\n    [\n      \"\\\\CU-Gestionar_preguntas_admin.cy.js\\\\Pagina de inicio de sesión -- Encontrar el botón de menú (failed).png\"\n    ]\n  ]\n}",
+              "code": "// Click en el menu de navegación (movil)\n//cy.get('.navbar-toggler-icon').should('be.visible').click()\n// Click en iniciar sesión (movil)\n//cy.get('.nav-link > #iniciarSesion').should('be.visible').click()\n// Click en iniciar sesión\ncy.get('#loginNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'\ncy.fixture('datos_admin.json').then(datos => {\n  cy.get('#email').should('be.visible').type(datos.email, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(datos.contrasena, {\n    force: true\n  });\n});\n//Iniciar sesión\ncy.get('#login').should('be.visible').click();\n//Click en menu de navegación (movil)\n//cy.get('.navbar-toggler-icon').should('be.visible').click()\n// Click en Foro (movil)\n//cy.get('#foro').click()\n// Click en foro\ncy.get('#foroNavItem > .nav-link').click();\n// 22. Verificar que estemos en el sitio de Foro\ncy.get('#titulo').should('contain.text', '¿En qué podemos ayudarte?');\n// abrir menu (movil)\n//cy.get('.navbar-toggler-icon').click()\n// ir a la seccion de solicitud de preguntas (movil)\n//cy.get('#solicitudesPreguntas').click()\n// ir a la seccion de solicitud de preguntas\ncy.get('#SolicitudesPreguntasNavItem > .nav-link').click();\n// 26. CONTESTAR Y PUBLICAR PREGUNTA DEL CLIENTE EN EL FORO\n// verificar que estemos en el apartado de solicitud de preguntas\ncy.get('.fs-2').should('contain.text', 'Solicitudes de preguntas');\n// Debe de haber al menos dos solicitudes\ncy.get('textarea:first').type(\"Respuesta...\", {\n  force: true\n});\n// darle click en boton responder\ncy.get('.btn').contains(\" Publicar \").click({\n  force: true\n});\n// aceptar\ncy.get(':nth-child(2) > :nth-child(1) > .col-md-12 > .card > .card-footer > .row > [action=\"/responder_pregunta\"] > #staticBackdrop > .modal-dialog > .modal-content > .modal-footer > .botones').click();\n// mensaje de verificacion que se haya publicado\ncy.get('.alert').should(\"contain.text\", \"La pregunta ha sido respondida y publicada en el foro\");\n// 25. Rechazar solicitud de pregunta\n// click en el icono de basura para rechazar pregunta\ncy.get('.row > [action=\"/rechazar_solicitud_pregunta\"] > [data-bs-toggle=\"modal\"]:first').click({\n  force: true\n});\n// aceptar rechazar pregunta\ncy.get('.btn-delete:first').click({\n  force: true\n});\n// TODO: 24. ELIMINAR PREGUNTA PUBLICADA EN EL FORO\n//Click en menu de navegación (movil)\n//cy.get('.navbar-toggler-icon').should('be.visible').click()\n// Click en Foro (movil)\n//cy.get('#foro').click()\n// Click en Foro\ncy.get('#foroNavItem > .nav-link').click();\n// click en el boton de eliminar pregunta\ncy.get('#btn-eliminar-pregunta:first').click({\n  force: true\n});\n// aceptar eliminar la pregunta publicada\ncy.get('#btn-aceptar').click();",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: Expected to find element: `.alert`, but never found it.",
+                "estack": "AssertionError: Timed out retrying after 4000ms: Expected to find element: `.alert`, but never found it.\n    at Context.eval (webpack://resostenido/./cypress/e2e/Producción/CU-Gestionar_preguntas_admin.cy.js:51:25)",
+                "diff": null
+              },
+              "uuid": "34edec6f-9e34-4f6e-b37b-54187ccb0ba4",
+              "parentUUID": "20f523a8-a641-465a-8873-ff0a38ba5559",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "34edec6f-9e34-4f6e-b37b-54187ccb0ba4"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 13729,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "Re_Sostenido",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "charts": true,
+        "html": true,
+        "reportsDir": "cypress/reports/mochawesome",
+        "reportFilename": "Re_Sostenido",
+        "overwrite": false,
+        "reporterEnabled": "mochawesome",
+        "mochawesomeReporterOptions": {
+          "reportDir": "cypress/reports/mocha",
+          "quiet": true,
+          "overwrite": false,
+          "html": true,
+          "json": true
+        }
+      },
+      "version": "6.2.0"
+    }
+  }
+}

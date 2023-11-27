@@ -1,0 +1,114 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2023-11-27T01:24:13.141Z",
+    "end": "2023-11-27T01:24:21.644Z",
+    "duration": 8503,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "55a48f1a-9367-41df-b9eb-3691d7a7980c",
+      "title": "",
+      "fullFile": "cypress\\e2e\\Producción\\CU-Registro.cy.js",
+      "file": "cypress\\e2e\\Producción\\CU-Registro.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "5298e9d6-62ef-4e0f-85f2-9cc49cafb9a7",
+          "title": "Pagina de registro",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Realizar registro",
+              "fullTitle": "Pagina de registro Realizar registro",
+              "timedOut": null,
+              "duration": 5922,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Click en registrar\ncy.get('#registerNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de registro desde el archivo de fixture 'registro.json'\ncy.fixture('datos_cliente.json').then(data => {\n  cy.get('#nombre').should('be.visible').type(data.nombre, {\n    force: true\n  });\n  cy.get('#apellidos').should('be.visible').type(data.apellido, {\n    force: true\n  });\n  cy.get('#email').should('be.visible').type(data.email, {\n    force: true\n  });\n  cy.get('#numero_telefono').should('be.visible').type(data.celular, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(data.contrasena, {\n    force: true\n  });\n  cy.get('#confirmar_contrasenia').should('be.visible').type(data.contrasena, {\n    force: true\n  });\n});\ncy.get('#register').should('be.visible').click();",
+              "err": {},
+              "uuid": "623374f7-6171-4d79-b544-f9185e2c9991",
+              "parentUUID": "5298e9d6-62ef-4e0f-85f2-9cc49cafb9a7",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "623374f7-6171-4d79-b544-f9185e2c9991"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 5922,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "Re_Sostenido",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "charts": true,
+        "html": true,
+        "reportsDir": "cypress/reports/mochawesome",
+        "reportFilename": "Re_Sostenido",
+        "overwrite": false,
+        "reporterEnabled": "mochawesome",
+        "mochawesomeReporterOptions": {
+          "reportDir": "cypress/reports/mocha",
+          "quiet": true,
+          "overwrite": false,
+          "html": true,
+          "json": true
+        }
+      },
+      "version": "6.2.0"
+    }
+  }
+}
