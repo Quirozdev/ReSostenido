@@ -281,7 +281,7 @@ class CitasService {
 
       // mandar correo en caso de que se haya cambiado al estado de terminada
 
-      if (detallesCita.nuevoEstadoCitaId === ESTADOS_CITA.TERMINADA) {
+      if (Number(detallesCita.nuevoEstadoCitaId) === ESTADOS_CITA.TERMINADA) {
         const [usuarios, campos] = await connection.execute(
           'SELECT email FROM usuarios WHERE id = ?',
           [cita.id_usuario]
