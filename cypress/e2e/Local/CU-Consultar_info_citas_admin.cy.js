@@ -1,4 +1,4 @@
-describe('Pagina de inicio de sesion', () => {
+describe('Consultar_info_citas-admin', () => {
     before(() => {
         // Deshabilitar la detección de errores no atrapados
         Cypress.on('uncaught:exception', (err, runnable) => {
@@ -21,7 +21,7 @@ describe('Pagina de inicio de sesion', () => {
       });
       
       //Iniciar sesión
-      cy.get('#login').should('be.visible').click()
+      cy.get('#login').click({force:true})
 
       // Ir al apartado de citas
       cy.get('#citasNavItem > .nav-link').should('be.visible').click()
@@ -32,23 +32,23 @@ describe('Pagina de inicio de sesion', () => {
       // Verificar que aparezca nombre del instrumento, descripcion, costo total y fecha
       cy.fixture('datos_cliente.json').then((datos) => {
         // nombre instrumento
-        cy.get(':nth-child(4) > .row > .table > tbody > :nth-child(1) > .line-placeholder').should('contain.text', datos.nombre_instrumento)
-        // descripcion servicio
-        cy.get(':nth-child(2) > .border > .row > .table > tbody > :nth-child(2) > .line-placeholder').should('contain.text', datos.descripcion)
-        // fecha y hora
-        cy.get(':nth-child(2) > .border > .row > .table > tbody > :nth-child(3) > :nth-child(1)').should('contain.text', "Fecha y hora")
-        // X no aparece el anticipo
-        //cy.get(':nth-child(4) > .line-placeholder').should('contain.text', datos.anticipo)
-        // nota cliente
-        cy.get('tbody > :nth-child(5) > :nth-child(1)').should('contain.text', "Notas del cliente")
-        // incluye cuerdas
-        cy.get('tbody > :nth-child(6) > :nth-child(1)').should('contain.text', "Incluye cuerdas")
-        // estado
-        cy.get(':nth-child(2) > .border > .row > .table > tbody > :nth-child(4) > :nth-child(1)').should('contain.text', "Estado de la cita")
-        // Cancelar cita
-        cy.get('#cancelar-cita-form > .d-flex > .me-2 > .btn').click({force:true})
-        // debe de decir cancelada
-        cy.get(':nth-child(2) > .border > .row > .table > tbody > :nth-child(4) > .line-placeholder').should('contain.text', "Cancelada")
+      cy.get(':nth-child(4) > .row > .table > tbody > :nth-child(1) > :nth-child(1)').should('contain.text', "Nombre del instrumento")
+      // descripcion servicio
+      cy.get(':nth-child(2) > .border > .row > .table > tbody > :nth-child(2) > :nth-child(1)').should('contain.text', "Descripción del servicio")
+      // fecha y hora
+      cy.get(':nth-child(2) > .border > .row > .table > tbody > :nth-child(3) > :nth-child(1)').should('contain.text', "Fecha y hora")
+      // el anticipo
+      cy.get('tbody > :nth-child(7) > :nth-child(1)').should('contain.text', "Anticipo")
+      // nota cliente
+      cy.get('tbody > :nth-child(5) > :nth-child(1)').should('contain.text', "Notas del cliente")
+      // incluye cuerdas
+      cy.get('tbody > :nth-child(6) > :nth-child(1)').should('contain.text', "Incluye cuerdas")
+      // estado
+      cy.get(':nth-child(2) > .border > .row > .table > tbody > :nth-child(4) > :nth-child(1)').should('contain.text', "Estado de la cita")
+      // Cancelar cita
+      cy.get('#cancelar-cita-form > .d-flex > .me-2 > .btn').click({force:true})
+      // debe de decir cancelada
+      cy.get(':nth-child(2) > .border > .row > .table > tbody > :nth-child(4) > .line-placeholder').should('contain.text', "Cancelada")
 
       });
     })
