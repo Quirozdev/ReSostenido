@@ -5,9 +5,9 @@
     "passes": 1,
     "pending": 0,
     "failures": 0,
-    "start": "2023-11-27T01:22:22.287Z",
-    "end": "2023-11-27T01:22:28.686Z",
-    "duration": 6399,
+    "start": "2023-11-27T16:52:29.329Z",
+    "end": "2023-11-27T16:52:38.397Z",
+    "duration": 9068,
     "testsRegistered": 1,
     "passPercent": 100,
     "pendingPercent": 0,
@@ -18,17 +18,17 @@
   },
   "results": [
     {
-      "uuid": "c64fd922-12c0-4ddb-9817-bbda5bc19778",
+      "uuid": "16af7d10-471f-4676-8f47-caf8e299e319",
       "title": "",
-      "fullFile": "cypress\\e2e\\Producción\\CU-Consultar_citas_admin.cy.js",
-      "file": "cypress\\e2e\\Producción\\CU-Consultar_citas_admin.cy.js",
+      "fullFile": "cypress\\e2e\\Producción\\CU-Cancelar_cita_admin.cy.js",
+      "file": "cypress\\e2e\\Producción\\CU-Cancelar_cita_admin.cy.js",
       "beforeHooks": [],
       "afterHooks": [],
       "tests": [],
       "suites": [
         {
-          "uuid": "cb7d5c3e-9449-489a-9ee3-e76eff88972c",
-          "title": "Pagina de inicio de sesion",
+          "uuid": "bd5bba43-3232-467e-bb84-1d2f6e9fb46b",
+          "title": "Cancelar cita Admin",
           "fullFile": "",
           "file": "",
           "beforeHooks": [],
@@ -36,31 +36,31 @@
           "tests": [
             {
               "title": "Encontrar el boton de menu",
-              "fullTitle": "Pagina de inicio de sesion Encontrar el boton de menu",
+              "fullTitle": "Cancelar cita Admin Encontrar el boton de menu",
               "timedOut": null,
-              "duration": 4127,
+              "duration": 6880,
               "state": "passed",
-              "speed": "fast",
+              "speed": "medium",
               "pass": true,
               "fail": false,
               "pending": false,
               "context": null,
-              "code": "// Click en iniciar sesión\ncy.get('#loginNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'\ncy.fixture('datos_admin.json').then(datos => {\n  cy.get('#email').should('be.visible').type(datos.email, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(datos.contrasena, {\n    force: true\n  });\n});\n//Iniciar sesión\ncy.get('#login').should('be.visible').click();\n//Click en citas\ncy.get('#citasNavItem > .nav-link').should('be.visible').click();\n//Buscar cita para guitarra acustica:\ncy.fixture('datos_cliente.json').then(datos => {\n  //cy.get('#CPnombre').should('contain.text', datos.nombre_instrumento)\n  //cy.get('#CPdescripcion_servicio').should('contain.text', datos.descripcion)\n  //cy.get('#CPanticipo').should('contain.text', datos.anticipo)\n});",
+              "code": "// Click en iniciar sesión\ncy.get('#loginNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'\ncy.fixture('datos_admin.json').then(data => {\n  cy.get('#email').should('be.visible').type(data.email, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(data.contrasena, {\n    force: true\n  });\n});\ncy.get('#login').should('be.visible').click();\n//Click en administración de citas\ncy.get(':nth-child(2) > .single-feature > .content > .btn').should('be.visible').click();\n//Click en una cita\ncy.get(':nth-child(2) > .table-responsive > .col-lg-8 > #tabla_servicios > tbody > :nth-child(1) > #CPboton > a > #btnverCita').click();\n//Click en eliminar cita\ncy.get('#cancelar-cita-form > .d-flex > .me-2 > .btn');",
               "err": {},
-              "uuid": "c45fd0fb-f3c1-4c77-9a8e-f3a17f088d7a",
-              "parentUUID": "cb7d5c3e-9449-489a-9ee3-e76eff88972c",
+              "uuid": "8e709ae4-489d-47d5-85ec-b0b013d53fb6",
+              "parentUUID": "bd5bba43-3232-467e-bb84-1d2f6e9fb46b",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "c45fd0fb-f3c1-4c77-9a8e-f3a17f088d7a"
+            "8e709ae4-489d-47d5-85ec-b0b013d53fb6"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 4127,
+          "duration": 6880,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
@@ -96,7 +96,7 @@
       "options": {
         "charts": true,
         "html": true,
-        "reportsDir": "cypress/reports/mochawesome",
+        "reportsDir": "cypress/reports/ReSostenido",
         "reportFilename": "Re_Sostenido",
         "overwrite": false,
         "reporterEnabled": "mochawesome",

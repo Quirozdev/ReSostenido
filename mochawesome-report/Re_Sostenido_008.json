@@ -5,9 +5,9 @@
     "passes": 1,
     "pending": 0,
     "failures": 0,
-    "start": "2023-11-27T01:23:59.284Z",
-    "end": "2023-11-27T01:24:03.886Z",
-    "duration": 4602,
+    "start": "2023-11-27T16:53:42.847Z",
+    "end": "2023-11-27T16:53:50.666Z",
+    "duration": 7819,
     "testsRegistered": 1,
     "passPercent": 100,
     "pendingPercent": 0,
@@ -18,17 +18,17 @@
   },
   "results": [
     {
-      "uuid": "49f3dede-3886-442d-8f91-e22bfd1c95ea",
+      "uuid": "88a00066-6b42-46b1-b066-f5b7633a1cea",
       "title": "",
-      "fullFile": "cypress\\e2e\\Producción\\CU-Pagina_Informativa.cy.js",
-      "file": "cypress\\e2e\\Producción\\CU-Pagina_Informativa.cy.js",
+      "fullFile": "cypress\\e2e\\Producción\\CU-Editar_datos_admin.cy.js",
+      "file": "cypress\\e2e\\Producción\\CU-Editar_datos_admin.cy.js",
       "beforeHooks": [],
       "afterHooks": [],
       "tests": [],
       "suites": [
         {
-          "uuid": "f5afb2bb-c421-4c75-ac40-acfc8af8088b",
-          "title": "Pagina de servicios",
+          "uuid": "01a45506-0640-4e2c-ab16-3b04f73253fa",
+          "title": "Editar datos-admin",
           "fullFile": "",
           "file": "",
           "beforeHooks": [],
@@ -36,31 +36,31 @@
           "tests": [
             {
               "title": "Encontrar el boton de menu",
-              "fullTitle": "Pagina de servicios Encontrar el boton de menu",
+              "fullTitle": "Editar datos-admin Encontrar el boton de menu",
               "timedOut": null,
-              "duration": 2127,
+              "duration": 5774,
               "state": "passed",
-              "speed": "fast",
+              "speed": "medium",
               "pass": true,
               "fail": false,
               "pending": false,
               "context": null,
-              "code": "//Click en servicios\ncy.get('#serviciosNavItem > .nav-link').should('be.visible').click();\n//Titulo sección de Servicios\ncy.get('#titulo').should('be.visible');\n//Encontrar descripción del servicio de calibración\ncy.get('#informacion').should('be.visible');\n//Sección de Servicios Disponibles\n//SECCIÓN DE GUITARRAS:\ncy.get('.container-xl > .container > :nth-child(1)').should('contain.text', 'Guitarras');\n//SECCIÓN DE BAJOS\ncy.get('.container-xl > .container > :nth-child(3)').should('contain.text', 'Bajos');\n//SECCIÓN DE REGIONAL\ncy.get('.container > :nth-child(5)').should('contain.text', 'Otros');",
+              "code": "// Click en iniciar sesión\ncy.get('#loginNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'\ncy.fixture('datos_admin.json').then(data => {\n  cy.get('#email').should('be.visible').type(data.email, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(data.contrasena, {\n    force: true\n  });\n});\ncy.get('#login').should('be.visible').click();\n//Click en administración de citas\ncy.get(':nth-child(2) > .single-feature > .content > .btn').should('be.visible').click();\n//Click en una cita\ncy.get(':nth-child(3) > .table-responsive > .col-lg-8 > #tabla_servicios > tbody > :nth-child(1) > #CPboton > a > #btnverCita').click();\n//Ingresar datos\ncy.get('#marca').should('be.visible');\ncy.get('#modelo').should('be.visible');\ncy.get('#numero_serie').should('be.visible');\ncy.get('#notas_admin').should('be.visible');\n//Boton de actualizar datos\ncy.get('.col-sm-8 > [style=\"justify-content: center;\"] > .me-2 > .btn').should('be.visible');",
               "err": {},
-              "uuid": "e7e34a94-3927-4e91-b30f-e5d52292830f",
-              "parentUUID": "f5afb2bb-c421-4c75-ac40-acfc8af8088b",
+              "uuid": "f2917349-1acc-46ec-87a6-1f0c06847f6e",
+              "parentUUID": "01a45506-0640-4e2c-ab16-3b04f73253fa",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "e7e34a94-3927-4e91-b30f-e5d52292830f"
+            "f2917349-1acc-46ec-87a6-1f0c06847f6e"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 2127,
+          "duration": 5774,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
@@ -96,7 +96,7 @@
       "options": {
         "charts": true,
         "html": true,
-        "reportsDir": "cypress/reports/mochawesome",
+        "reportsDir": "cypress/reports/ReSostenido",
         "reportFilename": "Re_Sostenido",
         "overwrite": false,
         "reporterEnabled": "mochawesome",

@@ -5,9 +5,9 @@
     "passes": 1,
     "pending": 0,
     "failures": 0,
-    "start": "2023-11-27T16:52:40.673Z",
-    "end": "2023-11-27T16:52:49.675Z",
-    "duration": 9002,
+    "start": "2023-11-27T16:54:45.352Z",
+    "end": "2023-11-27T16:54:54.914Z",
+    "duration": 9562,
     "testsRegistered": 1,
     "passPercent": 100,
     "pendingPercent": 0,
@@ -18,17 +18,17 @@
   },
   "results": [
     {
-      "uuid": "5b943798-808f-4526-ac8a-08c9aea5f3b9",
+      "uuid": "2c7b51ee-0e6d-4ac3-9f76-a5b6668ddf46",
       "title": "",
-      "fullFile": "cypress\\e2e\\Producción\\CU-Cancelar_cita_cliente.cy.js",
-      "file": "cypress\\e2e\\Producción\\CU-Cancelar_cita_cliente.cy.js",
+      "fullFile": "cypress\\e2e\\Producción\\CU-Ingresar_datos_admin.cy.js",
+      "file": "cypress\\e2e\\Producción\\CU-Ingresar_datos_admin.cy.js",
       "beforeHooks": [],
       "afterHooks": [],
       "tests": [],
       "suites": [
         {
-          "uuid": "7342b00d-693d-4f11-9bf6-4552d86e338a",
-          "title": "Cancelar cita cliente",
+          "uuid": "e4e75749-eece-4f14-8150-e2510ad71d81",
+          "title": "Ingresar datos-admin",
           "fullFile": "",
           "file": "",
           "beforeHooks": [],
@@ -36,31 +36,31 @@
           "tests": [
             {
               "title": "Encontrar el boton de menu",
-              "fullTitle": "Cancelar cita cliente Encontrar el boton de menu",
+              "fullTitle": "Ingresar datos-admin Encontrar el boton de menu",
               "timedOut": null,
-              "duration": 6965,
+              "duration": 7539,
               "state": "passed",
               "speed": "medium",
               "pass": true,
               "fail": false,
               "pending": false,
               "context": null,
-              "code": "// Click en iniciar sesión\ncy.get('#loginNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'\ncy.fixture('datos_cliente.json').then(data => {\n  cy.get('#email').should('be.visible').type(data.email, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(data.contrasena, {\n    force: true\n  });\n});\ncy.get('#login').should('be.visible').click();\n//Click en administración de citas\ncy.get('#misCitas').should('be.visible').click();\n//Click en una cita\ncy.get(':nth-child(2) > .table-responsive > .col-lg-8 > #tabla_servicios > tbody > :nth-child(1) > #CPboton > a > #btnverCita').click();\n//Click en eliminar cita\ncy.get('#btn-eliminar-pregunta').should('be.visible').click();\n//Click en aceptar\ncy.get('#btn-aceptar-cancelar-cita').should('be.visible');",
+              "code": "// Click en iniciar sesión\ncy.get('#loginNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'\ncy.fixture('datos_admin.json').then(data => {\n  cy.get('#email').should('be.visible').type(data.email, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(data.contrasena, {\n    force: true\n  });\n});\ncy.get('#login').should('be.visible').click();\n//Click en administración de citas\ncy.get(':nth-child(2) > .single-feature > .content > .btn').should('be.visible').click();\n//Click en una cita\ncy.get(':nth-child(2) > .table-responsive > .col-lg-8 > #tabla_servicios > tbody > :nth-child(1) > #CPboton > a > #btnverCita').click();\n//Cambiar estado de la cita\ncy.get('#seleccionador-estado').should('be.visible').select('En progreso');\n//Ingresar datos\ncy.get('#marca').should('be.visible').type('marca');\ncy.get('#modelo').should('be.visible').type('modelo');\ncy.get('#numero_serie').should('be.visible').type('123456789');\ncy.get('#notas_admin').should('be.visible').type('pruebas notas');\n//Boton de actualizar datos\ncy.get('.col-sm-8 > [style=\"justify-content: center;\"] > .me-2 > .btn').should('be.visible');",
               "err": {},
-              "uuid": "81fdac5f-fbba-43f7-984f-2b9e2e59f873",
-              "parentUUID": "7342b00d-693d-4f11-9bf6-4552d86e338a",
+              "uuid": "83115b0e-cef4-48de-8eb8-6dd8121875a3",
+              "parentUUID": "e4e75749-eece-4f14-8150-e2510ad71d81",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "81fdac5f-fbba-43f7-984f-2b9e2e59f873"
+            "83115b0e-cef4-48de-8eb8-6dd8121875a3"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 6965,
+          "duration": 7539,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000

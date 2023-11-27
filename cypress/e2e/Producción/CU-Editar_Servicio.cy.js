@@ -1,4 +1,4 @@
-describe('Agendar Servicio', () => {
+describe('Editar servicio', () => {
   before(() => {
     // Deshabilitar la detección de errores no atrapados
     Cypress.on('uncaught:exception', (err, runnable) => {

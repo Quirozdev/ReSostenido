@@ -1,4 +1,4 @@
-describe('Pagina de inicio de sesion', () => {
+describe('}consultar citas - admin', () => {
   before(() => {
       // Deshabilitar la detección de errores no atrapados
       Cypress.on('uncaught:exception', (err, runnable) => {

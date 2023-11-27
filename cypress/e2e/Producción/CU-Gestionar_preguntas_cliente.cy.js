@@ -1,4 +1,4 @@
-describe('Pagina de inicio de sesión', () => {
+describe('Gestionar preguntas- cliente', () => {
     before(() => {
         // Deshabilitar la detección de errores no atrapados
         Cypress.on('uncaught:exception', (err, runnable) => {

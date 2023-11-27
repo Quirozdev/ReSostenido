@@ -5,9 +5,9 @@
     "passes": 1,
     "pending": 0,
     "failures": 0,
-    "start": "2023-11-27T16:52:40.673Z",
-    "end": "2023-11-27T16:52:49.675Z",
-    "duration": 9002,
+    "start": "2023-11-27T16:54:57.123Z",
+    "end": "2023-11-27T16:55:03.119Z",
+    "duration": 5996,
     "testsRegistered": 1,
     "passPercent": 100,
     "pendingPercent": 0,
@@ -18,17 +18,17 @@
   },
   "results": [
     {
-      "uuid": "5b943798-808f-4526-ac8a-08c9aea5f3b9",
+      "uuid": "51cad0e2-0d41-42a2-b551-a8395691e9e5",
       "title": "",
-      "fullFile": "cypress\\e2e\\Producción\\CU-Cancelar_cita_cliente.cy.js",
-      "file": "cypress\\e2e\\Producción\\CU-Cancelar_cita_cliente.cy.js",
+      "fullFile": "cypress\\e2e\\Producción\\CU-Inicio_Sesion.cy.js",
+      "file": "cypress\\e2e\\Producción\\CU-Inicio_Sesion.cy.js",
       "beforeHooks": [],
       "afterHooks": [],
       "tests": [],
       "suites": [
         {
-          "uuid": "7342b00d-693d-4f11-9bf6-4552d86e338a",
-          "title": "Cancelar cita cliente",
+          "uuid": "203bf664-6333-449b-8608-8f62fc648687",
+          "title": "Pagina de inicio de sesion",
           "fullFile": "",
           "file": "",
           "beforeHooks": [],
@@ -36,31 +36,31 @@
           "tests": [
             {
               "title": "Encontrar el boton de menu",
-              "fullTitle": "Cancelar cita cliente Encontrar el boton de menu",
+              "fullTitle": "Pagina de inicio de sesion Encontrar el boton de menu",
               "timedOut": null,
-              "duration": 6965,
+              "duration": 3991,
               "state": "passed",
-              "speed": "medium",
+              "speed": "fast",
               "pass": true,
               "fail": false,
               "pending": false,
               "context": null,
-              "code": "// Click en iniciar sesión\ncy.get('#loginNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'\ncy.fixture('datos_cliente.json').then(data => {\n  cy.get('#email').should('be.visible').type(data.email, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(data.contrasena, {\n    force: true\n  });\n});\ncy.get('#login').should('be.visible').click();\n//Click en administración de citas\ncy.get('#misCitas').should('be.visible').click();\n//Click en una cita\ncy.get(':nth-child(2) > .table-responsive > .col-lg-8 > #tabla_servicios > tbody > :nth-child(1) > #CPboton > a > #btnverCita').click();\n//Click en eliminar cita\ncy.get('#btn-eliminar-pregunta').should('be.visible').click();\n//Click en aceptar\ncy.get('#btn-aceptar-cancelar-cita').should('be.visible');",
+              "code": "// Click en iniciar sesión\ncy.get('#loginNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'\ncy.fixture('datos_cliente.json').then(data => {\n  cy.get('#email').should('be.visible').type(data.email, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(data.contrasena, {\n    force: true\n  });\n});\ncy.get('#login').should('be.visible').click();\n//Ver mensaje de bienvenida\ncy.get('.header-title').should('be.visible');\n//Sección de citas para el cliente\ncy.get(':nth-child(1) > .single-feature').should('be.visible');\n//Sección de servicios disponibles\ncy.get(':nth-child(2) > .single-feature').should('be.visible');\n//Sección de foro\ncy.get(':nth-child(3) > .single-feature').should('be.visible');",
               "err": {},
-              "uuid": "81fdac5f-fbba-43f7-984f-2b9e2e59f873",
-              "parentUUID": "7342b00d-693d-4f11-9bf6-4552d86e338a",
+              "uuid": "79657a32-7044-456b-8e0e-9ecc8a7562a1",
+              "parentUUID": "203bf664-6333-449b-8608-8f62fc648687",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "81fdac5f-fbba-43f7-984f-2b9e2e59f873"
+            "79657a32-7044-456b-8e0e-9ecc8a7562a1"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 6965,
+          "duration": 3991,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000

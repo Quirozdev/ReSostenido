@@ -1,24 +1,140 @@
 {
   "stats": {
-    "suites": 11,
-    "tests": 11,
-    "passes": 9,
+    "suites": 18,
+    "tests": 18,
+    "passes": 18,
     "pending": 0,
-    "failures": 2,
-    "testsRegistered": 11,
-    "passPercent": 81.81818181818181,
+    "failures": 0,
+    "testsRegistered": 18,
+    "passPercent": 100,
     "pendingPercent": 0,
     "other": 0,
     "hasOther": false,
     "skipped": 0,
     "hasSkipped": false,
-    "start": "2023-11-27T01:22:03.093Z",
-    "end": "2023-11-27T01:24:21.644Z",
-    "duration": 138551
+    "start": "2023-11-27T16:52:14.002Z",
+    "end": "2023-11-27T16:55:25.967Z",
+    "duration": 191965
   },
   "results": [
     {
-      "uuid": "c64fd922-12c0-4ddb-9817-bbda5bc19778",
+      "uuid": "16af7d10-471f-4676-8f47-caf8e299e319",
+      "title": "",
+      "fullFile": "cypress\\e2e\\Producción\\CU-Cancelar_cita_admin.cy.js",
+      "file": "cypress\\e2e\\Producción\\CU-Cancelar_cita_admin.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "bd5bba43-3232-467e-bb84-1d2f6e9fb46b",
+          "title": "Cancelar cita Admin",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Encontrar el boton de menu",
+              "fullTitle": "Cancelar cita Admin Encontrar el boton de menu",
+              "timedOut": null,
+              "duration": 6880,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Click en iniciar sesión\ncy.get('#loginNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'\ncy.fixture('datos_admin.json').then(data => {\n  cy.get('#email').should('be.visible').type(data.email, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(data.contrasena, {\n    force: true\n  });\n});\ncy.get('#login').should('be.visible').click();\n//Click en administración de citas\ncy.get(':nth-child(2) > .single-feature > .content > .btn').should('be.visible').click();\n//Click en una cita\ncy.get(':nth-child(2) > .table-responsive > .col-lg-8 > #tabla_servicios > tbody > :nth-child(1) > #CPboton > a > #btnverCita').click();\n//Click en eliminar cita\ncy.get('#cancelar-cita-form > .d-flex > .me-2 > .btn');",
+              "err": {},
+              "uuid": "8e709ae4-489d-47d5-85ec-b0b013d53fb6",
+              "parentUUID": "bd5bba43-3232-467e-bb84-1d2f6e9fb46b",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "8e709ae4-489d-47d5-85ec-b0b013d53fb6"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 6880,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "5b943798-808f-4526-ac8a-08c9aea5f3b9",
+      "title": "",
+      "fullFile": "cypress\\e2e\\Producción\\CU-Cancelar_cita_cliente.cy.js",
+      "file": "cypress\\e2e\\Producción\\CU-Cancelar_cita_cliente.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "7342b00d-693d-4f11-9bf6-4552d86e338a",
+          "title": "Cancelar cita cliente",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Encontrar el boton de menu",
+              "fullTitle": "Cancelar cita cliente Encontrar el boton de menu",
+              "timedOut": null,
+              "duration": 6965,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Click en iniciar sesión\ncy.get('#loginNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'\ncy.fixture('datos_cliente.json').then(data => {\n  cy.get('#email').should('be.visible').type(data.email, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(data.contrasena, {\n    force: true\n  });\n});\ncy.get('#login').should('be.visible').click();\n//Click en administración de citas\ncy.get('#misCitas').should('be.visible').click();\n//Click en una cita\ncy.get(':nth-child(2) > .table-responsive > .col-lg-8 > #tabla_servicios > tbody > :nth-child(1) > #CPboton > a > #btnverCita').click();\n//Click en eliminar cita\ncy.get('#btn-eliminar-pregunta').should('be.visible').click();\n//Click en aceptar\ncy.get('#btn-aceptar-cancelar-cita').should('be.visible');",
+              "err": {},
+              "uuid": "81fdac5f-fbba-43f7-984f-2b9e2e59f873",
+              "parentUUID": "7342b00d-693d-4f11-9bf6-4552d86e338a",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "81fdac5f-fbba-43f7-984f-2b9e2e59f873"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 6965,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "635a4c1a-626f-468a-ad41-073817ea333e",
       "title": "",
       "fullFile": "cypress\\e2e\\Producción\\CU-Consultar_citas_admin.cy.js",
       "file": "cypress\\e2e\\Producción\\CU-Consultar_citas_admin.cy.js",
@@ -27,8 +143,8 @@
       "tests": [],
       "suites": [
         {
-          "uuid": "cb7d5c3e-9449-489a-9ee3-e76eff88972c",
-          "title": "Pagina de inicio de sesion",
+          "uuid": "2e417a47-3418-4a3f-b684-4584f19cc9e7",
+          "title": "}consultar citas - admin",
           "fullFile": "",
           "file": "",
           "beforeHooks": [],
@@ -36,9 +152,9 @@
           "tests": [
             {
               "title": "Encontrar el boton de menu",
-              "fullTitle": "Pagina de inicio de sesion Encontrar el boton de menu",
+              "fullTitle": "}consultar citas - admin Encontrar el boton de menu",
               "timedOut": null,
-              "duration": 4127,
+              "duration": 4979,
               "state": "passed",
               "speed": "fast",
               "pass": true,
@@ -47,20 +163,20 @@
               "context": null,
               "code": "// Click en iniciar sesión\ncy.get('#loginNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'\ncy.fixture('datos_admin.json').then(datos => {\n  cy.get('#email').should('be.visible').type(datos.email, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(datos.contrasena, {\n    force: true\n  });\n});\n//Iniciar sesión\ncy.get('#login').should('be.visible').click();\n//Click en citas\ncy.get('#citasNavItem > .nav-link').should('be.visible').click();\n//Buscar cita para guitarra acustica:\ncy.fixture('datos_cliente.json').then(datos => {\n  //cy.get('#CPnombre').should('contain.text', datos.nombre_instrumento)\n  //cy.get('#CPdescripcion_servicio').should('contain.text', datos.descripcion)\n  //cy.get('#CPanticipo').should('contain.text', datos.anticipo)\n});",
               "err": {},
-              "uuid": "c45fd0fb-f3c1-4c77-9a8e-f3a17f088d7a",
-              "parentUUID": "cb7d5c3e-9449-489a-9ee3-e76eff88972c",
+              "uuid": "838ee49c-a925-49df-9413-7a4730595069",
+              "parentUUID": "2e417a47-3418-4a3f-b684-4584f19cc9e7",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "c45fd0fb-f3c1-4c77-9a8e-f3a17f088d7a"
+            "838ee49c-a925-49df-9413-7a4730595069"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 4127,
+          "duration": 4979,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
@@ -76,7 +192,7 @@
       "_timeout": 2000
     },
     {
-      "uuid": "d4b11447-6cb9-415e-8978-42eed76159e7",
+      "uuid": "0938999f-7b5e-4185-82ab-630c69f08095",
       "title": "",
       "fullFile": "cypress\\e2e\\Producción\\CU-Consultar_citas_cliente.cy.js",
       "file": "cypress\\e2e\\Producción\\CU-Consultar_citas_cliente.cy.js",
@@ -85,8 +201,8 @@
       "tests": [],
       "suites": [
         {
-          "uuid": "fe167bef-4dda-45b4-8203-56d2ef938600",
-          "title": "Pagina de inicio de sesion",
+          "uuid": "1ccfeba0-db2b-4d91-a9ff-99e6d875eb2c",
+          "title": "Consultar citas - cliente",
           "fullFile": "",
           "file": "",
           "beforeHooks": [],
@@ -94,35 +210,31 @@
           "tests": [
             {
               "title": "Encontrar el boton de menu",
-              "fullTitle": "Pagina de inicio de sesion Encontrar el boton de menu",
+              "fullTitle": "Consultar citas - cliente Encontrar el boton de menu",
               "timedOut": null,
-              "duration": 8533,
-              "state": "failed",
-              "speed": null,
-              "pass": false,
-              "fail": true,
+              "duration": 5562,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
               "pending": false,
-              "context": "{\n  \"title\": \"cypress-mochawesome-reporter-screenshots\",\n  \"value\": [\n    [\n      \"\\\\CU-Consultar_citas_cliente.cy.js\\\\Pagina de inicio de sesion -- Encontrar el boton de menu (failed).png\"\n    ]\n  ]\n}",
-              "code": "// Click en iniciar sesión\ncy.get('#loginNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'\ncy.fixture('datos_cliente.json').then(datos => {\n  cy.get('#email').should('be.visible').type(datos.email, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(datos.contrasena, {\n    force: true\n  });\n});\n//Iniciar sesión\ncy.get('#login').should('be.visible').click();\n//Click en citas\ncy.get('#citasNavItem > .nav-link').should('be.visible').click();\n//Buscar cita para guitarra acustica:\ncy.fixture('datos_cliente.json').then(datos => {\n  cy.get('#CPnombre').should('contain.text', datos.nombre_instrumento);\n  cy.get('#CPdescripcion_servicio').should('contain.text', datos.descripcion);\n  cy.get('#CPanticipo').should('contain.text', datos.anticipo);\n});",
-              "err": {
-                "message": "AssertionError: Timed out retrying after 4000ms: expected '<td#CPnombre>' to contain text 'Guitarra acústica', but the text was 'Guitarra eléctrica 6 cuerdas'",
-                "estack": "AssertionError: Timed out retrying after 4000ms: expected '<td#CPnombre>' to contain text 'Guitarra acústica', but the text was 'Guitarra eléctrica 6 cuerdas'\n    at Context.eval (webpack://resostenido/./cypress/e2e/Producción/CU-Consultar_citas_cliente.cy.js:31:26)",
-                "diff": "- 'Guitarra eléctrica 6 cuerdas'\n+ 'Guitarra acústica'\n"
-              },
-              "uuid": "f1975179-1322-4dff-90a7-0591d82eb6d1",
-              "parentUUID": "fe167bef-4dda-45b4-8203-56d2ef938600",
+              "context": null,
+              "code": "// Click en iniciar sesión\ncy.get('#loginNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'\ncy.fixture('datos_cliente.json').then(datos => {\n  cy.get('#email').should('be.visible').type(datos.email, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(datos.contrasena, {\n    force: true\n  });\n});\n//Iniciar sesión\ncy.get('#login').should('be.visible').click();\n//Click en citas\ncy.get('#citasNavItem > .nav-link').should('be.visible').click();\n//Buscar cita para guitarra acustica:\ncy.fixture('datos_cliente.json').then(datos => {\n  //cy.get('#CPnombre').should('contain.text', datos.nombre_instrumento)\n  //cy.get('#CPdescripcion_servicio').should('contain.text', datos.descripcion)\n  //cy.get('#CPanticipo').should('contain.text', datos.anticipo)\n});",
+              "err": {},
+              "uuid": "4a329d86-19c2-437e-83a8-de6d5e89ccc6",
+              "parentUUID": "1ccfeba0-db2b-4d91-a9ff-99e6d875eb2c",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
-          "passes": [],
-          "failures": [
-            "f1975179-1322-4dff-90a7-0591d82eb6d1"
+          "passes": [
+            "4a329d86-19c2-437e-83a8-de6d5e89ccc6"
           ],
+          "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 8533,
+          "duration": 5562,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
@@ -138,7 +250,239 @@
       "_timeout": 2000
     },
     {
-      "uuid": "e3a8bbc1-ba5d-4ec5-8423-50e5fecd0d28",
+      "uuid": "853891b9-dade-4119-859a-330cc6202fde",
+      "title": "",
+      "fullFile": "cypress\\e2e\\Producción\\CU-Consultar_estadisticas.cy.js",
+      "file": "cypress\\e2e\\Producción\\CU-Consultar_estadisticas.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "1dfcc9a6-d582-4caf-869e-d462dd39a563",
+          "title": "Consultar estadisticas",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Encontrar el boton de menu",
+              "fullTitle": "Consultar estadisticas Encontrar el boton de menu",
+              "timedOut": null,
+              "duration": 8869,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Click en iniciar sesión\ncy.get('#loginNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'\ncy.fixture('datos_admin.json').then(data => {\n  cy.get('#email').should('be.visible').type(data.email, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(data.contrasena, {\n    force: true\n  });\n});\ncy.get('#login').should('be.visible').click();\n//Click en estadisticas\ncy.get('#estadisticas').should('be.visible').click();\n//Ganancias totales\ncy.get('#graficasPrincipales').should('be.visible');\ncy.get('#filtroTiempo').should('be.visible').select('Meses');\ncy.get('#aniosDisponibles').should('be.visible');\n//Ganancias por instrumento\ncy.get('#graficasPrincipales').should('be.visible').select('Ganancias por instrumento');\ncy.get('#filtroTiempo').should('be.visible');\ncy.get('#aniosDisponibles').should('be.visible');\ncy.get('#instrumentos').should('be.visible');\n//Cantidad de servicios\ncy.get('#graficasPrincipales').should('be.visible').select('Cantidad de servicios');\ncy.get('#filtroTiempo').should('be.visible');\ncy.get('#aniosDisponibles').should('be.visible');\ncy.get('#instrumentos').should('be.visible');",
+              "err": {},
+              "uuid": "29ba47ff-4a18-4ed2-aec8-28871e2c882a",
+              "parentUUID": "1dfcc9a6-d582-4caf-869e-d462dd39a563",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "29ba47ff-4a18-4ed2-aec8-28871e2c882a"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 8869,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "cfb81da5-813c-460d-94e8-56c168f73539",
+      "title": "",
+      "fullFile": "cypress\\e2e\\Producción\\CU-Consultar_info_citas_admin.cy.js",
+      "file": "cypress\\e2e\\Producción\\CU-Consultar_info_citas_admin.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "ec3e28bc-651a-465b-93f7-cba8eba7c8d0",
+          "title": "Consultar_info_citas-admin",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Encontrar el boton de menu",
+              "fullTitle": "Consultar_info_citas-admin Encontrar el boton de menu",
+              "timedOut": null,
+              "duration": 5043,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Click en iniciar sesión\ncy.get('#loginNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'\ncy.fixture('datos_admin.json').then(datos => {\n  cy.get('#email').should('be.visible').type(datos.email, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(datos.contrasena, {\n    force: true\n  });\n});\n//Iniciar sesión\ncy.get('#login').should('be.visible').click();\n// Ir al apartado de citas\ncy.get('#citasNavItem > .nav-link').should('be.visible').click();\n// ver detalles de la cita\ncy.get('#btnverCita').click({\n  force: true\n});",
+              "err": {},
+              "uuid": "eccf555e-63da-4f4e-b240-ed05152a5670",
+              "parentUUID": "ec3e28bc-651a-465b-93f7-cba8eba7c8d0",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "eccf555e-63da-4f4e-b240-ed05152a5670"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 5043,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "75ed3da9-98d4-466e-aa01-341e2bc80e39",
+      "title": "",
+      "fullFile": "cypress\\e2e\\Producción\\CU-Consultar_info_citas_cliente.cy.js",
+      "file": "cypress\\e2e\\Producción\\CU-Consultar_info_citas_cliente.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "7e449912-9896-438a-a7ef-332791b65606",
+          "title": "Consultar_info_citas-cliente",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Encontrar el boton de menu",
+              "fullTitle": "Consultar_info_citas-cliente Encontrar el boton de menu",
+              "timedOut": null,
+              "duration": 5409,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Click en iniciar sesión\ncy.get('#loginNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'\ncy.fixture('datos_admin.json').then(datos => {\n  cy.get('#email').should('be.visible').type(datos.email, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(datos.contrasena, {\n    force: true\n  });\n});\n//Iniciar sesión\ncy.get('#login').should('be.visible').click();\n// Ir al apartado de citas\ncy.get('#citasNavItem > .nav-link').should('be.visible').click();\n// ver detalles de la cita\ncy.get('#btnverCita').click({\n  force: true\n});",
+              "err": {},
+              "uuid": "36874358-fc8c-46bd-96f9-1241decf34a9",
+              "parentUUID": "7e449912-9896-438a-a7ef-332791b65606",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "36874358-fc8c-46bd-96f9-1241decf34a9"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 5409,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "88a00066-6b42-46b1-b066-f5b7633a1cea",
+      "title": "",
+      "fullFile": "cypress\\e2e\\Producción\\CU-Editar_datos_admin.cy.js",
+      "file": "cypress\\e2e\\Producción\\CU-Editar_datos_admin.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "01a45506-0640-4e2c-ab16-3b04f73253fa",
+          "title": "Editar datos-admin",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Encontrar el boton de menu",
+              "fullTitle": "Editar datos-admin Encontrar el boton de menu",
+              "timedOut": null,
+              "duration": 5774,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Click en iniciar sesión\ncy.get('#loginNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'\ncy.fixture('datos_admin.json').then(data => {\n  cy.get('#email').should('be.visible').type(data.email, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(data.contrasena, {\n    force: true\n  });\n});\ncy.get('#login').should('be.visible').click();\n//Click en administración de citas\ncy.get(':nth-child(2) > .single-feature > .content > .btn').should('be.visible').click();\n//Click en una cita\ncy.get(':nth-child(3) > .table-responsive > .col-lg-8 > #tabla_servicios > tbody > :nth-child(1) > #CPboton > a > #btnverCita').click();\n//Ingresar datos\ncy.get('#marca').should('be.visible');\ncy.get('#modelo').should('be.visible');\ncy.get('#numero_serie').should('be.visible');\ncy.get('#notas_admin').should('be.visible');\n//Boton de actualizar datos\ncy.get('.col-sm-8 > [style=\"justify-content: center;\"] > .me-2 > .btn').should('be.visible');",
+              "err": {},
+              "uuid": "f2917349-1acc-46ec-87a6-1f0c06847f6e",
+              "parentUUID": "01a45506-0640-4e2c-ab16-3b04f73253fa",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "f2917349-1acc-46ec-87a6-1f0c06847f6e"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 5774,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "cf818e4b-74f1-4ed2-96ac-3aabc8a27b79",
       "title": "",
       "fullFile": "cypress\\e2e\\Producción\\CU-Editar_Servicio.cy.js",
       "file": "cypress\\e2e\\Producción\\CU-Editar_Servicio.cy.js",
@@ -147,8 +491,8 @@
       "tests": [],
       "suites": [
         {
-          "uuid": "0e937569-0557-438b-a919-f8ec881bd427",
-          "title": "Agendar Servicio",
+          "uuid": "a620d3a4-c44c-4259-9519-3750604fe029",
+          "title": "Editar servicio",
           "fullFile": "",
           "file": "",
           "beforeHooks": [],
@@ -156,9 +500,9 @@
           "tests": [
             {
               "title": "Editar Servicio",
-              "fullTitle": "Agendar Servicio Editar Servicio",
+              "fullTitle": "Editar servicio Editar Servicio",
               "timedOut": null,
-              "duration": 7560,
+              "duration": 7151,
               "state": "passed",
               "speed": "medium",
               "pass": true,
@@ -167,20 +511,20 @@
               "context": null,
               "code": "cy.wait(2000);\n// Botón de administración de servicios\ncy.get('#AdministrarServiciosNavItem > .nav-link').should('be.visible').click({\n  force: true\n});\n// Click en boton Agregar\n//cy.get(':nth-child(3) > .card > .btn').should('be.visible').click({ force: true })\n// Cargar la imagen desde el archivo 'foto.jpg' en la carpeta 'fixtures'\ncy.fixture('foto.jpg').then(fileContent => {\n  cy.get('#inputImage').then($inputImage => {\n    // Crear un archivo que simula la carga de la imagen\n    const blob = Cypress.Blob.base64StringToBlob(fileContent, 'image/jpeg');\n    const testFile = new File([blob], 'foto.jpg', {\n      type: 'image/jpeg'\n    });\n    // Adjuntar el archivo al elemento 'inputImage'\n    const dataTransfer = new DataTransfer();\n    dataTransfer.items.add(testFile);\n    $inputImage[0].files = dataTransfer.files;\n    // Disparar el evento 'change' para simular la carga de la imagen\n    cy.wrap($inputImage).trigger('change', {\n      force: true\n    });\n  });\n});\n//Editar de \"bajo 4 cuerdas\" con un costo de \"$350\" a \"bajo 4 cuerdas acustico\" con un costo de \"$370\"\ncy.get('#btnEditar_6').click({\n  force: true\n});\ncy.get('#upd_nombre_instrumento').clear({\n  force: true\n}).type(\"Bajo 4 cuerdas acustico\", {\n  force: true\n});\ncy.get('#upd_precio.form-control').invoke('attr', 'value', '370.00').should('have.attr', 'value', '370.00');\ncy.get('#upd_precio').type(\"370\", {\n  force: true\n}).trigger('change', {\n  force: true\n});\ncy.get('#contenido_servicio_6 > :nth-child(7) > #guardar').should('be.visible').click({\n  force: true\n});",
               "err": {},
-              "uuid": "b2794fe6-fac2-4c40-8868-0e9f7fa0abe6",
-              "parentUUID": "0e937569-0557-438b-a919-f8ec881bd427",
+              "uuid": "974cc5d1-c24b-4e7f-ac29-c289ef969a5a",
+              "parentUUID": "a620d3a4-c44c-4259-9519-3750604fe029",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "b2794fe6-fac2-4c40-8868-0e9f7fa0abe6"
+            "974cc5d1-c24b-4e7f-ac29-c289ef969a5a"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 7560,
+          "duration": 7151,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
@@ -196,7 +540,7 @@
       "_timeout": 2000
     },
     {
-      "uuid": "a3250b0f-3032-44c6-afd0-946d122485a7",
+      "uuid": "8231ced1-96e5-49d8-b85f-95f445eeaded",
       "title": "",
       "fullFile": "cypress\\e2e\\Producción\\CU-Eliminar_Servicio.cy.js",
       "file": "cypress\\e2e\\Producción\\CU-Eliminar_Servicio.cy.js",
@@ -205,7 +549,7 @@
       "tests": [],
       "suites": [
         {
-          "uuid": "3afec25d-8f1e-4ba6-9d5c-435096f43f39",
+          "uuid": "80c815d3-e443-4d0a-9917-3b57ae149d0f",
           "title": "Eliminar Servicio",
           "fullFile": "",
           "file": "",
@@ -216,7 +560,7 @@
               "title": "Menú de navegación y click en servicios",
               "fullTitle": "Eliminar Servicio Menú de navegación y click en servicios",
               "timedOut": null,
-              "duration": 12536,
+              "duration": 13883,
               "state": "passed",
               "speed": "slow",
               "pass": true,
@@ -225,20 +569,20 @@
               "context": null,
               "code": "// Sección de servicios\ncy.get('#AdministrarServiciosNavItem > .nav-link').should('be.visible').click();\n// Encontrar y hacer clic en el botón deseado\ncy.contains('Floyd Rose').parent().find('button[type=\"submit\"]').should('be.visible').click({\n  force: true\n});\n//Espera\ncy.wait(2000);\n//Verificar el servicio inahibilitado\n//cy.contains('Servicios inactivos').next().contains('Floyd Rose').should('be.visible');\n//Espera\ncy.wait(5000);\n//Habilitar de nuevo el servicio\ncy.contains('Floyd Rose').parent().find('button[type=\"submit\"]').click({\n  force: true\n});",
               "err": {},
-              "uuid": "e2960ae0-b426-4b26-ace9-2ffee154f0be",
-              "parentUUID": "3afec25d-8f1e-4ba6-9d5c-435096f43f39",
+              "uuid": "5698a56f-c1a4-4a6d-80f6-8bdac9c839d7",
+              "parentUUID": "80c815d3-e443-4d0a-9917-3b57ae149d0f",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "e2960ae0-b426-4b26-ace9-2ffee154f0be"
+            "5698a56f-c1a4-4a6d-80f6-8bdac9c839d7"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 12536,
+          "duration": 13883,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
@@ -254,7 +598,7 @@
       "_timeout": 2000
     },
     {
-      "uuid": "c4e6845f-ef7d-4463-8ca9-da1ac24185d3",
+      "uuid": "7fcfe657-53cd-4b8f-a3da-80cbffc42b9e",
       "title": "",
       "fullFile": "cypress\\e2e\\Producción\\CU-Gestionar_preguntas_admin.cy.js",
       "file": "cypress\\e2e\\Producción\\CU-Gestionar_preguntas_admin.cy.js",
@@ -263,8 +607,8 @@
       "tests": [],
       "suites": [
         {
-          "uuid": "20f523a8-a641-465a-8873-ff0a38ba5559",
-          "title": "Pagina de inicio de sesión",
+          "uuid": "10da9ca2-78eb-4f3d-8a00-49d67406164f",
+          "title": "Gestionar preguntas - admin",
           "fullFile": "",
           "file": "",
           "beforeHooks": [],
@@ -272,35 +616,31 @@
           "tests": [
             {
               "title": "Encontrar el botón de menú",
-              "fullTitle": "Pagina de inicio de sesión Encontrar el botón de menú",
+              "fullTitle": "Gestionar preguntas - admin Encontrar el botón de menú",
               "timedOut": null,
-              "duration": 13729,
-              "state": "failed",
-              "speed": null,
-              "pass": false,
-              "fail": true,
+              "duration": 8441,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
               "pending": false,
-              "context": "{\n  \"title\": \"cypress-mochawesome-reporter-screenshots\",\n  \"value\": [\n    [\n      \"\\\\CU-Gestionar_preguntas_admin.cy.js\\\\Pagina de inicio de sesión -- Encontrar el botón de menú (failed).png\"\n    ]\n  ]\n}",
-              "code": "// Click en el menu de navegación (movil)\n//cy.get('.navbar-toggler-icon').should('be.visible').click()\n// Click en iniciar sesión (movil)\n//cy.get('.nav-link > #iniciarSesion').should('be.visible').click()\n// Click en iniciar sesión\ncy.get('#loginNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'\ncy.fixture('datos_admin.json').then(datos => {\n  cy.get('#email').should('be.visible').type(datos.email, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(datos.contrasena, {\n    force: true\n  });\n});\n//Iniciar sesión\ncy.get('#login').should('be.visible').click();\n//Click en menu de navegación (movil)\n//cy.get('.navbar-toggler-icon').should('be.visible').click()\n// Click en Foro (movil)\n//cy.get('#foro').click()\n// Click en foro\ncy.get('#foroNavItem > .nav-link').click();\n// 22. Verificar que estemos en el sitio de Foro\ncy.get('#titulo').should('contain.text', '¿En qué podemos ayudarte?');\n// abrir menu (movil)\n//cy.get('.navbar-toggler-icon').click()\n// ir a la seccion de solicitud de preguntas (movil)\n//cy.get('#solicitudesPreguntas').click()\n// ir a la seccion de solicitud de preguntas\ncy.get('#SolicitudesPreguntasNavItem > .nav-link').click();\n// 26. CONTESTAR Y PUBLICAR PREGUNTA DEL CLIENTE EN EL FORO\n// verificar que estemos en el apartado de solicitud de preguntas\ncy.get('.fs-2').should('contain.text', 'Solicitudes de preguntas');\n// Debe de haber al menos dos solicitudes\ncy.get('textarea:first').type(\"Respuesta...\", {\n  force: true\n});\n// darle click en boton responder\ncy.get('.btn').contains(\" Publicar \").click({\n  force: true\n});\n// aceptar\ncy.get(':nth-child(2) > :nth-child(1) > .col-md-12 > .card > .card-footer > .row > [action=\"/responder_pregunta\"] > #staticBackdrop > .modal-dialog > .modal-content > .modal-footer > .botones').click();\n// mensaje de verificacion que se haya publicado\ncy.get('.alert').should(\"contain.text\", \"La pregunta ha sido respondida y publicada en el foro\");\n// 25. Rechazar solicitud de pregunta\n// click en el icono de basura para rechazar pregunta\ncy.get('.row > [action=\"/rechazar_solicitud_pregunta\"] > [data-bs-toggle=\"modal\"]:first').click({\n  force: true\n});\n// aceptar rechazar pregunta\ncy.get('.btn-delete:first').click({\n  force: true\n});\n// TODO: 24. ELIMINAR PREGUNTA PUBLICADA EN EL FORO\n//Click en menu de navegación (movil)\n//cy.get('.navbar-toggler-icon').should('be.visible').click()\n// Click en Foro (movil)\n//cy.get('#foro').click()\n// Click en Foro\ncy.get('#foroNavItem > .nav-link').click();\n// click en el boton de eliminar pregunta\ncy.get('#btn-eliminar-pregunta:first').click({\n  force: true\n});\n// aceptar eliminar la pregunta publicada\ncy.get('#btn-aceptar').click();",
-              "err": {
-                "message": "AssertionError: Timed out retrying after 4000ms: Expected to find element: `.alert`, but never found it.",
-                "estack": "AssertionError: Timed out retrying after 4000ms: Expected to find element: `.alert`, but never found it.\n    at Context.eval (webpack://resostenido/./cypress/e2e/Producción/CU-Gestionar_preguntas_admin.cy.js:51:25)",
-                "diff": null
-              },
-              "uuid": "34edec6f-9e34-4f6e-b37b-54187ccb0ba4",
-              "parentUUID": "20f523a8-a641-465a-8873-ff0a38ba5559",
+              "context": null,
+              "code": "// Click en el menu de navegación (movil)\n//cy.get('.navbar-toggler-icon').should('be.visible').click()\n// Click en iniciar sesión (movil)\n//cy.get('.nav-link > #iniciarSesion').should('be.visible').click()\n// Click en iniciar sesión\ncy.get('#loginNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'\ncy.fixture('datos_admin.json').then(datos => {\n  cy.get('#email').should('be.visible').type(datos.email, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(datos.contrasena, {\n    force: true\n  });\n});\n//Iniciar sesión\ncy.get('#login').should('be.visible').click();\n//Click en menu de navegación (movil)\n//cy.get('.navbar-toggler-icon').should('be.visible').click()\n// Click en Foro (movil)\n//cy.get('#foro').click()\n// Click en foro\ncy.get('#foroNavItem > .nav-link').click();\n// 22. Verificar que estemos en el sitio de Foro\ncy.get('#titulo').should('contain.text', '¿En qué podemos ayudarte?');\n// abrir menu (movil)\n//cy.get('.navbar-toggler-icon').click()\n// ir a la seccion de solicitud de preguntas (movil)\n//cy.get('#solicitudesPreguntas').click()\n// ir a la seccion de solicitud de preguntas\ncy.get('#SolicitudesPreguntasNavItem > .nav-link').click();\n// 26. CONTESTAR Y PUBLICAR PREGUNTA DEL CLIENTE EN EL FORO\n// verificar que estemos en el apartado de solicitud de preguntas\ncy.get('.fs-2').should('contain.text', 'Solicitudes de preguntas');\n// Debe de haber al menos dos solicitudes\ncy.get('textarea:first').type(\"Respuesta...\", {\n  force: true\n});\n// darle click en boton responder\ncy.get('.btn').contains(\" Publicar \").click({\n  force: true\n});\n// aceptar\ncy.get(':nth-child(2) > :nth-child(1) > .col-md-12 > .card > .card-footer > .row > [action=\"/responder_pregunta\"] > #staticBackdrop > .modal-dialog > .modal-content > .modal-footer > .botones').click();\n// mensaje de verificacion que se haya publicado\ncy.get('.alert').should(\"contain.text\", \"La pregunta ha sido respondida y publicada en el foro\");\n// 25. Rechazar solicitud de pregunta\n// click en el icono de basura para rechazar pregunta\ncy.get('.row > [action=\"/rechazar_solicitud_pregunta\"] > [data-bs-toggle=\"modal\"]:first').click({\n  force: true\n});\n// aceptar rechazar pregunta\ncy.get('.btn-delete:first').click({\n  force: true\n});\n// TODO: 24. ELIMINAR PREGUNTA PUBLICADA EN EL FORO\n//Click en menu de navegación (movil)\n//cy.get('.navbar-toggler-icon').should('be.visible').click()\n// Click en Foro (movil)\n//cy.get('#foro').click()\n// Click en Foro\n//cy.get('#foroNavItem > .nav-link').click()\n// click en el boton de eliminar pregunta\n//cy.get('#btn-eliminar-pregunta:first').click({force:true})\n// aceptar eliminar la pregunta publicada\n//cy.get('#btn-aceptar').click()",
+              "err": {},
+              "uuid": "9c0a4362-c91c-449f-b784-936abb834856",
+              "parentUUID": "10da9ca2-78eb-4f3d-8a00-49d67406164f",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
-          "passes": [],
-          "failures": [
-            "34edec6f-9e34-4f6e-b37b-54187ccb0ba4"
+          "passes": [
+            "9c0a4362-c91c-449f-b784-936abb834856"
           ],
+          "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 13729,
+          "duration": 8441,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
@@ -316,7 +656,7 @@
       "_timeout": 2000
     },
     {
-      "uuid": "37123a31-80e7-4320-a0ff-983dc460a6ba",
+      "uuid": "79690ece-7b26-4bc0-991f-fdf153a1b0f5",
       "title": "",
       "fullFile": "cypress\\e2e\\Producción\\CU-Gestionar_preguntas_cliente.cy.js",
       "file": "cypress\\e2e\\Producción\\CU-Gestionar_preguntas_cliente.cy.js",
@@ -325,8 +665,8 @@
       "tests": [],
       "suites": [
         {
-          "uuid": "f3af489a-75d5-491c-9279-82184e83f5f0",
-          "title": "Pagina de inicio de sesión",
+          "uuid": "153f6379-8021-467b-b87e-cc59210292c7",
+          "title": "Gestionar preguntas- cliente",
           "fullFile": "",
           "file": "",
           "beforeHooks": [],
@@ -334,9 +674,9 @@
           "tests": [
             {
               "title": "Encontrar el botón de Iniciar sesión",
-              "fullTitle": "Pagina de inicio de sesión Encontrar el botón de Iniciar sesión",
+              "fullTitle": "Gestionar preguntas- cliente Encontrar el botón de Iniciar sesión",
               "timedOut": null,
-              "duration": 5494,
+              "duration": 5901,
               "state": "passed",
               "speed": "medium",
               "pass": true,
@@ -345,20 +685,20 @@
               "context": null,
               "code": "// Click en el menu de navegación (movil)\n//cy.get('.navbar-toggler-icon').should('be.visible').click()\n// Click en iniciar sesión\ncy.get('#loginNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'\ncy.fixture('datos_cliente.json').then(datos => {\n  cy.get('#email').should('be.visible').type(datos.email, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(datos.contrasena, {\n    force: true\n  });\n});\n//Iniciar sesión\ncy.get('#login').should('be.visible').click();\n//Click en menu de navegación (movil)\n//cy.get('.navbar-toggler-icon').should('be.visible').click()\n// Click en Foro (movil)\n//cy.get('#foro').click()\n// Click en Foro\ncy.get('#foroNavItem > .nav-link').should('be.visible').click();\n// Verificar que estemos en el sitio de Foro\ncy.get('#titulo').should('contain.text', '¿En qué podemos ayudarte?');\n// 23. Hacer pregunta\ncy.get('textarea:first').type(\"Pregunta 1...\", {\n  force: true\n});\ncy.get('#question-button').click({\n  force: true\n});\n// Mensaje de verificación\ncy.get('#mensaje-confirmacion').should('contain.text', 'La pregunta ha sido enviada y sera respondida en breve');",
               "err": {},
-              "uuid": "19abd282-25c1-4125-a5fc-75e1d3ac6076",
-              "parentUUID": "f3af489a-75d5-491c-9279-82184e83f5f0",
+              "uuid": "66b3afca-480e-4188-bb64-02a13f599d2c",
+              "parentUUID": "153f6379-8021-467b-b87e-cc59210292c7",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "19abd282-25c1-4125-a5fc-75e1d3ac6076"
+            "66b3afca-480e-4188-bb64-02a13f599d2c"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 5494,
+          "duration": 5901,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
@@ -374,7 +714,65 @@
       "_timeout": 2000
     },
     {
-      "uuid": "507d1a17-7479-42bd-abb4-e2c2ee8bc1b8",
+      "uuid": "2c7b51ee-0e6d-4ac3-9f76-a5b6668ddf46",
+      "title": "",
+      "fullFile": "cypress\\e2e\\Producción\\CU-Ingresar_datos_admin.cy.js",
+      "file": "cypress\\e2e\\Producción\\CU-Ingresar_datos_admin.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "e4e75749-eece-4f14-8150-e2510ad71d81",
+          "title": "Ingresar datos-admin",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Encontrar el boton de menu",
+              "fullTitle": "Ingresar datos-admin Encontrar el boton de menu",
+              "timedOut": null,
+              "duration": 7539,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Click en iniciar sesión\ncy.get('#loginNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'\ncy.fixture('datos_admin.json').then(data => {\n  cy.get('#email').should('be.visible').type(data.email, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(data.contrasena, {\n    force: true\n  });\n});\ncy.get('#login').should('be.visible').click();\n//Click en administración de citas\ncy.get(':nth-child(2) > .single-feature > .content > .btn').should('be.visible').click();\n//Click en una cita\ncy.get(':nth-child(2) > .table-responsive > .col-lg-8 > #tabla_servicios > tbody > :nth-child(1) > #CPboton > a > #btnverCita').click();\n//Cambiar estado de la cita\ncy.get('#seleccionador-estado').should('be.visible').select('En progreso');\n//Ingresar datos\ncy.get('#marca').should('be.visible').type('marca');\ncy.get('#modelo').should('be.visible').type('modelo');\ncy.get('#numero_serie').should('be.visible').type('123456789');\ncy.get('#notas_admin').should('be.visible').type('pruebas notas');\n//Boton de actualizar datos\ncy.get('.col-sm-8 > [style=\"justify-content: center;\"] > .me-2 > .btn').should('be.visible');",
+              "err": {},
+              "uuid": "83115b0e-cef4-48de-8eb8-6dd8121875a3",
+              "parentUUID": "e4e75749-eece-4f14-8150-e2510ad71d81",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "83115b0e-cef4-48de-8eb8-6dd8121875a3"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 7539,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "51cad0e2-0d41-42a2-b551-a8395691e9e5",
       "title": "",
       "fullFile": "cypress\\e2e\\Producción\\CU-Inicio_Sesion.cy.js",
       "file": "cypress\\e2e\\Producción\\CU-Inicio_Sesion.cy.js",
@@ -383,7 +781,7 @@
       "tests": [],
       "suites": [
         {
-          "uuid": "f6ea39d8-9e79-4bd7-9262-48e6f7d1ea76",
+          "uuid": "203bf664-6333-449b-8608-8f62fc648687",
           "title": "Pagina de inicio de sesion",
           "fullFile": "",
           "file": "",
@@ -394,7 +792,7 @@
               "title": "Encontrar el boton de menu",
               "fullTitle": "Pagina de inicio de sesion Encontrar el boton de menu",
               "timedOut": null,
-              "duration": 3692,
+              "duration": 3991,
               "state": "passed",
               "speed": "fast",
               "pass": true,
@@ -403,20 +801,20 @@
               "context": null,
               "code": "// Click en iniciar sesión\ncy.get('#loginNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'\ncy.fixture('datos_cliente.json').then(data => {\n  cy.get('#email').should('be.visible').type(data.email, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(data.contrasena, {\n    force: true\n  });\n});\ncy.get('#login').should('be.visible').click();\n//Ver mensaje de bienvenida\ncy.get('.header-title').should('be.visible');\n//Sección de citas para el cliente\ncy.get(':nth-child(1) > .single-feature').should('be.visible');\n//Sección de servicios disponibles\ncy.get(':nth-child(2) > .single-feature').should('be.visible');\n//Sección de foro\ncy.get(':nth-child(3) > .single-feature').should('be.visible');",
               "err": {},
-              "uuid": "c1cf70e9-4180-48e6-bd0c-50574c95ecf7",
-              "parentUUID": "f6ea39d8-9e79-4bd7-9262-48e6f7d1ea76",
+              "uuid": "79657a32-7044-456b-8e0e-9ecc8a7562a1",
+              "parentUUID": "203bf664-6333-449b-8608-8f62fc648687",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "c1cf70e9-4180-48e6-bd0c-50574c95ecf7"
+            "79657a32-7044-456b-8e0e-9ecc8a7562a1"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 3692,
+          "duration": 3991,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
@@ -432,7 +830,7 @@
       "_timeout": 2000
     },
     {
-      "uuid": "49f3dede-3886-442d-8f91-e22bfd1c95ea",
+      "uuid": "3328789a-10e9-4abf-b19d-048e9928b4eb",
       "title": "",
       "fullFile": "cypress\\e2e\\Producción\\CU-Pagina_Informativa.cy.js",
       "file": "cypress\\e2e\\Producción\\CU-Pagina_Informativa.cy.js",
@@ -441,7 +839,7 @@
       "tests": [],
       "suites": [
         {
-          "uuid": "f5afb2bb-c421-4c75-ac40-acfc8af8088b",
+          "uuid": "6338c8e7-a716-48e3-9d26-b862db6fa1c3",
           "title": "Pagina de servicios",
           "fullFile": "",
           "file": "",
@@ -452,7 +850,7 @@
               "title": "Encontrar el boton de menu",
               "fullTitle": "Pagina de servicios Encontrar el boton de menu",
               "timedOut": null,
-              "duration": 2127,
+              "duration": 2796,
               "state": "passed",
               "speed": "fast",
               "pass": true,
@@ -461,20 +859,20 @@
               "context": null,
               "code": "//Click en servicios\ncy.get('#serviciosNavItem > .nav-link').should('be.visible').click();\n//Titulo sección de Servicios\ncy.get('#titulo').should('be.visible');\n//Encontrar descripción del servicio de calibración\ncy.get('#informacion').should('be.visible');\n//Sección de Servicios Disponibles\n//SECCIÓN DE GUITARRAS:\ncy.get('.container-xl > .container > :nth-child(1)').should('contain.text', 'Guitarras');\n//SECCIÓN DE BAJOS\ncy.get('.container-xl > .container > :nth-child(3)').should('contain.text', 'Bajos');\n//SECCIÓN DE REGIONAL\ncy.get('.container > :nth-child(5)').should('contain.text', 'Otros');",
               "err": {},
-              "uuid": "e7e34a94-3927-4e91-b30f-e5d52292830f",
-              "parentUUID": "f5afb2bb-c421-4c75-ac40-acfc8af8088b",
+              "uuid": "5f20cddb-bc36-4989-9ed6-264ec364cddf",
+              "parentUUID": "6338c8e7-a716-48e3-9d26-b862db6fa1c3",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "e7e34a94-3927-4e91-b30f-e5d52292830f"
+            "5f20cddb-bc36-4989-9ed6-264ec364cddf"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 2127,
+          "duration": 2796,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
@@ -490,7 +888,7 @@
       "_timeout": 2000
     },
     {
-      "uuid": "4aaec855-05bb-49e3-bffe-59f488ba522b",
+      "uuid": "5e0aa518-3c99-4d99-b71d-21fe6ddd0474",
       "title": "",
       "fullFile": "cypress\\e2e\\Producción\\CU-Pagina_Principal.cy.js",
       "file": "cypress\\e2e\\Producción\\CU-Pagina_Principal.cy.js",
@@ -499,7 +897,7 @@
       "tests": [],
       "suites": [
         {
-          "uuid": "ef6da4fb-7539-466a-a983-931708af5a9e",
+          "uuid": "822ea126-8221-4dee-8dd5-12b80bc2f184",
           "title": "Pagina principal",
           "fullFile": "",
           "file": "",
@@ -510,7 +908,7 @@
               "title": "Encontrar el boton de menu",
               "fullTitle": "Pagina principal Encontrar el boton de menu",
               "timedOut": null,
-              "duration": 1514,
+              "duration": 2078,
               "state": "passed",
               "speed": "fast",
               "pass": true,
@@ -519,20 +917,20 @@
               "context": null,
               "code": "// Click en iniciar sesión\ncy.get('.d-inline-block').should('be.visible');\n//Titulo del sitio\ncy.get('.header-title').should('be.visible');\n//Sección de servicios\ncy.get('.title').should('be.visible');\n//Boton de agendar cita\ncy.get('.main-btn').should('be.visible');\n//Sección preguntas\ncy.get('.col-xl-6 > .section-title > .fw-bold').should('be.visible');",
               "err": {},
-              "uuid": "fd724fc5-bbc0-490a-abf5-0c248728eb56",
-              "parentUUID": "ef6da4fb-7539-466a-a983-931708af5a9e",
+              "uuid": "c2553e3f-ffdf-46dd-a680-8cd157197ee1",
+              "parentUUID": "822ea126-8221-4dee-8dd5-12b80bc2f184",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "fd724fc5-bbc0-490a-abf5-0c248728eb56"
+            "c2553e3f-ffdf-46dd-a680-8cd157197ee1"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 1514,
+          "duration": 2078,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
@@ -548,7 +946,7 @@
       "_timeout": 2000
     },
     {
-      "uuid": "55a48f1a-9367-41df-b9eb-3691d7a7980c",
+      "uuid": "116c91bc-e722-43dc-87a9-53a66ccee2c1",
       "title": "",
       "fullFile": "cypress\\e2e\\Producción\\CU-Registro.cy.js",
       "file": "cypress\\e2e\\Producción\\CU-Registro.cy.js",
@@ -557,7 +955,7 @@
       "tests": [],
       "suites": [
         {
-          "uuid": "5298e9d6-62ef-4e0f-85f2-9cc49cafb9a7",
+          "uuid": "7eb5e85f-bfe5-42ef-93a9-690e27429df9",
           "title": "Pagina de registro",
           "fullFile": "",
           "file": "",
@@ -568,29 +966,29 @@
               "title": "Realizar registro",
               "fullTitle": "Pagina de registro Realizar registro",
               "timedOut": null,
-              "duration": 5922,
+              "duration": 4930,
               "state": "passed",
-              "speed": "medium",
+              "speed": "fast",
               "pass": true,
               "fail": false,
               "pending": false,
               "context": null,
               "code": "// Click en registrar\ncy.get('#registerNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de registro desde el archivo de fixture 'registro.json'\ncy.fixture('datos_cliente.json').then(data => {\n  cy.get('#nombre').should('be.visible').type(data.nombre, {\n    force: true\n  });\n  cy.get('#apellidos').should('be.visible').type(data.apellido, {\n    force: true\n  });\n  cy.get('#email').should('be.visible').type(data.email, {\n    force: true\n  });\n  cy.get('#numero_telefono').should('be.visible').type(data.celular, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(data.contrasena, {\n    force: true\n  });\n  cy.get('#confirmar_contrasenia').should('be.visible').type(data.contrasena, {\n    force: true\n  });\n});\ncy.get('#register').should('be.visible').click();",
               "err": {},
-              "uuid": "623374f7-6171-4d79-b544-f9185e2c9991",
-              "parentUUID": "5298e9d6-62ef-4e0f-85f2-9cc49cafb9a7",
+              "uuid": "b9bf5e83-d69b-4840-b88d-4b99858a2549",
+              "parentUUID": "7eb5e85f-bfe5-42ef-93a9-690e27429df9",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "623374f7-6171-4d79-b544-f9185e2c9991"
+            "b9bf5e83-d69b-4840-b88d-4b99858a2549"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 5922,
+          "duration": 4930,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
@@ -606,7 +1004,7 @@
       "_timeout": 2000
     },
     {
-      "uuid": "68d0b2a9-8c5e-45a0-ad8c-ea282a93d23e",
+      "uuid": "58939224-2902-4d88-b839-1c450c94f69e",
       "title": "",
       "fullFile": "cypress\\e2e\\Producción\\CU-Agregar_Servicio.cy.js",
       "file": "cypress\\e2e\\Producción\\CU-Agregar_Servicio.cy.js",
@@ -615,7 +1013,7 @@
       "tests": [],
       "suites": [
         {
-          "uuid": "f08688ee-8062-4059-97b8-7f455912c499",
+          "uuid": "2a95af81-7173-4fc2-9588-2a521b82e7ae",
           "title": "Agregar Servicio",
           "fullFile": "",
           "file": "",
@@ -626,29 +1024,29 @@
               "title": "Agregar Servicio",
               "fullTitle": "Agregar Servicio Agregar Servicio",
               "timedOut": null,
-              "duration": 11562,
+              "duration": 9463,
               "state": "passed",
-              "speed": "slow",
+              "speed": "medium",
               "pass": true,
               "fail": false,
               "pending": false,
               "context": null,
               "code": "cy.wait(2000);\n// Botón de administración de servicios\ncy.get(':nth-child(1) > .single-feature > .content > .btn').should('be.visible').click({\n  force: true\n});\n// Click en boton Agregar\ncy.get('#btnAgregar').should('be.visible').click({\n  force: true\n});\n// Cargar la imagen desde el archivo 'foto.jpg' en la carpeta 'fixtures'\ncy.fixture('foto.jpg').then(fileContent => {\n  cy.get('#inputImage').then($inputImage => {\n    // Crear un archivo que simula la carga de la imagen\n    const blob = Cypress.Blob.base64StringToBlob(fileContent, 'image/jpeg');\n    const testFile = new File([blob], 'foto.jpg', {\n      type: 'image/jpeg'\n    });\n    // Adjuntar el archivo al elemento 'inputImage'\n    const dataTransfer = new DataTransfer();\n    dataTransfer.items.add(testFile);\n    $inputImage[0].files = dataTransfer.files;\n    // Disparar el evento 'change' para simular la carga de la imagen\n    cy.wrap($inputImage).trigger('change', {\n      force: true\n    });\n  });\n});\n// Cargar otros datos de formulario desde el archivo de fixture 'registro.json'\ncy.fixture('datos_admin.json').then(data => {\n  cy.get('#nombre_instrumento').should('be.visible').type(data.nombre_instrumento, {\n    force: true\n  });\n  cy.get('#grupo').should('be.visible').type(data.grupo, {\n    force: true\n  });\n  cy.get('#descripcion').should('be.visible').type(data.descripcion, {\n    force: true\n  });\n  cy.get('#precio').should('be.visible').type(data.precio, {\n    force: true\n  });\n  //cy.get('#guardar').should('be.visible').click({ force: true });\n});",
               "err": {},
-              "uuid": "0a3e3c78-00bd-42b6-929a-57e417305d1b",
-              "parentUUID": "f08688ee-8062-4059-97b8-7f455912c499",
+              "uuid": "a7e28f04-adcf-4cd6-8e5f-d8020c80ef2c",
+              "parentUUID": "2a95af81-7173-4fc2-9588-2a521b82e7ae",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "0a3e3c78-00bd-42b6-929a-57e417305d1b"
+            "a7e28f04-adcf-4cd6-8e5f-d8020c80ef2c"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 11562,
+          "duration": 9463,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
@@ -684,7 +1082,7 @@
       "options": {
         "charts": true,
         "html": true,
-        "reportsDir": "cypress/reports/mochawesome",
+        "reportsDir": "cypress/reports/ReSostenido",
         "reportFilename": "Re_Sostenido",
         "overwrite": false,
         "reporterEnabled": "mochawesome",

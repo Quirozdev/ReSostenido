@@ -5,9 +5,9 @@
     "passes": 1,
     "pending": 0,
     "failures": 0,
-    "start": "2023-11-27T16:52:40.673Z",
-    "end": "2023-11-27T16:52:49.675Z",
-    "duration": 9002,
+    "start": "2023-11-27T16:55:12.289Z",
+    "end": "2023-11-27T16:55:16.403Z",
+    "duration": 4114,
     "testsRegistered": 1,
     "passPercent": 100,
     "pendingPercent": 0,
@@ -18,17 +18,17 @@
   },
   "results": [
     {
-      "uuid": "5b943798-808f-4526-ac8a-08c9aea5f3b9",
+      "uuid": "5e0aa518-3c99-4d99-b71d-21fe6ddd0474",
       "title": "",
-      "fullFile": "cypress\\e2e\\Producción\\CU-Cancelar_cita_cliente.cy.js",
-      "file": "cypress\\e2e\\Producción\\CU-Cancelar_cita_cliente.cy.js",
+      "fullFile": "cypress\\e2e\\Producción\\CU-Pagina_Principal.cy.js",
+      "file": "cypress\\e2e\\Producción\\CU-Pagina_Principal.cy.js",
       "beforeHooks": [],
       "afterHooks": [],
       "tests": [],
       "suites": [
         {
-          "uuid": "7342b00d-693d-4f11-9bf6-4552d86e338a",
-          "title": "Cancelar cita cliente",
+          "uuid": "822ea126-8221-4dee-8dd5-12b80bc2f184",
+          "title": "Pagina principal",
           "fullFile": "",
           "file": "",
           "beforeHooks": [],
@@ -36,31 +36,31 @@
           "tests": [
             {
               "title": "Encontrar el boton de menu",
-              "fullTitle": "Cancelar cita cliente Encontrar el boton de menu",
+              "fullTitle": "Pagina principal Encontrar el boton de menu",
               "timedOut": null,
-              "duration": 6965,
+              "duration": 2078,
               "state": "passed",
-              "speed": "medium",
+              "speed": "fast",
               "pass": true,
               "fail": false,
               "pending": false,
               "context": null,
-              "code": "// Click en iniciar sesión\ncy.get('#loginNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'\ncy.fixture('datos_cliente.json').then(data => {\n  cy.get('#email').should('be.visible').type(data.email, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(data.contrasena, {\n    force: true\n  });\n});\ncy.get('#login').should('be.visible').click();\n//Click en administración de citas\ncy.get('#misCitas').should('be.visible').click();\n//Click en una cita\ncy.get(':nth-child(2) > .table-responsive > .col-lg-8 > #tabla_servicios > tbody > :nth-child(1) > #CPboton > a > #btnverCita').click();\n//Click en eliminar cita\ncy.get('#btn-eliminar-pregunta').should('be.visible').click();\n//Click en aceptar\ncy.get('#btn-aceptar-cancelar-cita').should('be.visible');",
+              "code": "// Click en iniciar sesión\ncy.get('.d-inline-block').should('be.visible');\n//Titulo del sitio\ncy.get('.header-title').should('be.visible');\n//Sección de servicios\ncy.get('.title').should('be.visible');\n//Boton de agendar cita\ncy.get('.main-btn').should('be.visible');\n//Sección preguntas\ncy.get('.col-xl-6 > .section-title > .fw-bold').should('be.visible');",
               "err": {},
-              "uuid": "81fdac5f-fbba-43f7-984f-2b9e2e59f873",
-              "parentUUID": "7342b00d-693d-4f11-9bf6-4552d86e338a",
+              "uuid": "c2553e3f-ffdf-46dd-a680-8cd157197ee1",
+              "parentUUID": "822ea126-8221-4dee-8dd5-12b80bc2f184",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "81fdac5f-fbba-43f7-984f-2b9e2e59f873"
+            "c2553e3f-ffdf-46dd-a680-8cd157197ee1"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 6965,
+          "duration": 2078,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000

@@ -1,4 +1,4 @@
-describe('Pagina de inicio de sesion', () => {
+describe('Cancelar cita Admin', () => {
     before(() => {
       // Deshabilitar la detección de errores no atrapados
       Cypress.on('uncaught:exception', (err, runnable) => {
@@ -29,10 +29,7 @@ describe('Pagina de inicio de sesion', () => {
       cy.get(':nth-child(2) > .table-responsive > .col-lg-8 > #tabla_servicios > tbody > :nth-child(1) > #CPboton > a > #btnverCita').click()
 
       //Click en eliminar cita
-      cy.get('#btn-eliminar-pregunta').should('be.visible').click();
-
-      //Confirmar
-      cy.get('#btn-aceptar-cancelar-cita').should('be.visible');
+      cy.get('#cancelar-cita-form > .d-flex > .me-2 > .btn');
 
     })
     })

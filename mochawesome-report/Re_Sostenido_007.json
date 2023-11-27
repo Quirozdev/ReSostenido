@@ -5,9 +5,9 @@
     "passes": 1,
     "pending": 0,
     "failures": 0,
-    "start": "2023-11-27T01:23:50.133Z",
-    "end": "2023-11-27T01:23:56.119Z",
-    "duration": 5986,
+    "start": "2023-11-27T16:53:33.290Z",
+    "end": "2023-11-27T16:53:40.580Z",
+    "duration": 7290,
     "testsRegistered": 1,
     "passPercent": 100,
     "pendingPercent": 0,
@@ -18,17 +18,17 @@
   },
   "results": [
     {
-      "uuid": "507d1a17-7479-42bd-abb4-e2c2ee8bc1b8",
+      "uuid": "75ed3da9-98d4-466e-aa01-341e2bc80e39",
       "title": "",
-      "fullFile": "cypress\\e2e\\Producción\\CU-Inicio_Sesion.cy.js",
-      "file": "cypress\\e2e\\Producción\\CU-Inicio_Sesion.cy.js",
+      "fullFile": "cypress\\e2e\\Producción\\CU-Consultar_info_citas_cliente.cy.js",
+      "file": "cypress\\e2e\\Producción\\CU-Consultar_info_citas_cliente.cy.js",
       "beforeHooks": [],
       "afterHooks": [],
       "tests": [],
       "suites": [
         {
-          "uuid": "f6ea39d8-9e79-4bd7-9262-48e6f7d1ea76",
-          "title": "Pagina de inicio de sesion",
+          "uuid": "7e449912-9896-438a-a7ef-332791b65606",
+          "title": "Consultar_info_citas-cliente",
           "fullFile": "",
           "file": "",
           "beforeHooks": [],
@@ -36,31 +36,31 @@
           "tests": [
             {
               "title": "Encontrar el boton de menu",
-              "fullTitle": "Pagina de inicio de sesion Encontrar el boton de menu",
+              "fullTitle": "Consultar_info_citas-cliente Encontrar el boton de menu",
               "timedOut": null,
-              "duration": 3692,
+              "duration": 5409,
               "state": "passed",
-              "speed": "fast",
+              "speed": "medium",
               "pass": true,
               "fail": false,
               "pending": false,
               "context": null,
-              "code": "// Click en iniciar sesión\ncy.get('#loginNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'\ncy.fixture('datos_cliente.json').then(data => {\n  cy.get('#email').should('be.visible').type(data.email, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(data.contrasena, {\n    force: true\n  });\n});\ncy.get('#login').should('be.visible').click();\n//Ver mensaje de bienvenida\ncy.get('.header-title').should('be.visible');\n//Sección de citas para el cliente\ncy.get(':nth-child(1) > .single-feature').should('be.visible');\n//Sección de servicios disponibles\ncy.get(':nth-child(2) > .single-feature').should('be.visible');\n//Sección de foro\ncy.get(':nth-child(3) > .single-feature').should('be.visible');",
+              "code": "// Click en iniciar sesión\ncy.get('#loginNavItem > .nav-link').should('be.visible').click();\n// Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'\ncy.fixture('datos_admin.json').then(datos => {\n  cy.get('#email').should('be.visible').type(datos.email, {\n    force: true\n  });\n  cy.get('#contrasenia').should('be.visible').type(datos.contrasena, {\n    force: true\n  });\n});\n//Iniciar sesión\ncy.get('#login').should('be.visible').click();\n// Ir al apartado de citas\ncy.get('#citasNavItem > .nav-link').should('be.visible').click();\n// ver detalles de la cita\ncy.get('#btnverCita').click({\n  force: true\n});",
               "err": {},
-              "uuid": "c1cf70e9-4180-48e6-bd0c-50574c95ecf7",
-              "parentUUID": "f6ea39d8-9e79-4bd7-9262-48e6f7d1ea76",
+              "uuid": "36874358-fc8c-46bd-96f9-1241decf34a9",
+              "parentUUID": "7e449912-9896-438a-a7ef-332791b65606",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "c1cf70e9-4180-48e6-bd0c-50574c95ecf7"
+            "36874358-fc8c-46bd-96f9-1241decf34a9"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 3692,
+          "duration": 5409,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
@@ -96,7 +96,7 @@
       "options": {
         "charts": true,
         "html": true,
-        "reportsDir": "cypress/reports/mochawesome",
+        "reportsDir": "cypress/reports/ReSostenido",
         "reportFilename": "Re_Sostenido",
         "overwrite": false,
         "reporterEnabled": "mochawesome",

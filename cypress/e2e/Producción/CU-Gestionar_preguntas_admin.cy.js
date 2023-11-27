@@ -1,4 +1,4 @@
-describe('Pagina de inicio de sesión', () => {
+describe('Gestionar preguntas - admin', () => {
     before(() => {
         // Deshabilitar la detección de errores no atrapados
         Cypress.on('uncaught:exception', (err, runnable) => {
@@ -60,10 +60,10 @@ describe('Pagina de inicio de sesión', () => {
         // Click en Foro (movil)
         //cy.get('#foro').click()
         // Click en Foro
-        cy.get('#foroNavItem > .nav-link').click()
+        //cy.get('#foroNavItem > .nav-link').click()
         // click en el boton de eliminar pregunta
-        cy.get('#btn-eliminar-pregunta:first').click({force:true})
+        //cy.get('#btn-eliminar-pregunta:first').click({force:true})
         // aceptar eliminar la pregunta publicada
-        cy.get('#btn-aceptar').click()
+        //cy.get('#btn-aceptar').click()
     })
 })

@@ -1,4 +1,4 @@
-describe('Editar datos-admin', () => {
+describe('Cancelar cita cliente', () => {
     before(() => {
       // Deshabilitar la detección de errores no atrapados
       Cypress.on('uncaught:exception', (err, runnable) => {
@@ -15,7 +15,7 @@ describe('Editar datos-admin', () => {
       cy.get('#loginNavItem > .nav-link').should('be.visible').click()
   
       // Cargar datos de inicio de sesión desde el archivo de fixture 'registro.json'
-      cy.fixture('datos_admin.json').then((data) => {
+      cy.fixture('datos_cliente.json').then((data) => {
         cy.get('#email').should('be.visible').type(data.email, { force: true });
         cy.get('#contrasenia').should('be.visible').type(data.contrasena, { force: true });
       });
@@ -23,19 +23,16 @@ describe('Editar datos-admin', () => {
       cy.get('#login').should('be.visible').click();
   
       //Click en administración de citas
-      cy.get(':nth-child(2) > .single-feature > .content > .btn').should('be.visible').click();
+      cy.get('#misCitas').should('be.visible').click();
 
       //Click en una cita
-      cy.get(':nth-child(3) > .table-responsive > .col-lg-8 > #tabla_servicios > tbody > :nth-child(1) > #CPboton > a > #btnverCita').click();
+      cy.get(':nth-child(2) > .table-responsive > .col-lg-8 > #tabla_servicios > tbody > :nth-child(1) > #CPboton > a > #btnverCita').click()
 
-      //Ingresar datos
-      cy.get('#marca').should('be.visible')
-      cy.get('#modelo').should('be.visible')
-      cy.get('#numero_serie').should('be.visible')
-      cy.get('#notas_admin').should('be.visible')
+      //Click en eliminar cita
+      cy.get('#btn-eliminar-pregunta').should('be.visible').click();
 
-      //Boton de actualizar datos
-      cy.get('.col-sm-8 > [style="justify-content: center;"] > .me-2 > .btn').should('be.visible');
+      //Click en aceptar
+      cy.get('#btn-aceptar-cancelar-cita').should('be.visible');
 
     })
     })

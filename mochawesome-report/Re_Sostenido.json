@@ -5,9 +5,9 @@
     "passes": 1,
     "pending": 0,
     "failures": 0,
-    "start": "2023-11-27T01:22:03.093Z",
-    "end": "2023-11-27T01:22:17.853Z",
-    "duration": 14760,
+    "start": "2023-11-27T16:52:14.002Z",
+    "end": "2023-11-27T16:52:26.259Z",
+    "duration": 12257,
     "testsRegistered": 1,
     "passPercent": 100,
     "pendingPercent": 0,
@@ -18,7 +18,7 @@
   },
   "results": [
     {
-      "uuid": "68d0b2a9-8c5e-45a0-ad8c-ea282a93d23e",
+      "uuid": "58939224-2902-4d88-b839-1c450c94f69e",
       "title": "",
       "fullFile": "cypress\\e2e\\Producción\\CU-Agregar_Servicio.cy.js",
       "file": "cypress\\e2e\\Producción\\CU-Agregar_Servicio.cy.js",
@@ -27,7 +27,7 @@
       "tests": [],
       "suites": [
         {
-          "uuid": "f08688ee-8062-4059-97b8-7f455912c499",
+          "uuid": "2a95af81-7173-4fc2-9588-2a521b82e7ae",
           "title": "Agregar Servicio",
           "fullFile": "",
           "file": "",
@@ -38,29 +38,29 @@
               "title": "Agregar Servicio",
               "fullTitle": "Agregar Servicio Agregar Servicio",
               "timedOut": null,
-              "duration": 11562,
+              "duration": 9463,
               "state": "passed",
-              "speed": "slow",
+              "speed": "medium",
               "pass": true,
               "fail": false,
               "pending": false,
               "context": null,
               "code": "cy.wait(2000);\n// Botón de administración de servicios\ncy.get(':nth-child(1) > .single-feature > .content > .btn').should('be.visible').click({\n  force: true\n});\n// Click en boton Agregar\ncy.get('#btnAgregar').should('be.visible').click({\n  force: true\n});\n// Cargar la imagen desde el archivo 'foto.jpg' en la carpeta 'fixtures'\ncy.fixture('foto.jpg').then(fileContent => {\n  cy.get('#inputImage').then($inputImage => {\n    // Crear un archivo que simula la carga de la imagen\n    const blob = Cypress.Blob.base64StringToBlob(fileContent, 'image/jpeg');\n    const testFile = new File([blob], 'foto.jpg', {\n      type: 'image/jpeg'\n    });\n    // Adjuntar el archivo al elemento 'inputImage'\n    const dataTransfer = new DataTransfer();\n    dataTransfer.items.add(testFile);\n    $inputImage[0].files = dataTransfer.files;\n    // Disparar el evento 'change' para simular la carga de la imagen\n    cy.wrap($inputImage).trigger('change', {\n      force: true\n    });\n  });\n});\n// Cargar otros datos de formulario desde el archivo de fixture 'registro.json'\ncy.fixture('datos_admin.json').then(data => {\n  cy.get('#nombre_instrumento').should('be.visible').type(data.nombre_instrumento, {\n    force: true\n  });\n  cy.get('#grupo').should('be.visible').type(data.grupo, {\n    force: true\n  });\n  cy.get('#descripcion').should('be.visible').type(data.descripcion, {\n    force: true\n  });\n  cy.get('#precio').should('be.visible').type(data.precio, {\n    force: true\n  });\n  //cy.get('#guardar').should('be.visible').click({ force: true });\n});",
               "err": {},
-              "uuid": "0a3e3c78-00bd-42b6-929a-57e417305d1b",
-              "parentUUID": "f08688ee-8062-4059-97b8-7f455912c499",
+              "uuid": "a7e28f04-adcf-4cd6-8e5f-d8020c80ef2c",
+              "parentUUID": "2a95af81-7173-4fc2-9588-2a521b82e7ae",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "0a3e3c78-00bd-42b6-929a-57e417305d1b"
+            "a7e28f04-adcf-4cd6-8e5f-d8020c80ef2c"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 11562,
+          "duration": 9463,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
@@ -96,7 +96,7 @@
       "options": {
         "charts": true,
         "html": true,
-        "reportsDir": "cypress/reports/mochawesome",
+        "reportsDir": "cypress/reports/ReSostenido",
         "reportFilename": "Re_Sostenido",
         "overwrite": false,
         "reporterEnabled": "mochawesome",
