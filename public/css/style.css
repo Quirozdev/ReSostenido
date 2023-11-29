@@ -624,3 +624,15 @@ nav ul li a .cart::after {
         padding: 20px;
     }
 }
+
+/* Para ocultar las flechas en navegadores basados en WebKit como Chrome, Safari */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Para ocultar las flechas en Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
