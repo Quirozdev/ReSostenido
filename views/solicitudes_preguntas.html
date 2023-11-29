@@ -6,128 +6,130 @@
         <div class="container">
 
             {% if preguntas.length > 0 %}
-            <p class="fs-2 ms-4 mt-5 mb-5 fw-bold text-center letra-principal">
-                Solicitudes de preguntas
-            </p>
-            {% if query.mensaje_confirmacion %}
-            <div class="alert alert-success" role="alert">
-                {{query.mensaje_confirmacion}}
-            </div>
-            {% endif %}
-            {% for pregunta in preguntas %}
-            <div class="container-fluid mt-3">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <div class="media flex-wrap w-100 align-items-center">
-                                    <div class="media-body ml-3 fs-5">
-                                        Anónimo
+                <p class="fs-2 ms-4 mt-5 mb-5 fw-bold text-center letra-principal">
+                    Solicitudes de preguntas
+                </p>
+                {% if query.mensaje_confirmacion %}
+                    <div class="alert alert-success" role="alert">
+                        {{query.mensaje_confirmacion}}
+                    </div>
+                {% endif %}
+                {% for pregunta in preguntas %}
+                    <div class="container-fluid mt-3">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <div class="media flex-wrap w-100 align-items-center">
+                                            <div class="media-body ml-3 fs-5">
+                                                Anónimo
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <p class="fs-5">
-                                    {{pregunta.pregunta}}
-                                </p>
-                                <p class="fs-5">
-                                    {{pregunta.respuesta}}
-                                </p>
-                            </div>
+                                    <div class="card-body">
+                                        <p class="fs-5">
+                                            {{pregunta.pregunta}}
+                                        </p>
+                                        <p class="fs-5">
+                                            {{pregunta.respuesta}}
+                                        </p>
+                                    </div>
 
-                            <div class="card-footer d-flex justify-content-between align-items-center px-0 pt-0 pb-3">
-                                <div class="row w-100 m-0">
-                                    <form action="/responder_pregunta" method="post">
-                                        <div class="px-4 pt-3">
-                                            <div class="form-floating">
-                                                <input type="hidden" name="id_pregunta" value="{{pregunta.id}}">
-                                                <textarea class="form-control" placeholder="Responde la pregunta"
-                                                    name="respuesta" id="respuesta_{{pregunta.id}}"
-                                                    style="height: 100px; margin-bottom: 0;"></textarea>
-                                                <label for="floatingTextarea2">Responde la pregunta</label>
-                                            </div>
-                                        </div>
-                                        {% if query.error_id_pregunta == pregunta.id %}
-                                        <div class="d-flex justify-content-center align-items-center mt-3">
-                                            <div class="alert alert-danger" role="alert">
-                                                {{query.error_respuesta}}
-                                            </div>
-                                        </div>
-                                        {% endif %}
-                                        {% if query.error_rechazo %}
-                                        <div class="d-flex justify-content-center align-items-center mt-3">
-                                            <div class="alert alert-danger" role="alert">
-                                                {{query.error_rechazo}}
-                                            </div>
-                                        </div>
-                                        {% endif %}
-
-                                        <div class="d-flex justify-content-center align-items-center mt-3">
-                                            <button type="button" class="btn botones me-2" data-bs-toggle="modal"
-                                                data-bs-target="#staticBackdrop">
-                                                Publicar
-                                            </button>
-                                        </div>
-                                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
-                                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                            aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="staticBackdropLabel">¿
-                                                            Desea publicar esta pregunta en el foro?
-                                                        </h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        Una vez publica la pregunta no podrá ser editada y será visible
-                                                        al público.
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Cancelar</button>
-                                                        <button type="submit" class="btn botones">Aceptar</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <form action="/rechazar_solicitud_pregunta" method="post">
-                                        <button type="button" class="btn" data-bs-toggle="modal"
-                                            data-bs-target="#staticBackdrop2">
-                                            <i class="fa-solid fa-trash fa-xl" style="color: #034165;"></i>
-                                        </button>
-                                        <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static"
-                                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                            aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="staticBackdropLabel">¿Estás seguro
-                                                            de rechazar la pregunta?
-                                                        </h5>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        Recuerda que no podrás recuperar la pregunta una vez la rechace.
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Cancelar</button>
+                                    <div class="card-footer d-flex justify-content-between align-items-center px-0 pt-0 pb-3">
+                                        <div class="row w-100 m-0">
+                                            <form action="/responder_pregunta" method="post">
+                                                <div class="px-4 pt-3">
+                                                    <div class="form-floating">
                                                         <input type="hidden" name="id_pregunta" value="{{pregunta.id}}">
-                                                        <button type="submit" class="btn btn-delete">Aceptar</button>
+                                                        <textarea class="form-control" placeholder="Responde la pregunta"
+                                                            name="respuesta" id="respuesta_{{pregunta.id}}"
+                                                            style="height: 100px; margin-bottom: 0;"></textarea>
+                                                        <label for="floatingTextarea2">Responde la pregunta</label>
                                                     </div>
                                                 </div>
-                                            </div>
+                                                id de la pregunta {{pregunta.id}}
+                                                id de la pregunta con error {{query.error_id_pregunta}}
+                                                {% if query.error_id_pregunta == pregunta.id %}
+                                                <div class="d-flex justify-content-center align-items-center mt-3">
+                                                    <div class="alert alert-danger" role="alert">
+                                                        {{query.error_respuesta}}
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% if query.error_rechazo %}
+                                                <div class="d-flex justify-content-center align-items-center mt-3">
+                                                    <div class="alert alert-danger" role="alert">
+                                                        {{query.error_rechazo}}
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+
+                                                <div class="d-flex justify-content-center align-items-center mt-3">
+                                                    <button type="button" class="btn botones me-2" data-bs-toggle="modal"
+                                                        data-bs-target="#staticBackdrop_{{pregunta.id}}">
+                                                        Publicar
+                                                    </button>
+                                                </div>
+                                                <div class="modal fade" id="staticBackdrop_{{pregunta.id}}" data-bs-backdrop="static"
+                                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="staticBackdropLabel">¿
+                                                                    Desea publicar esta pregunta en el foro?
+                                                                </h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                    aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Una vez publica la pregunta no podrá ser editada y será visible
+                                                                al público.
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Cancelar</button>
+                                                                <button type="submit" class="btn botones">Aceptar</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <form action="/rechazar_solicitud_pregunta" method="post">
+                                                <button type="button" class="btn" data-bs-toggle="modal"
+                                                    data-bs-target="#staticBackdrop2_{{pregunta.id}}">
+                                                    <i class="fa-solid fa-trash fa-xl" style="color: #034165;"></i>
+                                                </button>
+                                                <div class="modal fade" id="staticBackdrop2_{{pregunta.id}}" data-bs-backdrop="static"
+                                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="staticBackdropLabel">¿Estás seguro
+                                                                    de rechazar la pregunta?
+                                                                </h5>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Recuerda que no podrás recuperar la pregunta una vez la rechace.
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Cancelar</button>
+                                                                <input type="hidden" name="id_pregunta" value="{{pregunta.id}}">
+                                                                <button type="submit" class="btn btn-delete">Aceptar</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            {% endfor %}
+                {% endfor %}
             {% else %}
             <div class="page_404">
                 <div class="row d-flex justify-content-center align-middle">

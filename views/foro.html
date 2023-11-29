@@ -140,10 +140,10 @@
                                     <div class="px-4 pt-3">
                                         <input type="hidden" name="id_pregunta" value={{pregunta.id}}>
                                         <button type="button" class="btn btn-delete" data-bs-toggle="modal"
-                                            data-bs-target="#staticBackdrop" id="btn-eliminar-pregunta">
+                                            data-bs-target="#staticBackdrop_{{pregunta.id}}" id="btn-eliminar-pregunta">
                                             Eliminar pregunta
                                         </button>
-                                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                                        <div class="modal fade" id="staticBackdrop_{{pregunta.id}}" data-bs-backdrop="static"
                                             data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
                                             aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" id="modal-dialog">
