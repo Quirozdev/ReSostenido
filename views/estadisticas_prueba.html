@@ -91,7 +91,11 @@
           {% for etiqueta, valor in datosGrafica %}
           <tr>
             <td>{{etiqueta}}</td>
-            <td>${{(valor|float).toFixed(2)}}</td>
+            {% if raizRuta == "ganancias" or raizRuta =="ganancias_de_servicio" %}
+              <td>${{(valor|float).toFixed(2)}}</td>
+            {% else %}
+              <td>{{(valor)}}</td>
+            {% endif %}
           </tr>
           {% endfor %}
         </table>
